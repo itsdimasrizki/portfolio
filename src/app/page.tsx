@@ -1,7 +1,8 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Navbar } from "@/components/layout/navbar";
-import { Hero } from "@/components/sections/hero";
+import { Hero } from "@/components/sections/hero/";
+import { FeaturedProjects } from "@/components/sections/projects";
 
 export default function Home() {
   return (
@@ -10,6 +11,9 @@ export default function Home() {
 
     <main>
       <Hero />
+      <FeaturedProjects />
+
+
       <Section>
         <Container>
           <h1 className="text-5xl font-bold">
@@ -25,7 +29,3 @@ export default function Home() {
     </>
   );
 }
-
-// export default function Home() {
-//   return <h1>Hello</h1>;
-// }
