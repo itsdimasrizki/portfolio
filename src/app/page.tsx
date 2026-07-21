@@ -3,6 +3,7 @@ import { Section } from "@/components/layout/section";
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/components/sections/hero/";
 import { FeaturedProjects } from "@/components/sections/projects";
+import { ExperiencePreview } from "@/components/sections/experience";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
     <main>
       <Hero />
       <FeaturedProjects />
-
+      <ExperiencePreview />
 
       <Section>
         <Container>
