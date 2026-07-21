@@ -1,8 +1,12 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { Navbar } from "@/components/layout/navbar";
 
 export default function Home() {
   return (
+    <>
+    <Navbar />
+
     <main>
       <Section>
         <Container>
@@ -16,6 +20,7 @@ export default function Home() {
         </Container>
       </Section>
     </main>
+    </>
   );
 }
 
