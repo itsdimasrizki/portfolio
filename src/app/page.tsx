@@ -1,6 +1,7 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Navbar } from "@/components/layout/navbar";
+import { Hero } from "@/components/sections/hero";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
     <Navbar />
 
     <main>
+      <Hero />
       <Section>
         <Container>
           <h1 className="text-5xl font-bold">
