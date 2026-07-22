@@ -116,14 +116,10 @@
   }
 
   html {
-    @apply font-sans scroll-smooth;
+    @apply scroll-smooth;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
   }
-}
-
-body {
-  font-family: "Geist", sans-serif !important;
 }
