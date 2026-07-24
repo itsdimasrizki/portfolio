@@ -10,7 +10,7 @@ export function CTA() {
       <Container>
         <div className="rounded-3xl border bg-background px-8 py-16 text-center lg:px-16">
           <span className="text-sm font-medium text-teal-700">
-            Let's Work Together
+            Let&apos;s Work Together
           </span>
 
           <h2 className="mt-4 text-4xl font-bold tracking-tight lg:text-5xl">
@@ -18,8 +18,8 @@ export function CTA() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            I'm currently available for freelance projects, internships,
-            and full-time opportunities. Let's build something meaningful
+            I&apos;m currently available for freelance projects, internships,
+            and full-time opportunities. Let&apos;s build something meaningful
             together.
           </p>
 

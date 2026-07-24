@@ -1,7 +1,7 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { featuredProjects } from "@/constants/projects";
-import { ProjectCard } from "./project-card";
+import { ProjectGrid } from "./project-grid";
 
 export function FeaturedProjects() {
   return (
@@ -11,14 +11,7 @@ export function FeaturedProjects() {
           Featured Projects
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featuredProjects.map((project) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-            />
-          ))}
-        </div>
+        <ProjectGrid projects={featuredProjects} />
       </Container>
     </Section>
   );

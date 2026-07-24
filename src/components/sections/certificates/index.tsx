@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import { certificates } from "@/constants/certificates";
 
-import { CertificateCard } from "./certificate-card";
+import { CertificateGrid } from "./certificate-grid";
 
 export function FeaturedCertificates() {
   return (
@@ -30,14 +30,7 @@ export function FeaturedCertificates() {
           </Button>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {certificates.map((certificate) => (
-            <CertificateCard
-              key={certificate.id}
-              certificate={certificate}
-            />
-          ))}
-        </div>
+        <CertificateGrid certificates={certificates} />
       </Container>
     </Section>
   );

@@ -4,14 +4,6 @@ import Tilt from "react-parallax-tilt";
 import { HeroStats } from "./hero-stats";
 import Image from "next/image";
 
-<Image
-  src="/images/profile/profile.jpeg"
-  alt="Your Name"
-  fill
-  priority
-  className="object-cover"
-/>
-
 export function HeroImage() {
   return (
     <div className="space-y-6">
@@ -31,7 +23,7 @@ export function HeroImage() {
     <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
         <Image
             src="/images/profile/profile.jpeg"
-            alt="Your Name"
+            alt="Dimas Rizki"
             fill
             priority
             className="object-cover"

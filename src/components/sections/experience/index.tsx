@@ -19,7 +19,7 @@ export function ExperiencePreview() {
             </h2>
 
             <p className="mt-2 text-muted-foreground">
-              Companies and teams I've worked with.
+              Companies and teams I&apos;ve worked with.
             </p>
           </div>
 

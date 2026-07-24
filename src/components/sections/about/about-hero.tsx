@@ -32,7 +32,7 @@ export function AboutHero() {
 
           {/* Description */}
           <p className="text-muted-foreground mt-6 max-w-2xl text-lg leading-8">
-            I'm Dimas Rizki, a Fullstack Software Engineer based in Indonesia
+            I&apos;m Dimas Rizki, a Fullstack Software Engineer based in Indonesia
             who enjoys building modern web applications with a strong focus on
             performance, scalability, and user experience.
           </p>
@@ -47,7 +47,7 @@ export function AboutHero() {
               size="lg"
               variant="outline"
             >
-              Let's Connect
+              Let&apos;s Connect
             </Button>
           </div>
 
