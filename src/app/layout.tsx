@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { MotionProvider } from "@/components/motion/motion-provider";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -24,11 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.className} antialiased`}>
-        <Navbar />
+        <MotionProvider>
+          <Navbar />
 
-        {children}
+          {children}
 
-        <Footer />
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

@@ -1,12 +1,25 @@
 "use client";
 
+import { useState } from "react";
+import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
-import { HeroStats } from "./hero-stats";
 import Image from "next/image";
 
+import { HeroStats } from "./hero-stats";
+import { heroItem } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+
 export function HeroImage() {
+  const [loaded, setLoaded] = useState(false);
+
   return (
-    <div className="space-y-6">
+    <motion.div
+      custom={4}
+      variants={heroItem}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6"
+    >
       <Tilt
         tiltMaxAngleX={8}
         tiltMaxAngleY={8}
@@ -19,19 +32,22 @@ export function HeroImage() {
         transitionSpeed={1500}
         className="rounded-3xl"
       >
-
-    <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
-        <Image
+        <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
+          <Image
             src="/images/profile/profile.jpeg"
             alt="Dimas Rizki"
             fill
             priority
-            className="object-cover"
-        />
-    </div>
+            onLoad={() => setLoaded(true)}
+            className={cn(
+              "object-cover transition-all duration-700 ease-out",
+              loaded ? "scale-100 blur-0" : "scale-105 blur-lg"
+            )}
+          />
+        </div>
       </Tilt>
 
       <HeroStats />
-    </div>
+    </motion.div>
   );
 }

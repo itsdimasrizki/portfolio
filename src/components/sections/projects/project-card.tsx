@@ -1,11 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 import { Project } from "@/types/project";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { BlurImage } from "@/components/motion/blur-image";
 
 type ProjectCardProps = {
   project: Project;
@@ -13,14 +14,14 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="gap-0 overflow-hidden rounded-2xl border border-border bg-card p-0 ring-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+    <Card className="group/card gap-0 overflow-hidden rounded-2xl border border-border bg-card p-0 ring-0 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md">
       {/* Image */}
       <div className="relative aspect-video overflow-hidden">
-        <Image
+        <BlurImage
           src={project.image}
           alt={project.title}
           fill
-          className="object-cover transition-transform duration-300 group-hover/card:scale-105"
+          className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.03]"
         />
 
         {project.status === "ongoing" && (
@@ -44,8 +45,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Title */}
         <div>
-          <h3 className="text-xl font-semibold">
+          <h3 className="flex items-center gap-1 text-xl font-semibold transition-transform duration-300 ease-out group-hover/card:-translate-y-0.5">
             {project.title}
+            <ArrowUpRight className="size-4 text-muted-foreground transition-transform duration-300 ease-out group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
           </h3>
 
           <p className="mt-2 text-sm text-muted-foreground">
