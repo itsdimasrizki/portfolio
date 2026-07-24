@@ -6,6 +6,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/reveal";
 
 import { certificates } from "@/constants/certificates";
 
@@ -29,14 +30,16 @@ export function CertificatesList() {
   return (
     <Section>
       <Container>
-        <SectionHeader
-          as="h1"
-          eyebrow="Certificates"
-          title="Certifications and continuous learning."
-          description="Professional certifications I've earned while growing as a Fullstack Software Engineer."
-        />
+        <Reveal>
+          <SectionHeader
+            as="h1"
+            eyebrow="Certificates"
+            title="Certifications and continuous learning."
+            description="Professional certifications I've earned while growing as a Fullstack Software Engineer."
+          />
+        </Reveal>
 
-        <div className="mt-12 flex flex-wrap justify-center gap-2">
+        <Reveal delay={0.1} className="mt-12 flex flex-wrap justify-center gap-2">
           {issuers.map((issuer) => (
             <Button
               key={issuer}
@@ -47,7 +50,7 @@ export function CertificatesList() {
               {issuer}
             </Button>
           ))}
-        </div>
+        </Reveal>
 
         <div className="mt-12">
           <CertificateGrid certificates={filtered} />
@@ -56,3 +59,4 @@ export function CertificatesList() {
     </Section>
   );
 }
+

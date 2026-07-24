@@ -5,35 +5,27 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Base */
-  /* --background: oklch(0.985 0 0); */
   --background: #f7f7f5;
   --foreground: oklch(0.18 0 0);
 
-  /* Surface */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.18 0 0);
 
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0 0);
 
-  /* Brand */
   --primary: oklch(0.47 0.11 184);
   --primary-foreground: oklch(1 0 0);
 
-  /* Secondary */
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.18 0 0);
 
-  /* Muted */
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.55 0 0);
 
-  /* Accent */
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.18 0 0);
 
-  /* Others */
   --destructive: oklch(0.62 0.25 27);
 
   --border: oklch(0.92 0 0);
@@ -42,14 +34,12 @@
 
   --radius: 0.75rem;
 
-  /* Charts */
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.56 0 0);
   --chart-3: oklch(0.44 0 0);
   --chart-4: oklch(0.37 0 0);
   --chart-5: oklch(0.27 0 0);
 
-  /* Sidebar */
   --sidebar: var(--background);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);

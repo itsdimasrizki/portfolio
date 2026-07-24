@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
@@ -50,12 +51,17 @@ export function HeroContent() {
         animate="visible"
         className="mt-8 flex flex-wrap gap-4"
       >
-        <Button size="lg">View Projects</Button>
+        <Button size="lg" asChild>
+          <Link href="/projects">View Projects</Link>
+        </Button>
 
-        <Button size="lg" variant="outline">
-          Download CV
+        <Button size="lg" variant="outline" asChild>
+          <a href="/resume.pdf" download>
+            Download CV
+          </a>
         </Button>
       </motion.div>
     </div>
   );
 }
+

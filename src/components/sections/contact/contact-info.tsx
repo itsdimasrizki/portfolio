@@ -13,7 +13,7 @@ export function ContactInfo() {
             <Link
               key={item.id}
               href={item.href}
-              className="flex items-start gap-4 rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+              className="flex items-start gap-4 rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                 <Icon size={18} />

@@ -1,11 +1,12 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { Reveal } from "@/components/motion/reveal";
 
 export function AboutStory() {
   return (
     <Section>
       <Container>
-        <div className="mx-auto max-w-3xl">
+        <Reveal className="mx-auto max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-widest text-teal-700">
             My Story
           </p>
@@ -29,7 +30,7 @@ export function AboutStory() {
               a genuine story and AI-generated buzzwords.
             </p>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </Section>
   );
