@@ -13,15 +13,21 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="overflow-hidden rounded-2xl border-0 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+    <Card className="gap-0 overflow-hidden rounded-2xl border border-border bg-card p-0 ring-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
       {/* Image */}
-      <div className="relative aspect-video">
+      <div className="relative aspect-video overflow-hidden">
         <Image
           src={project.image}
           alt={project.title}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-300 group-hover/card:scale-105"
         />
+
+        {project.status === "ongoing" && (
+          <Badge className="absolute left-4 top-4 bg-teal-700 text-white">
+            Ongoing
+          </Badge>
+        )}
       </div>
 
       <CardContent className="space-y-5 p-6">

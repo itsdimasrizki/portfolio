@@ -1,19 +1,20 @@
 import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
 
 export function AboutStory() {
   return (
-    <section className="py-24">
+    <Section>
       <Container>
         <div className="mx-auto max-w-3xl">
-          <p className="text-primary text-sm font-medium uppercase tracking-[0.2em]">
+          <p className="text-sm font-semibold uppercase tracking-widest text-teal-700">
             My Story
           </p>
 
-          <h2 className="mt-4 text-4xl font-semibold tracking-tight">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
             Building software with purpose, not just features.
           </h2>
 
-          <div className="text-muted-foreground mt-10 space-y-6 text-lg leading-8">
+          <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground">
             <p>
               Write your journey here...
             </p>
@@ -30,6 +31,6 @@ export function AboutStory() {
           </div>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

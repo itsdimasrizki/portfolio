@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 
 import { certificates } from "@/constants/certificates";
@@ -12,25 +13,21 @@ export function FeaturedCertificates() {
   return (
     <Section>
       <Container>
-        <div className="mb-10 flex items-center justify-between">
-          <div>
-            <h2 className="text-3xl font-bold">
-              Featured Certificates
-            </h2>
+        <SectionHeader
+          align="left"
+          eyebrow="Certificates"
+          title="Featured Certificates"
+          description="Professional certifications and continuous learning."
+          action={
+            <Button asChild variant="ghost">
+              <Link href="/certificates">View all</Link>
+            </Button>
+          }
+        />
 
-            <p className="mt-2 text-muted-foreground">
-              Professional certifications and continuous learning.
-            </p>
-          </div>
-
-          <Button asChild variant="ghost">
-            <Link href="/certificates">
-              View all
-            </Link>
-          </Button>
+        <div className="mt-12">
+          <CertificateGrid certificates={certificates} />
         </div>
-
-        <CertificateGrid certificates={certificates} />
       </Container>
     </Section>
   );

@@ -8,16 +8,16 @@ export function CTA() {
   return (
     <Section>
       <Container>
-        <div className="rounded-3xl border bg-background px-8 py-16 text-center lg:px-16">
-          <span className="text-sm font-medium text-teal-700">
+        <div className="rounded-2xl border bg-card px-8 py-16 text-center lg:px-16">
+          <p className="text-sm font-semibold uppercase tracking-widest text-teal-700">
             Let&apos;s Work Together
-          </span>
+          </p>
 
-          <h2 className="mt-4 text-4xl font-bold tracking-tight lg:text-5xl">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
             Have an idea worth building?
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
             I&apos;m currently available for freelance projects, internships,
             and full-time opportunities. Let&apos;s build something meaningful
             together.

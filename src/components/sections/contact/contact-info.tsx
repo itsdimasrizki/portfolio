@@ -13,7 +13,7 @@ export function ContactInfo() {
             <Link
               key={item.id}
               href={item.href}
-              className="flex items-start gap-4 rounded-xl border bg-card p-4 transition-all hover:-translate-y-1 hover:shadow-md"
+              className="flex items-start gap-4 rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                 <Icon size={18} />
@@ -49,7 +49,7 @@ export function ContactInfo() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="flex h-10 w-10 items-center justify-center rounded-lg border bg-background text-foreground transition-all hover:-translate-y-1 hover:border-teal-700 hover:text-teal-700 hover:shadow-md"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-all duration-300 hover:-translate-y-1 hover:border-teal-700 hover:text-teal-700 hover:shadow-md"
               >
                 <Icon size={18} />
               </Link>

@@ -7,26 +7,26 @@ const navItems = navLinks.filter((item) => item.href !== "/");
 
 export function Navbar() {
   return (
-    <header className="border-b border-border bg-background">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
       <Container className="flex h-16 items-center justify-between">
         <Link href="/" className="text-sm font-semibold tracking-tight">
           Dimas Rizki
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
-        {navItems.map((item) => (
+        <nav className="hidden items-center gap-8 md:flex">
+          {navItems.map((item) => (
             <Link
-            key={item.href}
-            href={item.href}
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              key={item.href}
+              href={item.href}
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-            {item.label}
+              {item.label}
             </Link>
-        ))}
+          ))}
         </nav>
 
         <Button variant="outline" size="sm">
-            Download CV
+          Download CV
         </Button>
       </Container>
     </header>

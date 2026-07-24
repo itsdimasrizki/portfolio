@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 
 import { certificates } from "@/constants/certificates";
@@ -28,20 +29,12 @@ export function CertificatesList() {
   return (
     <Section>
       <Container>
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-teal-700">
-            Certificates
-          </p>
-
-          <h1 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
-            Certifications and continuous learning.
-          </h1>
-
-          <p className="mt-4 text-muted-foreground">
-            Professional certifications I&apos;ve earned while growing as a
-            Fullstack Software Engineer.
-          </p>
-        </div>
+        <SectionHeader
+          as="h1"
+          eyebrow="Certificates"
+          title="Certifications and continuous learning."
+          description="Professional certifications I've earned while growing as a Fullstack Software Engineer."
+        />
 
         <div className="mt-12 flex flex-wrap justify-center gap-2">
           {issuers.map((issuer) => (
