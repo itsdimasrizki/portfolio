@@ -1,14 +1,9 @@
 import Link from "next/link";
 import { Container } from "./container";
 import { Button } from "@/components/ui/button";
+import { navLinks } from "@/constants/navigation";
 
-const navItems = [
-  { label: "Projects", href: "/projects" },
-  { label: "Experience", href: "/experience" },
-  { label: "Certificates", href: "/certificates" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+const navItems = navLinks.filter((item) => item.href !== "/");
 
 export function Navbar() {
   return (
