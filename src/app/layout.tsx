@@ -3,6 +3,8 @@ import { Geist } from "next/font/google";
 
 import "./globals.css";
 
+import { Navbar } from "@/components/layout/navbar";
+
 const geistSans = Geist({
   subsets: ["latin"],
 });
@@ -21,6 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.className} antialiased`}>
+        <Navbar />
+
         {children}
       </body>
     </html>

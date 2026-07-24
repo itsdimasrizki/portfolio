@@ -1,42 +1,68 @@
+import Image from "next/image";
+
 import { Container } from "@/components/layout/container";
+import { Button } from "@/components/ui/button";
 
 export function AboutHero() {
   return (
-    <section className="py-24">
+    <section className="py-24 md:py-32">
       <Container>
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
-           <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
-              About Me
-        </p>
+          {/* Eyebrow */}
+          <p className="text-primary text-sm font-medium uppercase tracking-[0.2em]">
+            About Me
+          </p>
 
           {/* Avatar */}
-          <div>Avatar</div>
+          <div className="mt-8">
+            <Image
+              src="/images/profile/profile.jpeg"
+              alt="Dimas Rizki"
+              width={160}
+              height={160}
+              className="rounded-full border object-cover shadow-sm"
+            />
+          </div>
 
           {/* Heading */}
-          <h1 className="mt-8 max-w-4xl text-5xl font-semibold tracking-[-0.04em] leading-tight md:text-6xl">
+          <h1 className="mt-10 text-5xl font-semibold leading-tight tracking-[-0.04em] md:text-6xl">
             Building scalable digital products with clean architecture and
             meaningful user experiences.
           </h1>
 
           {/* Description */}
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+          <p className="text-muted-foreground mt-6 max-w-2xl text-lg leading-8">
             I'm Dimas Rizki, a Fullstack Software Engineer based in Indonesia
             who enjoys building modern web applications with a strong focus on
             performance, scalability, and user experience.
           </p>
 
           {/* CTA */}
-          <div className="mt-10 flex gap-4">
-            <button>Download CV</button>
-            <button>Contact Me</button>
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
+            <Button size="lg">
+              Download CV
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+            >
+              Let's Connect
+            </Button>
           </div>
 
           {/* Quick Info */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-            <div className="rounded-full border px-4 py-2">
-                <span>📍 Indonesia</span>
-                <span>💼 Open to Work</span>
-                <span>🚀 Fullstack Engineer</span>
+          <div className="mt-12 flex flex-wrap justify-center gap-3">
+            <div className="rounded-full border px-4 py-2 text-sm">
+              📍 Indonesia
+            </div>
+
+            <div className="rounded-full border px-4 py-2 text-sm">
+              💼 Open to Work
+            </div>
+
+            <div className="rounded-full border px-4 py-2 text-sm">
+              🚀 Fullstack Engineer
             </div>
           </div>
         </div>
