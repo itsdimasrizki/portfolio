@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ProjectsList } from "@/components/sections/projects/projects-list";
+import { getAllProjects } from "@/services/project.service";
 
 export const metadata: Metadata = {
   title: "Projects | Dimas Rizki",
@@ -8,10 +9,12 @@ export const metadata: Metadata = {
     "A selection of web apps, dashboards, APIs, and interfaces built by Dimas Rizki.",
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const projects = await getAllProjects();
+
   return (
     <main>
-      <ProjectsList />
+      <ProjectsList projects={projects} />
     </main>
   );
 }

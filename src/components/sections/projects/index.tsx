@@ -6,11 +6,15 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
-import { featuredProjects } from "@/constants/projects";
+import type { Project } from "@/types/project";
 
 import { ProjectGrid } from "./project-grid";
 
-export function FeaturedProjects() {
+type Props = {
+  projects: Project[];
+};
+
+export function FeaturedProjects({ projects }: Props) {
   return (
     <Section>
       <Container>
@@ -29,10 +33,9 @@ export function FeaturedProjects() {
         </Reveal>
 
         <div className="mt-12">
-          <ProjectGrid projects={featuredProjects} />
+          <ProjectGrid projects={projects} />
         </div>
       </Container>
     </Section>
   );
 }
-

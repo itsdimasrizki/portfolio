@@ -6,11 +6,15 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
-import { certificates } from "@/constants/certificates";
+import type { Certificate } from "@/types/certificate";
 
 import { CertificateGrid } from "./certificate-grid";
 
-export function FeaturedCertificates() {
+type Props = {
+  certificates: Certificate[];
+};
+
+export function FeaturedCertificates({ certificates }: Props) {
   return (
     <Section>
       <Container>
@@ -35,4 +39,3 @@ export function FeaturedCertificates() {
     </Section>
   );
 }
-

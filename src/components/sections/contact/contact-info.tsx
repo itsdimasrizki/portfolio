@@ -1,8 +1,13 @@
 import Link from "next/link";
 
-import { contactInfo, socialLinks } from "@/constants/contact";
+import type { ContactInfo as ContactInfoType, SocialLink } from "@/types/contact";
 
-export function ContactInfo() {
+type Props = {
+  contactInfo: ContactInfoType[];
+  socialLinks: SocialLink[];
+};
+
+export function ContactInfo({ contactInfo, socialLinks }: Props) {
   return (
     <div className="space-y-8">
       <div className="space-y-4">

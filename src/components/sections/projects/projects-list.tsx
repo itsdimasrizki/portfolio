@@ -2,10 +2,16 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Reveal } from "@/components/motion/reveal";
-import { projects } from "@/constants/projects";
+
+import type { Project } from "@/types/project";
+
 import { ProjectGrid } from "./project-grid";
 
-export function ProjectsList() {
+type Props = {
+  projects: Project[];
+};
+
+export function ProjectsList({ projects }: Props) {
   return (
     <Section>
       <Container>
@@ -25,4 +31,3 @@ export function ProjectsList() {
     </Section>
   );
 }
-

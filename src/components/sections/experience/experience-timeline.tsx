@@ -7,10 +7,15 @@ import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Reveal } from "@/components/motion/reveal";
 import { TimelineItem } from "@/components/cards/timeline-item";
-import { experiences } from "@/constants/experience";
+
+import type { Experience } from "@/types/experience";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
-export function ExperienceTimeline() {
+type Props = {
+  experiences: Experience[];
+};
+
+export function ExperienceTimeline({ experiences }: Props) {
   return (
     <Section>
       <Container>
@@ -43,4 +48,3 @@ export function ExperienceTimeline() {
     </Section>
   );
 }
-

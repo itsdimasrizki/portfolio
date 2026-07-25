@@ -7,10 +7,14 @@ import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Reveal } from "@/components/motion/reveal";
 import { SkillCard } from "@/components/cards/skill-card";
-import { skills } from "@/constants/skills";
+import type { Skill } from "@/types/skill";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
-export function Skills() {
+type Props = {
+  skills: Skill[];
+};
+
+export function Skills({ skills }: Props) {
   return (
     <Section>
       <Container>

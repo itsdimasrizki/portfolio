@@ -9,12 +9,16 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
-import { experiences } from "@/constants/experience";
+import type { Experience } from "@/types/experience";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
 import { ExperienceCard } from "./experience-card";
 
-export function ExperiencePreview() {
+type Props = {
+  experiences: Experience[];
+};
+
+export function ExperiencePreview({ experiences }: Props) {
   return (
     <Section>
       <Container>
@@ -49,4 +53,3 @@ export function ExperiencePreview() {
     </Section>
   );
 }
-

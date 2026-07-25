@@ -8,24 +8,28 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
-import { certificates } from "@/constants/certificates";
+import type { Certificate } from "@/types/certificate";
 
 import { CertificateGrid } from "./certificate-grid";
 
 const ALL = "All";
 
-export function CertificatesList() {
+type Props = {
+  certificates: Certificate[];
+};
+
+export function CertificatesList({ certificates }: Props) {
   const [activeIssuer, setActiveIssuer] = useState(ALL);
 
   const issuers = useMemo(() => {
     const unique = Array.from(new Set(certificates.map((c) => c.issuer)));
     return [ALL, ...unique];
-  }, []);
+  }, [certificates]);
 
   const filtered = useMemo(() => {
     if (activeIssuer === ALL) return certificates;
     return certificates.filter((c) => c.issuer === activeIssuer);
-  }, [activeIssuer]);
+  }, [activeIssuer, certificates]);
 
   return (
     <Section>
@@ -59,4 +63,3 @@ export function CertificatesList() {
     </Section>
   );
 }
-

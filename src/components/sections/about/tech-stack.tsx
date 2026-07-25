@@ -7,10 +7,14 @@ import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Reveal } from "@/components/motion/reveal";
 import { TechnologyCard } from "@/components/cards/technology-card";
-import { technologies } from "@/constants/technologies";
+import type { TechnologyGroup } from "@/types/technology";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
-export function TechStack() {
+type Props = {
+  technologies: TechnologyGroup[];
+};
+
+export function TechStack({ technologies }: Props) {
   return (
     <Section>
       <Container>

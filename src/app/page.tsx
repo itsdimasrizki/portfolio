@@ -4,13 +4,23 @@ import { ExperiencePreview } from "@/components/sections/experience";
 import { FeaturedCertificates } from "@/components/sections/certificates";
 import { CTA } from "@/components/sections/cta";
 
-export default function Home() {
+import { getFeaturedProjects } from "@/services/project.service";
+import { getAllExperiences } from "@/services/experience.service";
+import { getFeaturedCertificates } from "@/services/certificate.service";
+
+export default async function Home() {
+  const [featuredProjects, experiences, featuredCertificates] = await Promise.all([
+    getFeaturedProjects(),
+    getAllExperiences(),
+    getFeaturedCertificates(),
+  ]);
+
   return (
     <main>
       <Hero />
-      <FeaturedProjects />
-      <ExperiencePreview />
-      <FeaturedCertificates />
+      <FeaturedProjects projects={featuredProjects} />
+      <ExperiencePreview experiences={experiences} />
+      <FeaturedCertificates certificates={featuredCertificates} />
       <CTA />
     </main>
   );
