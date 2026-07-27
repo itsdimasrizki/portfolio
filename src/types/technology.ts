@@ -1,5 +1,3 @@
-import { ComponentType } from "react";
-
 export interface SanityTechnology {
   _id: string;
   name: string;
@@ -10,7 +8,7 @@ export interface SanityTechnology {
 
 export interface TechnologyItem {
   name: string;
-  icon: ComponentType<{ size?: number; className?: string }>;
+  iconName: string;
 }
 
 export interface TechnologyGroup {
