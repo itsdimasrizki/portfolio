@@ -1,6 +1,37 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ComponentType } from "react";
+
+import {
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+  SiShadcnui,
+  SiFramer,
+  SiExpress,
+  SiPostgresql,
+  SiMysql,
+  SiMongodb,
+  SiPostman,
+  SiVercel,
+  SiSanity,
+  SiJavascript,
+} from "react-icons/si";
+
+import {
+  FaReact,
+  FaNodeJs,
+  FaLaravel,
+  FaGitAlt,
+  FaGithub,
+  FaDocker,
+  FaFigma,
+  FaHtml5,
+  FaCss3Alt,
+  FaPhp,
+  FaLinux,
+} from "react-icons/fa6";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
@@ -9,6 +40,38 @@ import { Reveal } from "@/components/motion/reveal";
 import { TechnologyCard } from "@/components/cards/technology-card";
 import type { TechnologyGroup } from "@/types/technology";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
+
+type IconComponent = ComponentType<{ size?: number; className?: string }>;
+
+const iconMap: Record<string, IconComponent> = {
+  // Simple icons
+  SiNextdotjs,
+  SiNextdojs: SiNextdotjs, // alias for typo in Sanity data
+  SiTypescript,
+  SiTailwindcss,
+  SiShadcnui,
+  SiFramer,
+  SiExpress,
+  SiPostgresql,
+  SiMysql,
+  SiMongodb,
+  SiPostman,
+  SiVercel,
+  SiSanity,
+  SiJavascript,
+  // Font Awesome icons
+  FaReact,
+  FaNodeJs,
+  FaLaravel,
+  FaGitAlt,
+  FaGithub,
+  FaDocker,
+  FaFigma,
+  FaHtml5,
+  FaCss3Alt,
+  FaPhp,
+  FaLinux,
+};
 
 type Props = {
   technologies: TechnologyGroup[];
@@ -44,7 +107,8 @@ export function TechStack({ technologies }: Props) {
                 className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
               >
                 {category.items.map((tech) => {
-                  const Icon = tech.icon;
+                  const Icon = iconMap[tech.iconName];
+                  if (!Icon) return null;
 
                   return (
                     <motion.div key={tech.name} variants={staggerItem}>

@@ -1,5 +1,3 @@
-import { ComponentType } from "react";
-
 export interface SanitySkill {
   _id: string;
   title: string;
@@ -11,5 +9,5 @@ export interface SanitySkill {
 export interface Skill {
   title: string;
   description: string;
-  icon: ComponentType<{ size?: number; className?: string }>;
+  iconName: string;
 }
