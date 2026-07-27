@@ -15,14 +15,6 @@ export const technologySchema = defineType({
       name: "category",
       title: "Category",
       type: "string",
-      options: {
-        list: [
-          { title: "Frontend", value: "Frontend" },
-          { title: "Backend", value: "Backend" },
-          { title: "Database", value: "Database" },
-          { title: "Tools", value: "Tools" },
-        ],
-      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
