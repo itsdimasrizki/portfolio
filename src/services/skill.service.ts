@@ -4,7 +4,9 @@ import type { SanitySkill, Skill } from "@/types/skill";
 
 export async function getSkills(): Promise<Skill[]> {
   try {
-    const data = await client.fetch<SanitySkill[]>(allSkillsQuery);
+    const data = await client.fetch<SanitySkill[]>(allSkillsQuery, {}, {
+      next: { tags: ["sanity", "skill"] },
+    });
 
     if (!data || !Array.isArray(data)) return [];
 

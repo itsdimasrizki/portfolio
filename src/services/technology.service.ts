@@ -6,7 +6,9 @@ const CATEGORY_ORDER = ["Frontend", "Backend", "Database", "Tools"];
 
 export async function getTechnologies(): Promise<TechnologyGroup[]> {
   try {
-    const data = await client.fetch<SanityTechnology[]>(allTechnologiesQuery);
+    const data = await client.fetch<SanityTechnology[]>(allTechnologiesQuery, {}, {
+      next: { tags: ["sanity", "technology"] },
+    });
 
     if (!data || !Array.isArray(data)) return [];
 

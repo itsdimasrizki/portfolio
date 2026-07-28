@@ -9,6 +9,13 @@ export const allExperiencesQuery = groq`
     startDate,
     endDate,
     description,
+    "technologies": technologies[]-> {
+      _id,
+      name,
+      category,
+      iconName,
+      order
+    },
     order
   }
 `;

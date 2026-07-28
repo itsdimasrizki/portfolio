@@ -6,6 +6,7 @@ export interface Certificate {
   issuer: string;
   issuedAt: string;
   image: string;
+  pdfUrl?: string;
   credentialUrl?: string;
 }
 
@@ -14,7 +15,12 @@ export interface SanityCertificate {
   title: string;
   issuer: string;
   issuedAt: string;
-  image?: SanityImageSource;
+  thumbnail?: SanityImageSource;
+  pdfFile?: {
+    asset: {
+      url: string;
+    };
+  };
   credentialUrl?: string;
   order?: number;
 }

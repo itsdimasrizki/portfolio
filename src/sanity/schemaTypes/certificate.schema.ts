@@ -25,10 +25,20 @@ export const certificateSchema = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "image",
-      title: "Certificate Image",
+      name: "thumbnail",
+      title: "Thumbnail",
       type: "image",
       options: { hotspot: true },
+      description: "Gambar preview sertifikat untuk ditampilkan di website",
+    }),
+    defineField({
+      name: "pdfFile",
+      title: "PDF File",
+      type: "file",
+      description: "File PDF sertifikat asli",
+      options: {
+        accept: "application/pdf",
+      },
     }),
     defineField({
       name: "credentialUrl",

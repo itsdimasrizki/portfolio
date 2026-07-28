@@ -11,12 +11,15 @@ function toExperience(raw: SanityExperience): Experience {
     startDate: raw.startDate,
     endDate: raw.endDate,
     description: raw.description ?? "",
+    technologies: raw.technologies?.map((t) => t.name) ?? [],
   };
 }
 
 export async function getAllExperiences(): Promise<Experience[]> {
   try {
-    const data = await client.fetch<SanityExperience[]>(allExperiencesQuery);
+    const data = await client.fetch<SanityExperience[]>(allExperiencesQuery, {}, {
+      next: { tags: ["sanity", "experience"] },
+    });
     return data ? data.map(toExperience) : [];
   } catch (error) {
     console.warn("Failed to fetch experiences from Sanity:", error);

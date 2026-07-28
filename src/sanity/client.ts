@@ -7,6 +7,6 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? "2024-01-01",
-  useCdn: true,
+  useCdn: false, // Set to false for tag-based ISR/On-demand revalidation
   token: process.env.SANITY_API_TOKEN,
 });

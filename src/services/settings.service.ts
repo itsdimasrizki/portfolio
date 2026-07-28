@@ -12,7 +12,9 @@ export async function getSiteSettings(): Promise<{
 }> {
   let settings: SanitySettings | null = null;
   try {
-    settings = await client.fetch<SanitySettings | null>(siteSettingsQuery);
+    settings = await client.fetch<SanitySettings | null>(siteSettingsQuery, {}, {
+      next: { tags: ["sanity", "settings"] },
+    });
   } catch (error) {
     console.warn("Failed to fetch site settings from Sanity:", error);
   }
