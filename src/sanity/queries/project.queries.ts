@@ -8,7 +8,13 @@ export const allProjectsQuery = groq`
     image,
     year,
     category,
-    technologies,
+    "technologies": technologies[]-> {
+      _id,
+      name,
+      category,
+      iconName,
+      order
+    },
     status,
     github,
     liveDemo,
@@ -24,7 +30,13 @@ export const featuredProjectsQuery = groq`
     image,
     year,
     category,
-    technologies,
+    "technologies": technologies[]-> {
+      _id,
+      name,
+      category,
+      iconName,
+      order
+    },
     status,
     github,
     liveDemo,

@@ -12,14 +12,17 @@ function toCertificate(raw: SanityCertificate): Certificate {
     title: raw.title,
     issuer: raw.issuer,
     issuedAt: raw.issuedAt,
-    image: raw.image ? urlFor(raw.image).width(800).url() : "",
+    image: raw.thumbnail ? urlFor(raw.thumbnail).width(800).url() : "",
+    pdfUrl: raw.pdfFile?.asset?.url,
     credentialUrl: raw.credentialUrl,
   };
 }
 
 export async function getAllCertificates(): Promise<Certificate[]> {
   try {
-    const data = await client.fetch<SanityCertificate[]>(allCertificatesQuery);
+    const data = await client.fetch<SanityCertificate[]>(allCertificatesQuery, {}, {
+      next: { tags: ["sanity", "certificate"] },
+    });
     return data ? data.map(toCertificate) : [];
   } catch (error) {
     console.warn("Failed to fetch certificates from Sanity:", error);
@@ -30,7 +33,9 @@ export async function getAllCertificates(): Promise<Certificate[]> {
 export async function getFeaturedCertificates(): Promise<Certificate[]> {
   try {
     const data = await client.fetch<SanityCertificate[]>(
-      featuredCertificatesQuery
+      featuredCertificatesQuery,
+      {},
+      { next: { tags: ["sanity", "certificate"] } }
     );
     return data ? data.map(toCertificate) : [];
   } catch (error) {

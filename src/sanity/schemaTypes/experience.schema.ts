@@ -43,6 +43,17 @@ export const experienceSchema = defineType({
       rows: 4,
     }),
     defineField({
+      name: "technologies",
+      title: "Technologies",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "technology" }],
+        },
+      ],
+    }),
+    defineField({
       name: "order",
       title: "Order",
       type: "number",

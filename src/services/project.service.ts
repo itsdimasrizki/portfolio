@@ -14,7 +14,7 @@ function toProject(raw: SanityProject): Project {
     image: raw.image ? urlFor(raw.image).width(800).url() : "",
     year: raw.year,
     category: raw.category,
-    technologies: raw.technologies ?? [],
+    technologies: raw.technologies?.map((t) => t.name) ?? [],
     status: raw.status,
     github: raw.github,
     liveDemo: raw.liveDemo,
@@ -23,7 +23,9 @@ function toProject(raw: SanityProject): Project {
 
 export async function getAllProjects(): Promise<Project[]> {
   try {
-    const data = await client.fetch<SanityProject[]>(allProjectsQuery);
+    const data = await client.fetch<SanityProject[]>(allProjectsQuery, {}, {
+      next: { tags: ["sanity", "project"] },
+    });
     return data ? data.map(toProject) : [];
   } catch (error) {
     console.warn("Failed to fetch projects from Sanity:", error);
@@ -33,7 +35,9 @@ export async function getAllProjects(): Promise<Project[]> {
 
 export async function getFeaturedProjects(): Promise<Project[]> {
   try {
-    const data = await client.fetch<SanityProject[]>(featuredProjectsQuery);
+    const data = await client.fetch<SanityProject[]>(featuredProjectsQuery, {}, {
+      next: { tags: ["sanity", "project"] },
+    });
     return data ? data.map(toProject) : [];
   } catch (error) {
     console.warn("Failed to fetch featured projects from Sanity:", error);

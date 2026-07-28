@@ -1,3 +1,5 @@
+import type { SanityTechnology } from "./technology";
+
 export interface Experience {
   id: string;
   company: string;
@@ -6,6 +8,7 @@ export interface Experience {
   startDate: string;
   endDate: string;
   description: string;
+  technologies?: string[];
 }
 
 export interface SanityExperience {
@@ -16,5 +19,6 @@ export interface SanityExperience {
   startDate: string;
   endDate: string;
   description: string;
+  technologies?: SanityTechnology[];
   order?: number;
 }

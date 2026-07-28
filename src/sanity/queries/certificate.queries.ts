@@ -6,7 +6,12 @@ export const allCertificatesQuery = groq`
     title,
     issuer,
     issuedAt,
-    image,
+    thumbnail,
+    "pdfFile": pdfFile {
+      asset-> {
+        url
+      }
+    },
     credentialUrl,
     order
   }
@@ -18,7 +23,12 @@ export const featuredCertificatesQuery = groq`
     title,
     issuer,
     issuedAt,
-    image,
+    thumbnail,
+    "pdfFile": pdfFile {
+      asset-> {
+        url
+      }
+    },
     credentialUrl,
     order
   }
