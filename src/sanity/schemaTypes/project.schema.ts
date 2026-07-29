@@ -34,7 +34,7 @@ export const projectSchema = defineType({
       name: "category",
       title: "Categories",
       description:
-        "Pilih satu atau lebih kategori. Ketik nama kategori baru lalu tekan Enter untuk menambahkannya.",
+        "Pilih satu atau lebih kategori. Jika dokumen lama bermasalah, hapus/re-select kategori lalu publish.",
       type: "array",
       of: [{ type: "string" }],
       options: {
@@ -49,7 +49,6 @@ export const projectSchema = defineType({
           { title: "CLI / Tool", value: "CLI / Tool" },
           { title: "Open Source", value: "Open Source" },
         ],
-        layout: "tags",
       },
       validation: (Rule) => Rule.required().min(1),
     }),
@@ -79,12 +78,14 @@ export const projectSchema = defineType({
     defineField({
       name: "github",
       title: "GitHub URL",
-      type: "url",
+      type: "string",
+      description: "URL repository GitHub (e.g. https://github.com/... atau #)",
     }),
     defineField({
       name: "liveDemo",
       title: "Live Demo URL",
-      type: "url",
+      type: "string",
+      description: "URL live demo website (e.g. https://... atau #)",
     }),
     defineField({
       name: "order",
