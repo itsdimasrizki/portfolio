@@ -7,7 +7,7 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  image: string;
+  images: string[];
   year: string;
   categories: string[];
   technologies: string[];
@@ -20,7 +20,7 @@ export interface SanityProject {
   _id: string;
   title: string;
   description: string;
-  image?: SanityImageSource;
+  images?: string[];
   year: string;
   category?: string[];
   technologies?: SanityTechnology[];

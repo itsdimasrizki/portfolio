@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 
 import { Project } from "@/types/project";
@@ -6,26 +10,84 @@ import { Project } from "@/types/project";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BlurImage } from "@/components/motion/blur-image";
 
 type ProjectCardProps = {
   project: Project;
 };
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const images = project.images.length > 0 ? project.images : [];
+  const hasMultiple = images.length > 1;
+
+  useEffect(() => {
+    if (isHovered && hasMultiple) {
+      intervalRef.current = setInterval(() => {
+        setActiveIndex((prev) => (prev + 1) % images.length);
+      }, 1200);
+    } else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (!isHovered) setActiveIndex(0);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isHovered, hasMultiple, images.length]);
+
   return (
-    <Card className="group/card gap-0 overflow-hidden rounded-2xl border border-border bg-card p-0 ring-0 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md">
-      {/* Image */}
-      <div className="relative aspect-video overflow-hidden">
-        <BlurImage
-          src={project.image}
-          alt={project.title}
-          fill
-          className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.03]"
-        />
+    <Card
+      className="group/card gap-0 overflow-hidden rounded-2xl border border-border bg-card p-0 ring-0 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Image area */}
+      <div className="relative aspect-video overflow-hidden bg-muted">
+        {images.length > 0 ? (
+          <>
+            {images.map((src, i) => (
+              <Image
+                key={i}
+                src={src}
+                alt={`${project.title} screenshot ${i + 1}`}
+                fill
+                className={`object-cover transition-all duration-700 ease-in-out ${
+                  i === activeIndex
+                    ? "opacity-100 scale-[1.03]"
+                    : "opacity-0 scale-100"
+                }`}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            ))}
+
+            {/* Dot indicators — only show when multiple images */}
+            {hasMultiple && (
+              <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveIndex(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === activeIndex
+                        ? "w-4 bg-white"
+                        : "w-1.5 bg-white/50"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          // Placeholder when no image
+          <div className="absolute inset-0 flex items-center justify-center bg-muted">
+            <span className="text-xs text-muted-foreground">No image</span>
+          </div>
+        )}
 
         {project.status === "ongoing" && (
-          <Badge className="absolute left-4 top-4 bg-teal-700 text-white">
+          <Badge className="absolute left-4 top-4 z-10 bg-teal-700 text-white">
             Ongoing
           </Badge>
         )}
@@ -70,20 +132,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Action */}
         <div className="flex gap-3">
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-          >
+          <Button asChild variant="outline" size="sm">
             <Link href={project.github ?? "#"}>
               GitHub
             </Link>
           </Button>
 
-          <Button
-            asChild
-            size="sm"
-          >
+          <Button asChild size="sm">
             <Link href={project.liveDemo ?? "#"}>
               Live Demo
             </Link>

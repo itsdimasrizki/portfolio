@@ -1,5 +1,4 @@
 import { client } from "@/sanity/client";
-import { urlFor } from "@/sanity/lib/image";
 import {
   allProjectsQuery,
   featuredProjectsQuery,
@@ -11,7 +10,7 @@ function toProject(raw: SanityProject): Project {
     id: raw._id,
     title: raw.title,
     description: raw.description,
-    image: raw.image ? urlFor(raw.image).width(800).url() : "",
+    images: raw.images ?? [],
     year: raw.year,
     categories: raw.category ?? [],
     technologies: raw.technologies?.map((t) => t.name) ?? [],

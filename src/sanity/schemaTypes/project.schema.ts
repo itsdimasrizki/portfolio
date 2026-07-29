@@ -19,10 +19,17 @@ export const projectSchema = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "image",
-      title: "Image",
-      type: "image",
-      options: { hotspot: true },
+      name: "images",
+      title: "Project Images",
+      description:
+        "Upload satu atau lebih gambar. Gambar pertama = thumbnail utama. Saat di-hover, gambar akan berganti-ganti otomatis.",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+        },
+      ],
     }),
     defineField({
       name: "year",
@@ -96,9 +103,9 @@ export const projectSchema = defineType({
   ],
   orderings: [
     {
-      title: "Order",
-      name: "orderAsc",
-      by: [{ field: "order", direction: "asc" }],
+      title: "Order (Terbaru Dulu)",
+      name: "orderDesc",
+      by: [{ field: "order", direction: "desc" }],
     },
   ],
 });
