@@ -2,36 +2,11 @@
 
 import { motion } from "framer-motion";
 import { ComponentType } from "react";
+import { Code2 } from "lucide-react";
 
-import {
-  SiNextdotjs,
-  SiTypescript,
-  SiTailwindcss,
-  SiShadcnui,
-  SiFramer,
-  SiExpress,
-  SiPostgresql,
-  SiMysql,
-  SiMongodb,
-  SiPostman,
-  SiVercel,
-  SiSanity,
-  SiJavascript,
-} from "react-icons/si";
-
-import {
-  FaReact,
-  FaNodeJs,
-  FaLaravel,
-  FaGitAlt,
-  FaGithub,
-  FaDocker,
-  FaFigma,
-  FaHtml5,
-  FaCss3Alt,
-  FaPhp,
-  FaLinux,
-} from "react-icons/fa6";
+import * as SiIcons from "react-icons/si";
+import * as FaIcons from "react-icons/fa6";
+import * as LuIcons from "lucide-react";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
@@ -41,37 +16,41 @@ import { TechnologyCard } from "@/components/cards/technology-card";
 import type { TechnologyGroup } from "@/types/technology";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
-type IconComponent = ComponentType<{ size?: number; className?: string }>;
+type IconComponent = ComponentType<any>;
 
-const iconMap: Record<string, IconComponent> = {
-  // Simple icons
-  SiNextdotjs,
-  SiNextdojs: SiNextdotjs, // alias for typo in Sanity data
-  SiTypescript,
-  SiTailwindcss,
-  SiShadcnui,
-  SiFramer,
-  SiExpress,
-  SiPostgresql,
-  SiMysql,
-  SiMongodb,
-  SiPostman,
-  SiVercel,
-  SiSanity,
-  SiJavascript,
-  // Font Awesome icons
-  FaReact,
-  FaNodeJs,
-  FaLaravel,
-  FaGitAlt,
-  FaGithub,
-  FaDocker,
-  FaFigma,
-  FaHtml5,
-  FaCss3Alt,
-  FaPhp,
-  FaLinux,
+const allIcons: Record<string, IconComponent> = {
+  ...(SiIcons as unknown as Record<string, IconComponent>),
+  ...(FaIcons as unknown as Record<string, IconComponent>),
+  ...(LuIcons as unknown as Record<string, IconComponent>),
+  // Aliases for common typos or user inputs
+  SiNextdojs: SiIcons.SiNextdotjs as IconComponent,
+  "c++": SiIcons.SiCplusplus as IconComponent,
+  cpp: SiIcons.SiCplusplus as IconComponent,
+  python: FaIcons.FaPython as IconComponent,
 };
+
+function getDynamicIcon(iconName: string): IconComponent {
+  if (!iconName) return Code2;
+
+  const trimmed = iconName.trim();
+
+  // 1. Direct match (e.g. SiCplusplus, FaPython, Code2)
+  if (allIcons[trimmed]) return allIcons[trimmed];
+
+  // 2. Auto-prefix (e.g. user typed "Python" or "React" -> try "SiPython", "FaPython", "FaReact")
+  const capitalized = trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+  if (allIcons[`Si${capitalized}`]) return allIcons[`Si${capitalized}`];
+  if (allIcons[`Fa${capitalized}`]) return allIcons[`Fa${capitalized}`];
+
+  // 3. Case-insensitive lookup
+  const lower = trimmed.toLowerCase();
+  for (const [key, IconComp] of Object.entries(allIcons)) {
+    if (key.toLowerCase() === lower) return IconComp;
+  }
+
+  // 4. Default fallback icon
+  return Code2;
+}
 
 type Props = {
   technologies: TechnologyGroup[];
@@ -107,8 +86,7 @@ export function TechStack({ technologies }: Props) {
                 className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
               >
                 {category.items.map((tech) => {
-                  const Icon = iconMap[tech.iconName];
-                  if (!Icon) return null;
+                  const Icon = getDynamicIcon(tech.iconName);
 
                   return (
                     <motion.div key={tech.name} variants={staggerItem}>
