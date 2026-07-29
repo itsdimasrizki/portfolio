@@ -9,7 +9,7 @@ export interface Project {
   description: string;
   image: string;
   year: string;
-  category: string;
+  categories: string[];
   technologies: string[];
   status?: ProjectStatus;
   github?: string;
@@ -22,7 +22,7 @@ export interface SanityProject {
   description: string;
   image?: SanityImageSource;
   year: string;
-  category: string;
+  category?: string[];
   technologies?: SanityTechnology[];
   status?: ProjectStatus;
   github?: string;

@@ -32,8 +32,11 @@ export const projectSchema = defineType({
     }),
     defineField({
       name: "category",
-      title: "Category",
-      type: "string",
+      title: "Categories",
+      description:
+        "Pilih satu atau lebih kategori. Ketik nama kategori baru lalu tekan Enter untuk menambahkannya.",
+      type: "array",
+      of: [{ type: "string" }],
       options: {
         list: [
           { title: "Web App", value: "Web App" },
@@ -41,9 +44,14 @@ export const projectSchema = defineType({
           { title: "Backend", value: "Backend" },
           { title: "Marketing", value: "Marketing" },
           { title: "Personal", value: "Personal" },
+          { title: "AI / ML", value: "AI / ML" },
+          { title: "Mobile App", value: "Mobile App" },
+          { title: "CLI / Tool", value: "CLI / Tool" },
+          { title: "Open Source", value: "Open Source" },
         ],
+        layout: "tags",
       },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: "technologies",

@@ -13,7 +13,7 @@ function toProject(raw: SanityProject): Project {
     description: raw.description,
     image: raw.image ? urlFor(raw.image).width(800).url() : "",
     year: raw.year,
-    category: raw.category,
+    categories: raw.category ?? [],
     technologies: raw.technologies?.map((t) => t.name) ?? [],
     status: raw.status,
     github: raw.github,

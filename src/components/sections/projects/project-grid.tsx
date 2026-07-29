@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 import { Project } from "@/types/project";
 import { ProjectCard } from "./project-card";
-import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
+import { staggerContainer, staggerItem } from "@/lib/motion";
 
 type ProjectGridProps = {
   projects: Project[];
@@ -15,8 +15,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
     <motion.div
       variants={staggerContainer}
       initial="hidden"
-      whileInView="visible"
-      viewport={viewportOnce}
+      animate="visible"
       className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
     >
       {projects.map((project) => (
