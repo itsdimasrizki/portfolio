@@ -32,13 +32,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       <CardContent className="space-y-5 p-6">
-        {/* Category */}
-        <div className="flex items-center justify-between">
-          <Badge variant="secondary">
-            {project.category}
-          </Badge>
+        {/* Categories */}
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-wrap gap-1.5">
+            {project.categories.map((cat) => (
+              <Badge key={cat} variant="secondary">
+                {cat}
+              </Badge>
+            ))}
+          </div>
 
-          <span className="text-sm text-muted-foreground">
+          <span className="shrink-0 text-sm text-muted-foreground">
             {project.year}
           </span>
         </div>

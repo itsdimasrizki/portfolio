@@ -57,7 +57,7 @@ export function CertificatesList({ certificates }: Props) {
         </Reveal>
 
         <div className="mt-12">
-          <CertificateGrid certificates={filtered} />
+          <CertificateGrid key={activeIssuer} certificates={filtered} />
         </div>
       </Container>
     </Section>
