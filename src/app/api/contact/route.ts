@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     // Get recipient email from Sanity settings or use default
     const { contactInfo } = await getSiteSettings();
     const targetEmailObj = contactInfo.find((item) => item.id === "email");
-    const toEmail = targetEmailObj?.value || "itsdimasrizki@gmail.com";
+    const toEmail = targetEmailObj?.value || "dimasrizkia477@gmail.com";
 
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
