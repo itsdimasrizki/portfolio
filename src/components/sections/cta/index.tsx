@@ -5,7 +5,11 @@ import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
-export function CTA() {
+type CTAProps = {
+  cvUrl?: string | null;
+};
+
+export function CTA({ cvUrl }: CTAProps) {
   return (
     <Section>
       <Container>
@@ -33,7 +37,12 @@ export function CTA() {
               </Button>
 
               <Button asChild variant="outline" size="lg">
-                <a href="/resume.pdf" download>
+                <a
+                  href={cvUrl ?? "/resume.pdf"}
+                  download
+                  target={cvUrl ? "_blank" : undefined}
+                  rel={cvUrl ? "noopener noreferrer" : undefined}
+                >
                   Download CV
                 </a>
               </Button>

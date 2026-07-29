@@ -7,6 +7,7 @@ import type { SanitySettings } from "@/types/siteSettings";
 import type { ContactInfo, SocialLink } from "@/types/contact";
 
 export async function getSiteSettings(): Promise<{
+  cvUrl: string | null;
   contactInfo: ContactInfo[];
   socialLinks: SocialLink[];
 }> {
@@ -18,6 +19,8 @@ export async function getSiteSettings(): Promise<{
   } catch (error) {
     console.warn("Failed to fetch site settings from Sanity:", error);
   }
+
+  const cvUrl = settings?.cvUrl ?? null;
 
   const contactInfo: ContactInfo[] = [
     {
@@ -70,5 +73,5 @@ export async function getSiteSettings(): Promise<{
     },
   ].filter((item) => item.href && item.href !== "#");
 
-  return { contactInfo, socialLinks };
+  return { cvUrl, contactInfo, socialLinks };
 }

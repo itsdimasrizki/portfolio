@@ -7,23 +7,26 @@ import { CTA } from "@/components/sections/cta";
 import { getFeaturedProjects } from "@/services/project.service";
 import { getAllExperiences } from "@/services/experience.service";
 import { getFeaturedCertificates } from "@/services/certificate.service";
+import { getSiteSettings } from "@/services/settings.service";
 
 export const revalidate = 0;
 
 export default async function Home() {
-  const [featuredProjects, experiences, featuredCertificates] = await Promise.all([
-    getFeaturedProjects(),
-    getAllExperiences(),
-    getFeaturedCertificates(),
-  ]);
+  const [featuredProjects, experiences, featuredCertificates, { cvUrl }] =
+    await Promise.all([
+      getFeaturedProjects(),
+      getAllExperiences(),
+      getFeaturedCertificates(),
+      getSiteSettings(),
+    ]);
 
   return (
     <main>
-      <Hero />
+      <Hero cvUrl={cvUrl} />
       <FeaturedProjects projects={featuredProjects} />
       <ExperiencePreview experiences={experiences} />
       <FeaturedCertificates certificates={featuredCertificates} />
-      <CTA />
+      <CTA cvUrl={cvUrl} />
     </main>
   );
 }
