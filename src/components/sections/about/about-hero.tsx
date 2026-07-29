@@ -9,7 +9,11 @@ import { Button } from "@/components/ui/button";
 import { BlurImage } from "@/components/motion/blur-image";
 import { heroItem } from "@/lib/motion";
 
-export function AboutHero() {
+type AboutHeroProps = {
+  cvUrl?: string | null;
+};
+
+export function AboutHero({ cvUrl }: AboutHeroProps) {
   return (
     <Section>
       <Container>
@@ -76,7 +80,12 @@ export function AboutHero() {
             className="mt-10 flex flex-wrap justify-center gap-4"
           >
             <Button size="lg" asChild>
-              <a href="/resume.pdf" download>
+              <a
+                href={cvUrl ?? "/resume.pdf"}
+                download
+                target={cvUrl ? "_blank" : undefined}
+                rel={cvUrl ? "noopener noreferrer" : undefined}
+              >
                 Download CV
               </a>
             </Button>

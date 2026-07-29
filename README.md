@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dimas Rizki — Personal Portfolio v2
 
-## Getting Started
+Modern, responsive, and dynamic developer portfolio built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, **Sanity CMS**, and **Resend API**.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38bdf8?style=flat-square&logo=tailwind-css)
+![Sanity CMS](https://img.shields.io/badge/Sanity-CMS-red?style=flat-square&logo=sanity)
+![Resend](https://img.shields.io/badge/Resend-API-black?style=flat-square)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Features
+
+- **🎨 Modern Aesthetic & Glassmorphism**: Clean layout, smooth transitions, dark mode-ready design, and fluid micro-animations powered by Framer Motion.
+- **🏷️ Dynamic Projects Showcase**: Multi-category tagging (Web App, Dashboard, AI/ML, Backend, etc.) with real-time interactive filtering.
+- **📜 Certifications & Experience**: Dynamic listings fetched from Sanity CMS with instant category switching.
+- **📄 Dynamic CV / Resume Upload**: Manage & update your PDF CV directly from Sanity Studio without re-deploying code.
+- **✉️ Functional Contact Form**: Direct email delivery to your inbox integrated via Resend API and Next.js Route Handlers.
+- **⚡ Headless CMS (Sanity)**: Manage content for Projects, Experiences, Certificates, Tech Stack, Skills, and Site Settings visually in `/studio`.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS, Shadcn UI components, Lucide Icons, React Icons
+- **Animations**: Framer Motion
+- **Content Management**: Sanity CMS (`next-sanity`, `@sanity/image-url`)
+- **Email Service**: Resend REST API
+- **Deployment**: Vercel
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+
+Ensure you have Node.js (v18+ recommended) and `npm` installed.
+
+### 2. Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+NEXT_PUBLIC_SANITY_DATASET="production"
+NEXT_PUBLIC_SANITY_PROJECT_ID="your_sanity_project_id"
+SANITY_REVALIDATE_SECRET="your_revalidate_secret"
+RESEND_API_KEY="re_your_resend_api_key"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Installation & Run
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Install dependencies
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Run local development server
+npm run dev
+```
 
-## Learn More
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📂 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+src/
+├── app/                  # Next.js App Router (pages & API routes)
+│   ├── about/            # About page
+│   ├── api/contact/      # Contact email endpoint (Resend API)
+│   ├── certificates/     # Certificates page
+│   ├── contact/          # Contact page
+│   ├── experience/       # Experience timeline
+│   ├── projects/         # Projects showcase
+│   └── studio/           # Embedded Sanity Studio CMS
+├── components/           # UI Components (Layout, Cards, Sections, Motion)
+├── constants/            # Static navigation & fallback data
+├── lib/                  # Motion variants & helper utilities
+├── sanity/               # Sanity schemas, queries, and client setup
+├── services/             # Data fetchers for Sanity content
+└── types/                # TypeScript definitions
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Distributed under the MIT License. Built with ❤️ by [Dimas Rizki](https://github.com/itsdimasrizki).

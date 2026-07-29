@@ -12,7 +12,11 @@ import { cn } from "@/lib/utils";
 
 const navItems = navLinks.filter((item) => item.href !== "/");
 
-export function Navbar() {
+type NavbarProps = {
+  cvUrl?: string | null;
+};
+
+export function Navbar({ cvUrl }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -77,13 +81,20 @@ export function Navbar() {
           })}
         </nav>
 
-        <Button variant="outline" size="sm" asChild>
-          <a href="/resume.pdf" download>
-            Download CV
-          </a>
-        </Button>
+        {cvUrl ? (
+          <Button variant="outline" size="sm" asChild>
+            <a href={cvUrl} download target="_blank" rel="noopener noreferrer">
+              Download CV
+            </a>
+          </Button>
+        ) : (
+          <Button variant="outline" size="sm" asChild>
+            <a href="/resume.pdf" download>
+              Download CV
+            </a>
+          </Button>
+        )}
       </Container>
     </header>
   );
 }
-

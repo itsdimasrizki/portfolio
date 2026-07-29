@@ -6,7 +6,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { heroItem } from "@/lib/motion";
 
-export function HeroContent() {
+type HeroContentProps = {
+  cvUrl?: string | null;
+};
+
+export function HeroContent({ cvUrl }: HeroContentProps) {
   return (
     <div className="max-w-xl">
       <motion.span
@@ -56,7 +60,12 @@ export function HeroContent() {
         </Button>
 
         <Button size="lg" variant="outline" asChild>
-          <a href="/resume.pdf" download>
+          <a
+            href={cvUrl ?? "/resume.pdf"}
+            download
+            target={cvUrl ? "_blank" : undefined}
+            rel={cvUrl ? "noopener noreferrer" : undefined}
+          >
             Download CV
           </a>
         </Button>
@@ -64,4 +73,3 @@ export function HeroContent() {
     </div>
   );
 }
-

@@ -1,4 +1,5 @@
 export interface SanitySettings {
+  cvUrl?: string;
   email?: string;
   phone?: string;
   location?: string;

@@ -6,6 +6,15 @@ export const siteSettingsSchema = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "cvFile",
+      title: "CV / Resume File",
+      description: "Upload file PDF CV kamu di sini. Tombol 'Download CV' akan otomatis menggunakan file ini.",
+      type: "file",
+      options: {
+        accept: ".pdf",
+      },
+    }),
+    defineField({
       name: "email",
       title: "Email",
       type: "string",
