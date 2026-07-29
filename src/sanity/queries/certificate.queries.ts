@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 
 export const allCertificatesQuery = groq`
-  *[_type == "certificate"] | order(order asc) {
+  *[_type == "certificate"] | order(order desc) {
     _id,
     title,
     issuer,
@@ -18,7 +18,7 @@ export const allCertificatesQuery = groq`
 `;
 
 export const featuredCertificatesQuery = groq`
-  *[_type == "certificate"] | order(order asc)[0...3] {
+  *[_type == "certificate"] | order(order desc)[0...3] {
     _id,
     title,
     issuer,

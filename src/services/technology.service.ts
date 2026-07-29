@@ -2,7 +2,14 @@ import { client } from "@/sanity/client";
 import { allTechnologiesQuery } from "@/sanity/queries/technology.queries";
 import type { SanityTechnology, TechnologyGroup } from "@/types/technology";
 
-const CATEGORY_ORDER = ["Frontend", "Backend", "Database", "Tools"];
+const DEFAULT_CATEGORY_ORDER = [
+  "Programming Language",
+  "Languages",
+  "Frontend",
+  "Backend",
+  "Database",
+  "Tools",
+];
 
 export async function getTechnologies(): Promise<TechnologyGroup[]> {
   try {
@@ -22,9 +29,14 @@ export async function getTechnologies(): Promise<TechnologyGroup[]> {
       return acc;
     }, {});
 
-    return CATEGORY_ORDER.filter((cat) => grouped[cat]).map(
-      (cat) => grouped[cat]
-    );
+    // Sort categories: default categories in order, followed by any custom categories added in Sanity
+    const allCategories = Object.keys(grouped);
+    const sortedCategories = [
+      ...DEFAULT_CATEGORY_ORDER.filter((cat) => allCategories.includes(cat)),
+      ...allCategories.filter((cat) => !DEFAULT_CATEGORY_ORDER.includes(cat)),
+    ];
+
+    return sortedCategories.map((cat) => grouped[cat]);
   } catch (error) {
     console.warn("Failed to fetch technologies from Sanity:", error);
     return [];

@@ -54,9 +54,9 @@ export const certificateSchema = defineType({
   ],
   orderings: [
     {
-      title: "Order",
-      name: "orderAsc",
-      by: [{ field: "order", direction: "asc" }],
+      title: "Order (High to Low)",
+      name: "orderDesc",
+      by: [{ field: "order", direction: "desc" }],
     },
   ],
 });
