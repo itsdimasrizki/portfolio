@@ -6,6 +6,8 @@ import { Skills } from "@/components/sections/about/skills";
 import { getTechnologies } from "@/services/technology.service";
 import { getSkills } from "@/services/skill.service";
 
+export const revalidate = 0;
+
 export default async function AboutPage() {
   const [technologies, skills] = await Promise.all([
     getTechnologies(),

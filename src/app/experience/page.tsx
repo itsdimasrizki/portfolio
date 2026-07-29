@@ -4,6 +4,8 @@ import { ExperienceTimeline } from "@/components/sections/experience/experience-
 import { CTA } from "@/components/sections/cta";
 import { getAllExperiences } from "@/services/experience.service";
 
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Experience | Dimas Rizki",
   description:
