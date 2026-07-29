@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { ProjectsList } from "@/components/sections/projects/projects-list";
 import { getAllProjects } from "@/services/project.service";
 
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Projects | Dimas Rizki",
   description:

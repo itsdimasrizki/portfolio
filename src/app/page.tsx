@@ -8,6 +8,8 @@ import { getFeaturedProjects } from "@/services/project.service";
 import { getAllExperiences } from "@/services/experience.service";
 import { getFeaturedCertificates } from "@/services/certificate.service";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const [featuredProjects, experiences, featuredCertificates] = await Promise.all([
     getFeaturedProjects(),

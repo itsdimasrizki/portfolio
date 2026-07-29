@@ -4,6 +4,8 @@ import { ContactHero } from "@/components/sections/contact/contact-hero";
 import { ContactContent } from "@/components/sections/contact/contact-content";
 import { getSiteSettings } from "@/services/settings.service";
 
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Contact | Dimas Rizki",
   description:

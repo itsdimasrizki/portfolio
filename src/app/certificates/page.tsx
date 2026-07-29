@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { CertificatesList } from "@/components/sections/certificates/certificates-list";
 import { getAllCertificates } from "@/services/certificate.service";
 
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Certificates | Dimas Rizki",
   description:
