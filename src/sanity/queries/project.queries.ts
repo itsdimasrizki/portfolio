@@ -1,11 +1,11 @@
 import { groq } from "next-sanity";
 
 export const allProjectsQuery = groq`
-  *[_type == "project"] | order(order asc) {
+  *[_type == "project"] | order(order desc) {
     _id,
     title,
     description,
-    image,
+    "images": images[].asset->url,
     year,
     category,
     "technologies": technologies[]-> {
@@ -23,11 +23,11 @@ export const allProjectsQuery = groq`
 `;
 
 export const featuredProjectsQuery = groq`
-  *[_type == "project"] | order(order asc)[0...3] {
+  *[_type == "project"] | order(order desc)[0...3] {
     _id,
     title,
     description,
-    image,
+    "images": images[].asset->url,
     year,
     category,
     "technologies": technologies[]-> {

@@ -6,7 +6,7 @@ export const projects: Project[] = [
     title: "SaaS Analytics Suite",
     description:
       "Multi-tenant analytics platform with live dashboards and billing, currently in active development.",
-    image: "/images/projects/analytics.jpg",
+    images: ["/images/projects/analytics.jpg"],
     year: "2026",
     categories: ["Web App"],
     technologies: ["Next.js", "TypeScript", "PostgreSQL"],
@@ -19,7 +19,7 @@ export const projects: Project[] = [
     title: "AI Content Studio",
     description:
       "Workspace for drafting and scheduling content with AI assistance, being built in the open.",
-    image: "/images/projects/landing.jpg",
+    images: ["/images/projects/landing.jpg"],
     year: "2026",
     categories: ["Web App"],
     technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
@@ -32,7 +32,7 @@ export const projects: Project[] = [
     title: "Portfolio Website",
     description:
       "Modern portfolio built with Next.js, Tailwind CSS and Sanity.",
-    image: "/images/projects/portfolio.jpg",
+    images: ["/images/projects/portfolio.jpg"],
     year: "2025",
     categories: ["Personal"],
     technologies: ["Next.js", "TypeScript", "Sanity"],
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     title: "E-Commerce Platform",
     description:
       "Full-stack storefront with cart, checkout, and admin dashboard.",
-    image: "/images/projects/ecommerce.jpg",
+    images: ["/images/projects/ecommerce.jpg"],
     year: "2025",
     categories: ["Web App"],
     technologies: ["Next.js", "PostgreSQL", "Tailwind CSS"],
@@ -58,7 +58,7 @@ export const projects: Project[] = [
     title: "Task Management App",
     description:
       "Collaborative task board with real-time updates and team workspaces.",
-    image: "/images/projects/tasks.jpg",
+    images: ["/images/projects/tasks.jpg"],
     year: "2024",
     categories: ["Web App"],
     technologies: ["React", "Node.js", "MongoDB"],
@@ -71,7 +71,7 @@ export const projects: Project[] = [
     title: "Analytics Dashboard",
     description:
       "Data visualization dashboard with charts, filters, and exports.",
-    image: "/images/projects/analytics.jpg",
+    images: ["/images/projects/analytics.jpg"],
     year: "2024",
     categories: ["Dashboard"],
     technologies: ["Next.js", "TypeScript", "PostgreSQL"],
@@ -84,7 +84,7 @@ export const projects: Project[] = [
     title: "REST API Service",
     description:
       "Scalable RESTful API with authentication and role-based access.",
-    image: "/images/projects/api.jpg",
+    images: ["/images/projects/api.jpg"],
     year: "2024",
     categories: ["Backend"],
     technologies: ["Node.js", "Express", "PostgreSQL"],
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     title: "Landing Page",
     description:
       "High-converting marketing landing page with subtle animations.",
-    image: "/images/projects/landing.jpg",
+    images: ["/images/projects/landing.jpg"],
     year: "2023",
     categories: ["Marketing"],
     technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
