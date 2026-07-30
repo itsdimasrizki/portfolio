@@ -27,6 +27,7 @@ export function ContactForm() {
     const email = formData.get("email") as string;
     const subject = formData.get("subject") as string;
     const message = formData.get("message") as string;
+    const hpCompany = (formData.get("hp_company") as string) || "";
 
     try {
       const res = await fetch("/api/contact", {
@@ -34,7 +35,13 @@ export function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, subject, message }),
+        body: JSON.stringify({
+          name,
+          email,
+          subject,
+          message,
+          hp_company: hpCompany,
+        }),
       });
 
       const data = await res.json();
@@ -63,6 +70,16 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       className="space-y-5 rounded-2xl border bg-card p-6 md:p-8"
     >
+      {/* Hidden honeypot field to trap spam bots */}
+      <div className="hidden" aria-hidden="true">
+        <Input
+          id="hp_company"
+          name="hp_company"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       {status.type === "success" && (
         <div className="flex items-center gap-3 rounded-lg border border-teal-500/30 bg-teal-500/10 p-4 text-sm text-teal-700 dark:text-teal-400">
           <CheckCircle2 className="size-5 shrink-0" />
