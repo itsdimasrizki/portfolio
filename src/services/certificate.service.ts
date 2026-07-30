@@ -32,12 +32,17 @@ export async function getAllCertificates(): Promise<Certificate[]> {
 
 export async function getFeaturedCertificates(): Promise<Certificate[]> {
   try {
-    const data = await client.fetch<SanityCertificate[]>(
+    const data = await client.fetch<(SanityCertificate | null)[]>(
       featuredCertificatesQuery,
       {},
-      { next: { tags: ["sanity", "certificate"] } }
+      { next: { tags: ["sanity", "certificate", "siteSettings"] } }
     );
-    return data ? data.map(toCertificate) : [];
+    const validData = data ? data.filter((item): item is SanityCertificate => item !== null) : [];
+    if (validData.length > 0) {
+      return validData.map(toCertificate);
+    }
+    const all = await getAllCertificates();
+    return all.slice(0, 3);
   } catch (error) {
     console.warn("Failed to fetch featured certificates from Sanity:", error);
     return [];

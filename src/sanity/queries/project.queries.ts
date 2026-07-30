@@ -23,7 +23,7 @@ export const allProjectsQuery = groq`
 `;
 
 export const featuredProjectsQuery = groq`
-  *[_type == "project"] | order(order desc)[0...3] {
+  *[_type == "siteSettings"][0].featuredProjects[]-> {
     _id,
     title,
     description,

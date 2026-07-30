@@ -34,10 +34,15 @@ export async function getAllProjects(): Promise<Project[]> {
 
 export async function getFeaturedProjects(): Promise<Project[]> {
   try {
-    const data = await client.fetch<SanityProject[]>(featuredProjectsQuery, {}, {
-      next: { tags: ["sanity", "project"] },
+    const data = await client.fetch<(SanityProject | null)[]>(featuredProjectsQuery, {}, {
+      next: { tags: ["sanity", "project", "siteSettings"] },
     });
-    return data ? data.map(toProject) : [];
+    const validData = data ? data.filter((item): item is SanityProject => item !== null) : [];
+    if (validData.length > 0) {
+      return validData.map(toProject);
+    }
+    const all = await getAllProjects();
+    return all.slice(0, 3);
   } catch (error) {
     console.warn("Failed to fetch featured projects from Sanity:", error);
     return [];
