@@ -35,14 +35,14 @@ export function AboutHero({ cvUrl }: AboutHeroProps) {
             variants={heroItem}
             initial="hidden"
             animate="visible"
-            className="mt-8 relative size-40 overflow-hidden rounded-full border border-border bg-card shadow-sm"
+            className="mt-8 relative w-48 sm:w-56 aspect-[3/4] overflow-hidden rounded-2xl border border-border bg-card shadow-md ring-1 ring-border/50 transition-all duration-300 hover:shadow-lg"
           >
             <BlurImage
               src="/images/profile/profile.jpeg"
               alt="Dimas Rizki"
               fill
               priority
-              className="object-cover"
+              className="object-cover object-top"
             />
           </motion.div>
 
@@ -54,8 +54,7 @@ export function AboutHero({ cvUrl }: AboutHeroProps) {
             animate="visible"
             className="mt-10 text-4xl font-bold leading-tight tracking-tight md:text-5xl"
           >
-            Building scalable digital products with clean architecture and
-            meaningful user experiences.
+            Dimas Rizki Ardiansyah
           </motion.h1>
 
           {/* Description */}
@@ -66,9 +65,7 @@ export function AboutHero({ cvUrl }: AboutHeroProps) {
             animate="visible"
             className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground"
           >
-            I&apos;m Dimas Rizki, a Fullstack Software Engineer based in Indonesia
-            who enjoys building modern web applications with a strong focus on
-            performance, scalability, and user experience.
+            Informatics Engineering Student at UPN "Veteran" Yogyakarta, passionate about Software Engineering and Artificial Intelligence.
           </motion.p>
 
           {/* CTA */}

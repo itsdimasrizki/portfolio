@@ -63,8 +63,8 @@ export const experienceSchema = defineType({
   orderings: [
     {
       title: "Order",
-      name: "orderAsc",
-      by: [{ field: "order", direction: "asc" }],
+      name: "orderDesc",
+      by: [{ field: "order", direction: "desc" }],
     },
   ],
 });

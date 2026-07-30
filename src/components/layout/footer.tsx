@@ -29,11 +29,11 @@ export function Footer() {
               href="/"
               className="text-lg font-semibold tracking-tight"
             >
-              Dimas Rizki
+              Dimas Rizki Ardiansyah
             </Link>
 
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-              Fullstack Software Engineer building scalable digital products.
+              Fullstack Software Engineer.
             </p>
           </div>
 
@@ -81,12 +81,6 @@ export function Footer() {
               })}
             </ul>
           </div>
-        </div>
-
-        <div className="mt-12 border-t border-border pt-8">
-          <p className="text-sm text-muted-foreground">
-            © {year} Dimas Rizki. All rights reserved.
-          </p>
         </div>
       </Container>
     </footer>

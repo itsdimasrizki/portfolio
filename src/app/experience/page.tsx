@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ExperienceTimeline } from "@/components/sections/experience/experience-timeline";
 import { CTA } from "@/components/sections/cta";
 import { getAllExperiences } from "@/services/experience.service";
+import { getSiteSettings } from "@/services/settings.service";
 
 export const revalidate = 0;
 
@@ -13,12 +14,15 @@ export const metadata: Metadata = {
 };
 
 export default async function ExperiencePage() {
-  const experiences = await getAllExperiences();
+  const [experiences, { cvUrl }] = await Promise.all([
+    getAllExperiences(),
+    getSiteSettings(),
+  ]);
 
   return (
     <main>
       <ExperienceTimeline experiences={experiences} />
-      <CTA />
+      <CTA cvUrl={cvUrl} />
     </main>
   );
 }

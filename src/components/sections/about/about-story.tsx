@@ -17,17 +17,19 @@ export function AboutStory() {
 
           <div className="mt-8 space-y-6 text-base leading-relaxed text-muted-foreground">
             <p>
-              Write your journey here...
+              I don't believe software should exist simply because it can be built. Every project I take on starts with one question: What problem does this actually solve?
             </p>
 
             <p>
-              Explain how you started programming, what motivates you, and
-              what kind of engineer you aim to become.
+              That mindset has shaped the way I learn and build. From web development and backend systems to IoT and machine learning, I enjoy turning ideas into practical solutions that people can actually use. One of the projects I'm most proud of is a smart agriculture system that combines embedded hardware, real-time communication, and software engineering to automate fertigation processes.
             </p>
 
             <p>
-              Keep it authentic. Recruiters can tell the difference between
-              a genuine story and AI-generated buzzwords.
+              Outside the classroom, I've had the opportunity to mentor students as a Laboratory Assistant and Teaching Assistant while also serving in student organizations. Those experiences taught me that writing code is only one part of engineering. Communicating ideas, collaborating with others, and leading a team are equally important.
+            </p>
+            
+            <p>
+              I'm still early in my journey, and there's a lot left to learn. But every project, every challenge, and every bug I solve reinforces why I chose this path. I aim to become a software engineer who builds technology that is reliable, scalable, and designed with purpose.
             </p>
           </div>
         </Reveal>
