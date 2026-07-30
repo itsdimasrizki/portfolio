@@ -1,7 +1,7 @@
 import { groq } from "next-sanity";
 
 export const allExperiencesQuery = groq`
-  *[_type == "experience"] | order(order asc) {
+  *[_type == "experience"] | order(order desc) {
     _id,
     company,
     position,

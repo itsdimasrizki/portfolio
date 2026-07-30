@@ -54,5 +54,31 @@ export const siteSettingsSchema = defineType({
       title: "Instagram URL",
       type: "url",
     }),
+    defineField({
+      name: "featuredProjects",
+      title: "Featured Projects (Home Page)",
+      description: "Pilih hingga 3 project yang ingin ditampilkan di halaman utama.",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "project" }],
+        },
+      ],
+      validation: (Rule) => Rule.max(3),
+    }),
+    defineField({
+      name: "featuredCertificates",
+      title: "Featured Certificates (Home Page)",
+      description: "Pilih hingga 3 sertifikat yang ingin ditampilkan di halaman utama.",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "certificate" }],
+        },
+      ],
+      validation: (Rule) => Rule.max(3),
+    }),
   ],
 });

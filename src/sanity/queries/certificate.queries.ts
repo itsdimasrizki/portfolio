@@ -18,7 +18,7 @@ export const allCertificatesQuery = groq`
 `;
 
 export const featuredCertificatesQuery = groq`
-  *[_type == "certificate"] | order(order desc)[0...3] {
+  *[_type == "siteSettings"][0].featuredCertificates[]-> {
     _id,
     title,
     issuer,

@@ -44,7 +44,7 @@ export function Navbar({ cvUrl }: NavbarProps) {
           href="/"
           className="text-sm font-semibold tracking-tight transition-colors hover:text-foreground/80"
         >
-          Dimas Rizki
+          Dimas Rizki Ardiansyah
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

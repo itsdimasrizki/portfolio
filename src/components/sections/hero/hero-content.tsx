@@ -30,9 +30,9 @@ export function HeroContent({ cvUrl }: HeroContentProps) {
         animate="visible"
         className="mt-6 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
       >
-        Fullstack Software Engineer building{" "}
+        Dimas Rizki Ardiansyah{" "}
         <span className="text-teal-700">
-          scalable digital products.
+          Fullstack Web Developer.
         </span>
       </motion.h1>
 
