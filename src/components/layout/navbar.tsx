@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 
 import { Container } from "./container";
 import { Button } from "@/components/ui/button";
+import { DownloadPortfolioButton } from "@/components/common/download-portfolio-button";
 import { navLinks } from "@/constants/navigation";
 import { cn } from "@/lib/utils";
 
@@ -81,19 +82,23 @@ export function Navbar({ cvUrl }: NavbarProps) {
           })}
         </nav>
 
-        {cvUrl ? (
-          <Button variant="outline" size="sm" asChild>
-            <a href={cvUrl} download target="_blank" rel="noopener noreferrer">
-              Download CV
-            </a>
-          </Button>
-        ) : (
-          <Button variant="outline" size="sm" asChild>
-            <a href="/resume.pdf" download>
-              Download CV
-            </a>
-          </Button>
-        )}
+        <div className="flex items-center gap-2">
+          {cvUrl ? (
+            <Button variant="outline" size="sm" asChild>
+              <a href={cvUrl} download target="_blank" rel="noopener noreferrer">
+                Download CV
+              </a>
+            </Button>
+          ) : (
+            <Button variant="outline" size="sm" asChild>
+              <a href="/resume.pdf" download>
+                Download CV
+              </a>
+            </Button>
+          )}
+
+          <DownloadPortfolioButton />
+        </div>
       </Container>
     </header>
   );

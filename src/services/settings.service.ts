@@ -75,3 +75,15 @@ export async function getSiteSettings(): Promise<{
 
   return { cvUrl, contactInfo, socialLinks };
 }
+
+export async function getPdfSettings(): Promise<SanitySettings> {
+  try {
+    const settings = await client.fetch<SanitySettings | null>(siteSettingsQuery, {}, {
+      next: { tags: ["sanity", "settings"] },
+    });
+    return settings ?? {};
+  } catch (error) {
+    console.warn("Failed to fetch PDF settings from Sanity:", error);
+    return {};
+  }
+}
