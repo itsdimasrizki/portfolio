@@ -58,7 +58,7 @@ export function TechnologiesPage({ technologies, settings }: TechnologiesPagePro
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={shell.page}>
+    <Page size="A4" orientation="portrait" style={shell.page}>
       <PageHeader section="Tech Stack" name={fullName} />
       <SectionHeading label="Tools & Technologies" title="Tech Stack" />
 

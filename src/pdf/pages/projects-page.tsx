@@ -53,7 +53,7 @@ const S = StyleSheet.create({
   badge: {
     fontSize: typography.micro,
     color: colors.primary,
-    backgroundColor: colors.accent,
+    backgroundColor: colors.primaryBg,
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 10,
@@ -110,7 +110,7 @@ export function ProjectsPage({ projects, settings }: ProjectsPageProps) {
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={shell.page}>
+    <Page size="A4" orientation="portrait" style={shell.page}>
       <PageHeader section="Projects" name={fullName} />
       <SectionHeading label="Portfolio Highlights" title="Featured Projects" />
 

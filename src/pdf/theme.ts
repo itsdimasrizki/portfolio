@@ -1,32 +1,35 @@
 /**
- * PDF Design Tokens
- * Teal/slate palette — consistent with the website identity.
+ * PDF Design Tokens — Clean Light Theme
+ * All pages: white background, teal accent, slate typography.
  */
 
 export const colors = {
-  primary:      "#0d9488",  // teal-600
-  primaryLight: "#ccfbf1",  // teal-100
-  primaryDark:  "#0f766e",  // teal-700
+  // Brand
+  primary:      "#0d9488",   // teal-600
+  primaryDark:  "#0f766e",   // teal-700
+  primaryLight: "#ccfbf1",   // teal-100
+  primaryBg:    "#f0fdfa",   // teal-50
 
+  // Backgrounds
   white:        "#ffffff",
-  background:   "#f8fafc",  // slate-50
-  surface:      "#f1f5f9",  // slate-100
-  surfaceDark:  "#e2e8f0",  // slate-200
-  border:       "#e2e8f0",  // slate-200
-  borderDark:   "#cbd5e1",  // slate-300
-  muted:        "#94a3b8",  // slate-400
-  secondary:    "#64748b",  // slate-500
-  body:         "#475569",  // slate-600
-  foreground:   "#334155",  // slate-700
-  heading:      "#0f172a",  // slate-900
+  pageBg:       "#ffffff",
+  surface:      "#f8fafc",   // slate-50
+  surface2:     "#f1f5f9",   // slate-100
+  border:       "#e2e8f0",   // slate-200
+  borderDark:   "#cbd5e1",   // slate-300
 
-  accent:       "#f0fdfa",  // teal-50
-  accentBorder: "#99f6e4",  // teal-200
+  // Typography
+  heading:      "#0f172a",   // slate-900
+  body:         "#475569",   // slate-600
+  muted:        "#94a3b8",   // slate-400
+  secondary:    "#64748b",   // slate-500
+  foreground:   "#334155",   // slate-700
 
-  // Cover (dark theme)
-  coverBg:      "#0f172a",  // slate-900
-  coverSurface: "#1e293b",  // slate-800
-  coverText:    "#f1f5f9",  // slate-100
+  // Cover banner (teal top section)
+  bannerBg:     "#0f766e",   // teal-700 — top banner background
+  bannerText:   "#f0fdfa",   // teal-50  — text on banner
+  bannerMuted:  "#99f6e4",   // teal-200 — subtle text on banner
+  bannerBorder: "#0d9488",   // teal-600
 };
 
 export const typography = {
@@ -34,7 +37,7 @@ export const typography = {
   fontFamilyBold: "Helvetica-Bold",
 
   // Scale (pt)
-  display: 34,
+  display: 30,
   h1:      20,
   h2:      14,
   h3:      12,
@@ -46,13 +49,10 @@ export const typography = {
 };
 
 export const spacing = {
-  pageMarginH:  44,
-  pageMarginV:  36,
-  sectionGap:   16,
-  itemGap:      10,
-  cardPad:      12,
-  cardPadSm:    8,
-  headerH:      36,  // height of the per-page top header bar
+  pageMarginH: 44,
+  pageMarginV: 36,
+  headerH:     38,   // top header bar height
+  sectionGap:  16,
+  itemGap:     10,
+  cardPad:     12,
 };
-
-export const pageSize = { format: "A4" as const };

@@ -77,7 +77,7 @@ export function CertificatesPage({ certificates, settings }: CertificatesPagePro
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={shell.page}>
+    <Page size="A4" orientation="portrait" style={shell.page}>
       <PageHeader section="Certificates" name={fullName} />
       <SectionHeading label="Credentials" title="Certifications" />
 

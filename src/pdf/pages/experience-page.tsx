@@ -101,7 +101,7 @@ export function ExperiencePage({ experiences, settings }: ExperiencePageProps) {
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={shell.page}>
+    <Page size="A4" orientation="portrait" style={shell.page}>
       <PageHeader section="Experience" name={fullName} />
       <SectionHeading label="Work History" title="Experience" />
 
