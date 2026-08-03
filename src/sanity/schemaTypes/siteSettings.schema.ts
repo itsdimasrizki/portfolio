@@ -6,6 +6,31 @@ export const siteSettingsSchema = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "fullName",
+      title: "Full Name",
+      description: "Nama lengkap yang ditampilkan di PDF cover dan seluruh dokumen.",
+      type: "string",
+    }),
+    defineField({
+      name: "role",
+      title: "Role / Title",
+      description: "Role / jabatan profesional, misalnya: Fullstack Software Engineer.",
+      type: "string",
+    }),
+    defineField({
+      name: "bio",
+      title: "Professional Bio",
+      description: "Ringkasan profesional yang ditampilkan di halaman About pada PDF.",
+      type: "text",
+      rows: 5,
+    }),
+    defineField({
+      name: "portfolioUrl",
+      title: "Portfolio Website URL",
+      description: "URL website portfolio kamu. Digunakan untuk QR Code di PDF.",
+      type: "url",
+    }),
+    defineField({
       name: "cvFile",
       title: "CV / Resume File",
       description: "Upload file PDF CV kamu di sini. Tombol 'Download CV' akan otomatis menggunakan file ini.",
