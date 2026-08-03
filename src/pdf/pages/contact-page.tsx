@@ -2,6 +2,7 @@ import React from "react";
 import { Page, View, Text, Image, StyleSheet, Link } from "@react-pdf/renderer";
 import type { SanitySettings } from "@/types/siteSettings";
 import { colors, typography, spacing } from "../theme";
+import { PageHeader, PageFooter, SectionHeading, pageShellStyles as shell } from "../page-shell";
 
 function truncateUrl(url: string, max = 42) {
   const clean = url.replace(/^https?:\/\//, "");
@@ -9,93 +10,15 @@ function truncateUrl(url: string, max = 42) {
 }
 
 const S = StyleSheet.create({
-  page: {
-    backgroundColor: colors.coverBg,
-    fontFamily: typography.fontFamily,
-    position: "relative",
-  },
-  // Header bar (dark, matching cover style)
-  pageHeader: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 36,
-    backgroundColor: "#090f1a",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: spacing.pageMarginH,
-  },
-  pageHeaderLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 7,
-  },
-  pageHeaderDot: {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-    backgroundColor: colors.primary,
-  },
-  pageHeaderName: {
-    fontSize: typography.micro,
-    color: "#475569",
-  },
-  pageHeaderSection: {
-    fontSize: typography.micro,
-    color: colors.primary,
-    letterSpacing: 1.5,
-    textTransform: "uppercase",
-    fontFamily: typography.fontFamilyBold,
-  },
-
-  // Left sidebar accent
-  sidebar: {
-    position: "absolute",
-    left: 0,
-    top: 0,
-    bottom: 0,
-    width: 5,
-    backgroundColor: colors.primary,
-  },
-
-  // Main content area
-  content: {
-    paddingTop: 36 + 36,
-    paddingHorizontal: spacing.pageMarginH,
-    paddingBottom: 52,
-  },
-  sectionLabel: {
-    fontSize: typography.micro,
-    color: colors.primary,
-    letterSpacing: 2,
-    textTransform: "uppercase",
-    fontFamily: typography.fontFamilyBold,
-    marginBottom: 4,
-  },
-  sectionTitle: {
-    fontSize: typography.h1,
-    color: colors.coverText,
-    fontFamily: typography.fontFamilyBold,
-    marginBottom: 4,
-  },
-  sectionSub: {
-    fontSize: typography.body,
-    color: colors.muted,
-    marginBottom: 24,
-  },
-
-  // Two-column main layout
   twoCol: {
     flexDirection: "row",
-    gap: 32,
+    gap: 28,
   },
   leftCol: {
     flex: 1,
   },
   rightCol: {
-    width: 150,
+    width: 160,
     alignItems: "center",
   },
 
@@ -114,13 +37,18 @@ const S = StyleSheet.create({
   contactItem: {
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: 8,
-    marginBottom: 8,
+    gap: 10,
+    marginBottom: 10,
+    backgroundColor: colors.surface,
+    padding: 10,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   bullet: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
     backgroundColor: colors.primary,
     marginTop: 4,
     flexShrink: 0,
@@ -130,57 +58,58 @@ const S = StyleSheet.create({
   },
   contactLabel: {
     fontSize: typography.micro,
-    color: "#64748b",
-    marginBottom: 1,
+    color: colors.muted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: 2,
   },
   contactValue: {
     fontSize: typography.small,
-    color: "#cbd5e1",
+    color: colors.heading,
+    fontFamily: typography.fontFamilyBold,
   },
   contactLink: {
     fontSize: typography.small,
     color: colors.primary,
+    fontFamily: typography.fontFamilyBold,
     textDecoration: "underline",
   },
 
-  // QR Code
+  // QR Code Box
+  qrCard: {
+    backgroundColor: colors.primaryBg,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 16,
+    alignItems: "center",
+    width: "100%",
+  },
   qrBox: {
     width: 126,
     height: 126,
     backgroundColor: colors.white,
-    padding: 7,
-    borderRadius: 5,
-    marginBottom: 7,
+    padding: 6,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: colors.border,
+    marginBottom: 10,
   },
   qrImg: {
     width: "100%",
     height: "100%",
   },
+  qrTitle: {
+    fontSize: typography.small,
+    color: colors.heading,
+    fontFamily: typography.fontFamilyBold,
+    marginBottom: 2,
+    textAlign: "center",
+  },
   qrLabel: {
     fontSize: typography.micro,
     color: colors.muted,
     textAlign: "center",
-  },
-
-  // Footer
-  footer: {
-    position: "absolute",
-    bottom: 20,
-    left: spacing.pageMarginH,
-    right: spacing.pageMarginH,
-    borderTopWidth: 1,
-    borderTopColor: "#1e293b",
-    paddingTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  footerLeft: {
-    fontSize: typography.micro,
-    color: "#334155",
-  },
-  footerRight: {
-    fontSize: typography.micro,
-    color: "#334155",
   },
 });
 
@@ -202,78 +131,63 @@ export function ContactPage({ settings, qrCodeDataUrl }: ContactPageProps) {
   ].filter((c): c is { label: string; value: string; href: string } => Boolean(c.value));
 
   return (
-    <Page size="A4" style={S.page}>
-      <View style={S.sidebar} />
+    <Page size="A4" orientation="portrait" style={shell.page}>
+      <PageHeader section="Contact" name={fullName} />
+      <SectionHeading label="Get in Touch" title="Contact & Connect" />
 
-      {/* Page header (dark variant) */}
-      <View style={S.pageHeader} fixed>
-        <View style={S.pageHeaderLeft}>
-          <View style={S.pageHeaderDot} />
-          <Text style={S.pageHeaderName}>{fullName}</Text>
-        </View>
-        <Text style={S.pageHeaderSection}>Contact</Text>
-      </View>
-
-      <View style={S.content}>
-        <Text style={S.sectionLabel}>Get in Touch</Text>
-        <Text style={S.sectionTitle}>Let's Connect</Text>
-        <Text style={S.sectionSub}>Feel free to reach out for opportunities or collaboration.</Text>
-
-        <View style={S.twoCol}>
-          {/* Left: contact details */}
-          <View style={S.leftCol}>
-            {direct.length > 0 && (
-              <View style={S.group}>
-                <Text style={S.groupTitle}>Direct Contact</Text>
-                {direct.map((item) => (
-                  <View key={item.label} style={S.contactItem}>
-                    <View style={S.bullet} />
-                    <View style={S.contactTextCol}>
-                      <Text style={S.contactLabel}>{item.label}</Text>
-                      {item.href ? (
-                        <Link src={item.href} style={S.contactLink}>{item.value}</Link>
-                      ) : (
-                        <Text style={S.contactValue}>{item.value}</Text>
-                      )}
-                    </View>
-                  </View>
-                ))}
-              </View>
-            )}
-
-            {online.length > 0 && (
-              <View style={S.group}>
-                <Text style={S.groupTitle}>Online</Text>
-                {online.map((item) => (
-                  <View key={item.label} style={S.contactItem}>
-                    <View style={S.bullet} />
-                    <View style={S.contactTextCol}>
-                      <Text style={S.contactLabel}>{item.label}</Text>
+      <View style={S.twoCol}>
+        {/* Left: contact details */}
+        <View style={S.leftCol}>
+          {direct.length > 0 && (
+            <View style={S.group}>
+              <Text style={S.groupTitle}>Direct Contact</Text>
+              {direct.map((item) => (
+                <View key={item.label} style={S.contactItem}>
+                  <View style={S.bullet} />
+                  <View style={S.contactTextCol}>
+                    <Text style={S.contactLabel}>{item.label}</Text>
+                    {item.href ? (
                       <Link src={item.href} style={S.contactLink}>{item.value}</Link>
-                    </View>
+                    ) : (
+                      <Text style={S.contactValue}>{item.value}</Text>
+                    )}
                   </View>
-                ))}
-              </View>
-            )}
-          </View>
+                </View>
+              ))}
+            </View>
+          )}
 
-          {/* Right: QR code */}
-          {qrCodeDataUrl && (
-            <View style={S.rightCol}>
-              <View style={S.qrBox}>
-                <Image src={qrCodeDataUrl} style={S.qrImg} />
-              </View>
-              <Text style={S.qrLabel}>Scan to visit portfolio</Text>
+          {online.length > 0 && (
+            <View style={S.group}>
+              <Text style={S.groupTitle}>Online Profiles</Text>
+              {online.map((item) => (
+                <View key={item.label} style={S.contactItem}>
+                  <View style={S.bullet} />
+                  <View style={S.contactTextCol}>
+                    <Text style={S.contactLabel}>{item.label}</Text>
+                    <Link src={item.href} style={S.contactLink}>{item.value}</Link>
+                  </View>
+                </View>
+              ))}
             </View>
           )}
         </View>
+
+        {/* Right: QR code card */}
+        {qrCodeDataUrl && (
+          <View style={S.rightCol}>
+            <View style={S.qrCard}>
+              <View style={S.qrBox}>
+                <Image src={qrCodeDataUrl} style={S.qrImg} />
+              </View>
+              <Text style={S.qrTitle}>Portfolio Website</Text>
+              <Text style={S.qrLabel}>Scan QR code to visit interactive website</Text>
+            </View>
+          </View>
+        )}
       </View>
 
-      {/* Footer */}
-      <View style={S.footer}>
-        <Text style={S.footerLeft}>Thank you for reviewing my portfolio.</Text>
-        <Text style={S.footerRight}>{fullName} · {new Date().getFullYear()}</Text>
-      </View>
+      <PageFooter name={fullName} />
     </Page>
   );
 }

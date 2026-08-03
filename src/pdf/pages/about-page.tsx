@@ -6,7 +6,7 @@ import { PageHeader, PageFooter, SectionHeading, pageShellStyles as shell } from
 
 const S = StyleSheet.create({
   bioCard: {
-    backgroundColor: colors.accent,
+    backgroundColor: colors.primaryBg,
     borderRadius: 5,
     borderLeftWidth: 3,
     borderLeftColor: colors.primary,
@@ -27,7 +27,7 @@ const S = StyleSheet.create({
   highlight: {
     backgroundColor: colors.white,
     borderWidth: 1,
-    borderColor: colors.accentBorder,
+    borderColor: colors.borderDark,
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 4,
@@ -49,7 +49,7 @@ export function AboutPage({ settings }: AboutPageProps) {
   const bio = settings.bio ?? FALLBACK_BIO;
 
   return (
-    <Page size="A4" style={shell.page}>
+    <Page size="A4" orientation="portrait" style={shell.page}>
       <PageHeader section="About" name={fullName} />
 
       <SectionHeading label="Professional Summary" title="About Me" />

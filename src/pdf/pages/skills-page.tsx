@@ -50,7 +50,7 @@ export function SkillsPage({ skills, settings }: SkillsPageProps) {
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={shell.page}>
+    <Page size="A4" orientation="portrait" style={shell.page}>
       <PageHeader section="Skills" name={fullName} />
       <SectionHeading label="Core Competencies" title="Skills" />
 
