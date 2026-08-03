@@ -2,101 +2,75 @@ import React from "react";
 import { Page, View, Text, StyleSheet } from "@react-pdf/renderer";
 import type { Experience } from "@/types/experience";
 import type { SanitySettings } from "@/types/siteSettings";
-import { colors, typography, spacing } from "../theme";
+import { colors, typography } from "../theme";
+import { PageHeader, PageFooter, SectionHeading, pageShellStyles as shell } from "../page-shell";
 
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: colors.white,
-    fontFamily: typography.fontFamily,
-    paddingHorizontal: spacing.pageMarginH,
-    paddingVertical: spacing.pageMarginV,
-  },
-  eyebrow: {
-    fontSize: typography.tiny,
-    color: colors.primary,
-    letterSpacing: 2,
-    textTransform: "uppercase",
-    fontFamily: typography.fontFamilyBold,
-  },
-  divider: {
-    width: 40,
-    height: 2,
-    backgroundColor: colors.primary,
-    marginTop: 8,
-    marginBottom: 20,
-  },
-  heading: {
-    fontSize: typography.h1,
-    color: colors.heading,
-    fontFamily: typography.fontFamilyBold,
-    marginBottom: 24,
-  },
-  // Timeline
-  timeline: {
-    gap: 0,
-  },
+const S = StyleSheet.create({
   item: {
     flexDirection: "row",
-    gap: 16,
-    marginBottom: 22,
+    gap: 14,
+    marginBottom: 18,
   },
-  // Left: dot + line
-  timelineLeft: {
-    width: 16,
+  // Timeline spine
+  spine: {
+    width: 14,
     alignItems: "center",
+    paddingTop: 3,
   },
   dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
     backgroundColor: colors.primary,
-    marginTop: 4,
+    flexShrink: 0,
   },
   line: {
-    flex: 1,
     width: 1.5,
+    flex: 1,
     backgroundColor: colors.border,
     marginTop: 4,
   },
-  // Right: content
-  timelineRight: {
+  // Content
+  body: {
     flex: 1,
+    paddingBottom: 4,
   },
-  itemHeader: {
+  topRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    marginBottom: 2,
+    marginBottom: 1,
   },
   position: {
     fontSize: typography.h4,
     color: colors.heading,
     fontFamily: typography.fontFamilyBold,
     flex: 1,
+    paddingRight: 8,
   },
   dateRange: {
     fontSize: typography.tiny,
     color: colors.muted,
-    marginLeft: 8,
+    marginTop: 1,
+    flexShrink: 0,
   },
   company: {
     fontSize: typography.body,
     color: colors.primary,
     fontFamily: typography.fontFamilyBold,
-    marginBottom: 2,
+    marginBottom: 1,
   },
   location: {
     fontSize: typography.tiny,
     color: colors.muted,
-    marginBottom: 6,
+    marginBottom: 5,
   },
   description: {
     fontSize: typography.small,
-    color: colors.foreground,
+    color: colors.body,
     lineHeight: 1.6,
-    marginBottom: 6,
+    marginBottom: 7,
   },
-  // Tech tags
   tagRow: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -109,98 +83,60 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   tagText: {
-    fontSize: typography.tiny,
+    fontSize: typography.micro,
     color: colors.secondary,
-  },
-  pageFooter: {
-    position: "absolute",
-    bottom: 28,
-    left: spacing.pageMarginH,
-    right: spacing.pageMarginH,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    paddingTop: 8,
-  },
-  footerText: {
-    fontSize: typography.tiny,
-    color: colors.muted,
   },
 });
 
-function formatDate(dateStr: string): string {
-  if (!dateStr || dateStr.toLowerCase() === "present") return "Present";
+function formatDate(s: string) {
+  if (!s || s.toLowerCase() === "present") return "Present";
   try {
-    return new Date(dateStr).toLocaleDateString("en-US", { month: "short", year: "numeric" });
-  } catch {
-    return dateStr;
-  }
+    return new Date(s).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  } catch { return s; }
 }
 
-type ExperiencePageProps = {
-  experiences: Experience[];
-  settings: SanitySettings;
-};
+type ExperiencePageProps = { experiences: Experience[]; settings: SanitySettings };
 
 export function ExperiencePage({ experiences, settings }: ExperiencePageProps) {
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.eyebrow}>Experience</Text>
-      <View style={styles.divider} />
-      <Text style={styles.heading}>Work Experience</Text>
+    <Page size="A4" style={shell.page}>
+      <PageHeader section="Experience" name={fullName} />
+      <SectionHeading label="Work History" title="Experience" />
 
-      <View style={styles.timeline}>
-        {experiences.map((exp, idx) => (
-          <View key={exp.id} style={styles.item} wrap={false}>
-            {/* Timeline line */}
-            <View style={styles.timelineLeft}>
-              <View style={styles.dot} />
-              {idx < experiences.length - 1 && <View style={styles.line} />}
-            </View>
-
-            {/* Content */}
-            <View style={styles.timelineRight}>
-              <View style={styles.itemHeader}>
-                <Text style={styles.position}>{exp.position}</Text>
-                <Text style={styles.dateRange}>
-                  {formatDate(exp.startDate)} — {formatDate(exp.endDate)}
-                </Text>
-              </View>
-
-              <Text style={styles.company}>{exp.company}</Text>
-
-              {exp.location ? (
-                <Text style={styles.location}>📍 {exp.location}</Text>
-              ) : null}
-
-              {exp.description ? (
-                <Text style={styles.description}>{exp.description}</Text>
-              ) : null}
-
-              {exp.technologies && exp.technologies.length > 0 && (
-                <View style={styles.tagRow}>
-                  {exp.technologies.map((tech) => (
-                    <View key={tech} style={styles.tag}>
-                      <Text style={styles.tagText}>{tech}</Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-            </View>
+      {experiences.map((exp, idx) => (
+        <View key={exp.id} style={S.item} wrap={false}>
+          <View style={S.spine}>
+            <View style={S.dot} />
+            {idx < experiences.length - 1 && <View style={S.line} />}
           </View>
-        ))}
-      </View>
+          <View style={S.body}>
+            <View style={S.topRow}>
+              <Text style={S.position}>{exp.position}</Text>
+              <Text style={S.dateRange}>
+                {formatDate(exp.startDate)} – {formatDate(exp.endDate)}
+              </Text>
+            </View>
+            <Text style={S.company}>{exp.company}</Text>
+            {exp.location ? <Text style={S.location}>{exp.location}</Text> : null}
+            {exp.description ? (
+              <Text style={S.description}>{exp.description}</Text>
+            ) : null}
+            {(exp.technologies ?? []).length > 0 && (
+              <View style={S.tagRow}>
+                {(exp.technologies ?? []).map((t) => (
+                  <View key={t} style={S.tag}>
+                    <Text style={S.tagText}>{t}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+        </View>
+      ))}
 
-      <View style={styles.pageFooter} fixed>
-        <Text style={styles.footerText}>{fullName}</Text>
-        <Text
-          style={styles.footerText}
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-        />
-      </View>
+      <PageFooter name={fullName} />
     </Page>
   );
 }

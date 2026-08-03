@@ -2,123 +2,73 @@ import React from "react";
 import { Page, View, Text, StyleSheet } from "@react-pdf/renderer";
 import type { Skill } from "@/types/skill";
 import type { SanitySettings } from "@/types/siteSettings";
-import { colors, typography, spacing } from "../theme";
+import { colors, typography } from "../theme";
+import { PageHeader, PageFooter, SectionHeading, pageShellStyles as shell } from "../page-shell";
 
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: colors.white,
-    fontFamily: typography.fontFamily,
-    paddingHorizontal: spacing.pageMarginH,
-    paddingVertical: spacing.pageMarginV,
-  },
-  eyebrow: {
-    fontSize: typography.tiny,
-    color: colors.primary,
-    letterSpacing: 2,
-    textTransform: "uppercase",
-    fontFamily: typography.fontFamilyBold,
-  },
-  divider: {
-    width: 40,
-    height: 2,
-    backgroundColor: colors.primary,
-    marginTop: 8,
-    marginBottom: 20,
-  },
-  heading: {
-    fontSize: typography.h1,
-    color: colors.heading,
-    fontFamily: typography.fontFamilyBold,
-    marginBottom: 20,
-  },
-  // 2-column grid
+const S = StyleSheet.create({
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 12,
+    gap: 10,
   },
   card: {
-    width: "47%",
+    width: "47.5%",
     backgroundColor: colors.white,
-    borderRadius: 6,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: colors.border,
-    padding: spacing.cardPad,
+    padding: 12,
   },
   cardHeader: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    marginBottom: 6,
+    gap: 7,
+    marginBottom: 5,
   },
-  cardDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+  dot: {
+    width: 7,
+    height: 7,
+    borderRadius: 3.5,
     backgroundColor: colors.primary,
+    flexShrink: 0,
   },
   cardTitle: {
     fontSize: typography.h4,
     color: colors.heading,
     fontFamily: typography.fontFamilyBold,
   },
-  cardDescription: {
+  cardDesc: {
     fontSize: typography.small,
-    color: colors.secondary,
+    color: colors.body,
     lineHeight: 1.55,
-  },
-  pageFooter: {
-    position: "absolute",
-    bottom: 28,
-    left: spacing.pageMarginH,
-    right: spacing.pageMarginH,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    paddingTop: 8,
-  },
-  footerText: {
-    fontSize: typography.tiny,
-    color: colors.muted,
   },
 });
 
-type SkillsPageProps = {
-  skills: Skill[];
-  settings: SanitySettings;
-};
+type SkillsPageProps = { skills: Skill[]; settings: SanitySettings };
 
 export function SkillsPage({ skills, settings }: SkillsPageProps) {
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.eyebrow}>Skills</Text>
-      <View style={styles.divider} />
-      <Text style={styles.heading}>Core Skills</Text>
+    <Page size="A4" style={shell.page}>
+      <PageHeader section="Skills" name={fullName} />
+      <SectionHeading label="Core Competencies" title="Skills" />
 
-      <View style={styles.grid}>
+      <View style={S.grid}>
         {skills.map((skill) => (
-          <View key={skill.title} style={styles.card} wrap={false}>
-            <View style={styles.cardHeader}>
-              <View style={styles.cardDot} />
-              <Text style={styles.cardTitle}>{skill.title}</Text>
+          <View key={skill.title} style={S.card} wrap={false}>
+            <View style={S.cardHeader}>
+              <View style={S.dot} />
+              <Text style={S.cardTitle}>{skill.title}</Text>
             </View>
-            {skill.description && (
-              <Text style={styles.cardDescription}>{skill.description}</Text>
-            )}
+            {skill.description ? (
+              <Text style={S.cardDesc}>{skill.description}</Text>
+            ) : null}
           </View>
         ))}
       </View>
 
-      <View style={styles.pageFooter} fixed>
-        <Text style={styles.footerText}>{fullName}</Text>
-        <Text
-          style={styles.footerText}
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-        />
-      </View>
+      <PageFooter name={fullName} />
     </Page>
   );
 }

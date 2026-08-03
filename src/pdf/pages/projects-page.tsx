@@ -2,66 +2,56 @@ import React from "react";
 import { Page, View, Text, Image, StyleSheet, Link } from "@react-pdf/renderer";
 import type { Project } from "@/types/project";
 import type { SanitySettings } from "@/types/siteSettings";
-import { colors, typography, spacing } from "../theme";
+import { colors, typography } from "../theme";
+import { PageHeader, PageFooter, SectionHeading, pageShellStyles as shell } from "../page-shell";
 
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: colors.white,
-    fontFamily: typography.fontFamily,
-    paddingHorizontal: spacing.pageMarginH,
-    paddingVertical: spacing.pageMarginV,
-  },
-  eyebrow: {
-    fontSize: typography.tiny,
-    color: colors.primary,
-    letterSpacing: 2,
-    textTransform: "uppercase",
-    fontFamily: typography.fontFamilyBold,
-  },
-  divider: {
-    width: 40,
-    height: 2,
-    backgroundColor: colors.primary,
-    marginTop: 8,
-    marginBottom: 20,
-  },
-  heading: {
-    fontSize: typography.h1,
-    color: colors.heading,
-    fontFamily: typography.fontFamilyBold,
-    marginBottom: 20,
-  },
-  // Project card
+function truncateUrl(url: string, max = 44) {
+  const clean = url.replace(/^https?:\/\//, "");
+  return clean.length > max ? clean.slice(0, max) + "…" : clean;
+}
+
+const S = StyleSheet.create({
   card: {
-    marginBottom: 20,
-    borderRadius: 6,
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: colors.border,
     overflow: "hidden",
+    marginBottom: 14,
   },
-  cardImage: {
+  thumbnail: {
     width: "100%",
-    height: 140,
+    height: 130,
     objectFit: "cover",
     backgroundColor: colors.surface,
   },
-  cardBody: {
-    padding: spacing.cardPad,
+  noThumb: {
+    width: "100%",
+    height: 130,
+    backgroundColor: colors.surface,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  cardHeader: {
+  noThumbText: {
+    fontSize: typography.tiny,
+    color: colors.muted,
+  },
+  cardBody: {
+    padding: 12,
+  },
+  titleRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
-    marginBottom: 6,
+    alignItems: "center",
+    marginBottom: 5,
   },
-  cardTitle: {
+  title: {
     fontSize: typography.h3,
     color: colors.heading,
     fontFamily: typography.fontFamilyBold,
     flex: 1,
   },
-  statusBadge: {
-    fontSize: typography.tiny,
+  badge: {
+    fontSize: typography.micro,
     color: colors.primary,
     backgroundColor: colors.accent,
     paddingHorizontal: 6,
@@ -71,18 +61,17 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontFamily: typography.fontFamilyBold,
   },
-  description: {
+  desc: {
     fontSize: typography.small,
-    color: colors.foreground,
-    lineHeight: 1.55,
-    marginBottom: 10,
+    color: colors.body,
+    lineHeight: 1.6,
+    marginBottom: 8,
   },
-  // Tech tags
   tagRow: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 4,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   tag: {
     backgroundColor: colors.surface,
@@ -91,123 +80,83 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   tagText: {
-    fontSize: typography.tiny,
+    fontSize: typography.micro,
     color: colors.secondary,
   },
-  // Links row
-  linksRow: {
+  linkRow: {
     flexDirection: "row",
-    gap: 12,
+    gap: 16,
     borderTopWidth: 1,
     borderTopColor: colors.border,
-    paddingTop: 8,
-    marginTop: 2,
+    paddingTop: 7,
   },
-  linkItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-  },
+  linkGroup: { flexDirection: "row", alignItems: "center", gap: 4 },
   linkLabel: {
-    fontSize: typography.tiny,
+    fontSize: typography.micro,
     color: colors.muted,
     textTransform: "uppercase",
     fontFamily: typography.fontFamilyBold,
-    letterSpacing: 0.5,
   },
-  linkText: {
-    fontSize: typography.tiny,
+  linkHref: {
+    fontSize: typography.micro,
     color: colors.primary,
     textDecoration: "underline",
   },
-  pageFooter: {
-    position: "absolute",
-    bottom: 28,
-    left: spacing.pageMarginH,
-    right: spacing.pageMarginH,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    paddingTop: 8,
-  },
-  footerText: {
-    fontSize: typography.tiny,
-    color: colors.muted,
-  },
 });
 
-type ProjectsPageProps = {
-  projects: Project[];
-  settings: SanitySettings;
-};
+type ProjectsPageProps = { projects: Project[]; settings: SanitySettings };
 
 export function ProjectsPage({ projects, settings }: ProjectsPageProps) {
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.eyebrow}>Projects</Text>
-      <View style={styles.divider} />
-      <Text style={styles.heading}>Featured Projects</Text>
+    <Page size="A4" style={shell.page}>
+      <PageHeader section="Projects" name={fullName} />
+      <SectionHeading label="Portfolio Highlights" title="Featured Projects" />
 
-      {projects.map((project) => (
-        <View key={project.id} style={styles.card} wrap={false}>
-          {/* Thumbnail */}
-          {project.images?.[0] ? (
-            <Image
-              src={project.images[0]}
-              style={styles.cardImage}
-            />
+      {projects.map((p) => (
+        <View key={p.id} style={S.card} wrap={false}>
+          {p.images?.[0] ? (
+            <Image src={p.images[0]} style={S.thumbnail} />
           ) : (
-            <View style={[styles.cardImage, { justifyContent: "center", alignItems: "center" }]}>
-              <Text style={{ fontSize: typography.small, color: colors.muted }}>
-                No Image Available
-              </Text>
+            <View style={S.noThumb}>
+              <Text style={S.noThumbText}>No preview available</Text>
             </View>
           )}
 
-          <View style={styles.cardBody}>
-            {/* Title + Status */}
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>{project.title}</Text>
-              {project.status && (
-                <Text style={styles.statusBadge}>{project.status}</Text>
-              )}
+          <View style={S.cardBody}>
+            <View style={S.titleRow}>
+              <Text style={S.title}>{p.title}</Text>
+              {p.status && <Text style={S.badge}>{p.status}</Text>}
             </View>
 
-            {/* Description */}
-            {project.description && (
-              <Text style={styles.description}>{project.description}</Text>
-            )}
+            {p.description ? <Text style={S.desc}>{p.description}</Text> : null}
 
-            {/* Tech stack */}
-            {project.technologies?.length > 0 && (
-              <View style={styles.tagRow}>
-                {project.technologies.map((tech) => (
-                  <View key={tech} style={styles.tag}>
-                    <Text style={styles.tagText}>{tech}</Text>
+            {p.technologies?.length > 0 && (
+              <View style={S.tagRow}>
+                {p.technologies.map((t) => (
+                  <View key={t} style={S.tag}>
+                    <Text style={S.tagText}>{t}</Text>
                   </View>
                 ))}
               </View>
             )}
 
-            {/* Links */}
-            {(project.github || project.liveDemo) && (
-              <View style={styles.linksRow}>
-                {project.github && (
-                  <View style={styles.linkItem}>
-                    <Text style={styles.linkLabel}>GitHub:</Text>
-                    <Link src={project.github} style={styles.linkText}>
-                      {project.github.replace("https://github.com/", "")}
+            {(p.github || p.liveDemo) && (
+              <View style={S.linkRow}>
+                {p.github && (
+                  <View style={S.linkGroup}>
+                    <Text style={S.linkLabel}>GitHub →</Text>
+                    <Link src={p.github} style={S.linkHref}>
+                      {truncateUrl(p.github)}
                     </Link>
                   </View>
                 )}
-                {project.liveDemo && (
-                  <View style={styles.linkItem}>
-                    <Text style={styles.linkLabel}>Live Demo:</Text>
-                    <Link src={project.liveDemo} style={styles.linkText}>
-                      {project.liveDemo.replace("https://", "")}
+                {p.liveDemo && (
+                  <View style={S.linkGroup}>
+                    <Text style={S.linkLabel}>Live →</Text>
+                    <Link src={p.liveDemo} style={S.linkHref}>
+                      {truncateUrl(p.liveDemo)}
                     </Link>
                   </View>
                 )}
@@ -217,13 +166,7 @@ export function ProjectsPage({ projects, settings }: ProjectsPageProps) {
         </View>
       ))}
 
-      <View style={styles.pageFooter} fixed>
-        <Text style={styles.footerText}>{fullName}</Text>
-        <Text
-          style={styles.footerText}
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-        />
-      </View>
+      <PageFooter name={fullName} />
     </Page>
   );
 }
