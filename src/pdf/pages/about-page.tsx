@@ -2,114 +2,71 @@ import React from "react";
 import { Page, View, Text, StyleSheet } from "@react-pdf/renderer";
 import type { SanitySettings } from "@/types/siteSettings";
 import { colors, typography, spacing } from "../theme";
+import { PageHeader, PageFooter, SectionHeading, pageShellStyles as shell } from "../page-shell";
 
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: colors.white,
-    fontFamily: typography.fontFamily,
-    paddingHorizontal: spacing.pageMarginH,
-    paddingVertical: spacing.pageMarginV,
-  },
-  // Section label
-  eyebrow: {
-    fontSize: typography.tiny,
-    color: colors.primary,
-    letterSpacing: 2,
-    textTransform: "uppercase",
-    fontFamily: typography.fontFamilyBold,
-  },
-  // Divider
-  divider: {
-    width: 40,
-    height: 2,
-    backgroundColor: colors.primary,
-    marginTop: 8,
-    marginBottom: 20,
-  },
-  heading: {
-    fontSize: typography.h1,
-    color: colors.heading,
-    fontFamily: typography.fontFamilyBold,
-    marginBottom: 6,
-    lineHeight: 1.2,
-  },
-  subheading: {
-    fontSize: typography.body,
-    color: colors.secondary,
-    marginBottom: 24,
-  },
-  // Bio text
-  bioBox: {
+const S = StyleSheet.create({
+  bioCard: {
     backgroundColor: colors.accent,
+    borderRadius: 5,
     borderLeftWidth: 3,
     borderLeftColor: colors.primary,
-    padding: spacing.cardPad,
-    borderRadius: 4,
+    padding: 16,
+    marginBottom: 18,
   },
   bioText: {
     fontSize: typography.body,
-    color: colors.foreground,
-    lineHeight: 1.7,
+    color: colors.body,
+    lineHeight: 1.75,
   },
-  // Fallback bio paragraphs
-  paragraph: {
-    fontSize: typography.body,
-    color: colors.foreground,
-    lineHeight: 1.7,
-    marginBottom: 10,
-  },
-  // Page footer
-  pageFooter: {
-    position: "absolute",
-    bottom: 28,
-    left: spacing.pageMarginH,
-    right: spacing.pageMarginH,
+  highlightRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    paddingTop: 8,
+    gap: 8,
+    marginTop: 14,
+    flexWrap: "wrap",
   },
-  footerText: {
+  highlight: {
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.accentBorder,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+  },
+  highlightText: {
     fontSize: typography.tiny,
-    color: colors.muted,
+    color: colors.primary,
+    fontFamily: typography.fontFamilyBold,
   },
 });
 
-const FALLBACK_BIO = `I don't believe software should exist simply because it can be built. Every project I take on starts with one question: What problem does this actually solve?
+const FALLBACK_BIO =
+  "I don't believe software should exist simply because it can be built. Every project I take on starts with one question: What problem does this actually solve?\n\nThat mindset has shaped the way I learn and build. From web development and backend systems to IoT and machine learning, I enjoy turning ideas into practical solutions that people can actually use.\n\nOutside the classroom, I've had the opportunity to mentor students as a Laboratory Assistant and Teaching Assistant while also serving in student organizations. Those experiences taught me that writing code is only one part of engineering — communicating ideas, collaborating with others, and leading a team are equally important.\n\nI aim to become a software engineer who builds technology that is reliable, scalable, and designed with purpose.";
 
-That mindset has shaped the way I learn and build. From web development and backend systems to IoT and machine learning, I enjoy turning ideas into practical solutions that people can actually use.
-
-Outside the classroom, I've had the opportunity to mentor students while also serving in student organizations. Those experiences taught me that writing code is only one part of engineering — communicating ideas, collaborating with others, and leading a team are equally important.
-
-I aim to become a software engineer who builds technology that is reliable, scalable, and designed with purpose.`;
-
-type AboutPageProps = {
-  settings: SanitySettings;
-};
+type AboutPageProps = { settings: SanitySettings };
 
 export function AboutPage({ settings }: AboutPageProps) {
   const fullName = settings.fullName ?? "Portfolio";
   const bio = settings.bio ?? FALLBACK_BIO;
 
   return (
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.eyebrow}>About</Text>
-      <View style={styles.divider} />
-      <Text style={styles.heading}>Professional Summary</Text>
-      <Text style={styles.subheading}>{fullName}</Text>
+    <Page size="A4" style={shell.page}>
+      <PageHeader section="About" name={fullName} />
 
-      <View style={styles.bioBox}>
-        <Text style={styles.bioText}>{bio}</Text>
+      <SectionHeading label="Professional Summary" title="About Me" />
+
+      <View style={S.bioCard}>
+        <Text style={S.bioText}>{bio}</Text>
       </View>
 
-      {/* Page footer */}
-      <View style={styles.pageFooter} fixed>
-        <Text style={styles.footerText}>{fullName}</Text>
-        <Text style={styles.footerText} render={({ pageNumber, totalPages }) =>
-          `${pageNumber} / ${totalPages}`
-        } />
+      <View style={S.highlightRow}>
+        {["Open to Work", "Fullstack Engineer", "Indonesia"].map((tag) => (
+          <View key={tag} style={S.highlight}>
+            <Text style={S.highlightText}>{tag}</Text>
+          </View>
+        ))}
       </View>
+
+      <PageFooter name={fullName} />
     </Page>
   );
 }

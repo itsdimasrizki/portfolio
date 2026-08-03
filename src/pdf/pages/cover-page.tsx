@@ -3,115 +3,132 @@ import { Page, View, Text, StyleSheet } from "@react-pdf/renderer";
 import type { SanitySettings } from "@/types/siteSettings";
 import { colors, typography, spacing } from "../theme";
 
-const styles = StyleSheet.create({
+function truncateUrl(url: string, max = 38): string {
+  const clean = url.replace(/^https?:\/\//, "");
+  return clean.length > max ? clean.slice(0, max) + "…" : clean;
+}
+
+const S = StyleSheet.create({
   page: {
     backgroundColor: colors.coverBg,
     fontFamily: typography.fontFamily,
+    position: "relative",
   },
-  // Left accent bar
-  accentBar: {
+
+  // ── Left sidebar ──────────────────────────────────────────────
+  sidebar: {
     position: "absolute",
     left: 0,
     top: 0,
     bottom: 0,
-    width: 6,
-    backgroundColor: colors.coverAccent,
+    width: 5,
+    backgroundColor: colors.primary,
   },
-  // Top decorative strip
-  topStrip: {
-    width: "100%",
-    height: 3,
-    backgroundColor: colors.coverAccent,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: spacing.pageMarginH,
-    paddingVertical: 72,
-    justifyContent: "space-between",
-  },
-  // Header area
-  header: {
+
+  // ── Top tag strip ─────────────────────────────────────────────
+  topTag: {
+    position: "absolute",
+    top: 44,
+    left: spacing.pageMarginH,
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 8,
   },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.coverAccent,
+  tagDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: colors.primary,
   },
-  headerLabel: {
-    fontSize: typography.small,
-    color: colors.coverAccent,
+  tagText: {
+    fontSize: typography.tiny,
+    color: colors.primary,
+    letterSpacing: 2.5,
+    textTransform: "uppercase",
+    fontFamily: typography.fontFamilyBold,
+  },
+
+  // ── Hero block (vertically centered ~40% from top) ─────────────
+  hero: {
+    position: "absolute",
+    top: 190,
+    left: spacing.pageMarginH,
+    right: spacing.pageMarginH,
+  },
+  name: {
+    fontSize: 34,
+    color: colors.coverText,
+    fontFamily: typography.fontFamilyBold,
+    letterSpacing: 0.3,
+    lineHeight: 1.15,
+  },
+  ruleLine: {
+    width: 48,
+    height: 3,
+    backgroundColor: colors.primary,
+    marginTop: 16,
+    marginBottom: 16,
+  },
+  role: {
+    fontSize: typography.body,
+    color: colors.muted,
+    letterSpacing: 1.8,
+    textTransform: "uppercase",
+  },
+
+  // ── Contact card block ────────────────────────────────────────
+  contactCard: {
+    position: "absolute",
+    bottom: 80,
+    left: spacing.pageMarginH,
+    right: spacing.pageMarginH,
+    backgroundColor: "#131f2e",
+    borderRadius: 6,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.primary,
+    padding: 18,
+  },
+  contactCardTitle: {
+    fontSize: typography.tiny,
+    color: colors.primary,
     letterSpacing: 2,
     textTransform: "uppercase",
     fontFamily: typography.fontFamilyBold,
+    marginBottom: 12,
   },
-  // Hero area
-  heroSection: {
-    marginTop: 60,
-  },
-  name: {
-    fontSize: 38,
-    color: colors.coverText,
-    fontFamily: typography.fontFamilyBold,
-    letterSpacing: 0.5,
-    lineHeight: 1.15,
-  },
-  divider: {
-    width: 60,
-    height: 3,
-    backgroundColor: colors.coverAccent,
-    marginTop: 18,
-    marginBottom: 18,
-  },
-  role: {
-    fontSize: typography.h2,
-    color: colors.muted,
-    letterSpacing: 1,
-    textTransform: "uppercase",
-  },
-  // Contact grid
-  contactSection: {
-    marginTop: 48,
-  },
-  contactGrid: {
+  contactRow: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 14,
+    gap: 10,
   },
   contactItem: {
-    width: "45%",
+    width: "47%",
+    marginBottom: 4,
   },
   contactLabel: {
-    fontSize: typography.tiny,
-    color: colors.coverAccent,
-    letterSpacing: 1.5,
+    fontSize: typography.tiny - 1,
+    color: colors.muted,
+    marginBottom: 2,
     textTransform: "uppercase",
-    fontFamily: typography.fontFamilyBold,
-    marginBottom: 3,
+    letterSpacing: 1,
   },
   contactValue: {
     fontSize: typography.small,
-    color: colors.coverText,
+    color: "#e2e8f0",
   },
-  // Footer
-  footer: {
-    borderTopWidth: 1,
-    borderTopColor: "#1e293b",
-    paddingTop: 16,
+
+  // ── Footer ────────────────────────────────────────────────────
+  pageFooter: {
+    position: "absolute",
+    bottom: 24,
+    left: spacing.pageMarginH,
+    right: spacing.pageMarginH,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
-  footerLeft: {
-    fontSize: typography.tiny,
-    color: colors.muted,
-  },
-  footerRight: {
-    fontSize: typography.tiny,
-    color: colors.coverAccent,
+  footerText: {
+    fontSize: typography.tiny - 1,
+    color: "#334155",
   },
 });
 
@@ -124,50 +141,51 @@ export function CoverPage({ settings }: CoverPageProps) {
   const role = settings.role ?? "Software Engineer";
 
   const contacts = [
-    { label: "Email", value: settings.email },
-    { label: "Phone", value: settings.phone },
+    { label: "Email",    value: settings.email },
+    { label: "Phone",    value: settings.phone },
     { label: "Location", value: settings.location },
-    { label: "LinkedIn", value: settings.linkedinUrl?.replace("https://linkedin.com/in/", "@") },
-    { label: "GitHub", value: settings.githubUrl?.replace("https://github.com/", "@") },
-    { label: "Website", value: settings.portfolioUrl?.replace("https://", "") },
-  ].filter((c) => c.value);
+    { label: "LinkedIn", value: settings.linkedinUrl ? truncateUrl(settings.linkedinUrl) : undefined },
+    { label: "GitHub",   value: settings.githubUrl ? truncateUrl(settings.githubUrl) : undefined },
+    { label: "Website",  value: settings.portfolioUrl ? truncateUrl(settings.portfolioUrl) : undefined },
+  ].filter((c): c is { label: string; value: string } => Boolean(c.value));
 
   return (
-    <Page size="A4" style={styles.page}>
-      <View style={styles.accentBar} />
-      <View style={styles.topStrip} />
+    <Page size="A4" style={S.page}>
+      {/* Left sidebar stripe */}
+      <View style={S.sidebar} />
 
-      <View style={styles.content}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.dot} />
-          <Text style={styles.headerLabel}>Portfolio</Text>
-        </View>
+      {/* Top tag */}
+      <View style={S.topTag}>
+        <View style={S.tagDot} />
+        <Text style={S.tagText}>Portfolio</Text>
+      </View>
 
-        {/* Hero */}
-        <View style={styles.heroSection}>
-          <Text style={styles.name}>{fullName}</Text>
-          <View style={styles.divider} />
-          <Text style={styles.role}>{role}</Text>
+      {/* Hero: name + rule + role */}
+      <View style={S.hero}>
+        <Text style={S.name}>{fullName}</Text>
+        <View style={S.ruleLine} />
+        <Text style={S.role}>{role}</Text>
+      </View>
 
-          {/* Contact Info */}
-          <View style={styles.contactSection}>
-            <View style={styles.contactGrid}>
-              {contacts.map((item) => (
-                <View key={item.label} style={styles.contactItem}>
-                  <Text style={styles.contactLabel}>{item.label}</Text>
-                  <Text style={styles.contactValue}>{item.value}</Text>
-                </View>
-              ))}
-            </View>
+      {/* Contact card */}
+      {contacts.length > 0 && (
+        <View style={S.contactCard}>
+          <Text style={S.contactCardTitle}>Contact</Text>
+          <View style={S.contactRow}>
+            {contacts.map((item) => (
+              <View key={item.label} style={S.contactItem}>
+                <Text style={S.contactLabel}>{item.label}</Text>
+                <Text style={S.contactValue}>{item.value}</Text>
+              </View>
+            ))}
           </View>
         </View>
+      )}
 
-        {/* Footer */}
-        <View style={styles.footer}>
-          <Text style={styles.footerLeft}>Generated automatically from Sanity CMS</Text>
-          <Text style={styles.footerRight}>{new Date().getFullYear()}</Text>
-        </View>
+      {/* Footer */}
+      <View style={S.pageFooter}>
+        <Text style={S.footerText}>Auto-generated · Sanity CMS</Text>
+        <Text style={S.footerText}>{new Date().getFullYear()}</Text>
       </View>
     </Page>
   );

@@ -2,71 +2,56 @@ import React from "react";
 import { Page, View, Text, Image, StyleSheet, Link } from "@react-pdf/renderer";
 import type { Certificate } from "@/types/certificate";
 import type { SanitySettings } from "@/types/siteSettings";
-import { colors, typography, spacing } from "../theme";
+import { colors, typography } from "../theme";
+import { PageHeader, PageFooter, SectionHeading, pageShellStyles as shell } from "../page-shell";
 
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: colors.white,
-    fontFamily: typography.fontFamily,
-    paddingHorizontal: spacing.pageMarginH,
-    paddingVertical: spacing.pageMarginV,
-  },
-  eyebrow: {
-    fontSize: typography.tiny,
-    color: colors.primary,
-    letterSpacing: 2,
-    textTransform: "uppercase",
-    fontFamily: typography.fontFamilyBold,
-  },
-  divider: {
-    width: 40,
-    height: 2,
-    backgroundColor: colors.primary,
-    marginTop: 8,
-    marginBottom: 20,
-  },
-  heading: {
-    fontSize: typography.h1,
-    color: colors.heading,
-    fontFamily: typography.fontFamilyBold,
-    marginBottom: 20,
-  },
-  // 2-column grid
+function formatDate(s: string) {
+  if (!s) return "";
+  try {
+    return new Date(s).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  } catch { return s; }
+}
+
+const S = StyleSheet.create({
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 14,
+    gap: 12,
   },
   card: {
-    width: "47%",
-    borderRadius: 6,
+    width: "47.5%",
+    borderRadius: 5,
     borderWidth: 1,
     borderColor: colors.border,
     overflow: "hidden",
     backgroundColor: colors.white,
   },
-  thumbnail: {
+  thumb: {
     width: "100%",
-    height: 110,
+    height: 100,
     objectFit: "cover",
     backgroundColor: colors.surface,
   },
-  thumbnailPlaceholder: {
+  noThumb: {
     width: "100%",
-    height: 110,
+    height: 100,
     backgroundColor: colors.surface,
     justifyContent: "center",
     alignItems: "center",
   },
-  cardBody: {
-    padding: spacing.cardPadSm,
+  noThumbText: {
+    fontSize: typography.tiny,
+    color: colors.muted,
   },
-  cardTitle: {
+  cardBody: {
+    padding: 10,
+  },
+  title: {
     fontSize: typography.small,
     color: colors.heading,
     fontFamily: typography.fontFamilyBold,
-    marginBottom: 4,
     lineHeight: 1.3,
+    marginBottom: 4,
   },
   issuer: {
     fontSize: typography.tiny,
@@ -75,76 +60,44 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   date: {
-    fontSize: typography.tiny,
+    fontSize: typography.micro,
     color: colors.muted,
     marginBottom: 6,
   },
-  credentialLink: {
-    fontSize: typography.tiny,
+  credential: {
+    fontSize: typography.micro,
     color: colors.primary,
     textDecoration: "underline",
   },
-  pageFooter: {
-    position: "absolute",
-    bottom: 28,
-    left: spacing.pageMarginH,
-    right: spacing.pageMarginH,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    paddingTop: 8,
-  },
-  footerText: {
-    fontSize: typography.tiny,
-    color: colors.muted,
-  },
 });
 
-function formatDate(dateStr: string): string {
-  if (!dateStr) return "";
-  try {
-    return new Date(dateStr).toLocaleDateString("en-US", { month: "long", year: "numeric" });
-  } catch {
-    return dateStr;
-  }
-}
-
-type CertificatesPageProps = {
-  certificates: Certificate[];
-  settings: SanitySettings;
-};
+type CertificatesPageProps = { certificates: Certificate[]; settings: SanitySettings };
 
 export function CertificatesPage({ certificates, settings }: CertificatesPageProps) {
   const fullName = settings.fullName ?? "Portfolio";
 
   return (
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.eyebrow}>Certificates</Text>
-      <View style={styles.divider} />
-      <Text style={styles.heading}>Certifications</Text>
+    <Page size="A4" style={shell.page}>
+      <PageHeader section="Certificates" name={fullName} />
+      <SectionHeading label="Credentials" title="Certifications" />
 
-      <View style={styles.grid}>
+      <View style={S.grid}>
         {certificates.map((cert) => (
-          <View key={cert.id} style={styles.card} wrap={false}>
+          <View key={cert.id} style={S.card} wrap={false}>
             {cert.image ? (
-              <Image src={cert.image} style={styles.thumbnail} />
+              <Image src={cert.image} style={S.thumb} />
             ) : (
-              <View style={styles.thumbnailPlaceholder}>
-                <Text style={{ fontSize: typography.tiny, color: colors.muted }}>
-                  No Image
-                </Text>
+              <View style={S.noThumb}>
+                <Text style={S.noThumbText}>No Image</Text>
               </View>
             )}
-            <View style={styles.cardBody}>
-              <Text style={styles.cardTitle}>{cert.title}</Text>
-              <Text style={styles.issuer}>{cert.issuer}</Text>
-              {cert.issuedAt && (
-                <Text style={styles.date}>{formatDate(cert.issuedAt)}</Text>
-              )}
+            <View style={S.cardBody}>
+              <Text style={S.title}>{cert.title}</Text>
+              <Text style={S.issuer}>{cert.issuer}</Text>
+              {cert.issuedAt && <Text style={S.date}>{formatDate(cert.issuedAt)}</Text>}
               {cert.credentialUrl && (
-                <Link src={cert.credentialUrl} style={styles.credentialLink}>
-                  View Credential
+                <Link src={cert.credentialUrl} style={S.credential}>
+                  View Credential ↗
                 </Link>
               )}
             </View>
@@ -152,13 +105,7 @@ export function CertificatesPage({ certificates, settings }: CertificatesPagePro
         ))}
       </View>
 
-      <View style={styles.pageFooter} fixed>
-        <Text style={styles.footerText}>{fullName}</Text>
-        <Text
-          style={styles.footerText}
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-        />
-      </View>
+      <PageFooter name={fullName} />
     </Page>
   );
 }
