@@ -527,7 +527,7 @@ Primitif dan cover dikerjakan bersama karena saling membuktikan: cover memakai `
 - Produces:
   - `type Tone = "bone" | "paper" | "blue" | "ink" | "orange"`
   - `fgOn(tone: Tone): string`, `mutedOn(tone: Tone): string`
-  - `<Slide tone? padded? children>`
+  - `<Slide tone? padded? decoration? children>`
   - `<SlideHeader eyebrow tone? rule?>`, `<SlideNumber tone?>`
   - `<BigType lines size? color accentColor? accentLast? style?>`
   - `<Chip label variant? tone?>`, `<ChipRow labels max tone? pattern?>`
@@ -541,7 +541,7 @@ Primitif dan cover dikerjakan bersama karena saling membuktikan: cover memakai `
 
 - [ ] **Step 1: Tulis `src/pdf/deck/primitives.tsx`**
 
-Dua aturan yang harus dipatuhi seluruh slide dan sudah dibakukan di sini: `react-pdf` tidak punya `z-index`, jadi **`BleedCircle` harus dirender sebagai anak pertama `Slide`** agar berada di belakang; dan `Dither` membatasi jumlah kotaknya sendiri karena ribuan `View` membuat render sangat lambat.
+Dua aturan yang harus dipatuhi seluruh slide dan sudah dibakukan di sini: dekorasi latar diteruskan lewat prop `decoration`, **bukan** sebagai anak biasa — `react-pdf` tidak punya `z-index`, dan lebih penting lagi, elemen absolut dengan offset negatif akan menambah tinggi kotak konten sehingga slide pecah jadi dua halaman; dan `Dither` membatasi jumlah kotaknya sendiri karena ribuan `View` membuat render sangat lambat.
 
 ```tsx
 import React from "react";
@@ -567,21 +567,39 @@ const MUTED: Record<Tone, string> = {
 export function fgOn(tone: Tone): string { return FG[tone]; }
 export function mutedOn(tone: Tone): string { return MUTED[tone]; }
 
-/** Satu slide = satu Page. BleedCircle harus jadi anak pertama agar tampil di belakang. */
+/**
+ * Satu slide = satu Page.
+ *
+ * Dekorasi (BleedCircle) TIDAK boleh jadi anak biasa. Elemen absolut dengan
+ * `bottom` negatif diselesaikan terhadap tinggi akhir induknya, sehingga selalu
+ * menambah tinggi kotak konten sebesar tonjolannya (0.38 x diameter) dan
+ * memaksa react-pdf memecah slide jadi dua halaman begitu konten cukup tinggi.
+ * Karena itu dekorasi hidup di lapisan absolut seukuran halaman yang memotong
+ * sendiri, dan konten hidup di View ber-padding di dalam halaman tanpa padding.
+ */
 export function Slide({
-  tone = "bone", padded = true, children,
-}: { tone?: Tone; padded?: boolean; children: React.ReactNode }) {
+  tone = "bone", padded = true, decoration, children,
+}: {
+  tone?: Tone; padded?: boolean;
+  decoration?: React.ReactNode; children: React.ReactNode;
+}) {
   return (
-    <Page
-      size={[SLIDE.w, SLIDE.h]}
-      style={{
-        backgroundColor: BG[tone],
-        overflow: "hidden",
+    <Page size={[SLIDE.w, SLIDE.h]} style={{ backgroundColor: BG[tone] }}>
+      {decoration && (
+        <View style={{
+          position: "absolute", top: 0, left: 0,
+          width: SLIDE.w, height: SLIDE.h, overflow: "hidden",
+        }}>
+          {decoration}
+        </View>
+      )}
+      <View style={{
+        height: SLIDE.h,
         paddingHorizontal: padded ? SLIDE.mx : 0,
         paddingVertical: padded ? SLIDE.my : 0,
-      }}
-    >
-      {children}
+      }}>
+        {children}
+      </View>
     </Page>
   );
 }
@@ -616,7 +634,8 @@ export function BigType({
   lines, size = "hero", color, accentColor, accentLast = false, style,
 }: {
   lines: string[]; size?: BigSize; color: string;
-  accentColor?: string; accentLast?: boolean; style?: object;
+  accentColor?: string; accentLast?: boolean;
+  style?: React.ComponentProps<typeof View>["style"];
 }) {
   return (
     <View style={style}>
@@ -834,9 +853,7 @@ export function CoverSlide({
   const place = (settings.location ?? "").toLowerCase();
 
   return (
-    <Slide tone="bone">
-      <BleedCircle size={520} color={colors.peach} corner="bl" />
-
+    <Slide tone="bone" decoration={<BleedCircle size={520} color={colors.peach} corner="bl" />}>
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
         <Text style={{ ...type.body, fontWeight: 700, color: colors.ink }}>{name}</Text>
         <Text style={{ ...type.small, color: colors.muted }}>
@@ -956,8 +973,10 @@ export function DividerSlide({
 }) {
   const fg = fgOn(tone);
   return (
-    <Slide tone={tone}>
-      <BleedCircle size={460} color={tone === "bone" ? colors.peach : colors.mauve} corner={corner} />
+    <Slide
+      tone={tone}
+      decoration={<BleedCircle size={460} color={tone === "bone" ? colors.peach : colors.mauve} corner={corner} />}
+    >
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={{ ...type.micro, color: fg }}>{eyebrow}</Text>
         <SlideNumber tone={tone} />
@@ -1044,8 +1063,7 @@ export function ClosingSlide({ settings }: { settings: SanitySettings }) {
     .filter(Boolean)
     .join("  ·  ");
   return (
-    <Slide tone="bone">
-      <BleedCircle size={430} color={colors.lilac} corner="bl" />
+    <Slide tone="bone" decoration={<BleedCircle size={430} color={colors.lilac} corner="bl" />}>
       <View style={{ flexGrow: 1, justifyContent: "center" }}>
         <BigType size="hero" lines={["any", "questions?"]} color={colors.ink} />
         <Text style={{ ...type.body, color: colors.muted, marginTop: 16 }}>{line}</Text>
@@ -2019,8 +2037,7 @@ export function ContactSlide({
   ].filter((item): item is { key: string; value: string } => Boolean(item.value));
 
   return (
-    <Slide tone="blue">
-      <BleedCircle size={440} color={colors.mauve} corner="tr" />
+    <Slide tone="blue" decoration={<BleedCircle size={440} color={colors.mauve} corner="tr" />}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={{ ...type.micro, color: colors.bone }}>05 — contact</Text>
         <SlideNumber tone="blue" />
@@ -2274,6 +2291,7 @@ git commit -m "feat(deck): finish deck composer and remove the A4 PDF module"
 
 - **Jangan menambah dependensi.** Bila terasa butuh library layout atau test runner, itu tanda ada yang salah dipahami — semua sudah bisa dikerjakan dengan yang ada.
 - **Jangan mengarang data.** Tidak ada metrik impact, tidak ada label proficiency, tidak ada kutipan, tidak ada status ketersediaan kerja. Kalau sebuah slot layout terasa kosong, kecilkan slotnya — jangan isi dengan karangan.
-- **Urutan render menentukan lapisan.** `react-pdf` tidak punya `z-index`; `BleedCircle` harus selalu jadi anak pertama `Slide`.
+- **Dekorasi lewat prop `decoration`, bukan anak biasa.** Selain karena `react-pdf` tidak punya `z-index`, elemen absolut ber-offset negatif menambah tinggi kotak konten dan memecah slide jadi dua halaman. `Slide` sudah mengurung dekorasi di lapisan pemotong seukuran halaman.
+- **Cek `Pages:` setiap kali merender.** Jumlah halaman harus persis sama dengan jumlah slide. Halaman berlebih berarti ada konten yang melewati 460pt ruang tersedia.
 - **`Dither` itu mahal.** Ia sudah membatasi diri sendiri, tapi jangan memakainya untuk bidang sangat besar lebih dari sekali per slide.
 - **Server dev sudah berjalan di port 3001** pada sesi ini. Bila kamu memulai sesi baru, jalankan `pnpm dev` dan sesuaikan port di semua perintah `curl`.
