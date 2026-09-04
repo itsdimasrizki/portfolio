@@ -41,6 +41,24 @@ Deck baru harus:
 | Bahasa label | Inggris | Mengikuti konten Sanity yang berbahasa Inggris |
 | Ukuran halaman | `[960, 540]` pt | Persis PowerPoint 16:9 widescreen (13,33in x 7,5in) |
 
+### 2.1 Realitas data (diverifikasi dari Sanity, 2026-09-05)
+
+Volume sebenarnya, diukur dengan merender endpoint yang ada dan membaca isinya. Layout dirancang
+untuk angka ini, bukan untuk perkiraan.
+
+| Koleksi | Jumlah | Catatan yang membentuk layout |
+|---|---|---|
+| `featuredProjects` | 3 | Deskripsi 300–560 karakter; 5–11 teknologi per proyek; judul terpanjang 29 karakter |
+| `experiences` | 8 | Jabatan & institusi panjang (sampai 54 karakter); deskripsi ~250 karakter; `startDate` paling awal Jan 2022 |
+| `certificates` | 14 | 6 di antaranya menghasilkan `Invalid Date` pada PDF lama |
+| `technologies` | 7 grup / 37 item | Grup terbesar 9 item (Tools), terkecil 2 (Database) |
+| `skills` | 10 | Judul 2–3 kata, deskripsi ~90 karakter |
+| `settings.bio` | ~600 karakter | Satu paragraf panjang, dipecah jadi 2 di slide bio |
+
+Konsekuensi: slide `experience`, `certificates`, dan `process` **wajib berpaginasi** — tidak muat
+dalam satu slide. Slide `More work` tidak akan muncul dengan data saat ini (hanya 3 featured
+project, semuanya dapat slide detail).
+
 ---
 
 ## 3. Fondasi visual
@@ -138,20 +156,35 @@ Jumlah slide dinamis (±18–22) tergantung data. Slide dilewati bila datanya ko
 | 03 | Divider "01 — profile" (bone) | `divider.tsx` | statis | selalu |
 | 04 | Bio | `bio.tsx` | `settings` | selalu |
 | 05 | Numbers | `numbers.tsx` | derived (§6.1) | selalu |
-| 06 | Stack | `stack.tsx` | `technologies` | `technologies.length > 0` |
-| 07 | How I work | `process.tsx` | `skills` | `skills.length > 0` |
-| 08 | Divider "02 — work" (blue) | `divider.tsx` | jumlah proyek | ada proyek |
-| 09 | Project index | `project-index.tsx` | `featuredProjects` | ada proyek |
-| 10–13 | Project detail (1 slide/proyek, maks 4) | `project-detail.tsx` | proyek + `images[0]` | per proyek |
-| 14 | More work (grid 3) | `project-grid.tsx` | sisa proyek | sisa > 0 |
-| 15 | Divider "03 — experience" (ink) | `divider.tsx` | jumlah | ada experience |
-| 16 | Experience timeline | `experience.tsx` | `experiences` | ada experience |
-| 17 | Divider "04 — credentials" (orange) | `divider.tsx` | jumlah | ada sertifikat |
-| 18 | Certificates grid | `certificates.tsx` | `certificates` | ada sertifikat |
-| 19 | Contact (blue full-bleed) | `contact.tsx` | `settings`, `qrCodeDataUrl` | selalu |
-| 20 | Closing | `closing.tsx` | `settings` | selalu |
+| 06 | Stack | `stack.tsx` | `technologies` | ada teknologi |
+| 07–08 | How I work (5 kartu/slide) | `process.tsx` | `skills` | ada skill |
+| 09 | Divider "02 — work" (blue) | `divider.tsx` | jumlah proyek | ada proyek |
+| 10 | Project index | `project-index.tsx` | `featuredProjects` | ada proyek |
+| 11–14 | Project detail (1 slide/proyek, maks 4) | `project-detail.tsx` | proyek + gambar | per proyek |
+| 15 | More work (grid 3) | `project-grid.tsx` | proyek ke-5 dst | featured > 4 |
+| 16 | Divider "03 — experience" (ink) | `divider.tsx` | jumlah | ada experience |
+| 17–18 | Experience timeline (4 entri/slide) | `experience.tsx` | `experiences` | ada experience |
+| 19 | Divider "04 — credentials" (orange) | `divider.tsx` | jumlah | ada sertifikat |
+| 20–21 | Certificates grid (6 kartu/slide) | `certificates.tsx` | `certificates` | ada sertifikat |
+| 22 | Contact (blue full-bleed) | `contact.tsx` | `settings`, `qrCodeDataUrl` | selalu |
+| 23 | Closing | `closing.tsx` | `settings` | selalu |
 
-### 5.1 Spesifikasi per slide
+Dengan data saat ini deck menghasilkan **23 slide** (3 project detail, `More work` dilewati).
+
+### 5.1 Aturan paginasi
+
+Tiga slide berpaginasi memakai helper `paginate(items, perPage, maxPages)` yang sama:
+
+| Slide | Per slide | Maks slide | Kelebihan |
+|---|---|---|---|
+| How I work | 5 | 2 | dibuang diam-diam (skill ke-11 dst) |
+| Experience | 4 | 2 | dibuang diam-diam (entri ke-9 dst) |
+| Certificates | 6 | 2 | ditampilkan sebagai kartu terakhir bertulis `+N more` |
+
+Slide kedua dan seterusnya memakai eyebrow yang sama dengan sufiks `(cont.)` dan **tidak**
+mengulang judul besar — hanya slide pertama tiap seri yang punya judul h1.
+
+### 5.2 Spesifikasi per slide
 
 **Cover** — latar bone. `BleedCircle` peach Ø520 di kiri-bawah (`left:-190, bottom:-210`).
 Baris atas: nama (Bold 12pt) kiri; kanan `role · location · portfolio 2026` (blue). Garis ink 1pt.
@@ -184,31 +217,47 @@ kanan-bawah (angka 64pt + label body). Semua angka derived (§6.1).
 
 **Stack** — kiri: judul h1 2 baris, deretan seluruh chip teknologi (bungkus otomatis; warna solid
 untuk indeks `i % 5 === 0` blue dan `i % 7 === 0` orange, sisanya outline), legend nano di bawah.
-Kanan: satu baris per grup teknologi — kartu paper dengan judul h3, label level micro di kanan,
-dan `PixelBar`. Kartu di-offset horizontal `[0, 12, 0, 10, 0]` agar tidak rata.
+Kanan: satu baris per grup teknologi untuk **5 grup terbesar** (dari 7 grup yang ada) — kartu paper
+dengan judul h3, label micro di kanan, dan `PixelBar` yang terisi proporsional terhadap grup
+terbesar. Kartu di-offset horizontal `[0, 12, 0, 10, 0]` agar tidak rata.
 
-**How I work** — kartu dari `skills` (maks 5), di-stagger vertikal; satu kartu memakai
-`accentFor` (blue) sebagai hero. Nomor 56pt, judul h2, deskripsi small.
+Label bar berbunyi jumlah item (`9 tools`), **bukan** tingkat kemahiran seperti `advanced` /
+`intermediate`. Skema Sanity tidak menyimpan proficiency, dan bar yang panjangnya ditentukan
+jumlah item tidak boleh dibaca sebagai klaim keahlian. Legend nano di bawah chip menyatakan ini
+eksplisit: `bar length = tools per group, not proficiency`.
+
+**How I work** — 5 kartu per slide dari `skills` (maks 2 slide), di-stagger vertikal; satu kartu
+per slide memakai `accentFor` sebagai hero. Nomor 56pt (bernomor menerus lintas slide: 01–05,
+lalu 06–10), judul h2 dipotong di 24 karakter, deskripsi small.
 
 **Project index** — maks 6 baris. Pembagian proyek antar slide: index menampilkan 6 proyek
 pertama, detail slide dibuat untuk 4 proyek pertama, `More work` menampilkan proyek ke-5 dan ke-6.
-Proyek ke-7 dan seterusnya tidak masuk deck.
+Proyek ke-7 dan seterusnya tidak masuk deck. Dengan data saat ini (3 featured project) index
+menampilkan 3 baris, ketiganya dapat slide detail, dan `More work` dilewati.
 Baris: nomor 32pt (blue/orange bergantian), judul 30pt, daftar teknologi kanan
 small muted, tahun body. Pemisah antar baris: garis pixel-dashed (kotak 3pt jarak 3pt).
 
 **Project detail** — layout cermin: indeks genap = teks kiri / gambar kanan full-bleed setengah
 slide; indeks ganjil = kebalikan. Eyebrow: nomor blue 32pt + `category · year · status`.
-Judul 52pt. Deskripsi body maks 3 baris. Baris meta: `stack` dan `links`. Badge orange
+Judul 52pt, turun ke 40pt bila > 18 karakter dan 32pt bila > 26 karakter (judul terpanjang di data
+nyata 29 karakter). Deskripsi body dipotong di 320 karakter pada batas kata dengan akhiran `…`
+(deskripsi asli mencapai 560 karakter). Chip teknologi maks 8 dengan sisa diringkas `+N`
+(satu proyek punya 11). Baris meta: `stack` dan `links`. Badge orange
 melayang di atas gambar. Chip link: `github` (ink solid), `live` (outline).
 
 **More work** — 3 kartu staggered: thumbnail 1:0.55, nomor, judul h2, deskripsi small,
 footer `tech · year`.
 
-**Experience timeline** — kartu selebar konten, entri pertama blue penuh. Kiri: rentang tahun 30pt
-+ posisi micro. Kanan: perusahaan h2 + deskripsi small. Indent kiri berselang `[0, 26, 0, 26]`.
+**Experience timeline** — 4 entri per slide, kartu selebar konten (tinggi 96pt), entri pertama
+slide pertama blue penuh. Kiri (lebar 190pt): rentang tahun 30pt + jabatan micro dipotong di
+34 karakter. Kanan: institusi h3 dipotong di 46 karakter + deskripsi small dipotong di 150 karakter
+pada batas kata. Field `location` **tidak ditampilkan** — pada data nyata isinya mengulang nama
+institusi. Indent kiri berselang `[0, 26, 0, 26]`.
 
-**Certificates** — grid 3x2, tinggi kartu di-stagger; satu kartu blue dan satu ink sebagai aksen.
-Issuer small (blue/orange), judul h2, footer tahun + kode kredensial.
+**Certificates** — grid 3x2 (6 kartu per slide, maks 2 slide), tinggi kartu di-stagger; satu kartu
+blue dan satu ink sebagai aksen per slide. Issuer small (blue/orange), judul h3 dipotong di
+48 karakter, footer tanggal. Bila jumlah sertifikat melebihi 12, kartu terakhir slide kedua
+diganti kartu ink bertulis `+N more` dengan angka 56pt.
 
 **Contact** — blue full-bleed, `BleedCircle` mauve kanan-atas. Hero 2 baris 96pt.
 Garis + 4 kolom (`email`, `phone`, `github`, `linkedin`). QR 92x92 dalam kotak putih 8pt padding
@@ -228,10 +277,10 @@ yang ada:
 
 | Angka | Perhitungan | Label |
 |---|---|---|
-| Tahun pengalaman | tahun sekarang − tahun dari `startDate` paling awal di `experiences`; minimal 1 | `years building for the web` |
-| Jumlah proyek | `featuredProjects.length` | `projects shipped` |
-| Jumlah sertifikat | `certificates.length` | `certifications earned` |
-| Jumlah teknologi | total item di seluruh `technologies` group | `tools in daily rotation` |
+| Tahun pengalaman | tahun sekarang − tahun dari `startDate` paling awal di `experiences`; minimal 1. Data saat ini: Jan 2022 → **4** | `years building for the web` |
+| Jumlah proyek | `featuredProjects.length` (saat ini **3**) | `projects shipped` |
+| Jumlah sertifikat | `certificates.length` (saat ini **14**) | `certifications earned` |
+| Jumlah teknologi | total item di seluruh `technologies` group (saat ini **37**) | `tools in daily rotation` |
 
 Bila `experiences` kosong, kartu tahun diganti jumlah kategori proyek unik dengan label
 `domains worked in`. Slide tetap tampil
@@ -254,7 +303,22 @@ Karena itu gambar **tidak pernah** diberikan ke react-pdf sebagai URL mentah.
 Tipe `PortfolioPdfData` bertambah dua field: `profileImage?: string` dan `projectImages:
 Record<string, string | undefined>` (dikunci `project.id`).
 
-### 6.3 Font
+### 6.3 Tanggal
+
+PDF yang lama mencetak literal `Invalid Date` pada 6 dari 14 sertifikat karena `issuedAt` di Sanity
+tidak selalu berupa tanggal yang dapat di-parse. Deck tidak boleh mengulanginya.
+
+`layout.ts` menyediakan `formatDate(value?: string): string | undefined`:
+
+- `undefined` / string kosong → `undefined`
+- `new Date(value)` menghasilkan `NaN` → `undefined` (tidak pernah `"Invalid Date"`)
+- valid → `MMM yyyy` dalam locale `en-US` (contoh `Jan 2025`)
+
+Setiap slide yang menampilkan tanggal **menghilangkan seluruh baris** saat hasilnya `undefined`,
+bukan mencetak placeholder. `formatRange(start, end)` memakai `formatDate` untuk kedua sisi dan
+menghasilkan `Jan 2025 — Present` bila `end` kosong.
+
+### 6.4 Font
 
 `deck/fonts.ts` mendaftarkan font sekali (idempoten, dijaga flag modul) dengan
 `fs.readFileSync(path.join(process.cwd(), "public/fonts/..."))`.
@@ -274,7 +338,8 @@ src/pdf/
   deck/
     theme.ts           token: colors, type, spacing, grid
     fonts.ts           Font.register + fallback
-    layout.ts          stagger, heightFor, accentFor, chunk, formatYear
+    layout.ts          stagger, heightFor, accentFor, paginate, truncate,
+                       formatDate, formatRange, scaleTitle
     primitives.tsx     Slide, SlideHeader, Eyebrow, SlideNumber, BigType,
                        Chip, PixelBar, PixelRule, Dither, BleedCircle,
                        PhotoFrame, StatCard, Card
@@ -316,13 +381,16 @@ Dicatat supaya implementasi tidak menabraknya:
 Bukan sekadar "build lolos". Urutan wajib sebelum menyatakan selesai:
 
 1. `pnpm build` lolos tanpa error TypeScript.
-2. Jalankan dev server, `curl localhost:3000/api/portfolio/pdf -o /tmp/deck.pdf`.
+2. Jalankan dev server (`pnpm dev` — perhatikan port yang dipakai, bisa bergeser ke 3001 bila
+   3000 terpakai), lalu `curl localhost:<port>/api/portfolio/pdf -o /tmp/deck.pdf`.
+   Render penuh memakan ±20 detik: sebagian besar adalah fetch Sanity, bukan render.
 3. `pdfinfo /tmp/deck.pdf` — konfirmasi ukuran halaman 960x540pt dan jumlah slide masuk akal.
 4. `pdftoppm -png -r 72 /tmp/deck.pdf out/slide` — konversi **setiap** slide jadi PNG.
-5. Baca seluruh PNG secara visual. Yang dicari: teks meluber keluar kartu, kartu bertumpuk,
+5. `pdftotext /tmp/deck.pdf - | grep -c "Invalid Date"` harus menghasilkan `0`.
+6. Baca seluruh PNG secara visual. Yang dicari: teks meluber keluar kartu, kartu bertumpuk,
    kontras teks gagal, placeholder gambar yang tidak diinginkan, slide yang tanpa sengaja jadi
    grid rata.
-6. Perbaiki, ulangi dari langkah 2 sampai bersih.
+7. Perbaiki, ulangi dari langkah 2 sampai bersih.
 
 Bila Sanity tidak dapat dijangkau saat verifikasi, render memakai fixture dari `src/constants/`
 lewat harness sementara di scratchpad — harness itu tidak di-commit.
@@ -334,7 +402,10 @@ lewat harness sementara di scratchpad — harness itu tidak di-commit.
 | Risiko | Mitigasi |
 |---|---|
 | Bio dari Sanity terlalu panjang / pendek untuk slot slide | Potong di JS dengan batas karakter per slot; slide bio memakai 2 paragraf dengan sisa dibuang |
-| Judul proyek sangat panjang merusak headline 52pt | Ukuran font judul menurun bertahap bila panjang > 22 karakter |
-| Teknologi > 24 item membuat chip meluber | Chip dibatasi 24 dengan sisa diringkas `+N more` |
+| Judul proyek sangat panjang merusak headline 52pt | Ukuran turun bertahap: > 18 karakter → 40pt, > 26 karakter → 32pt |
+| 37 teknologi membuat chip meluber di cover & stack | Cover maks 6 chip; slide stack maks 24 chip dengan sisa diringkas `+N more` |
+| Deskripsi proyek sampai 560 karakter | Dipotong di 320 karakter pada batas kata |
+| 8 experience & 14 sertifikat tidak muat satu slide | Paginasi §5.1 |
+| `issuedAt` tak dapat di-parse mencetak `Invalid Date` | `formatDate` mengembalikan `undefined`, baris dihilangkan (§6.3) |
 | Font tidak ikut ter-bundle di serverless | `outputFileTracingIncludes` + fallback Helvetica |
 | Fetch gambar lambat memperlambat endpoint | Timeout 6 detik per gambar, di-fetch paralel |
