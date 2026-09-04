@@ -111,6 +111,7 @@ h1        52   lineHeight 1.0    Bold    judul proyek detail
 h1        44   lineHeight 1.02   Bold    judul slide
 stat      96   lineHeight 0.9    Bold    angka besar (kartu hero)
 stat2     64   lineHeight 0.9    Bold    angka besar (kartu sekunder)
+num       56   lineHeight 0.95   Bold    nomor kartu (contents, process)
 h2        26   lineHeight 1.1    Bold
 h3        17   lineHeight 1.2    Bold
 body      12   lineHeight 1.45   Regular
@@ -315,8 +316,9 @@ tidak selalu berupa tanggal yang dapat di-parse. Deck tidak boleh mengulanginya.
 - valid → `MMM yyyy` dalam locale `en-US` (contoh `Jan 2025`)
 
 Setiap slide yang menampilkan tanggal **menghilangkan seluruh baris** saat hasilnya `undefined`,
-bukan mencetak placeholder. `formatRange(start, end)` memakai `formatDate` untuk kedua sisi dan
-menghasilkan `Jan 2025 — Present` bila `end` kosong.
+bukan mencetak placeholder. `yearRange(start, end)` memakai `formatDate` untuk kedua sisi dan
+menghasilkan rentang tahun ringkas (`2025—now`, `2022—2024`) untuk kartu experience, di mana
+lebar kolom tidak memuat tanggal penuh.
 
 ### 6.4 Font
 
@@ -339,7 +341,8 @@ src/pdf/
     theme.ts           token: colors, type, spacing, grid
     fonts.ts           Font.register + fallback
     layout.ts          stagger, heightFor, accentFor, paginate, truncate,
-                       formatDate, formatRange, scaleTitle
+                       formatDate, yearRange, splitParagraphs, yearsSince,
+                       scaleTitle, pad2
     primitives.tsx     Slide, SlideHeader, Eyebrow, SlideNumber, BigType,
                        Chip, PixelBar, PixelRule, Dither, BleedCircle,
                        PhotoFrame, StatCard, Card
