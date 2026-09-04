@@ -21,21 +21,35 @@ const MUTED: Record<Tone, string> = {
 export function fgOn(tone: Tone): string { return FG[tone]; }
 export function mutedOn(tone: Tone): string { return MUTED[tone]; }
 
-/** Satu slide = satu Page. BleedCircle harus jadi anak pertama agar tampil di belakang. */
+/**
+ * Satu slide = satu Page. Dekorasi (mis. BleedCircle) dilewatkan lewat prop
+ * `decoration`, dirender di lapisan absolute page-sized yang overflow:hidden,
+ * terpisah dari children ber-padding — supaya offset negatifnya tidak pernah
+ * ikut dihitung ke content box yang dipakai react-pdf untuk pagination.
+ */
 export function Slide({
-  tone = "bone", padded = true, children,
-}: { tone?: Tone; padded?: boolean; children: React.ReactNode }) {
+  tone = "bone", padded = true, decoration, children,
+}: {
+  tone?: Tone; padded?: boolean;
+  decoration?: React.ReactNode; children: React.ReactNode;
+}) {
   return (
-    <Page
-      size={[SLIDE.w, SLIDE.h]}
-      style={{
-        backgroundColor: BG[tone],
-        overflow: "hidden",
+    <Page size={[SLIDE.w, SLIDE.h]} style={{ backgroundColor: BG[tone] }}>
+      {decoration && (
+        <View style={{
+          position: "absolute", top: 0, left: 0,
+          width: SLIDE.w, height: SLIDE.h, overflow: "hidden",
+        }}>
+          {decoration}
+        </View>
+      )}
+      <View style={{
+        height: SLIDE.h,
         paddingHorizontal: padded ? SLIDE.mx : 0,
         paddingVertical: padded ? SLIDE.my : 0,
-      }}
-    >
-      {children}
+      }}>
+        {children}
+      </View>
     </Page>
   );
 }
@@ -70,7 +84,7 @@ export function BigType({
   lines, size = "hero", color, accentColor, accentLast = false, style,
 }: {
   lines: string[]; size?: BigSize; color: string;
-  accentColor?: string; accentLast?: boolean; style?: object;
+  accentColor?: string; accentLast?: boolean; style?: React.ComponentProps<typeof View>["style"];
 }) {
   return (
     <View style={style}>

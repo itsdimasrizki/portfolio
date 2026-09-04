@@ -14,9 +14,7 @@ export function CoverSlide({
   const place = (settings.location ?? "").toLowerCase();
 
   return (
-    <Slide tone="bone">
-      <BleedCircle size={520} color={colors.peach} corner="bl" />
-
+    <Slide tone="bone" decoration={<BleedCircle size={520} color={colors.peach} corner="bl" />}>
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
         <Text style={{ ...type.body, fontWeight: 700, color: colors.ink }}>{name}</Text>
         <Text style={{ ...type.small, color: colors.muted }}>
