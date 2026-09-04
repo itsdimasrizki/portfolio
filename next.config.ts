@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  outputFileTracingIncludes: {
+    "/api/portfolio/pdf": ["./public/fonts/**"],
+  },
 };
 
 export default nextConfig;

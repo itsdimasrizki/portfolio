@@ -1,65 +1,24 @@
 import React from "react";
-import { Document } from "@react-pdf/renderer";
+import { Document, Page, View, Text } from "@react-pdf/renderer";
 import type { PortfolioPdfData } from "@/types/pdf";
+import { colors, SLIDE, type } from "./deck/theme";
 
-import { CoverPage } from "./pages/cover-page";
-import { AboutPage } from "./pages/about-page";
-import { ExperiencePage } from "./pages/experience-page";
-import { ProjectsPage } from "./pages/projects-page";
-import { CertificatesPage } from "./pages/certificates-page";
-import { TechnologiesPage } from "./pages/technologies-page";
-import { SkillsPage } from "./pages/skills-page";
-import { ContactPage } from "./pages/contact-page";
-
-type PortfolioPdfProps = {
-  data: PortfolioPdfData;
-};
-
-export function PortfolioPdf({ data }: PortfolioPdfProps) {
-  const { settings, experiences, featuredProjects, certificates, technologies, skills, qrCodeDataUrl } = data;
-
+export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
+  const name = data.settings.fullName ?? "Portfolio";
   return (
-    <Document
-      title={`${settings.fullName ?? "Portfolio"} — Portfolio`}
-      author={settings.fullName ?? "Portfolio"}
-      subject={`${settings.role ?? "Software Engineer"} Portfolio`}
-      keywords="Fullstack, Next.js, React, Laravel, TypeScript, Portfolio"
-      creator="Portfolio PDF Generator"
-      producer="@react-pdf/renderer"
-    >
-      {/* 1. Cover */}
-      <CoverPage settings={settings} />
-
-      {/* 2. About */}
-      <AboutPage settings={settings} />
-
-      {/* 3. Experience */}
-      {experiences.length > 0 && (
-        <ExperiencePage experiences={experiences} settings={settings} />
-      )}
-
-      {/* 4. Featured Projects */}
-      {featuredProjects.length > 0 && (
-        <ProjectsPage projects={featuredProjects} settings={settings} />
-      )}
-
-      {/* 5. Certificates */}
-      {certificates.length > 0 && (
-        <CertificatesPage certificates={certificates} settings={settings} />
-      )}
-
-      {/* 6. Technologies */}
-      {technologies.length > 0 && (
-        <TechnologiesPage technologies={technologies} settings={settings} />
-      )}
-
-      {/* 7. Skills */}
-      {skills.length > 0 && (
-        <SkillsPage skills={skills} settings={settings} />
-      )}
-
-      {/* 8. Contact + QR Code */}
-      <ContactPage settings={settings} qrCodeDataUrl={qrCodeDataUrl} />
+    <Document title={`${name} — Portfolio Deck`} author={name}>
+      <Page size={[SLIDE.w, SLIDE.h]} style={{ backgroundColor: colors.bone, padding: SLIDE.mx }}>
+        <Text style={{ ...type.micro, color: colors.blue }}>font check — silkscreen pixel</Text>
+        <Text style={{ ...type.hero, color: colors.ink }}>Grotesk</Text>
+        <Text style={{ ...type.body, color: colors.ink }}>
+          Space Grotesk regular 400 — the quick brown fox jumps over the lazy dog.
+        </Text>
+        <View style={{ flexDirection: "row", marginTop: 16 }}>
+          {[colors.blue, colors.orange, colors.ink, colors.peach, colors.mauve].map((c) => (
+            <View key={c} style={{ width: 60, height: 40, backgroundColor: c, marginRight: 8 }} />
+          ))}
+        </View>
+      </Page>
     </Document>
   );
 }
