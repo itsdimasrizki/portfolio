@@ -536,7 +536,6 @@ Primitif dan cover dikerjakan bersama karena saling membuktikan: cover memakai `
   - `<Dither width height color? cell? from? to? invert?>`
   - `<BleedCircle size color corner dx? dy?>`
   - `<PhotoFrame src? width height caption? dashed? tone?>`
-  - `<Card tone? width height top? left? padding? children>`
   - `<StatCard value label tone? width height size? dither? valueColor?>`
   - `<CoverSlide settings technologies photo?>`
 
@@ -786,22 +785,6 @@ export function PhotoFrame({
           <Text style={{ ...type.micro, color: colors.bone }}>{caption}</Text>
         </View>
       )}
-    </View>
-  );
-}
-
-export function Card({
-  tone = "paper", width, height, top = 0, left = 0, padding = 16, children,
-}: {
-  tone?: Tone; width: number; height?: number; top?: number;
-  left?: number; padding?: number; children: React.ReactNode;
-}) {
-  return (
-    <View style={{
-      width, height, marginTop: top, marginLeft: left,
-      backgroundColor: BG[tone], padding,
-    }}>
-      {children}
     </View>
   );
 }
@@ -1338,7 +1321,7 @@ git commit -m "feat(deck): prefetch images safely and add bio slide"
 - Modify: `src/pdf/portfolio-pdf.tsx`
 
 **Interfaces:**
-- Consumes: `yearsSince`, `truncate` (Task 2); `StatCard`, `Card`, `PixelBar`, `ChipRow`, `BigType`, `SlideHeader` (Task 3).
+- Consumes: `yearsSince`, `truncate` (Task 2); `StatCard`, `PixelBar`, `ChipRow`, `BigType`, `SlideHeader` (Task 3).
 - Produces:
   - `buildStats(input): { value: string; label: string }[]` diekspor dari `numbers.tsx`
   - `<NumbersSlide experiences featuredProjects certificates technologies>`
