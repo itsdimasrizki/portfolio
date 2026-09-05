@@ -4,10 +4,11 @@ import type { PortfolioPdfData } from "@/types/pdf";
 import { CoverSlide } from "./deck/slides/cover";
 import { ContentsSlide } from "./deck/slides/contents";
 import { DividerSlide } from "./deck/slides/divider";
+import { BioSlide } from "./deck/slides/bio";
 import { ClosingSlide } from "./deck/slides/closing";
 
 export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
-  const { settings, technologies } = data;
+  const { settings, technologies, profileImage } = data;
   const name = settings.fullName ?? "Portfolio";
   const techNames = technologies.flatMap((group) => group.items.map((item) => item.name));
 
@@ -18,7 +19,7 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
       subject={`${settings.role ?? "Software Engineer"} portfolio deck`}
       creator="Portfolio Deck Generator"
     >
-      <CoverSlide settings={settings} technologies={techNames} />
+      <CoverSlide settings={settings} technologies={techNames} photo={profileImage} />
       <ContentsSlide
         entries={[
           { label: "profile" }, { label: "work" }, { label: "experience" },
@@ -27,6 +28,7 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
       />
       <DividerSlide eyebrow="section 01" lines={["the", "profile"]} tone="bone" corner="bl"
         subline="Who is behind the work, and how they think about building it." />
+      <BioSlide settings={settings} photo={profileImage} />
       <DividerSlide eyebrow="section 02" lines={["selected", "work"]} tone="blue" corner="tr"
         subline="What the problem was, what was decided, and what came out of it." />
       <DividerSlide eyebrow="section 03" lines={["where i've", "worked"]} tone="ink" corner="tl"

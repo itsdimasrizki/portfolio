@@ -13,4 +13,8 @@ export interface PortfolioPdfData {
   technologies: TechnologyGroup[];
   skills: Skill[];
   qrCodeDataUrl: string;
+  /** Foto profil sebagai data URL; undefined bila file tidak terbaca. */
+  profileImage?: string;
+  /** Gambar pertama tiap proyek sebagai data URL, dikunci project.id. */
+  projectImages: Record<string, string | undefined>;
 }
