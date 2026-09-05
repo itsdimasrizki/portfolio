@@ -128,28 +128,36 @@ Konsekuensi yang diterima: halaman root tidak lagi murni statis.
 
 ### 4.3 Aliran data & fallback
 
-Tiap halaman menerima `params.locale` dan meneruskannya ke service. Service
-meneruskannya ke GROQ sebagai `$locale`. **Fallback dipasang di lapisan query,
-satu tempat saja:**
+Tiap halaman menerima `params.locale` dan meneruskannya ke service. **Query GROQ
+tidak berubah sama sekali** — field yang kini objek tetap terpilih apa adanya.
+Yang memilih bahasa adalah pemeta (`toProject`, `toExperience`, dan seterusnya)
+yang sudah ada di tiap service, lewat satu fungsi murni:
 
-```groq
-"description": coalesce(description[$locale], description.en)
+```ts
+description: pickLocalized(raw.description, locale)
+categories: (raw.category ?? []).map((item) => pickLocalized(item, locale))
 ```
 
-Untuk field array seperti `project.category`, bentuknya berbeda dan ini yang
-paling mudah salah — `coalesce` harus dijalankan per elemen, bukan atas
-arraynya:
+Fallback ke Inggris hidup di dalam `pickLocalized`, satu tempat saja.
 
-```groq
-"categories": category[]{ "v": coalesce(@[$locale], @.en) }.v
-```
+**Kenapa di JavaScript, bukan di GROQ.** Rancangan awal menaruh fallback di
+query sebagai `coalesce(description[$locale], description.en)`. Dua hal
+membatalkannya:
 
-Hasilnya tetap `string[]`, sama seperti yang diterima komponen sekarang.
+1. `coalesce` mengembalikan nilai pertama yang bukan `null`, dan string kosong
+   **bukan** `null`. Field Indonesia yang sudah dibuat lalu dikosongkan akan
+   mengembalikan `""`, bukan jatuh ke Inggris — persis kasus yang paling sering
+   terjadi selama pengisian bertahap.
+2. Logika di dalam string GROQ tidak bisa diuji tanpa menghubungi Sanity.
+   Sebagai fungsi murni, `pickLocalized` masuk ke `node --test` bersama helper
+   lain, dan proyek ini memang hanya punya jaring pengaman di sana.
 
-Tidak ada satu pun komponen yang perlu tahu soal fallback. Kalau versi Indonesia
-sebuah field belum diisi, GROQ sudah mengembalikan teks Inggrisnya, dan tipe
-yang diterima komponen tetap `string` seperti sekarang — jadi komponen tidak
-berubah bentuknya.
+`pickLocalized` juga menerima string mentah, bukan hanya objek. Itu yang membuat
+situs tidak pernah rusak di tengah migrasi: sebelum data dipindah ia
+mengembalikan string apa adanya, sesudahnya ia memilih bahasa.
+
+Tipe yang diterima komponen tetap `string` seperti sekarang, jadi tidak ada satu
+pun komponen tampilan yang berubah bentuknya.
 
 Tanda tangan service berubah dari `getProjects()` menjadi
 `getProjects(locale: Locale)`. Semua service ikut: `project`, `experience`,
@@ -192,8 +200,8 @@ menampilkannya — tapi isinya nama institusi seperti
 `Universitas Pembangunan Nasional "Veteran" Yogyakarta`, jadi tetap satu versi.
 
 Catatan untuk `certificate.title`: versi ID bersifat opsional. Kalau kosong,
-`coalesce` mengembalikan judul asli dari penerbit — jadi tidak pernah tampil
-kosong sementara 14 sertifikat diisi bertahap.
+`pickLocalized` mengembalikan judul asli dari penerbit — jadi tidak pernah
+tampil kosong sementara 14 sertifikat diisi bertahap.
 
 ### 5.2 Dokumen baru `pageContent`
 
