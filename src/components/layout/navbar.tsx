@@ -9,18 +9,23 @@ import { Container } from "./container";
 import { Button } from "@/components/ui/button";
 import { DownloadPortfolioButton } from "@/components/common/download-portfolio-button";
 import { MobileNav } from "./mobile-nav";
+import { LanguageSwitcher } from "./language-switcher";
 import { navLinks } from "@/constants/navigation";
+import { getMessages } from "@/i18n/dictionary";
+import { localeHref, type Locale } from "@/i18n/locale";
 import { cn } from "@/lib/utils";
 
 const navItems = navLinks.filter((item) => item.href !== "/");
 
 type NavbarProps = {
   cvUrl?: string | null;
+  locale: Locale;
 };
 
-export function Navbar({ cvUrl }: NavbarProps) {
+export function Navbar({ cvUrl, locale }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const messages = getMessages(locale);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +48,7 @@ export function Navbar({ cvUrl }: NavbarProps) {
     >
       <Container className="flex h-16 items-center justify-between">
         <Link
-          href="/"
+          href={localeHref(locale, "/")}
           className="text-sm font-semibold tracking-tight transition-colors hover:text-foreground/80"
         >
           Dimas Rizki Ardiansyah
@@ -51,14 +56,14 @@ export function Navbar({ cvUrl }: NavbarProps) {
 
         <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => {
+            const href = localeHref(locale, item.href);
             const isActive =
-              pathname === item.href ||
-              (pathname.startsWith(item.href) && item.href !== "/");
+              pathname === href || (pathname.startsWith(href) && item.href !== "/");
 
             return (
               <Link
                 key={item.href}
-                href={item.href}
+                href={href}
                 className={cn(
                   "relative rounded-md px-3 py-1.5 text-sm transition-colors duration-200",
                   isActive
@@ -77,7 +82,7 @@ export function Navbar({ cvUrl }: NavbarProps) {
                     }}
                   />
                 )}
-                {item.label}
+                {messages[item.labelKey]}
               </Link>
             );
           })}
@@ -90,21 +95,23 @@ export function Navbar({ cvUrl }: NavbarProps) {
             {cvUrl ? (
               <Button variant="outline" size="sm" asChild>
                 <a href={cvUrl} download target="_blank" rel="noopener noreferrer">
-                  Download CV
+                  {messages["cta.downloadCv"]}
                 </a>
               </Button>
             ) : (
               <Button variant="outline" size="sm" asChild>
                 <a href="/resume.pdf" download>
-                  Download CV
+                  {messages["cta.downloadCv"]}
                 </a>
               </Button>
             )}
 
             <DownloadPortfolioButton />
+
+            <LanguageSwitcher locale={locale} className="hidden md:flex" />
           </div>
 
-          <MobileNav cvUrl={cvUrl} />
+          <MobileNav cvUrl={cvUrl} locale={locale} />
         </div>
       </Container>
     </header>

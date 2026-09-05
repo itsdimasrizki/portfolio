@@ -48,9 +48,9 @@ export default async function SiteLayout({
     <html lang={locale}>
       <body className={`${geistSans.className} antialiased`}>
         <MotionProvider>
-          <Navbar cvUrl={cvUrl} />
+          <Navbar cvUrl={cvUrl} locale={locale} />
           {children}
-          <Footer />
+          <Footer locale={locale} />
         </MotionProvider>
       </body>
     </html>
