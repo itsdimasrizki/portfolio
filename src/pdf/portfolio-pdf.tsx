@@ -5,6 +5,8 @@ import { CoverSlide } from "./deck/slides/cover";
 import { ContentsSlide } from "./deck/slides/contents";
 import { DividerSlide } from "./deck/slides/divider";
 import { BioSlide } from "./deck/slides/bio";
+import { NumbersSlide } from "./deck/slides/numbers";
+import { StackSlide } from "./deck/slides/stack";
 import { ClosingSlide } from "./deck/slides/closing";
 
 export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
@@ -29,6 +31,13 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
       <DividerSlide eyebrow="section 01" lines={["the", "profile"]} tone="bone" corner="bl"
         subline="Who is behind the work, and how they think about building it." />
       <BioSlide settings={settings} photo={profileImage} />
+      <NumbersSlide
+        experiences={data.experiences}
+        featuredProjects={data.featuredProjects}
+        certificates={data.certificates}
+        technologies={technologies}
+      />
+      {technologies.length > 0 && <StackSlide technologies={technologies} />}
       <DividerSlide eyebrow="section 02" lines={["selected", "work"]} tone="blue" corner="tr"
         subline="What the problem was, what was decided, and what came out of it." />
       <DividerSlide eyebrow="section 03" lines={["where i've", "worked"]} tone="ink" corner="tl"
