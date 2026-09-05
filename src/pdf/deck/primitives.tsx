@@ -20,6 +20,7 @@ const MUTED: Record<Tone, string> = {
 
 export function fgOn(tone: Tone): string { return FG[tone]; }
 export function mutedOn(tone: Tone): string { return MUTED[tone]; }
+export function bgOn(tone: Tone): string { return BG[tone]; }
 
 /**
  * Satu slide = satu Page. Dekorasi (mis. BleedCircle) dilewatkan lewat prop

@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text } from "@react-pdf/renderer";
-import { Slide, SlideHeader, fgOn, type Tone } from "../primitives";
+import { Slide, SlideHeader, fgOn, bgOn, type Tone } from "../primitives";
 import { colors, type } from "../theme";
 import { stagger, heightFor, accentFor, truncate, pad2 } from "../layout";
 import type { Skill } from "@/types/skill";
 
 const WIDTH = 158;
 const GUTTER = 18;
-const BASE = 300;
+const BASE = 370;
 
 export function ProcessSlide({ skills, pageIndex }: { skills: Skill[]; pageIndex: number }) {
   const heroIndex = pageIndex % 5;
@@ -28,9 +28,7 @@ export function ProcessSlide({ skills, pageIndex }: { skills: Skill[]; pageIndex
                 height: heightFor(i, BASE),
                 marginTop: Math.max(0, stagger(i)),
                 marginRight: i < skills.length - 1 ? GUTTER : 0,
-                backgroundColor: tone === "paper" ? colors.paper
-                  : tone === "blue" ? colors.blue
-                  : tone === "orange" ? colors.orange : colors.ink,
+                backgroundColor: bgOn(tone),
                 padding: 16,
               }}
             >
