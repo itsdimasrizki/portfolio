@@ -526,7 +526,7 @@ Primitif dan cover dikerjakan bersama karena saling membuktikan: cover memakai `
 - Consumes: `colors`, `SLIDE`, `type` (Task 1); `pad2` (Task 2).
 - Produces:
   - `type Tone = "bone" | "paper" | "blue" | "ink" | "orange"`
-  - `fgOn(tone: Tone): string`, `mutedOn(tone: Tone): string`
+  - `bgOn(tone: Tone): string`, `fgOn(tone: Tone): string`, `mutedOn(tone: Tone): string`
   - `<Slide tone? padded? decoration? children>`
   - `<SlideHeader eyebrow tone? rule?>`, `<SlideNumber tone?>`
   - `<BigType lines size? color accentColor? accentLast? style?>`
@@ -564,6 +564,7 @@ const MUTED: Record<Tone, string> = {
   ink: "#7A786F", orange: "#8A3E22",
 };
 
+export function bgOn(tone: Tone): string { return BG[tone]; }
 export function fgOn(tone: Tone): string { return FG[tone]; }
 export function mutedOn(tone: Tone): string { return MUTED[tone]; }
 
@@ -1223,7 +1224,7 @@ import { colors, type } from "../theme";
 import { splitParagraphs, truncate } from "../layout";
 import type { SanitySettings } from "@/types/siteSettings";
 
-const FOCUS = ["clean architecture", "intuitive interfaces", "efficient backends"];
+const FOCUS = ["clean architecture", "intuitive experiences", "efficient backends"];
 
 export function BioSlide({ settings, photo }: { settings: SanitySettings; photo?: string }) {
   const first = (settings.fullName ?? "").split(" ")[0]?.toLowerCase() || "me";
@@ -1243,7 +1244,10 @@ export function BioSlide({ settings, photo }: { settings: SanitySettings; photo?
           <PhotoFrame src={photo} width={372} height={252} />
           <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 12 }}>
             {facts.map((fact, i) => {
-              const highlight = i === 3;
+              // Keyed on the field, not the position: `facts` is filtered for
+              // present values, so a positional check would silently drop the
+              // highlight whenever any settings field is missing.
+              const highlight = fact.key === "portfolio";
               return (
                 <View
                   key={fact.key}
@@ -1526,14 +1530,14 @@ Nomor kartu berjalan menerus lintas slide (01–05 lalu 06–10), jadi `pageInde
 ```tsx
 import React from "react";
 import { View, Text } from "@react-pdf/renderer";
-import { Slide, SlideHeader, fgOn, type Tone } from "../primitives";
+import { Slide, SlideHeader, bgOn, fgOn, type Tone } from "../primitives";
 import { colors, type } from "../theme";
 import { stagger, heightFor, accentFor, truncate, pad2 } from "../layout";
 import type { Skill } from "@/types/skill";
 
 const WIDTH = 158;
 const GUTTER = 18;
-const BASE = 300;
+const BASE = 370;
 
 export function ProcessSlide({ skills, pageIndex }: { skills: Skill[]; pageIndex: number }) {
   const heroIndex = pageIndex % 5;
@@ -1554,9 +1558,7 @@ export function ProcessSlide({ skills, pageIndex }: { skills: Skill[]; pageIndex
                 height: heightFor(i, BASE),
                 marginTop: Math.max(0, stagger(i)),
                 marginRight: i < skills.length - 1 ? GUTTER : 0,
-                backgroundColor: tone === "paper" ? colors.paper
-                  : tone === "blue" ? colors.blue
-                  : tone === "orange" ? colors.orange : colors.ink,
+                backgroundColor: bgOn(tone),
                 padding: 16,
               }}
             >
@@ -1900,7 +1902,7 @@ export function ExperienceSlide({
 ```tsx
 import React from "react";
 import { View, Text } from "@react-pdf/renderer";
-import { Slide, SlideHeader, fgOn, mutedOn, type Tone } from "../primitives";
+import { Slide, SlideHeader, bgOn, fgOn, mutedOn, type Tone } from "../primitives";
 import { colors, type } from "../theme";
 import { truncate, formatDate } from "../layout";
 import type { Certificate } from "@/types/certificate";
@@ -1926,7 +1928,7 @@ export function CertificatesSlide({
               style={{
                 width: 272, height: HEIGHTS[i], padding: 16, marginBottom: 16,
                 marginRight: i % 3 === 2 ? 0 : 24,
-                backgroundColor: tone === "blue" ? colors.blue : tone === "ink" ? colors.ink : colors.paper,
+                backgroundColor: bgOn(tone),
                 justifyContent: "space-between",
               }}
             >
