@@ -1717,8 +1717,10 @@ export function ProjectDetailSlide({
         </View>
       </View>
       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-        {project.github && <Chip label={`github ↗ ${shortUrl(project.github)}`} variant="ink" />}
-        {project.liveDemo && <Chip label={`live ↗ ${shortUrl(project.liveDemo)}`} variant="outline" />}
+        {/* Pemisah `·`, bukan `↗`: Space Grotesk tidak punya U+2197, jadi panah
+            jatuh ke Helvetica dan tercetak sebagai strip. */}
+        {project.github && <Chip label={`github · ${shortUrl(project.github)}`} variant="ink" />}
+        {project.liveDemo && <Chip label={`live · ${shortUrl(project.liveDemo)}`} variant="outline" />}
       </View>
     </View>
   );
@@ -2286,21 +2288,21 @@ ls /tmp/slides
 ```
 
 Expected:
-- `pnpm test` — semua lolos; `pnpm build` dan `pnpm lint` bersih.
+- `pnpm test` — semua lolos; `pnpm build` bersih. `pnpm lint` masih melaporkan 11 error yang sudah ada sebelum deck ini (semuanya di `src/components/sections/**`: `react/no-unescaped-entities`, `no-explicit-any`, satu setState-dalam-effect); tidak satu pun berasal dari `src/pdf/`. Berkas deck hanya memicu warning `jsx-a11y/alt-text` atas `Image` milik `@react-pdf` — aturan itu memang salah sasaran di sini.
 - `http=200`.
-- `Page size: 960 x 540 pts`, `Pages: 23`.
-- `pdffonts` menampilkan SpaceGrotesk (tiga berat) dan Silkscreen, semuanya `emb yes`.
+- `Page size: 960 x 540 pts`. Jumlah halaman mengikuti data: dengan 3 featured project, 8 experience, dan 14 sertifikat hasilnya **21 halaman** (slide grid proyek tidak muncul karena butuh >4 proyek).
+- `pdffonts` menampilkan SpaceGrotesk (tiga berat) dan Silkscreen, semuanya `emb yes`, **dan tidak ada Helvetica**. Helvetica yang muncul berarti ada glyph di luar cakupan Space Grotesk — font ini tidak punya panah (`↗`, `→`), jadi karakter semacam itu jatuh ke Helvetica dan tercetak sebagai strip.
 - Hitungan `Invalid Date` = `0`.
 
 - [ ] **Step 6: Lihat SETIAP slide, satu per satu**
 
-Buka ke-23 PNG di `/tmp/slides/`. Ini langkah yang tidak boleh dilewati — bukan sekadar mengecek build lolos. Untuk tiap slide periksa:
+Buka seluruh PNG di `/tmp/slides/` (21 dengan data saat ini). Ini langkah yang tidak boleh dilewati — bukan sekadar mengecek build lolos. Untuk tiap slide periksa:
 
 1. Tidak ada teks yang melewati tepi kartu atau tepi slide.
 2. Tidak ada kartu yang bertumpuk atau keluar tepi bawah.
 3. Kontras teks memadai (bone di atas blue/ink, ink di atas orange/bone).
 4. Tidak ada placeholder dither yang tidak disengaja (artinya gambar gagal dimuat).
-5. Nomor slide berurutan 01–23 dan nomor di daftar isi menunjuk ke slide yang benar — buka halaman yang disebut daftar isi dan pastikan itu memang divider bagian tersebut.
+5. Nomor slide berurutan 01–21 dan nomor di daftar isi menunjuk ke slide yang benar — buka halaman yang disebut daftar isi dan pastikan itu memang divider bagian tersebut.
 6. **Tidak ada slide konten yang tampak sebagai grid rata.** Bila ada, `stagger`/`heightFor` belum diterapkan di slide itu.
 7. Tidak ada dua slide berurutan dengan warna hero yang sama.
 

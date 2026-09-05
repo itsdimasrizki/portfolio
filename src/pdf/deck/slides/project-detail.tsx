@@ -38,8 +38,10 @@ export function ProjectDetailSlide({
         </View>
       </View>
       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-        {project.github && <Chip label={`github ↗ ${shortUrl(project.github)}`} variant="ink" />}
-        {project.liveDemo && <Chip label={`live ↗ ${shortUrl(project.liveDemo)}`} variant="outline" />}
+        {/* Pemisah `·`, bukan `↗`: Space Grotesk tidak punya U+2197, jadi panah
+            jatuh ke Helvetica dan tercetak sebagai strip. */}
+        {project.github && <Chip label={`github · ${shortUrl(project.github)}`} variant="ink" />}
+        {project.liveDemo && <Chip label={`live · ${shortUrl(project.liveDemo)}`} variant="outline" />}
       </View>
     </View>
   );

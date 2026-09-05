@@ -22,7 +22,7 @@ export async function GET(): Promise<Response> {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="Dimas-Rizki-Portfolio.pdf"',
+        "Content-Disposition": 'attachment; filename="Dimas-Rizki-Portfolio-Deck.pdf"',
         "Cache-Control": "no-store, no-cache, must-revalidate",
       },
     });
