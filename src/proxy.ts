@@ -4,7 +4,7 @@ import { isLocale, resolveLocale } from "@/i18n/locale";
 
 const HAS_EXTENSION = /\.[^/]+$/;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Studio adalah aplikasi tersendiri, /api bukan halaman, dan berkas statis

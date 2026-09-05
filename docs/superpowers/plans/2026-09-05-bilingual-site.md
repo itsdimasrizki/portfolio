@@ -44,7 +44,7 @@ pdfinfo /tmp/deck-id.pdf | grep -E "Pages|Page size"
 | `src/i18n/locale.ts` | Locale, konstanta, dan seluruh logika murni: `resolveLocale`, `localeHref`, `pickLocalized`. **Tanpa import.** |
 | `src/i18n/messages/{id,en}.json` | Kamus label UI, kunci datar bertitik |
 | `src/i18n/dictionary.ts` | `getMessages(locale)` + tipe `Messages` |
-| `src/middleware.ts` | Pengalihan URL polos ke bahasa yang tepat |
+| `src/proxy.ts` | Pengalihan URL polos ke bahasa yang tepat (Next 16 mengganti nama konvensi `middleware` jadi `proxy`) |
 | `src/app/(site)/[locale]/layout.tsx` | Root layout situs: `<html lang>`, Navbar, Footer, `generateStaticParams`, `generateMetadata` |
 | `src/app/(studio)/studio/[[...tool]]/layout.tsx` | Root layout kedua, khusus Sanity Studio |
 | `src/components/layout/language-switcher.tsx` | Tombol ID/EN, menulis cookie dan pindah path |
@@ -504,8 +504,8 @@ Task paling struktural. Setelah ini `/id/...` dan `/en/...` sudah melayani situs
 **Files:**
 - Create: `src/app/(site)/[locale]/layout.tsx`
 - Create: `src/app/(studio)/studio/[[...tool]]/layout.tsx`
-- Create: `src/middleware.ts`
-- Move: `src/app/{page,about,projects,experience,certificates,contact}` → `src/app/(site)/[locale]/`
+- Create: `src/proxy.ts`
+- Move: `src/app/{page,template,about,projects,experience,certificates,contact}` → `src/app/(site)/[locale]/`
 - Move: `src/app/studio` → `src/app/(studio)/studio`
 - Modify: `src/app/(studio)/studio/[[...tool]]/page.tsx` (kedalaman import berubah)
 - Delete: `src/app/layout.tsx`
@@ -634,9 +634,11 @@ export default function StudioLayout({
 }
 ```
 
-- [ ] **Step 5: Tulis middleware**
+- [ ] **Step 5: Tulis proxy**
 
-`src/middleware.ts`:
+Next 16 mengganti nama konvensi `middleware` menjadi `proxy`; berkas lama masih jalan tapi memunculkan peringatan usang di tiap build, dan nama fungsi ekspornya harus mengikuti nama berkas.
+
+`src/proxy.ts`:
 
 ```ts
 import { NextResponse, type NextRequest } from "next/server";
@@ -645,7 +647,7 @@ import { isLocale, resolveLocale } from "@/i18n/locale";
 
 const HAS_EXTENSION = /\.[^/]+$/;
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Studio adalah aplikasi tersendiri, /api bukan halaman, dan berkas statis
@@ -710,7 +712,7 @@ Expected:
 - `Accept-Language: id-ID,...,en;q=0.8` → 307 ke `/id` (mengandung `en` tapi bobotnya lebih rendah)
 - `/studio` → **200, tanpa pengalihan**
 - `/id` dan `/en/about` → 200
-- `/jv` → 404
+- `/jv` → 307 ke `/id/jv`, lalu 404. Proxy tidak bisa membedakan locale yang salah dari path tanpa prefix — `/about` juga segmen pertama yang bukan locale dan memang harus dialihkan. Yang penting pembacanya berakhir di 404.
 
 - [ ] **Step 8: Lihat halamannya**
 
@@ -721,7 +723,7 @@ Buka juga `http://localhost:$P/studio` dan pastikan Sanity Studio memuat penuh, 
 - [ ] **Step 9: Commit**
 
 ```bash
-git add -A src/app src/middleware.ts
+git add -A src/app src/proxy.ts
 git commit -m "feat(i18n): move pages under [locale] with a separate studio root layout"
 ```
 
