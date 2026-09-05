@@ -46,18 +46,32 @@ export function scaleTitle(title: string): number {
 
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
+const YEAR_ONLY = /^\s*(\d{4})\s*$/;
+
 export function formatDate(value?: string): string | undefined {
   if (!value) return undefined;
+  // Tahun telanjang tetap telanjang: `new Date("2026")` mendarat di 1 Januari,
+  // jadi mencetak "Jan 2026" berarti mengarang bulan yang tidak ada di data.
+  const bareYear = YEAR_ONLY.exec(value);
+  if (bareYear) return bareYear[1];
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return undefined;
   return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
+/** Tahun saja dari sebuah tanggal, apa pun bentuk keluaran `formatDate`. */
+function yearOf(value?: string): string | undefined {
+  const formatted = formatDate(value);
+  if (!formatted) return undefined;
+  const parts = formatted.split(" ");
+  return parts[parts.length - 1];
+}
+
 /** Rentang tahun ringkas untuk kartu experience: "2025—now", "2022—2024". */
 export function yearRange(start?: string, end?: string): string | undefined {
-  const from = formatDate(start)?.split(" ")[1];
+  const from = yearOf(start);
   if (!from) return undefined;
-  return `${from}—${formatDate(end)?.split(" ")[1] ?? "now"}`;
+  return `${from}—${yearOf(end) ?? "now"}`;
 }
 
 export function splitParagraphs(text: string, parts: number): string[] {

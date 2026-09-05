@@ -61,6 +61,13 @@ test("formatDate renders a parseable date as MMM yyyy", () => {
   assert.equal(formatDate("2025-01-15"), "Jan 2025");
 });
 
+test("formatDate keeps a bare year bare instead of inventing a month", () => {
+  // `new Date("2026")` lands on 1 January, so "Jan 2026" would print a month
+  // that is not in the data.
+  assert.equal(formatDate("2026"), "2026");
+  assert.equal(formatDate("2025"), "2025");
+});
+
 test("yearRange marks an open-ended range as now", () => {
   assert.equal(yearRange("2025-01-15", undefined), "2025—now");
   assert.equal(yearRange("2022-01-01", "2024-01-01"), "2022—2024");
@@ -68,6 +75,11 @@ test("yearRange marks an open-ended range as now", () => {
 
 test("yearRange returns undefined when the start is unusable", () => {
   assert.equal(yearRange("nope", "also nope"), undefined);
+});
+
+test("yearRange still reads a bare year on either end", () => {
+  assert.equal(yearRange("2022", "2024"), "2022—2024");
+  assert.equal(yearRange("2022", undefined), "2022—now");
 });
 
 test("splitParagraphs splits on sentence boundaries", () => {

@@ -456,18 +456,32 @@ export function scaleTitle(title: string): number {
 
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
+const YEAR_ONLY = /^\s*(\d{4})\s*$/;
+
 export function formatDate(value?: string): string | undefined {
   if (!value) return undefined;
+  // Tahun telanjang tetap telanjang: `new Date("2026")` mendarat di 1 Januari,
+  // jadi mencetak "Jan 2026" berarti mengarang bulan yang tidak ada di data.
+  const bareYear = YEAR_ONLY.exec(value);
+  if (bareYear) return bareYear[1];
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return undefined;
   return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
+/** Tahun saja dari sebuah tanggal, apa pun bentuk keluaran `formatDate`. */
+function yearOf(value?: string): string | undefined {
+  const formatted = formatDate(value);
+  if (!formatted) return undefined;
+  const parts = formatted.split(" ");
+  return parts[parts.length - 1];
+}
+
 /** Rentang tahun ringkas untuk kartu experience: "2025—now", "2022—2024". */
 export function yearRange(start?: string, end?: string): string | undefined {
-  const from = formatDate(start)?.split(" ")[1];
+  const from = yearOf(start);
   if (!from) return undefined;
-  return `${from}—${formatDate(end)?.split(" ")[1] ?? "now"}`;
+  return `${from}—${yearOf(end) ?? "now"}`;
 }
 
 export function splitParagraphs(text: string, parts: number): string[] {
@@ -1867,11 +1881,16 @@ export function ExperienceSlide({
         const hero = pageIndex === 0 && i === 0;
         const tone: Tone = hero ? "blue" : "paper";
         const range = yearRange(experience.startDate, experience.endDate);
+        const indent = INDENT[i % 4];
+        // Lebar eksplisit, bukan flexGrow: flexShrink default yoga adalah 0,
+        // jadi kolom teks tidak pernah menyusut dan deskripsi panjang meluber
+        // keluar kartu. 864 - indent - 28 (padding kartu) - 190 (kolom kiri).
+        const bodyWidth = 646 - indent;
         return (
           <View
             key={experience.id}
             style={{
-              width: 864 - INDENT[i % 4], marginLeft: INDENT[i % 4],
+              width: 864 - indent, marginLeft: indent,
               height: 84, marginBottom: 12, padding: 14, flexDirection: "row",
               backgroundColor: hero ? colors.blue : colors.paper,
             }}
@@ -1884,7 +1903,7 @@ export function ExperienceSlide({
                 {truncate(experience.position, 34)}
               </Text>
             </View>
-            <View style={{ flexGrow: 1, paddingLeft: 16 }}>
+            <View style={{ width: bodyWidth, paddingLeft: 16 }}>
               <Text style={{ ...type.h3, color: fgOn(tone) }}>
                 {truncate(experience.company, 46)}
               </Text>
@@ -1998,7 +2017,8 @@ Daftar periksa:
 - Dua slide experience (8 entri / 4 per slide); entri pertama slide pertama biru.
 - Kartu experience ber-indent selang-seling, tidak rata kiri semua.
 - Tidak ada satu pun `Invalid Date` — jalankan `pdftotext /tmp/deck.pdf - | grep -c "Invalid Date"`, harus `0`.
-- Sertifikat dengan `issuedAt` rusak tampil **tanpa baris tanggal**, bukan dengan placeholder.
+- Sertifikat dengan `issuedAt` rusak tampil **tanpa baris tanggal**, bukan dengan placeholder. `issuedAt` di Sanity adalah teks bebas berformat campur (`"2026"`, `"20 Juli 2026"`, `"08 Juli 2026 - 08 Juli 2029"`); nama bulan Indonesia dan rentang tidak terparse, jadi 7 dari 14 sertifikat memang tampil tanpa tanggal.
+- Deskripsi kartu experience membungkus **di dalam** kartu, tidak meluber ke tepi slide.
 - Dua slide sertifikat; kartu terakhir slide kedua bertulis `+2` `more credentials` (14 sertifikat, 12 tampil).
 - Judul sertifikat panjang seperti `Participans Competitive Programming GUNADARMA CODE WEEK` terpotong rapi, tidak menabrak tanggal.
 

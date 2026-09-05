@@ -11,11 +11,14 @@ import { ProcessSlide } from "./deck/slides/process";
 import { ProjectIndexSlide } from "./deck/slides/project-index";
 import { ProjectDetailSlide } from "./deck/slides/project-detail";
 import { ProjectGridSlide } from "./deck/slides/project-grid";
+import { ExperienceSlide } from "./deck/slides/experience";
+import { CertificatesSlide } from "./deck/slides/certificates";
 import { ClosingSlide } from "./deck/slides/closing";
 import { paginate } from "./deck/layout";
 
 export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
-  const { settings, technologies, skills, profileImage, featuredProjects, projectImages } = data;
+  const { settings, technologies, skills, profileImage, featuredProjects, projectImages,
+    experiences, certificates } = data;
   const name = settings.fullName ?? "Portfolio";
   const techNames = technologies.flatMap((group) => group.items.map((item) => item.name));
 
@@ -37,9 +40,9 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
         subline="Who is behind the work, and how they think about building it." />
       <BioSlide settings={settings} photo={profileImage} />
       <NumbersSlide
-        experiences={data.experiences}
+        experiences={experiences}
         featuredProjects={featuredProjects}
-        certificates={data.certificates}
+        certificates={certificates}
         technologies={technologies}
       />
       {technologies.length > 0 && <StackSlide technologies={technologies} />}
@@ -57,9 +60,25 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
       )}
       <DividerSlide eyebrow="section 03" lines={["where i've", "worked"]} tone="ink" corner="tl"
         subline="Teaching, research labs, student organisations, and industry programmes." />
+      {paginate(experiences, 4, 2).map((page, i) => (
+        <ExperienceSlide key={`exp-${i}`} experiences={page} pageIndex={i} />
+      ))}
       <DividerSlide eyebrow="section 04" lines={["credentials"]} tone="orange" corner="br"
         subline="Scheduled proof of learning — not a substitute for experience." />
-      <ClosingSlide settings={data.settings} />
+      {(() => {
+        const pages = paginate(certificates, 6, 2);
+        const shown = pages.flat().length;
+        const overflow = certificates.length - shown;
+        return pages.map((page, i) => (
+          <CertificatesSlide
+            key={`cert-${i}`}
+            certificates={page}
+            pageIndex={i}
+            overflow={i === pages.length - 1 ? Math.max(0, overflow) : 0}
+          />
+        ));
+      })()}
+      <ClosingSlide settings={settings} />
     </Document>
   );
 }
