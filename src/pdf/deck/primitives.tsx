@@ -86,8 +86,12 @@ export function BigType({
   lines: string[]; size?: BigSize; color: string;
   accentColor?: string; accentLast?: boolean; style?: React.ComponentProps<typeof View>["style"];
 }) {
+  const containerStyle = [
+    { paddingBottom: size === "hero" ? 22 : 0 },
+    style,
+  ] as React.ComponentProps<typeof View>["style"];
   return (
-    <View style={style}>
+    <View style={containerStyle}>
       {lines.map((line, i) => (
         <Text
           key={`${line}-${i}`}
