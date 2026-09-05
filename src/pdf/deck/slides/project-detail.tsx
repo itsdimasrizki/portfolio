@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image } from "@react-pdf/renderer";
+import { View, Text, Image, Link } from "@react-pdf/renderer";
 import { Slide, SlideNumber, ChipRow, Chip, Dither } from "../primitives";
 import { colors, type } from "../theme";
 import { truncate, scaleTitle, pad2 } from "../layout";
@@ -40,8 +40,16 @@ export function ProjectDetailSlide({
       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
         {/* Pemisah `·`, bukan `↗`: Space Grotesk tidak punya U+2197, jadi panah
             jatuh ke Helvetica dan tercetak sebagai strip. */}
-        {project.github && <Chip label={`github · ${shortUrl(project.github)}`} variant="ink" />}
-        {project.liveDemo && <Chip label={`live · ${shortUrl(project.liveDemo)}`} variant="outline" />}
+        {project.github && (
+          <Link src={project.github} style={{ textDecoration: "none" }}>
+            <Chip label={`github · ${shortUrl(project.github)}`} variant="ink" />
+          </Link>
+        )}
+        {project.liveDemo && (
+          <Link src={project.liveDemo} style={{ textDecoration: "none" }}>
+            <Chip label={`live · ${shortUrl(project.liveDemo)}`} variant="outline" />
+          </Link>
+        )}
       </View>
     </View>
   );

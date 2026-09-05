@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "@react-pdf/renderer";
+import { View, Text, Link } from "@react-pdf/renderer";
 import { Slide, SlideHeader, BigType, PhotoFrame, PixelRule } from "../primitives";
 import { colors, type } from "../theme";
 import { splitParagraphs, truncate } from "../layout";
@@ -7,15 +7,26 @@ import type { SanitySettings } from "@/types/siteSettings";
 
 const FOCUS = ["clean architecture", "intuitive experiences", "efficient backends"];
 
+type FactDraft = { key: string; value?: string; href?: string };
+type Fact = FactDraft & { value: string };
+
+function bareUrl(url: string): string {
+  return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+}
+
 export function BioSlide({ settings, photo }: { settings: SanitySettings; photo?: string }) {
   const first = (settings.fullName ?? "").split(" ")[0]?.toLowerCase() || "me";
   const paragraphs = splitParagraphs(settings.bio ?? "", 2);
-  const facts = [
+  // `label` yang dicetak, `href` yang diklik. URL mentah dicukur protokol dan
+  // garis miring akhirnya dulu supaya muat di kartu 180pt tanpa terpotong.
+  const drafts: FactDraft[] = [
     { key: "location", value: settings.location },
     { key: "role", value: settings.role },
-    { key: "email", value: settings.email },
-    { key: "portfolio", value: settings.portfolioUrl },
-  ].filter((fact): fact is { key: string; value: string } => Boolean(fact.value));
+    { key: "email", value: settings.email, href: settings.email && `mailto:${settings.email}` },
+    { key: "portfolio", value: settings.portfolioUrl && bareUrl(settings.portfolioUrl),
+      href: settings.portfolioUrl },
+  ];
+  const facts = drafts.filter((fact): fact is Fact => Boolean(fact.value));
 
   return (
     <Slide tone="bone">
@@ -26,9 +37,8 @@ export function BioSlide({ settings, photo }: { settings: SanitySettings; photo?
           <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 12 }}>
             {facts.map((fact, i) => {
               const highlight = fact.key === "portfolio";
-              return (
+              const card = (
                 <View
-                  key={fact.key}
                   style={{
                     width: 180, height: 62, padding: 10,
                     marginRight: i % 2 === 0 ? 12 : 0, marginBottom: 12,
@@ -43,10 +53,13 @@ export function BioSlide({ settings, photo }: { settings: SanitySettings; photo?
                     ...type.small, fontWeight: 500, marginTop: 4,
                     color: highlight ? colors.bone : colors.ink,
                   }}>
-                    {truncate(fact.value, 28)}
+                    {truncate(fact.value, 32)}
                   </Text>
                 </View>
               );
+              return fact.href
+                ? <Link key={fact.key} src={fact.href} style={{ textDecoration: "none" }}>{card}</Link>
+                : <View key={fact.key}>{card}</View>;
             })}
           </View>
         </View>

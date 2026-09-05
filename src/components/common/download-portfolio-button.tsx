@@ -37,7 +37,7 @@ export function DownloadPortfolioButton({
       // Trigger browser download
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = "Dimas-Rizki-Portfolio.pdf";
+      anchor.download = "Dimas-Rizki-Portfolio-Deck.pdf";
       document.body.appendChild(anchor);
       anchor.click();
       document.body.removeChild(anchor);

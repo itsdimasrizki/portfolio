@@ -1,19 +1,23 @@
 import React from "react";
-import { View, Text, Image } from "@react-pdf/renderer";
+import { View, Text, Image, Link } from "@react-pdf/renderer";
 import { Slide, BleedCircle, BigType, SlideNumber } from "../primitives";
 import { colors, type } from "../theme";
 import { truncate } from "../layout";
 import type { SanitySettings } from "@/types/siteSettings";
 
+type ItemDraft = { key: string; value?: string; href?: string };
+type Item = ItemDraft & { value: string };
+
 export function ContactSlide({
   settings, qrCodeDataUrl,
 }: { settings: SanitySettings; qrCodeDataUrl: string }) {
-  const items = [
-    { key: "email", value: settings.email },
-    { key: "phone", value: settings.phone },
-    { key: "github", value: settings.githubUrl },
-    { key: "linkedin", value: settings.linkedinUrl },
-  ].filter((item): item is { key: string; value: string } => Boolean(item.value));
+  const drafts: ItemDraft[] = [
+    { key: "email", value: settings.email, href: settings.email && `mailto:${settings.email}` },
+    { key: "phone", value: settings.phone, href: settings.phone && `tel:${settings.phone.replace(/[^+\d]/g, "")}` },
+    { key: "github", value: settings.githubUrl, href: settings.githubUrl },
+    { key: "linkedin", value: settings.linkedinUrl, href: settings.linkedinUrl },
+  ];
+  const items = drafts.filter((item): item is Item => Boolean(item.value));
 
   return (
     <Slide tone="blue" decoration={<BleedCircle size={440} color={colors.mauve} corner="tr" />}>
@@ -27,14 +31,19 @@ export function ContactSlide({
         <View style={{ height: 1, backgroundColor: colors.bone, marginTop: 22, marginBottom: 14 }} />
         <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
           <View style={{ flexDirection: "row", flexGrow: 1 }}>
-            {items.map((item) => (
-              <View key={item.key} style={{ width: 190 }}>
-                <Text style={{ ...type.micro, color: colors.mutedOn }}>{item.key}</Text>
-                <Text style={{ ...type.small, fontWeight: 700, color: colors.bone, marginTop: 5 }}>
-                  {truncate(item.value.replace(/^https?:\/\//, ""), 26)}
-                </Text>
-              </View>
-            ))}
+            {items.map((item) => {
+              const cell = (
+                <View style={{ width: 190 }}>
+                  <Text style={{ ...type.micro, color: colors.mutedOn }}>{item.key}</Text>
+                  <Text style={{ ...type.small, fontWeight: 700, color: colors.bone, marginTop: 5 }}>
+                    {truncate(item.value.replace(/^https?:\/\//, ""), 26)}
+                  </Text>
+                </View>
+              );
+              return item.href
+                ? <Link key={item.key} src={item.href} style={{ textDecoration: "none" }}>{cell}</Link>
+                : <View key={item.key}>{cell}</View>;
+            })}
           </View>
           {qrCodeDataUrl && (
             <View style={{ backgroundColor: colors.white, padding: 8 }}>
