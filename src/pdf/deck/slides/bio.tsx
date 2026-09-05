@@ -5,7 +5,7 @@ import { colors, type } from "../theme";
 import { splitParagraphs, truncate } from "../layout";
 import type { SanitySettings } from "@/types/siteSettings";
 
-const FOCUS = ["clean architecture", "intuitive interfaces", "efficient backends"];
+const FOCUS = ["clean architecture", "intuitive experiences", "efficient backends"];
 
 export function BioSlide({ settings, photo }: { settings: SanitySettings; photo?: string }) {
   const first = (settings.fullName ?? "").split(" ")[0]?.toLowerCase() || "me";
@@ -25,7 +25,7 @@ export function BioSlide({ settings, photo }: { settings: SanitySettings; photo?
           <PhotoFrame src={photo} width={372} height={252} />
           <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 12 }}>
             {facts.map((fact, i) => {
-              const highlight = i === 3;
+              const highlight = fact.key === "portfolio";
               return (
                 <View
                   key={fact.key}
