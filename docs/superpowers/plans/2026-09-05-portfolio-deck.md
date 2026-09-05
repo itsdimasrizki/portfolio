@@ -637,8 +637,11 @@ export function BigType({
   accentColor?: string; accentLast?: boolean;
   style?: React.ComponentProps<typeof View>["style"];
 }) {
+  // `hero` is the only token with a sub-1.0 lineHeight, so its descenders hang
+  // outside the line box and collide with whatever follows. Reserve the space
+  // here rather than at each call site.
   return (
-    <View style={style}>
+    <View style={[{ paddingBottom: size === "hero" ? 22 : 0 }, style as object]}>
       {lines.map((line, i) => (
         <Text
           key={`${line}-${i}`}
