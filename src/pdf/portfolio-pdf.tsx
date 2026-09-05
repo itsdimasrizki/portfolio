@@ -7,10 +7,12 @@ import { DividerSlide } from "./deck/slides/divider";
 import { BioSlide } from "./deck/slides/bio";
 import { NumbersSlide } from "./deck/slides/numbers";
 import { StackSlide } from "./deck/slides/stack";
+import { ProcessSlide } from "./deck/slides/process";
 import { ClosingSlide } from "./deck/slides/closing";
+import { paginate } from "./deck/layout";
 
 export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
-  const { settings, technologies, profileImage } = data;
+  const { settings, technologies, skills, profileImage } = data;
   const name = settings.fullName ?? "Portfolio";
   const techNames = technologies.flatMap((group) => group.items.map((item) => item.name));
 
@@ -38,6 +40,9 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
         technologies={technologies}
       />
       {technologies.length > 0 && <StackSlide technologies={technologies} />}
+      {paginate(skills, 5, 2).map((page, i) => (
+        <ProcessSlide key={`process-${i}`} skills={page} pageIndex={i} />
+      ))}
       <DividerSlide eyebrow="section 02" lines={["selected", "work"]} tone="blue" corner="tr"
         subline="What the problem was, what was decided, and what came out of it." />
       <DividerSlide eyebrow="section 03" lines={["where i've", "worked"]} tone="ink" corner="tl"
