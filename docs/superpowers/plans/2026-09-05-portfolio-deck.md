@@ -1716,7 +1716,10 @@ export function ProjectDetailSlide({
         : <Dither width={480} height={540} />}
       {project.status && (
         <View style={{
-          position: "absolute", top: 40,
+          // Sudut bawah, bukan atas: nomor slide duduk di kanan atas, dan pada
+          // slide tak-bercermin media menempati sisi itu — badge di atas akan
+          // menimpanya.
+          position: "absolute", bottom: 40,
           left: mirrored ? 40 : undefined, right: mirrored ? undefined : 40,
           backgroundColor: colors.orange, paddingHorizontal: 10, paddingVertical: 6,
         }}>
@@ -1812,10 +1815,10 @@ export function ProjectGridSlide({
 
 Daftar periksa:
 - Tiga slide detail; slide 1 dan 3 teks di kiri, slide 2 teks di kanan (layout cermin bekerja).
-- Judul `Matcha - AI Career Assistance` (29 karakter) turun ke 32pt dan **muat satu baris**, tidak terpotong.
+- Judul `Matcha - AI Career Assistance` (29 karakter) turun ke 32pt dan patah rapi jadi dua baris — kolom teks hanya 384pt, jadi satu baris mustahil tanpa mengecilkan tipe sampai kehilangan hierarki. Yang wajib: tidak terpotong.
 - Proyek dengan 11 teknologi menampilkan 8 chip + chip `+3`.
-- Screenshot proyek memenuhi setengah bidang tanpa distorsi (objectFit cover).
-- Badge oranye `completed` tidak menutupi bagian penting gambar dan berpindah sisi mengikuti cermin.
+- Screenshot proyek memenuhi setengah bidang tanpa distorsi (objectFit cover). Screenshot lanskap akan terpotong berat di frame 480×540; itu konsekuensi `cover` yang diterima.
+- Badge oranye `completed` duduk di sudut **bawah** media dan berpindah sisi mengikuti cermin — di sudut atas ia menimpa nomor slide pada slide tak-bercermin.
 - Deskripsi 560 karakter terpotong di ~320 dengan `…`, tidak meluber ke luar kolom.
 - Nomor slide tetap muncul di kanan atas meski slide ini tanpa padding.
 

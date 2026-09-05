@@ -8,11 +8,14 @@ import { BioSlide } from "./deck/slides/bio";
 import { NumbersSlide } from "./deck/slides/numbers";
 import { StackSlide } from "./deck/slides/stack";
 import { ProcessSlide } from "./deck/slides/process";
+import { ProjectIndexSlide } from "./deck/slides/project-index";
+import { ProjectDetailSlide } from "./deck/slides/project-detail";
+import { ProjectGridSlide } from "./deck/slides/project-grid";
 import { ClosingSlide } from "./deck/slides/closing";
 import { paginate } from "./deck/layout";
 
 export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
-  const { settings, technologies, skills, profileImage } = data;
+  const { settings, technologies, skills, profileImage, featuredProjects, projectImages } = data;
   const name = settings.fullName ?? "Portfolio";
   const techNames = technologies.flatMap((group) => group.items.map((item) => item.name));
 
@@ -35,7 +38,7 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
       <BioSlide settings={settings} photo={profileImage} />
       <NumbersSlide
         experiences={data.experiences}
-        featuredProjects={data.featuredProjects}
+        featuredProjects={featuredProjects}
         certificates={data.certificates}
         technologies={technologies}
       />
@@ -45,6 +48,13 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
       ))}
       <DividerSlide eyebrow="section 02" lines={["selected", "work"]} tone="blue" corner="tr"
         subline="What the problem was, what was decided, and what came out of it." />
+      {featuredProjects.length > 0 && <ProjectIndexSlide projects={featuredProjects} />}
+      {featuredProjects.slice(0, 4).map((project, i) => (
+        <ProjectDetailSlide key={project.id} project={project} index={i} image={projectImages[project.id]} />
+      ))}
+      {featuredProjects.length > 4 && (
+        <ProjectGridSlide projects={featuredProjects.slice(4, 6)} images={projectImages} startIndex={4} />
+      )}
       <DividerSlide eyebrow="section 03" lines={["where i've", "worked"]} tone="ink" corner="tl"
         subline="Teaching, research labs, student organisations, and industry programmes." />
       <DividerSlide eyebrow="section 04" lines={["credentials"]} tone="orange" corner="br"
