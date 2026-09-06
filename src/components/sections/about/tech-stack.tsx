@@ -13,6 +13,8 @@ import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Reveal } from "@/components/motion/reveal";
 import { TechnologyCard } from "@/components/cards/technology-card";
+import { getMessages } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locale";
 import type { TechnologyGroup } from "@/types/technology";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
@@ -54,17 +56,20 @@ function getDynamicIcon(iconName: string): IconComponent {
 
 type Props = {
   technologies: TechnologyGroup[];
+  locale: Locale;
 };
 
-export function TechStack({ technologies }: Props) {
+export function TechStack({ technologies, locale }: Props) {
+  const messages = getMessages(locale);
+
   return (
     <Section>
       <Container>
         <Reveal>
           <SectionHeader
-            eyebrow="Tech Stack"
-            title="The technologies I use every day."
-            description="A curated set of tools and technologies I use to build modern, scalable, and maintainable applications."
+            eyebrow={messages["section.techStack.eyebrow"]}
+            title={messages["section.techStack.title"]}
+            description={messages["section.techStack.description"]}
           />
         </Reveal>
 

@@ -78,7 +78,7 @@ export function MobileNav({ cvUrl, locale }: MobileNavProps) {
               </a>
             )}
           </Button>
-          <DownloadPortfolioButton className="w-full" />
+          <DownloadPortfolioButton className="w-full" locale={locale} />
         </div>
       </SheetContent>
     </Sheet>

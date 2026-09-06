@@ -6,27 +6,34 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
+import { getMessages } from "@/i18n/dictionary";
+import { localeHref, type Locale } from "@/i18n/locale";
 import type { Project } from "@/types/project";
 
 import { ProjectGrid } from "./project-grid";
 
 type Props = {
   projects: Project[];
+  locale: Locale;
 };
 
-export function FeaturedProjects({ projects }: Props) {
+export function FeaturedProjects({ projects, locale }: Props) {
+  const messages = getMessages(locale);
+
   return (
     <Section>
       <Container>
         <Reveal>
           <SectionHeader
             align="left"
-            eyebrow="Projects"
-            title="Featured Projects"
-            description="A selection of things I've designed and built recently."
+            eyebrow={messages["section.featuredProjects.eyebrow"]}
+            title={messages["section.featuredProjects.title"]}
+            description={messages["section.featuredProjects.description"]}
             action={
               <Button asChild variant="ghost">
-                <Link href="/projects">View all</Link>
+                <Link href={localeHref(locale, "/projects")}>
+                  {messages["cta.viewAll"]}
+                </Link>
               </Button>
             }
           />

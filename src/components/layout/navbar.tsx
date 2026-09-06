@@ -106,7 +106,7 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
               </Button>
             )}
 
-            <DownloadPortfolioButton />
+            <DownloadPortfolioButton locale={locale} />
 
             <LanguageSwitcher locale={locale} className="hidden md:flex" />
           </div>

@@ -13,6 +13,8 @@ import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Reveal } from "@/components/motion/reveal";
 import { SkillCard } from "@/components/cards/skill-card";
+import { getMessages } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locale";
 import type { Skill } from "@/types/skill";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
@@ -41,17 +43,20 @@ function getDynamicSkillIcon(iconName: string): IconComponent {
 
 type Props = {
   skills: Skill[];
+  locale: Locale;
 };
 
-export function Skills({ skills }: Props) {
+export function Skills({ skills, locale }: Props) {
+  const messages = getMessages(locale);
+
   return (
     <Section>
       <Container>
         <Reveal>
           <SectionHeader
-            eyebrow="Skills"
-            title="What I bring to every project."
-            description="Beyond the technologies I use, these are the core skills I apply to design, develop, and deliver high-quality software solutions."
+            eyebrow={messages["section.skills.eyebrow"]}
+            title={messages["section.skills.title"]}
+            description={messages["section.skills.description"]}
           />
         </Reveal>
 

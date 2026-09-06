@@ -3,20 +3,28 @@ import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Reveal } from "@/components/motion/reveal";
 
-export function ContactHero() {
+import { getMessages } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locale";
+
+type Props = {
+  locale: Locale;
+};
+
+export function ContactHero({ locale }: Props) {
+  const messages = getMessages(locale);
+
   return (
     <Section className="pb-0">
       <Container>
         <Reveal>
           <SectionHeader
             as="h1"
-            eyebrow="Contact"
-            title="Let's build something together."
-            description="Have a project in mind or just want to say hello? Send me a message and I'll get back to you as soon as I can."
+            eyebrow={messages["section.contact.eyebrow"]}
+            title={messages["section.contact.title"]}
+            description={messages["section.contact.description"]}
           />
         </Reveal>
       </Container>
     </Section>
   );
 }
-

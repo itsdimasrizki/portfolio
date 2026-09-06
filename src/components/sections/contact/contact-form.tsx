@@ -7,8 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { getMessages } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locale";
 
-export function ContactForm() {
+type Props = {
+  locale: Locale;
+};
+
+export function ContactForm({ locale }: Props) {
+  const messages = getMessages(locale);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<{
     type: "success" | "error" | null;
@@ -96,17 +103,23 @@ export function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Name</Label>
-          <Input id="name" name="name" placeholder="Your name" required disabled={loading} />
+          <Label htmlFor="name">{messages["form.name.label"]}</Label>
+          <Input
+            id="name"
+            name="name"
+            placeholder={messages["form.name.placeholder"]}
+            required
+            disabled={loading}
+          />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{messages["form.email.label"]}</Label>
           <Input
             id="email"
             name="email"
             type="email"
-            placeholder="you@example.com"
+            placeholder={messages["form.email.placeholder"]}
             required
             disabled={loading}
           />
@@ -114,22 +127,22 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="subject">Subject</Label>
+        <Label htmlFor="subject">{messages["form.subject.label"]}</Label>
         <Input
           id="subject"
           name="subject"
-          placeholder="What's this about?"
+          placeholder={messages["form.subject.placeholder"]}
           required
           disabled={loading}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message">Message</Label>
+        <Label htmlFor="message">{messages["form.message.label"]}</Label>
         <Textarea
           id="message"
           name="message"
-          placeholder="Tell me about your project or idea..."
+          placeholder={messages["form.message.placeholder"]}
           required
           disabled={loading}
         />

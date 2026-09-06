@@ -8,6 +8,8 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
+import { getMessages } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locale";
 import type { Certificate } from "@/types/certificate";
 
 import { CertificateGrid } from "./certificate-grid";
@@ -16,9 +18,11 @@ const ALL = "All";
 
 type Props = {
   certificates: Certificate[];
+  locale: Locale;
 };
 
-export function CertificatesList({ certificates }: Props) {
+export function CertificatesList({ certificates, locale }: Props) {
+  const messages = getMessages(locale);
   const [activeIssuer, setActiveIssuer] = useState(ALL);
 
   const issuers = useMemo(() => {
@@ -37,9 +41,9 @@ export function CertificatesList({ certificates }: Props) {
         <Reveal>
           <SectionHeader
             as="h1"
-            eyebrow="Certificates"
-            title="Certifications and continuous learning."
-            description="Professional certifications I've earned while growing as a Fullstack Software Engineer."
+            eyebrow={messages["section.allCertificates.eyebrow"]}
+            title={messages["section.allCertificates.title"]}
+            description={messages["section.allCertificates.description"]}
           />
         </Reveal>
 

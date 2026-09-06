@@ -4,13 +4,18 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
+import { getMessages } from "@/i18n/dictionary";
+import { localeHref, type Locale } from "@/i18n/locale";
 import { heroItem } from "@/lib/motion";
 
 type HeroContentProps = {
   cvUrl?: string | null;
+  locale: Locale;
 };
 
-export function HeroContent({ cvUrl }: HeroContentProps) {
+export function HeroContent({ cvUrl, locale }: HeroContentProps) {
+  const messages = getMessages(locale);
+
   return (
     <div className="max-w-xl">
       <motion.span
@@ -56,7 +61,9 @@ export function HeroContent({ cvUrl }: HeroContentProps) {
         className="mt-8 flex flex-wrap gap-4"
       >
         <Button size="lg" asChild>
-          <Link href="/projects">View Projects</Link>
+          <Link href={localeHref(locale, "/projects")}>
+            {messages["cta.viewProjects"]}
+          </Link>
         </Button>
 
         <Button size="lg" variant="outline" asChild>
@@ -66,7 +73,7 @@ export function HeroContent({ cvUrl }: HeroContentProps) {
             target={cvUrl ? "_blank" : undefined}
             rel={cvUrl ? "noopener noreferrer" : undefined}
           >
-            Download CV
+            {messages["cta.downloadCv"]}
           </a>
         </Button>
       </motion.div>
