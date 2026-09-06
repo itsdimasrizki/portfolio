@@ -10,6 +10,14 @@
 
 **Spec:** `docs/superpowers/specs/2026-09-05-bilingual-site-design.md`
 
+**Status per 2026-09-06:** Task 1-7 dan Task 10 selesai dan ter-commit di
+`portofolio-v2`. Task 8 berhenti di Step 5: penulisan ke dataset produksi butuh
+`SANITY_API_WRITE_TOKEN` dan berkas cadangan yang keduanya hanya bisa dibuat
+pemilik akun Sanity. Skrip, entri `package.json`, dan dry-run-nya sudah ada dan
+menyebut 70 field. Task 9 sengaja belum dikerjakan: menghapus prosa dari kode
+sebelum dokumen `pageContent` benar-benar ada akan mengosongkan hero dan
+halaman Tentang.
+
 ## Global Constraints
 
 - **Tanpa dependensi npm baru.** Tidak ada `next-intl` atau library i18n lain. Diukur sebelum diputuskan: hanya 8 link internal dan 0 `useRouter` di seluruh situs.
@@ -77,7 +85,7 @@ Seluruh logika yang bisa salah diam-diam ada di sini, dan hanya di sini yang bis
   - `localeHref(locale: Locale, href: string): string`
   - `pickLocalized(value: Localized | string | undefined, locale: Locale): string`
 
-- [ ] **Step 1: Tulis test yang gagal**
+- [x] **Step 1: Tulis test yang gagal**
 
 `tests/i18n/locale.test.ts`:
 
@@ -161,12 +169,12 @@ test("pickLocalized menerima string mentah dari data yang belum dimigrasi", () =
 });
 ```
 
-- [ ] **Step 2: Jalankan test, pastikan gagal**
+- [x] **Step 2: Jalankan test, pastikan gagal**
 
 Run: `pnpm test`
 Expected: FAIL dengan `Cannot find module .../src/i18n/locale.ts`.
 
-- [ ] **Step 3: Tulis implementasinya**
+- [x] **Step 3: Tulis implementasinya**
 
 `src/i18n/locale.ts`:
 
@@ -234,17 +242,17 @@ export function pickLocalized(
 }
 ```
 
-- [ ] **Step 4: Jalankan test, pastikan lolos**
+- [x] **Step 4: Jalankan test, pastikan lolos**
 
 Run: `pnpm test`
 Expected: PASS. Jumlah test naik dari 18 menjadi 31, `fail 0`, tanpa baris warning.
 
-- [ ] **Step 5: Pastikan build tetap bersih**
+- [x] **Step 5: Pastikan build tetap bersih**
 
 Run: `pnpm build`
 Expected: selesai tanpa error TypeScript.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add src/i18n/locale.ts tests/i18n/locale.test.ts
@@ -264,7 +272,7 @@ git commit -m "feat(i18n): add pure locale helpers with unit tests"
 - Consumes: `Locale`, `DEFAULT_LOCALE` (Task 1).
 - Produces: `getMessages(locale: Locale): Messages`, `type Messages` (kunci datar bertitik).
 
-- [ ] **Step 1: Tulis test yang gagal**
+- [x] **Step 1: Tulis test yang gagal**
 
 Uji yang benar-benar berharga di sini adalah kesamaan kunci — itu yang menangkap terjemahan yang lupa ditambahkan.
 
@@ -306,12 +314,12 @@ test("kamus Indonesia tidak sekadar menyalin bahasa Inggris", () => {
 });
 ```
 
-- [ ] **Step 2: Jalankan test, pastikan gagal**
+- [x] **Step 2: Jalankan test, pastikan gagal**
 
 Run: `pnpm test`
 Expected: FAIL — berkas `id.json` dan `en.json` belum ada (`ENOENT`).
 
-- [ ] **Step 3: Tulis `src/i18n/messages/en.json`**
+- [x] **Step 3: Tulis `src/i18n/messages/en.json`**
 
 ```json
 {
@@ -386,7 +394,7 @@ Expected: FAIL — berkas `id.json` dan `en.json` belum ada (`ENOENT`).
 }
 ```
 
-- [ ] **Step 4: Tulis `src/i18n/messages/id.json`**
+- [x] **Step 4: Tulis `src/i18n/messages/id.json`**
 
 ```json
 {
@@ -461,7 +469,7 @@ Expected: FAIL — berkas `id.json` dan `en.json` belum ada (`ENOENT`).
 }
 ```
 
-- [ ] **Step 5: Tulis `src/i18n/dictionary.ts`**
+- [x] **Step 5: Tulis `src/i18n/dictionary.ts`**
 
 ```ts
 import en from "./messages/en.json";
@@ -480,7 +488,7 @@ export function getMessages(locale: Locale): Messages {
 
 `Messages` sengaja diturunkan dari `en.json` supaya nama kunci ikut ter-autocomplete dan salah ketik tertangkap type-check.
 
-- [ ] **Step 6: Jalankan test dan build**
+- [x] **Step 6: Jalankan test dan build**
 
 Run: `pnpm test`
 Expected: PASS, jumlah test naik menjadi 34.
@@ -488,7 +496,7 @@ Expected: PASS, jumlah test naik menjadi 34.
 Run: `pnpm build`
 Expected: bersih. Bila TypeScript mengeluh soal impor JSON, pastikan `resolveJsonModule` aktif di `tsconfig.json` — di proyek ini sudah.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add src/i18n tests/i18n/messages.test.ts
@@ -516,7 +524,7 @@ Task paling struktural. Setelah ini `/id/...` dan `/en/...` sudah melayani situs
 
 **Kenapa route group.** Kalau semua halaman masuk `[locale]`, `src/app/layout.tsx` tidak bisa lagi jadi root layout — `/studio` akan ikut tertelan segmen bahasa dan Studio rusak. Next.js menyediakan root layout ganda lewat route group: hapus `app/layout.tsx`, lalu beri tiap group root layout-nya sendiri. `(site)` dan `(studio)` tidak muncul di URL.
 
-- [ ] **Step 1: Pindahkan berkas dengan `git mv`**
+- [x] **Step 1: Pindahkan berkas dengan `git mv`**
 
 Pakai `git mv` supaya riwayatnya terjaga dan diff terbaca sebagai perpindahan, bukan hapus-tulis.
 
@@ -533,7 +541,7 @@ ls -R src/app | head -40
 
 `src/app/globals.css`, `src/app/favicon.ico`, `src/app/template.tsx`, dan `src/app/api/` **tetap di tempatnya**.
 
-- [ ] **Step 2: Perbaiki kedalaman import di halaman Studio**
+- [x] **Step 2: Perbaiki kedalaman import di halaman Studio**
 
 `src/app/(studio)/studio/[[...tool]]/page.tsx` mengimpor `sanity.config` dengan path relatif. Folder bertambah satu tingkat, jadi jumlah `../` ikut bertambah:
 
@@ -543,7 +551,7 @@ import config from "../../../../../sanity.config";
 
 Sebelumnya empat tingkat, sekarang lima. Kalau ini terlewat, Studio gagal di-build dan pesannya tidak menyebut soal pemindahan folder.
 
-- [ ] **Step 3: Tulis root layout situs**
+- [x] **Step 3: Tulis root layout situs**
 
 `src/app/(site)/[locale]/layout.tsx`:
 
@@ -608,7 +616,7 @@ export default async function SiteLayout({
 }
 ```
 
-- [ ] **Step 4: Tulis root layout Studio**
+- [x] **Step 4: Tulis root layout Studio**
 
 `src/app/(studio)/studio/[[...tool]]/layout.tsx`:
 
@@ -634,7 +642,7 @@ export default function StudioLayout({
 }
 ```
 
-- [ ] **Step 5: Tulis proxy**
+- [x] **Step 5: Tulis proxy**
 
 Next 16 mengganti nama konvensi `middleware` menjadi `proxy`; berkas lama masih jalan tapi memunculkan peringatan usang di tiap build, dan nama fungsi ekspornya harus mengikuti nama berkas.
 
@@ -681,14 +689,14 @@ export const config = {
 };
 ```
 
-- [ ] **Step 6: Build**
+- [x] **Step 6: Build**
 
 Run: `pnpm build`
 Expected: bersih. Daftar route menampilkan `/[locale]`, `/[locale]/about`, dan seterusnya, plus `/studio/[[...tool]]`.
 
 Bila Next mengeluh soal root layout yang hilang, berarti `src/app/layout.tsx` belum terhapus atau salah satu route group belum punya `layout.tsx`.
 
-- [ ] **Step 7: Buktikan pengalihannya, satu per satu**
+- [x] **Step 7: Buktikan pengalihannya, satu per satu**
 
 ```bash
 pnpm dev   # catat portnya
@@ -714,13 +722,13 @@ Expected:
 - `/id` dan `/en/about` → 200
 - `/jv` → 307 ke `/id/jv`, lalu 404. Proxy tidak bisa membedakan locale yang salah dari path tanpa prefix — `/about` juga segmen pertama yang bukan locale dan memang harus dialihkan. Yang penting pembacanya berakhir di 404.
 
-- [ ] **Step 8: Lihat halamannya**
+- [x] **Step 8: Lihat halamannya**
 
 Buka `http://localhost:$P/id` di browser dan pastikan situs tampil utuh seperti sebelumnya — navbar, hero, seluruh seksi, footer. Isinya masih berbahasa Inggris; itu benar, terjemahan datang di task berikutnya.
 
 Buka juga `http://localhost:$P/studio` dan pastikan Sanity Studio memuat penuh, bukan halaman putih atau error.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A src/app src/proxy.ts
@@ -743,7 +751,7 @@ Navbar, menu mobile, footer, dan tombol pengganti bahasa.
 - Consumes: `localeHref`, `type Locale`, `LOCALES` (Task 1); `getMessages`, `type Messages` (Task 2).
 - Produces: `<LanguageSwitcher locale className? />`; `Navbar` dan `Footer` menerima prop `locale: Locale`.
 
-- [ ] **Step 1: Ubah `navLinks` jadi menyimpan kunci, bukan label**
+- [x] **Step 1: Ubah `navLinks` jadi menyimpan kunci, bukan label**
 
 `src/constants/navigation.ts`:
 
@@ -767,7 +775,7 @@ export const navLinks: NavLink[] = [
 
 `href` sengaja disimpan tanpa prefix bahasa; prefix ditambahkan saat render lewat `localeHref`.
 
-- [ ] **Step 2: Tulis tombol pengganti bahasa**
+- [x] **Step 2: Tulis tombol pengganti bahasa**
 
 `src/components/layout/language-switcher.tsx`:
 
@@ -828,7 +836,7 @@ export function LanguageSwitcher({ locale, className }: LanguageSwitcherProps) {
 }
 ```
 
-- [ ] **Step 3: Ubah navbar**
+- [x] **Step 3: Ubah navbar**
 
 Di `src/components/layout/navbar.tsx`: tambahkan `locale: Locale` ke `NavbarProps`, ambil `const messages = getMessages(locale)`, dan
 
@@ -842,7 +850,7 @@ Di `src/components/layout/navbar.tsx`: tambahkan `locale: Locale` ke `NavbarProp
 
 `getMessages` aman dipanggil di komponen client karena kamusnya JSON statis, bukan permintaan jaringan.
 
-- [ ] **Step 4: Ubah menu mobile**
+- [x] **Step 4: Ubah menu mobile**
 
 Di `src/components/layout/mobile-nav.tsx`: tambahkan `locale: Locale` ke props, ambil `messages`, dan
 
@@ -854,7 +862,7 @@ Di `src/components/layout/mobile-nav.tsx`: tambahkan `locale: Locale` ke props, 
 - ganti `title="Navigation"` pada `SheetContent` menjadi `title={messages["footer.navigation"]}`
 - tambahkan `<LanguageSwitcher locale={locale} className="self-start" />` di atas kedua tombol unduhan
 
-- [ ] **Step 5: Ubah footer**
+- [x] **Step 5: Ubah footer**
 
 Di `src/components/layout/footer.tsx`: tambahkan `locale: Locale` ke props, ambil `messages`, dan
 
@@ -867,7 +875,7 @@ Di `src/components/layout/footer.tsx`: tambahkan `locale: Locale` ke props, ambi
 
 Tautan media sosial memakai URL absolut, jadi `localeHref` membiarkannya utuh — tidak perlu perlakuan khusus.
 
-- [ ] **Step 6: Teruskan locale dari layout**
+- [x] **Step 6: Teruskan locale dari layout**
 
 Di `src/app/(site)/[locale]/layout.tsx`, ubah pemanggilannya:
 
@@ -879,7 +887,7 @@ Di `src/app/(site)/[locale]/layout.tsx`, ubah pemanggilannya:
 
 `locale` di titik ini sudah lolos `isLocale`, jadi tipenya sudah menyempit menjadi `Locale`.
 
-- [ ] **Step 7: Build dan lihat kedua bahasa**
+- [x] **Step 7: Build dan lihat kedua bahasa**
 
 ```bash
 pnpm build && pnpm dev
@@ -892,7 +900,7 @@ Buka `/id` dan `/en`, lalu periksa:
 - Item nav yang aktif tersorot dengan benar di kedua bahasa
 - Di lebar 360px, panel menu memuat kelima link berbahasa Indonesia plus tombol pengganti bahasa
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add src/components/layout src/constants/navigation.ts "src/app/(site)"
@@ -919,7 +927,7 @@ Mekanis tapi banyak: sembilan pemanggilan `SectionHeader`, formulir kontak, dan 
 - Consumes: `localeHref`, `type Locale` (Task 1); `getMessages` (Task 2).
 - Produces: setiap komponen seksi menerima prop `locale: Locale`.
 
-- [ ] **Step 1: Contoh lengkap satu berkas**
+- [x] **Step 1: Contoh lengkap satu berkas**
 
 `src/components/sections/projects/index.tsx` dikerjakan seperti ini, dan berkas lain mengikuti pola yang sama:
 
@@ -954,7 +962,7 @@ export function FeaturedProjects({ projects, locale }: FeaturedProjectsProps) {
 }
 ```
 
-- [ ] **Step 2: Terapkan ke seluruh pemanggilan `SectionHeader`**
+- [x] **Step 2: Terapkan ke seluruh pemanggilan `SectionHeader`**
 
 Setiap baris di bawah adalah satu berkas; ketiga prop diganti dengan kunci yang tercantum.
 
@@ -972,7 +980,7 @@ Setiap baris di bawah adalah satu berkas; ketiga prop diganti dengan kunci yang 
 
 Masing-masing memakai `.eyebrow`, `.title`, dan `.description`.
 
-- [ ] **Step 3: Ganti teks tombol dan tautan**
+- [x] **Step 3: Ganti teks tombol dan tautan**
 
 | Berkas | Teks sekarang | Kunci |
 |---|---|---|
@@ -988,7 +996,7 @@ Masing-masing memakai `.eyebrow`, `.title`, dan `.description`.
 
 Setiap `<Link href="/...">` internal di berkas-berkas ini dibungkus `localeHref(locale, ...)`. `DownloadPortfolioButton` mendapat prop `locale` baru; pemanggilnya di navbar dan menu mobile ikut meneruskannya.
 
-- [ ] **Step 4: Formulir kontak**
+- [x] **Step 4: Formulir kontak**
 
 Di `src/components/sections/contact/contact-form.tsx`, ganti empat pasang label dan placeholder:
 
@@ -999,7 +1007,7 @@ Di `src/components/sections/contact/contact-form.tsx`, ganti empat pasang label 
 | `subject` | `form.subject.label` | `form.subject.placeholder` |
 | `message` | `form.message.label` | `form.message.placeholder` |
 
-- [ ] **Step 5: Teruskan `locale` dari setiap halaman**
+- [x] **Step 5: Teruskan `locale` dari setiap halaman**
 
 Keenam halaman di `src/app/(site)/[locale]/` menerima `params` dan meneruskannya. Contoh untuk `projects/page.tsx`:
 
@@ -1041,7 +1049,7 @@ export async function generateMetadata({
 
 Kunci per halaman: `meta.home.*` (`page.tsx`), `meta.about.*`, `meta.projects.*`, `meta.experience.*`, `meta.certificates.*`, `meta.contact.*`.
 
-- [ ] **Step 6: Build dan periksa kedua bahasa**
+- [x] **Step 6: Build dan periksa kedua bahasa**
 
 ```bash
 pnpm build && pnpm dev
@@ -1055,7 +1063,7 @@ Telusuri keenam halaman di `/id` lalu di `/en`. Yang dicari:
 
 Isi dari Sanity — bio, deskripsi proyek, deskripsi pengalaman — **masih berbahasa Inggris di kedua bahasa**. Itu benar; datanya baru dibuat dwibahasa mulai Task 6.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add src/components src/app
@@ -1081,7 +1089,7 @@ Hanya skema. Data belum disentuh, query belum berubah, situs belum terpengaruh.
 
 **Catatan:** setelah task ini, Studio akan menandai dokumen yang sudah ada sebagai tidak valid — datanya masih string sedangkan skemanya kini objek. Itu wajar dan sementara; Task 8 yang memindahkannya. Situs sendiri tidak terpengaruh karena query dan service belum berubah.
 
-- [ ] **Step 1: Tulis tipe objek dwibahasa**
+- [x] **Step 1: Tulis tipe objek dwibahasa**
 
 `src/sanity/schemaTypes/localized.schema.ts`:
 
@@ -1120,7 +1128,7 @@ export const localizedTextSchema = defineType({
 });
 ```
 
-- [ ] **Step 2: Tulis skema `pageContent`**
+- [x] **Step 2: Tulis skema `pageContent`**
 
 `src/sanity/schemaTypes/pageContent.schema.ts`:
 
@@ -1160,7 +1168,7 @@ export const pageContentSchema = defineType({
 });
 ```
 
-- [ ] **Step 3: Ubah field dokumen yang ada**
+- [x] **Step 3: Ubah field dokumen yang ada**
 
 Ganti `type` pada field berikut. Isi lain (`title`, `description` pada `defineField`) dibiarkan.
 
@@ -1182,7 +1190,7 @@ Untuk `bio` dan `description`, hapus properti `rows` — tinggi baris sekarang d
 
 Perhatian pada `preview` di tiap skema: beberapa memakai `title` atau `description` sebagai judul daftar dokumen di Studio. Field yang berubah jadi objek tidak lagi bisa dipakai langsung. Untuk `skill` dan `certificate` yang `title`-nya kini objek, ubah `preview.select` menjadi `title: "title.en"` supaya daftar dokumennya tetap terbaca.
 
-- [ ] **Step 4: Daftarkan tipe baru**
+- [x] **Step 4: Daftarkan tipe baru**
 
 `src/sanity/schemaTypes/index.ts`:
 
@@ -1209,7 +1217,7 @@ export const schemaTypes = [
 ];
 ```
 
-- [ ] **Step 5: Tambahkan `pageContent` ke struktur Studio**
+- [x] **Step 5: Tambahkan `pageContent` ke struktur Studio**
 
 Di `sanity.config.ts`, sisipkan tepat sebelum item `Site Settings`:
 
@@ -1224,7 +1232,7 @@ S.listItem()
   ),
 ```
 
-- [ ] **Step 6: Build dan buka Studio**
+- [x] **Step 6: Build dan buka Studio**
 
 ```bash
 pnpm build && pnpm dev
@@ -1237,7 +1245,7 @@ Buka `http://localhost:3001/studio`:
 
 Situs di `/id` dan `/en` masih berjalan normal.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add src/sanity sanity.config.ts
@@ -1262,7 +1270,7 @@ Dikerjakan **sebelum** migrasi data, bukan sesudah. `pickLocalized` sengaja mene
 
 Inilah inti rancangannya: pemetaan terjadi di service, sehingga tidak satu pun komponen tampilan perlu tahu soal dwibahasa.
 
-- [ ] **Step 1: Longgarkan tipe Sanity**
+- [x] **Step 1: Longgarkan tipe Sanity**
 
 Contoh `src/types/project.ts`:
 
@@ -1288,7 +1296,7 @@ export interface SanityProject {
 
 Field yang dilonggarkan di berkas lain: `SanityExperience.position`, `SanityExperience.description`, `SanitySkill.title`, `SanitySkill.description`, `SanityCertificate.title`, `SanitySettings.role`, `SanitySettings.bio`.
 
-- [ ] **Step 2: Contoh lengkap satu service**
+- [x] **Step 2: Contoh lengkap satu service**
 
 `src/services/project.service.ts`:
 
@@ -1330,7 +1338,7 @@ export async function getFeaturedProjects(locale: Locale): Promise<Project[]> {
 
 **Query GROQ tidak berubah sama sekali.** Field yang kini objek tetap terpilih apa adanya, dan objeknya sampai ke service dalam bentuk utuh.
 
-- [ ] **Step 3: Terapkan ke service lain**
+- [x] **Step 3: Terapkan ke service lain**
 
 | Service | Fungsi | Field yang lewat `pickLocalized` |
 |---|---|---|
@@ -1340,7 +1348,7 @@ export async function getFeaturedProjects(locale: Locale): Promise<Project[]> {
 | `settings.service.ts` | `getSiteSettings(locale)`, `getPdfSettings(locale)` | `role`, `bio` |
 | `pdf.service.ts` | `getPortfolioPdfData(locale)` | meneruskan `locale` ke semua service di atas |
 
-- [ ] **Step 4: Label kontak ikut bahasa**
+- [x] **Step 4: Label kontak ikut bahasa**
 
 `getSiteSettings` menyusun `contactInfo` dengan label `Email`, `Phone`, dan `Location` yang tertulis mati. Tambahkan tiga kunci ke **kedua** kamus (uji kesamaan kunci akan menangkap kalau hanya satu yang diisi):
 
@@ -1349,7 +1357,7 @@ export async function getFeaturedProjects(locale: Locale): Promise<Project[]> {
 
 Lalu di `settings.service.ts`, ganti `label: "Email"` menjadi `label: messages["contact.email"]`, dan seterusnya. Label media sosial (GitHub, LinkedIn, X, Instagram) adalah nama produk — biarkan.
 
-- [ ] **Step 5: Halaman meneruskan `locale` ke service**
+- [x] **Step 5: Halaman meneruskan `locale` ke service**
 
 Keenam halaman mengubah pemanggilan service. Contoh `src/app/(site)/[locale]/page.tsx`:
 
@@ -1375,13 +1383,13 @@ export default async function Home({
 
 `src/app/(site)/[locale]/layout.tsx` juga memanggil `getSiteSettings()` — tambahkan `locale` di sana.
 
-- [ ] **Step 6: Build dan periksa**
+- [x] **Step 6: Build dan periksa**
 
 Run: `pnpm build` — bersih. `pnpm test` — 34 lolos.
 
 Buka `/id` dan `/en`. Isi dari Sanity masih berbahasa Inggris di keduanya, karena datanya memang belum dimigrasi dan `pickLocalized` mengembalikan string mentah apa adanya. **Yang penting: tidak ada halaman yang kosong atau error.** Kalau ada teks yang hilang, `pickLocalized` salah dipasang.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add src/types src/services src/app src/i18n
@@ -1417,7 +1425,7 @@ ls -lh sanity-backup-*.tar.gz
 
 Jangan lanjut ke langkah berikutnya sebelum berkas cadangan itu ada dan ukurannya masuk akal.
 
-- [ ] **Step 2: Tulis skrip migrasi**
+- [x] **Step 2: Tulis skrip migrasi**
 
 `scripts/migrate-i18n.mjs`:
 
@@ -1593,13 +1601,13 @@ main().catch((error) => {
 });
 ```
 
-- [ ] **Step 3: Tambahkan script ke `package.json`**
+- [x] **Step 3: Tambahkan script ke `package.json`**
 
 ```json
 "migrate:i18n": "node --env-file=.env.local scripts/migrate-i18n.mjs"
 ```
 
-- [ ] **Step 4: Jalankan mode kering dan baca hasilnya**
+- [x] **Step 4: Jalankan mode kering dan baca hasilnya**
 
 Run: `pnpm migrate:i18n`
 
@@ -1625,7 +1633,7 @@ Buka `/id` dan `/en`: keduanya masih menampilkan teks Inggris (karena kotak Indo
 
 Lalu uji fallback secara langsung: isi kotak Indonesia pada `bio` di Studio, publish, muat ulang `/id`. Bio berubah jadi Indonesia sementara `/en` tetap Inggris.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add scripts/migrate-i18n.mjs package.json
@@ -1826,7 +1834,7 @@ git commit -m "feat(i18n): move hero and story prose from components into Sanity
 - Consumes: `getPortfolioPdfData(locale)` (Task 7); `isLocale`, `DEFAULT_LOCALE`, `type Locale` (Task 1).
 - Produces: endpoint menerima `?lang=id|en`.
 
-- [ ] **Step 1: Endpoint membaca parameter bahasa**
+- [x] **Step 1: Endpoint membaca parameter bahasa**
 
 `src/app/api/portfolio/pdf/route.ts`:
 
@@ -1858,7 +1866,7 @@ export async function GET(request: Request): Promise<Response> {
 
 Nilai `lang` yang tidak dikenal jatuh ke `id`, bukan melempar error — tautan yang salah ketik tetap menghasilkan deck.
 
-- [ ] **Step 2: Tombol unduh meneruskan bahasa**
+- [x] **Step 2: Tombol unduh meneruskan bahasa**
 
 Di `src/components/common/download-portfolio-button.tsx`, gunakan prop `locale` yang sudah ditambahkan di Task 5:
 
@@ -1868,7 +1876,7 @@ const response = await fetch(`/api/portfolio/pdf?lang=${locale}`);
 anchor.download = `Dimas-Rizki-Portfolio-Deck-${locale.toUpperCase()}.pdf`;
 ```
 
-- [ ] **Step 3: Render kedua bahasa dan lihat**
+- [x] **Step 3: Render kedua bahasa dan lihat**
 
 ```bash
 pnpm dev
@@ -1890,7 +1898,7 @@ Lalu **lihat slide-nya**, bukan hanya jumlah halamannya. Yang dicari pada versi 
 - Isi dari Sanity ikut Indonesia sejauh sudah diisi; sisanya Inggris. Tidak boleh ada bagian yang kosong.
 - Tata letak tidak berubah: tidak ada teks yang meluber keluar kartu. Kalimat Indonesia lebih panjang, jadi slide bio, kartu experience, dan kartu proyek adalah yang paling mungkin bermasalah — periksa ketiganya secara khusus.
 
-- [ ] **Step 4: Verifikasi menyeluruh**
+- [x] **Step 4: Verifikasi menyeluruh**
 
 ```bash
 pnpm test     # 34 lolos
@@ -1900,7 +1908,7 @@ pnpm lint     # 11 error yang sudah ada sebelumnya di src/components/sections/**
 
 Telusuri sekali lagi keenam halaman di `/id` dan `/en`, lalu `/studio`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/app/api/portfolio/pdf/route.ts src/components/common/download-portfolio-button.tsx
