@@ -11,7 +11,8 @@ import type { Locale } from "@/i18n/locale";
 import { getFeaturedProjects } from "@/services/project.service";
 import { getAllExperiences } from "@/services/experience.service";
 import { getFeaturedCertificates } from "@/services/certificate.service";
-import { getSiteSettings } from "@/services/settings.service";
+import { getResolvedSettings } from "@/services/settings.service";
+import { getPageContent } from "@/services/pageContent.service";
 
 export const revalidate = 0;
 
@@ -36,17 +37,25 @@ export default async function Home({
   const { locale } = await params;
   const typedLocale = locale as Locale;
 
-  const [featuredProjects, experiences, featuredCertificates, { cvUrl }] =
+  const [featuredProjects, experiences, featuredCertificates, settings, content] =
     await Promise.all([
       getFeaturedProjects(typedLocale),
       getAllExperiences(typedLocale),
       getFeaturedCertificates(typedLocale),
-      getSiteSettings(typedLocale),
+      getResolvedSettings(typedLocale),
+      getPageContent(typedLocale),
     ]);
+
+  const cvUrl = settings.cvUrl ?? null;
 
   return (
     <main>
-      <Hero cvUrl={cvUrl} locale={typedLocale} />
+      <Hero
+        content={content}
+        settings={settings}
+        cvUrl={cvUrl}
+        locale={typedLocale}
+      />
       <FeaturedProjects projects={featuredProjects} locale={typedLocale} />
       <ExperiencePreview experiences={experiences} locale={typedLocale} />
       <FeaturedCertificates

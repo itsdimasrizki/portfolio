@@ -2,7 +2,7 @@ import QRCode from "qrcode";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
-import { getPdfSettings } from "./settings.service";
+import { getResolvedSettings } from "./settings.service";
 import { getAllExperiences } from "./experience.service";
 import { getFeaturedProjects } from "./project.service";
 import { getAllCertificates } from "./certificate.service";
@@ -59,7 +59,7 @@ export async function getPortfolioPdfData(
 ): Promise<PortfolioPdfData> {
   const [settings, experiences, featuredProjects, certificates, technologies, skills] =
     await Promise.all([
-      getPdfSettings(locale),
+      getResolvedSettings(locale),
       getAllExperiences(locale),
       getFeaturedProjects(locale),
       getAllCertificates(locale),

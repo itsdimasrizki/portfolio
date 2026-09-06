@@ -7,26 +7,44 @@ import { Button } from "@/components/ui/button";
 import { getMessages } from "@/i18n/dictionary";
 import { localeHref, type Locale } from "@/i18n/locale";
 import { heroItem } from "@/lib/motion";
+import type { PageContent } from "@/types/pageContent";
 
 type HeroContentProps = {
+  content: PageContent;
+  /**
+   * Cadangan bila dokumen `pageContent` hilang. Keduanya data nyata yang sudah
+   * ada di Sanity, jadi hero tetap menampilkan nama dan peran — bukan halaman
+   * kosong, dan bukan pula teks yang digandakan di dua tempat.
+   */
+  settings: { fullName?: string; role?: string };
   cvUrl?: string | null;
   locale: Locale;
 };
 
-export function HeroContent({ cvUrl, locale }: HeroContentProps) {
+export function HeroContent({
+  content,
+  settings,
+  cvUrl,
+  locale,
+}: HeroContentProps) {
   const messages = getMessages(locale);
+
+  const headline = content.heroHeadline || settings.fullName || "";
+  const highlight = content.heroHighlight || settings.role || "";
 
   return (
     <div className="max-w-xl">
-      <motion.span
-        custom={0}
-        variants={heroItem}
-        initial="hidden"
-        animate="visible"
-        className="inline-flex items-center rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-700"
-      >
-        Available for work
-      </motion.span>
+      {content.heroBadge && (
+        <motion.span
+          custom={0}
+          variants={heroItem}
+          initial="hidden"
+          animate="visible"
+          className="inline-flex items-center rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-700"
+        >
+          {content.heroBadge}
+        </motion.span>
+      )}
 
       <motion.h1
         custom={1}
@@ -35,23 +53,21 @@ export function HeroContent({ cvUrl, locale }: HeroContentProps) {
         animate="visible"
         className="mt-6 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
       >
-        Dimas Rizki Ardiansyah{" "}
-        <span className="text-teal-700">
-          Fullstack Web Developer.
-        </span>
+        {headline}{" "}
+        <span className="text-teal-700">{highlight}</span>
       </motion.h1>
 
-      <motion.p
-        custom={2}
-        variants={heroItem}
-        initial="hidden"
-        animate="visible"
-        className="mt-6 text-base leading-relaxed text-muted-foreground"
-      >
-        I design and build reliable web applications with modern
-        technologies, focusing on performance, maintainability,
-        and user experience.
-      </motion.p>
+      {content.heroDescription && (
+        <motion.p
+          custom={2}
+          variants={heroItem}
+          initial="hidden"
+          animate="visible"
+          className="mt-6 text-base leading-relaxed text-muted-foreground"
+        >
+          {content.heroDescription}
+        </motion.p>
+      )}
 
       <motion.div
         custom={3}

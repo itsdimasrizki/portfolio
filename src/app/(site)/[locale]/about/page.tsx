@@ -10,6 +10,7 @@ import type { Locale } from "@/i18n/locale";
 import { getTechnologies } from "@/services/technology.service";
 import { getSkills } from "@/services/skill.service";
 import { getSiteSettings } from "@/services/settings.service";
+import { getPageContent } from "@/services/pageContent.service";
 
 export const revalidate = 0;
 
@@ -34,16 +35,17 @@ export default async function AboutPage({
   const { locale } = await params;
   const typedLocale = locale as Locale;
 
-  const [technologies, skills, { cvUrl }] = await Promise.all([
+  const [technologies, skills, { cvUrl }, content] = await Promise.all([
     getTechnologies(),
     getSkills(typedLocale),
     getSiteSettings(typedLocale),
+    getPageContent(typedLocale),
   ]);
 
   return (
     <main>
       <AboutHero cvUrl={cvUrl} locale={typedLocale} />
-      <AboutStory />
+      <AboutStory content={content} />
       <TechStack technologies={technologies} locale={typedLocale} />
       <Skills skills={skills} locale={typedLocale} />
     </main>

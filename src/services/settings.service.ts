@@ -79,7 +79,7 @@ export async function getSiteSettings(locale: Locale): Promise<{
   return { cvUrl, contactInfo, socialLinks };
 }
 
-export async function getPdfSettings(locale: Locale): Promise<ResolvedSettings> {
+export async function getResolvedSettings(locale: Locale): Promise<ResolvedSettings> {
   try {
     const settings = await client.fetch<SanitySettings | null>(siteSettingsQuery, {}, {
       next: { tags: ["sanity", "settings"] },
@@ -91,7 +91,7 @@ export async function getPdfSettings(locale: Locale): Promise<ResolvedSettings> 
       bio: pickLocalized(settings.bio, locale),
     };
   } catch (error) {
-    console.warn("Failed to fetch PDF settings from Sanity:", error);
+    console.warn("Failed to fetch resolved settings from Sanity:", error);
     return {};
   }
 }
