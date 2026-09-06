@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { DEFAULT_LOCALE } from "@/i18n/locale";
 import { getSiteSettings } from "@/services/settings.service";
 
 // Simple In-Memory Rate Limiter (Max 3 messages per 5 minutes per IP)
@@ -58,7 +59,8 @@ export async function POST(request: Request) {
     const gmailUser = process.env.GMAIL_USER || "dimasrizkia477@gmail.com";
     const gmailPass = process.env.GMAIL_APP_PASSWORD;
 
-    const { contactInfo } = await getSiteSettings();
+    // Yang dipakai hanya alamat emailnya, jadi bahasa labelnya tidak penting.
+    const { contactInfo } = await getSiteSettings(DEFAULT_LOCALE);
     const targetEmailObj = contactInfo.find((item) => item.id === "email");
     const toEmail = targetEmailObj?.value || "dimasrizkia477@gmail.com";
 

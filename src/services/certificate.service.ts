@@ -4,12 +4,13 @@ import {
   allCertificatesQuery,
   featuredCertificatesQuery,
 } from "@/sanity/queries/certificate.queries";
+import { pickLocalized, type Locale } from "@/i18n/locale";
 import type { Certificate, SanityCertificate } from "@/types/certificate";
 
-function toCertificate(raw: SanityCertificate): Certificate {
+function toCertificate(raw: SanityCertificate, locale: Locale): Certificate {
   return {
     id: raw._id,
-    title: raw.title,
+    title: pickLocalized(raw.title, locale),
     issuer: raw.issuer,
     issuedAt: raw.issuedAt,
     image: raw.thumbnail ? urlFor(raw.thumbnail).width(800).url() : "",
@@ -18,19 +19,19 @@ function toCertificate(raw: SanityCertificate): Certificate {
   };
 }
 
-export async function getAllCertificates(): Promise<Certificate[]> {
+export async function getAllCertificates(locale: Locale): Promise<Certificate[]> {
   try {
     const data = await client.fetch<SanityCertificate[]>(allCertificatesQuery, {}, {
       next: { tags: ["sanity", "certificate"] },
     });
-    return data ? data.map(toCertificate) : [];
+    return data ? data.map((raw) => toCertificate(raw, locale)) : [];
   } catch (error) {
     console.warn("Failed to fetch certificates from Sanity:", error);
     return [];
   }
 }
 
-export async function getFeaturedCertificates(): Promise<Certificate[]> {
+export async function getFeaturedCertificates(locale: Locale): Promise<Certificate[]> {
   try {
     const data = await client.fetch<(SanityCertificate | null)[]>(
       featuredCertificatesQuery,
@@ -39,9 +40,9 @@ export async function getFeaturedCertificates(): Promise<Certificate[]> {
     );
     const validData = data ? data.filter((item): item is SanityCertificate => item !== null) : [];
     if (validData.length > 0) {
-      return validData.map(toCertificate);
+      return validData.map((raw) => toCertificate(raw, locale));
     }
-    const all = await getAllCertificates();
+    const all = await getAllCertificates(locale);
     return all.slice(0, 3);
   } catch (error) {
     console.warn("Failed to fetch featured certificates from Sanity:", error);

@@ -26,7 +26,7 @@ export default async function CertificatesPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const certificates = await getAllCertificates();
+  const certificates = await getAllCertificates(locale as Locale);
 
   return (
     <main>

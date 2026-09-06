@@ -3,14 +3,17 @@ import { FaGithub, FaLinkedinIn, FaXTwitter, FaInstagram } from "react-icons/fa6
 
 import { client } from "@/sanity/client";
 import { siteSettingsQuery } from "@/sanity/queries/siteSettings.queries";
-import type { SanitySettings } from "@/types/siteSettings";
+import { getMessages } from "@/i18n/dictionary";
+import { pickLocalized, type Locale } from "@/i18n/locale";
+import type { ResolvedSettings, SanitySettings } from "@/types/siteSettings";
 import type { ContactInfo, SocialLink } from "@/types/contact";
 
-export async function getSiteSettings(): Promise<{
+export async function getSiteSettings(locale: Locale): Promise<{
   cvUrl: string | null;
   contactInfo: ContactInfo[];
   socialLinks: SocialLink[];
 }> {
+  const messages = getMessages(locale);
   let settings: SanitySettings | null = null;
   try {
     settings = await client.fetch<SanitySettings | null>(siteSettingsQuery, {}, {
@@ -25,21 +28,21 @@ export async function getSiteSettings(): Promise<{
   const contactInfo: ContactInfo[] = [
     {
       id: "email",
-      label: "Email",
+      label: messages["contact.email"],
       value: settings?.email ?? "",
       href: `mailto:${settings?.email ?? ""}`,
       icon: Mail,
     },
     {
       id: "phone",
-      label: "Phone",
+      label: messages["contact.phone"],
       value: settings?.phone ?? "",
       href: `tel:${(settings?.phone ?? "").replace(/\s/g, "")}`,
       icon: Phone,
     },
     {
       id: "location",
-      label: "Location",
+      label: messages["contact.location"],
       value: settings?.location ?? "",
       href: settings?.locationMapUrl ?? "#",
       icon: MapPin,
@@ -76,12 +79,17 @@ export async function getSiteSettings(): Promise<{
   return { cvUrl, contactInfo, socialLinks };
 }
 
-export async function getPdfSettings(): Promise<SanitySettings> {
+export async function getPdfSettings(locale: Locale): Promise<ResolvedSettings> {
   try {
     const settings = await client.fetch<SanitySettings | null>(siteSettingsQuery, {}, {
       next: { tags: ["sanity", "settings"] },
     });
-    return settings ?? {};
+    if (!settings) return {};
+    return {
+      ...settings,
+      role: pickLocalized(settings.role, locale),
+      bio: pickLocalized(settings.bio, locale),
+    };
   } catch (error) {
     console.warn("Failed to fetch PDF settings from Sanity:", error);
     return {};

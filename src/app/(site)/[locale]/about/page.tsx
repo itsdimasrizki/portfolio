@@ -36,8 +36,8 @@ export default async function AboutPage({
 
   const [technologies, skills, { cvUrl }] = await Promise.all([
     getTechnologies(),
-    getSkills(),
-    getSiteSettings(),
+    getSkills(typedLocale),
+    getSiteSettings(typedLocale),
   ]);
 
   return (

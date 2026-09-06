@@ -3,14 +3,14 @@ import { View, Text, Image, Link } from "@react-pdf/renderer";
 import { Slide, BleedCircle, BigType, SlideNumber } from "../primitives";
 import { colors, type } from "../theme";
 import { truncate } from "../layout";
-import type { SanitySettings } from "@/types/siteSettings";
+import type { ResolvedSettings } from "@/types/siteSettings";
 
 type ItemDraft = { key: string; value?: string; href?: string };
 type Item = ItemDraft & { value: string };
 
 export function ContactSlide({
   settings, qrCodeDataUrl,
-}: { settings: SanitySettings; qrCodeDataUrl: string }) {
+}: { settings: ResolvedSettings; qrCodeDataUrl: string }) {
   const drafts: ItemDraft[] = [
     { key: "email", value: settings.email, href: settings.email && `mailto:${settings.email}` },
     { key: "phone", value: settings.phone, href: settings.phone && `tel:${settings.phone.replace(/[^+\d]/g, "")}` },

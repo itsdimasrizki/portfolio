@@ -29,7 +29,7 @@ export default async function ContactPage({
   const { locale } = await params;
   const typedLocale = locale as Locale;
 
-  const { contactInfo, socialLinks } = await getSiteSettings();
+  const { contactInfo, socialLinks } = await getSiteSettings(typedLocale);
 
   return (
     <main>

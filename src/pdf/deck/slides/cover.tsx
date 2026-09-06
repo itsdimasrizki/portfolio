@@ -2,13 +2,13 @@ import React from "react";
 import { View, Text } from "@react-pdf/renderer";
 import { Slide, BleedCircle, BigType, ChipRow, PhotoFrame } from "../primitives";
 import { colors, type } from "../theme";
-import type { SanitySettings } from "@/types/siteSettings";
+import type { ResolvedSettings } from "@/types/siteSettings";
 
 const NAV = ["profile", "work", "experience", "credentials", "contact"];
 
 export function CoverSlide({
   settings, technologies, photo,
-}: { settings: SanitySettings; technologies: string[]; photo?: string }) {
+}: { settings: ResolvedSettings; technologies: string[]; photo?: string }) {
   const name = (settings.fullName ?? "portfolio").toLowerCase();
   const role = (settings.role ?? "").toLowerCase();
   const place = (settings.location ?? "").toLowerCase();

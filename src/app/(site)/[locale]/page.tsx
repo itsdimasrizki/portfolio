@@ -38,10 +38,10 @@ export default async function Home({
 
   const [featuredProjects, experiences, featuredCertificates, { cvUrl }] =
     await Promise.all([
-      getFeaturedProjects(),
-      getAllExperiences(),
-      getFeaturedCertificates(),
-      getSiteSettings(),
+      getFeaturedProjects(typedLocale),
+      getAllExperiences(typedLocale),
+      getFeaturedCertificates(typedLocale),
+      getSiteSettings(typedLocale),
     ]);
 
   return (

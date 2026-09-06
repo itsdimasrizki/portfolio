@@ -42,7 +42,7 @@ export default async function SiteLayout({
   // diam-diam menampilkan bahasa default.
   if (!isLocale(locale)) notFound();
 
-  const { cvUrl } = await getSiteSettings();
+  const { cvUrl } = await getSiteSettings(locale);
 
   return (
     <html lang={locale}>

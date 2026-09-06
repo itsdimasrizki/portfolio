@@ -26,7 +26,7 @@ export default async function ProjectsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const projects = await getAllProjects();
+  const projects = await getAllProjects(locale as Locale);
 
   return (
     <main>

@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text } from "@react-pdf/renderer";
 import { Slide, BleedCircle, BigType } from "../primitives";
 import { colors, type } from "../theme";
-import type { SanitySettings } from "@/types/siteSettings";
+import type { ResolvedSettings } from "@/types/siteSettings";
 
-export function ClosingSlide({ settings }: { settings: SanitySettings }) {
+export function ClosingSlide({ settings }: { settings: ResolvedSettings }) {
   const line = [settings.fullName, settings.role, settings.email, settings.portfolioUrl]
     .filter(Boolean)
     .join("  ·  ");

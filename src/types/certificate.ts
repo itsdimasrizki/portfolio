@@ -1,5 +1,7 @@
 import type { SanityImageSource } from "@sanity/image-url";
 
+import type { Localized } from "@/i18n/locale";
+
 export interface Certificate {
   id: string;
   title: string;
@@ -12,7 +14,7 @@ export interface Certificate {
 
 export interface SanityCertificate {
   _id: string;
-  title: string;
+  title: Localized | string;
   issuer: string;
   issuedAt: string;
   thumbnail?: SanityImageSource;

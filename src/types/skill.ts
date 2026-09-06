@@ -1,7 +1,9 @@
+import type { Localized } from "@/i18n/locale";
+
 export interface SanitySkill {
   _id: string;
-  title: string;
-  description: string;
+  title: Localized | string;
+  description: Localized | string;
   iconName: string;
   order?: number;
 }

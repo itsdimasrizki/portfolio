@@ -1,3 +1,4 @@
+import type { Localized } from "@/i18n/locale";
 import type { SanityTechnology } from "./technology";
 
 export interface Experience {
@@ -14,11 +15,11 @@ export interface Experience {
 export interface SanityExperience {
   _id: string;
   company: string;
-  position: string;
+  position: Localized | string;
   location: string;
   startDate: string;
   endDate: string;
-  description: string;
+  description: Localized | string;
   technologies?: SanityTechnology[];
   order?: number;
 }

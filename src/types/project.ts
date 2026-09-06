@@ -1,4 +1,5 @@
 import type { SanityImageSource } from "@sanity/image-url";
+import type { Localized } from "@/i18n/locale";
 import type { SanityTechnology } from "./technology";
 
 export type ProjectStatus = "completed" | "ongoing";
@@ -19,10 +20,12 @@ export interface Project {
 export interface SanityProject {
   _id: string;
   title: string;
-  description: string;
+  // `| string` dipertahankan dengan sengaja: dokumen yang belum dimigrasi
+  // masih berisi string, dan pickLocalized menerima keduanya.
+  description: Localized | string;
   images?: string[];
   year: string;
-  category?: string[];
+  category?: (Localized | string)[];
   technologies?: SanityTechnology[];
   status?: ProjectStatus;
   github?: string;

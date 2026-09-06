@@ -31,8 +31,8 @@ export default async function ExperiencePage({
   const typedLocale = locale as Locale;
 
   const [experiences, { cvUrl }] = await Promise.all([
-    getAllExperiences(),
-    getSiteSettings(),
+    getAllExperiences(typedLocale),
+    getSiteSettings(typedLocale),
   ]);
 
   return (

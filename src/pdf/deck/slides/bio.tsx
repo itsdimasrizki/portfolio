@@ -3,7 +3,7 @@ import { View, Text, Link } from "@react-pdf/renderer";
 import { Slide, SlideHeader, BigType, PhotoFrame, PixelRule } from "../primitives";
 import { colors, type } from "../theme";
 import { splitParagraphs, truncate } from "../layout";
-import type { SanitySettings } from "@/types/siteSettings";
+import type { ResolvedSettings } from "@/types/siteSettings";
 
 const FOCUS = ["clean architecture", "intuitive experiences", "efficient backends"];
 
@@ -14,7 +14,7 @@ function bareUrl(url: string): string {
   return url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 }
 
-export function BioSlide({ settings, photo }: { settings: SanitySettings; photo?: string }) {
+export function BioSlide({ settings, photo }: { settings: ResolvedSettings; photo?: string }) {
   const first = (settings.fullName ?? "").split(" ")[0]?.toLowerCase() || "me";
   const paragraphs = splitParagraphs(settings.bio ?? "", 2);
   // `label` yang dicetak, `href` yang diklik. URL mentah dicukur protokol dan

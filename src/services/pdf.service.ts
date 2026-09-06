@@ -8,6 +8,7 @@ import { getFeaturedProjects } from "./project.service";
 import { getAllCertificates } from "./certificate.service";
 import { getTechnologies } from "./technology.service";
 import { getSkills } from "./skill.service";
+import type { Locale } from "@/i18n/locale";
 import type { PortfolioPdfData } from "@/types/pdf";
 
 const IMAGE_TIMEOUT_MS = 6000;
@@ -53,15 +54,17 @@ async function readProfileImage(): Promise<string | undefined> {
   }
 }
 
-export async function getPortfolioPdfData(): Promise<PortfolioPdfData> {
+export async function getPortfolioPdfData(
+  locale: Locale
+): Promise<PortfolioPdfData> {
   const [settings, experiences, featuredProjects, certificates, technologies, skills] =
     await Promise.all([
-      getPdfSettings(),
-      getAllExperiences(),
-      getFeaturedProjects(),
-      getAllCertificates(),
+      getPdfSettings(locale),
+      getAllExperiences(locale),
+      getFeaturedProjects(locale),
+      getAllCertificates(locale),
       getTechnologies(),
-      getSkills(),
+      getSkills(locale),
     ]);
 
   const qrCodeDataUrl = await generateQrCode(
