@@ -30,7 +30,7 @@ export function DownloadPortfolioButton({
 
     setState("loading");
     try {
-      const response = await fetch("/api/portfolio/pdf");
+      const response = await fetch(`/api/portfolio/pdf?lang=${locale}`);
 
       if (!response.ok) {
         throw new Error(`Server responded with ${response.status}`);
@@ -42,7 +42,7 @@ export function DownloadPortfolioButton({
       // Trigger browser download
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = "Dimas-Rizki-Portfolio-Deck.pdf";
+      anchor.download = `Dimas-Rizki-Portfolio-Deck-${locale.toUpperCase()}.pdf`;
       document.body.appendChild(anchor);
       anchor.click();
       document.body.removeChild(anchor);
