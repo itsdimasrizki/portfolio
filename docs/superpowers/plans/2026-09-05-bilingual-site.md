@@ -10,13 +10,25 @@
 
 **Spec:** `docs/superpowers/specs/2026-09-05-bilingual-site-design.md`
 
-**Status per 2026-09-06:** Task 1-7 dan Task 10 selesai dan ter-commit di
-`portofolio-v2`. Task 8 berhenti di Step 5: penulisan ke dataset produksi butuh
-`SANITY_API_WRITE_TOKEN` dan berkas cadangan yang keduanya hanya bisa dibuat
-pemilik akun Sanity. Skrip, entri `package.json`, dan dry-run-nya sudah ada dan
-menyebut 70 field. Task 9 sengaja belum dikerjakan: menghapus prosa dari kode
-sebelum dokumen `pageContent` benar-benar ada akan mengosongkan hero dan
-halaman Tentang.
+**Status per 2026-09-07: seluruh task selesai.** Migrasi dijalankan pada dataset
+`production` setelah `sanity-backup-2026-09-07.tar.gz` (14M, 79 dokumen, 48
+aset) ada di disk: 70 field dipindah ke `{ en: ... }` dan `pageContent` dibuat.
+Menjalankan ulang tanpa `--commit` melaporkan "Tidak ada field yang perlu
+dimigrasi" — skripnya idempoten seperti dirancang.
+
+**Dua hal yang ternyata berbeda dari rencana:**
+
+1. **`HeroStats` tidak dirender di mana pun.** Step 5 Task 9 mengandaikan
+   `hero/index.tsx` memasangnya; nyatanya berkas itu hanya memasang
+   `HeroContent` dan `HeroImage`, dan `grep` tidak menemukan satu pun pemakai.
+   Komponennya tetap diubah agar menerima `labels` supaya tidak ada label
+   Inggris yang tertinggal di kode, tapi memasangnya di beranda adalah
+   perubahan tampilan yang tidak diminta — jadi tidak dilakukan. `statLabels`
+   di `pageContent` ikut tersemai dan menunggu dipakai.
+
+2. **`getPdfSettings` berganti nama jadi `getResolvedSettings`.** Beranda kini
+   memakainya untuk `fullName` dan `role` sebagai cadangan hero, jadi nama
+   lamanya sudah tidak jujur. Dua pemanggil, keduanya ikut diubah.
 
 ## Global Constraints
 
@@ -1410,7 +1422,7 @@ Satu-satunya task yang menyentuh data produksi, dan satu-satunya yang tidak bisa
 - Consumes: `@sanity/client` (sudah jadi dependensi).
 - Produces: seluruh field di tabel Task 6 berbentuk `{ en: <nilai lama> }`; dokumen `pageContent` terisi teks Inggris yang sekarang ada di kode.
 
-- [ ] **Step 1: Siapkan token tulis dan cadangan**
+- [x] **Step 1: Siapkan token tulis dan cadangan**
 
 Skrip ini menulis ke dataset, dan itu butuh token yang **belum ada** di `.env.local` (yang ada hanya `NEXT_PUBLIC_SANITY_*`, `SANITY_REVALIDATE_SECRET`, dan kredensial email).
 
@@ -1615,14 +1627,14 @@ Expected: mode `DRY RUN`, **tidak ada** yang ditulis, dan daftar field yang akan
 
 Baca daftarnya. Kalau ada dokumen yang tidak kamu kenali atau field yang tidak seharusnya ikut, berhenti dan laporkan sebelum menulis.
 
-- [ ] **Step 5: Jalankan sungguhan**
+- [x] **Step 5: Jalankan sungguhan**
 
 Run: `pnpm migrate:i18n --commit`
 
 Lalu jalankan lagi tanpa flag: `pnpm migrate:i18n`
 Expected: `Tidak ada field yang perlu dimigrasi.` dan `pageContent sudah ada — dilewati.` Itu bukti skripnya idempoten.
 
-- [ ] **Step 6: Periksa Studio dan situs**
+- [x] **Step 6: Periksa Studio dan situs**
 
 Buka `/studio`:
 - Peringatan "tidak valid" pada dokumen sudah hilang
@@ -1656,7 +1668,7 @@ Setelah ini, cerita "My Story" dan teks hero bisa disunting dari Studio tanpa de
 - Consumes: `pickLocalized`, `type Locale`, `type Localized` (Task 1).
 - Produces: `getPageContent(locale: Locale): Promise<PageContent>` — seluruh medannya `string` atau `string[]`, tidak pernah `null`.
 
-- [ ] **Step 1: Tipe dan query**
+- [x] **Step 1: Tipe dan query**
 
 `src/types/pageContent.ts`:
 
@@ -1705,7 +1717,7 @@ export const pageContentQuery = groq`
 `;
 ```
 
-- [ ] **Step 2: Service**
+- [x] **Step 2: Service**
 
 `src/services/pageContent.service.ts`:
 
@@ -1746,7 +1758,7 @@ export async function getPageContent(locale: Locale): Promise<PageContent> {
 
 Mengembalikan `EMPTY`, bukan `null`, supaya komponen tidak perlu menjaga-jaga terhadap nilai kosong di setiap tempat.
 
-- [ ] **Step 3: Hero membaca dari Sanity**
+- [x] **Step 3: Hero membaca dari Sanity**
 
 `hero-content.tsx` menerima `content: PageContent`, `settings: { fullName?: string; role?: string }`, `locale`, dan `cvUrl`.
 
@@ -1758,7 +1770,7 @@ Mengembalikan `EMPTY`, bukan `null`, supaya komponen tidak perlu menjaga-jaga te
 
 Cadangan ke `settings.fullName` dan `settings.role` dipilih dengan sengaja: keduanya data nyata yang sudah ada di Sanity, jadi kalau dokumen `pageContent` hilang, hero tetap menampilkan nama dan peran — bukan halaman kosong, dan bukan pula teks yang digandakan di dua tempat.
 
-- [ ] **Step 4: Statistik hanya menukar labelnya**
+- [x] **Step 4: Statistik hanya menukar labelnya**
 
 `hero-stats.tsx` menerima `labels: string[]`. Angka `5+`, `12+`, dan `30+` **dibiarkan apa adanya** — itu keputusan tertunda di §9 spec, bukan bagian dari pekerjaan ini.
 
@@ -1778,7 +1790,7 @@ export function HeroStats({ labels }: { labels: string[] }) {
 }
 ```
 
-- [ ] **Step 5: Hero meneruskan ke anaknya**
+- [x] **Step 5: Hero meneruskan ke anaknya**
 
 `hero/index.tsx` adalah yang menerima `content`, `settings`, dan `locale` dari
 halaman, lalu membagikannya:
@@ -1789,7 +1801,7 @@ halaman, lalu membagikannya:
 <HeroStats labels={content.statLabels} />
 ```
 
-- [ ] **Step 6: Cerita About membaca dari Sanity**
+- [x] **Step 6: Cerita About membaca dari Sanity**
 
 `about-story.tsx` menerima `content: PageContent` dan merender `storyEyebrow`, `storyTitle`, serta memetakan `storyParagraphs`. Keempat paragraf yang sekarang tertulis di dalam JSX dihapus seluruhnya — sumbernya kini Sanity.
 
@@ -1801,11 +1813,11 @@ halaman, lalu membagikannya:
 </div>
 ```
 
-- [ ] **Step 7: Halaman mengambil dan meneruskan**
+- [x] **Step 7: Halaman mengambil dan meneruskan**
 
 `src/app/(site)/[locale]/page.tsx` dan `about/page.tsx` menambahkan `getPageContent(typedLocale)` ke `Promise.all` yang sudah ada, lalu meneruskan hasilnya ke `<Hero>` dan `<AboutStory>`.
 
-- [ ] **Step 8: Build dan periksa**
+- [x] **Step 8: Build dan periksa**
 
 ```bash
 pnpm build && pnpm dev
@@ -1815,7 +1827,7 @@ pnpm build && pnpm dev
 - Di Studio, ubah `storyTitle` Indonesia, publish, muat ulang `/id`: judulnya berubah, `/en` tidak
 - Kosongkan sementara `heroHeadline` di Studio dan pastikan hero jatuh ke `fullName`, bukan jadi kosong
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add src/types/pageContent.ts src/sanity/queries/pageContent.queries.ts src/services/pageContent.service.ts src/components/sections src/app
