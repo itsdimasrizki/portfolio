@@ -14,7 +14,7 @@ export const experienceSchema = defineType({
     defineField({
       name: "position",
       title: "Position",
-      type: "string",
+      type: "localizedString",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -39,8 +39,7 @@ export const experienceSchema = defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "text",
-      rows: 4,
+      type: "localizedText",
     }),
     defineField({
       name: "technologies",

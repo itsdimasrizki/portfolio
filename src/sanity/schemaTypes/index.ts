@@ -4,6 +4,8 @@ import { certificateSchema } from "./certificate.schema";
 import { technologySchema } from "./technology.schema";
 import { skillSchema } from "./skill.schema";
 import { siteSettingsSchema } from "./siteSettings.schema";
+import { pageContentSchema } from "./pageContent.schema";
+import { localizedStringSchema, localizedTextSchema } from "./localized.schema";
 
 export const schemaTypes = [
   projectSchema,
@@ -12,4 +14,7 @@ export const schemaTypes = [
   technologySchema,
   skillSchema,
   siteSettingsSchema,
+  pageContentSchema,
+  localizedStringSchema,
+  localizedTextSchema,
 ];

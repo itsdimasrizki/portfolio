@@ -15,14 +15,13 @@ export const siteSettingsSchema = defineType({
       name: "role",
       title: "Role / Title",
       description: "Role / jabatan profesional, misalnya: Fullstack Software Engineer.",
-      type: "string",
+      type: "localizedString",
     }),
     defineField({
       name: "bio",
       title: "Professional Bio",
       description: "Ringkasan profesional yang ditampilkan di halaman About pada PDF.",
-      type: "text",
-      rows: 5,
+      type: "localizedText",
     }),
     defineField({
       name: "portfolioUrl",

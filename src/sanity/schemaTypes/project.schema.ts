@@ -14,8 +14,7 @@ export const projectSchema = defineType({
     defineField({
       name: "description",
       title: "Description",
-      type: "text",
-      rows: 3,
+      type: "localizedText",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -41,22 +40,9 @@ export const projectSchema = defineType({
       name: "category",
       title: "Categories",
       description:
-        "Pilih satu atau lebih kategori. Jika dokumen lama bermasalah, hapus/re-select kategori lalu publish.",
+        "Satu atau lebih kategori, masing-masing dalam dua bahasa. Tulis persis sama antar proyek — nilainya dipakai sebagai tombol filter, jadi ejaan yang berbeda memunculkan tombol baru.",
       type: "array",
-      of: [{ type: "string" }],
-      options: {
-        list: [
-          { title: "Web App", value: "Web App" },
-          { title: "Dashboard", value: "Dashboard" },
-          { title: "Backend", value: "Backend" },
-          { title: "Marketing", value: "Marketing" },
-          { title: "Personal", value: "Personal" },
-          { title: "AI / ML", value: "AI / ML" },
-          { title: "Mobile App", value: "Mobile App" },
-          { title: "CLI / Tool", value: "CLI / Tool" },
-          { title: "Open Source", value: "Open Source" },
-        ],
-      },
+      of: [{ type: "localizedString" }],
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({

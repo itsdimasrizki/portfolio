@@ -8,7 +8,7 @@ export const certificateSchema = defineType({
     defineField({
       name: "title",
       title: "Title",
-      type: "string",
+      type: "localizedString",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -52,6 +52,11 @@ export const certificateSchema = defineType({
       initialValue: 0,
     }),
   ],
+  // title kini objek, jadi daftar dokumen harus menunjuk salah satu bahasanya
+  // supaya tidak berbunyi "Untitled".
+  preview: {
+    select: { title: "title.en", subtitle: "issuer" },
+  },
   orderings: [
     {
       title: "Order (High to Low)",

@@ -8,14 +8,13 @@ export const skillSchema = defineType({
     defineField({
       name: "title",
       title: "Title",
-      type: "string",
+      type: "localizedString",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "description",
       title: "Description",
-      type: "text",
-      rows: 3,
+      type: "localizedText",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -33,6 +32,11 @@ export const skillSchema = defineType({
       initialValue: 0,
     }),
   ],
+  // title kini objek, jadi daftar dokumen harus menunjuk salah satu bahasanya
+  // supaya tidak berbunyi "Untitled".
+  preview: {
+    select: { title: "title.en", subtitle: "title.id" },
+  },
   orderings: [
     {
       title: "Order",
