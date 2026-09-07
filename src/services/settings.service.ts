@@ -84,14 +84,16 @@ export async function getResolvedSettings(locale: Locale): Promise<ResolvedSetti
     const settings = await client.fetch<SanitySettings | null>(siteSettingsQuery, {}, {
       next: { tags: ["sanity", "settings"] },
     });
-    if (!settings) return {};
+    if (!settings) return { roles: [] };
     return {
       ...settings,
-      role: pickLocalized(settings.role, locale),
+      roles: (settings.roles ?? [])
+        .map((role) => pickLocalized(role, locale))
+        .filter((role) => role.trim() !== ""),
       bio: pickLocalized(settings.bio, locale),
     };
   } catch (error) {
     console.warn("Failed to fetch resolved settings from Sanity:", error);
-    return {};
+    return { roles: [] };
   }
 }

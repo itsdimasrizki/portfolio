@@ -4,7 +4,7 @@ export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
     "cvUrl": cvFile.asset->url,
     fullName,
-    role,
+    roles,
     bio,
     portfolioUrl,
     email,

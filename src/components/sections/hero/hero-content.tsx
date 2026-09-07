@@ -8,15 +8,16 @@ import { getMessages } from "@/i18n/dictionary";
 import { localeHref, type Locale } from "@/i18n/locale";
 import { heroItem } from "@/lib/motion";
 import type { PageContent } from "@/types/pageContent";
+import { RoleRotator } from "./role-rotator";
 
 type HeroContentProps = {
   content: PageContent;
   /**
-   * Cadangan bila dokumen `pageContent` hilang. Keduanya data nyata yang sudah
-   * ada di Sanity, jadi hero tetap menampilkan nama dan peran — bukan halaman
-   * kosong, dan bukan pula teks yang digandakan di dua tempat.
+   * `fullName` jadi cadangan judul bila dokumen `pageContent` hilang, dan
+   * `roles` adalah jalur utama peran yang berputar di judul — `heroHighlight`
+   * turun jadi cadangannya.
    */
-  settings: { fullName?: string; role?: string };
+  settings: { fullName?: string; roles: string[] };
   cvUrl?: string | null;
   locale: Locale;
 };
@@ -30,7 +31,6 @@ export function HeroContent({
   const messages = getMessages(locale);
 
   const headline = content.heroHeadline || settings.fullName || "";
-  const highlight = content.heroHighlight || settings.role || "";
 
   return (
     <div className="max-w-xl">
@@ -54,7 +54,11 @@ export function HeroContent({
         className="mt-6 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
       >
         {headline}{" "}
-        <span className="text-teal-700">{highlight}</span>
+        {settings.roles.length > 0 ? (
+          <RoleRotator roles={settings.roles} />
+        ) : (
+          <span className="text-teal-700">{content.heroHighlight}</span>
+        )}
       </motion.h1>
 
       {content.heroDescription && (

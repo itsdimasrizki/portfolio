@@ -9,6 +9,7 @@ export const pageContentQuery = groq`
     storyEyebrow,
     storyTitle,
     storyParagraphs,
-    statLabels
+    statLabels,
+    deckIntro
   }
 `;

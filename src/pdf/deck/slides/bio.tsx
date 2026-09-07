@@ -15,13 +15,12 @@ function bareUrl(url: string): string {
 }
 
 export function BioSlide({ settings, photo }: { settings: ResolvedSettings; photo?: string }) {
-  const first = (settings.fullName ?? "").split(" ")[0]?.toLowerCase() || "me";
   const paragraphs = splitParagraphs(settings.bio ?? "", 2);
   // `label` yang dicetak, `href` yang diklik. URL mentah dicukur protokol dan
   // garis miring akhirnya dulu supaya muat di kartu 180pt tanpa terpotong.
   const drafts: FactDraft[] = [
     { key: "location", value: settings.location },
-    { key: "role", value: settings.role },
+    { key: "role", value: truncate(settings.roles.join(", "), 44) || undefined },
     { key: "email", value: settings.email, href: settings.email && `mailto:${settings.email}` },
     { key: "portfolio", value: settings.portfolioUrl && bareUrl(settings.portfolioUrl),
       href: settings.portfolioUrl },
@@ -67,7 +66,7 @@ export function BioSlide({ settings, photo }: { settings: ResolvedSettings; phot
         <View style={{ width: 456 }}>
           <BigType
             size="h1"
-            lines={[`hi, i'm ${first} —`, "i turn ideas into", "reliable software."]}
+            lines={["i turn ideas into", "reliable software."]}
             color={colors.ink}
             accentColor={colors.blue}
             accentLast

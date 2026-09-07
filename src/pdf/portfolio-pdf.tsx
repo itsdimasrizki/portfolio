@@ -24,7 +24,7 @@ type Entry = { section?: Section; node: ReactElement };
 
 export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
   const {
-    settings, experiences, featuredProjects, certificates, technologies,
+    settings, intro, experiences, featuredProjects, certificates, technologies,
     skills, qrCodeDataUrl, profileImage, projectImages,
   } = data;
 
@@ -133,11 +133,11 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
     <Document
       title={`${name} — Portfolio Deck`}
       author={name}
-      subject={`${settings.role ?? "Software Engineer"} portfolio deck`}
+      subject={`${settings.roles[0] ?? "Software Engineer"} portfolio deck`}
       keywords="portfolio, deck, fullstack, next.js, react, typescript"
       creator="Portfolio Deck Generator"
     >
-      <CoverSlide settings={settings} technologies={techNames} photo={profileImage} />
+      <CoverSlide settings={settings} technologies={techNames} photo={profileImage} intro={intro} />
       <ContentsSlide entries={entries} />
       {rest.map((entry) => entry.node)}
     </Document>

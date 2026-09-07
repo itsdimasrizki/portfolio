@@ -44,6 +44,15 @@ export const pageContentSchema = defineType({
       of: [defineArrayMember({ type: "localizedText" })],
     }),
     defineField({
+      name: "deckIntro",
+      title: "Deck — Perkenalan Cover",
+      description:
+        "Kalimat pembuka di cover deck. Satu baris per Enter, maksimal 4 baris. " +
+        "Baris pendek lebih bagus: sekitar 13 karakter muat pada ukuran terbesar, " +
+        "lebih dari itu hurufnya otomatis mengecil.",
+      type: "localizedText",
+    }),
+    defineField({
       name: "statLabels",
       title: "Statistik — Label",
       description:

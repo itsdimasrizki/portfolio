@@ -2,16 +2,25 @@ import React from "react";
 import { View, Text } from "@react-pdf/renderer";
 import { Slide, BleedCircle, BigType, ChipRow, PhotoFrame } from "../primitives";
 import { colors, type } from "../theme";
+import { introLines, joinRoles } from "../layout";
 import type { ResolvedSettings } from "@/types/siteSettings";
 
 const NAV = ["profile", "work", "experience", "credentials", "contact"];
 
+/** Dipakai kalau `deckIntro` belum diisi di Studio, supaya cover tidak pernah kosong. */
+const FALLBACK_INTRO = ["modern,", "scalable,", "maintainable", "web apps."];
+
+/** Sisa ruang baris header setelah lokasi dan "portfolio 2026". */
+const ROLE_BUDGET = 46;
+
 export function CoverSlide({
-  settings, technologies, photo,
-}: { settings: ResolvedSettings; technologies: string[]; photo?: string }) {
+  settings, technologies, photo, intro,
+}: { settings: ResolvedSettings; technologies: string[]; photo?: string; intro: string }) {
   const name = (settings.fullName ?? "portfolio").toLowerCase();
-  const role = (settings.role ?? "").toLowerCase();
+  const role = joinRoles(settings.roles, ROLE_BUDGET).toLowerCase();
   const place = (settings.location ?? "").toLowerCase();
+  const written = introLines(intro);
+  const lines = written.lines.length > 0 ? written.lines : FALLBACK_INTRO;
 
   return (
     <Slide tone="bone" decoration={<BleedCircle size={520} color={colors.peach} corner="bl" />}>
@@ -26,8 +35,8 @@ export function CoverSlide({
       <View style={{ flexDirection: "row", marginTop: 30, flexGrow: 1 }}>
         <View style={{ width: 500, paddingRight: 28 }}>
           <BigType
-            size="display"
-            lines={["modern,", "scalable,", "maintainable", "web apps."]}
+            size={written.lines.length > 0 ? written.size : "display"}
+            lines={lines}
             color={colors.ink}
             accentColor={colors.blue}
             accentLast

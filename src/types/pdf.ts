@@ -7,6 +7,8 @@ import type { Skill } from "./skill";
 
 export interface PortfolioPdfData {
   settings: ResolvedSettings;
+  /** Perkenalan cover apa adanya dari Sanity; cover yang memecahnya jadi baris. */
+  intro: string;
   experiences: Experience[];
   featuredProjects: Project[];
   certificates: Certificate[];

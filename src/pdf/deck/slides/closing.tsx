@@ -5,7 +5,7 @@ import { colors, type } from "../theme";
 import type { ResolvedSettings } from "@/types/siteSettings";
 
 export function ClosingSlide({ settings }: { settings: ResolvedSettings }) {
-  const line = [settings.fullName, settings.role, settings.email, settings.portfolioUrl]
+  const line = [settings.fullName, settings.roles[0], settings.email, settings.portfolioUrl]
     .filter(Boolean)
     .join("  ·  ");
   return (

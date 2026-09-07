@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const siteSettingsSchema = defineType({
   name: "siteSettings",
@@ -12,10 +12,13 @@ export const siteSettingsSchema = defineType({
       type: "string",
     }),
     defineField({
-      name: "role",
-      title: "Role / Title",
-      description: "Role / jabatan profesional, misalnya: Fullstack Software Engineer.",
-      type: "localizedString",
+      name: "roles",
+      title: "Roles / Titles",
+      description:
+        "Peran profesional, urutannya bermakna. Yang pertama dipakai di tempat sempit " +
+        "(penutup deck, metadata PDF) dan jadi peran yang tampil lebih dulu di beranda.",
+      type: "array",
+      of: [defineArrayMember({ type: "localizedString" })],
     }),
     defineField({
       name: "bio",

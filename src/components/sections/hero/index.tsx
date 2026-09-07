@@ -7,7 +7,7 @@ import { HeroImage } from "./hero-image";
 
 type HeroProps = {
   content: PageContent;
-  settings: { fullName?: string; role?: string };
+  settings: { fullName?: string; roles: string[] };
   cvUrl?: string | null;
   locale: Locale;
 };

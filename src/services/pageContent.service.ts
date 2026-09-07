@@ -12,6 +12,7 @@ const EMPTY: PageContent = {
   storyTitle: "",
   storyParagraphs: [],
   statLabels: [],
+  deckIntro: "",
 };
 
 export async function getPageContent(locale: Locale): Promise<PageContent> {
@@ -39,5 +40,6 @@ export async function getPageContent(locale: Locale): Promise<PageContent> {
       pickLocalized(p, locale)
     ),
     statLabels: (raw.statLabels ?? []).map((s) => pickLocalized(s, locale)),
+    deckIntro: pickLocalized(raw.deckIntro, locale),
   };
 }

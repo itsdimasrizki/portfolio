@@ -13,6 +13,7 @@ export interface PageContent {
   storyTitle: string;
   storyParagraphs: string[];
   statLabels: string[];
+  deckIntro: string;
 }
 
 export interface SanityPageContent {
@@ -24,4 +25,5 @@ export interface SanityPageContent {
   storyTitle?: Localized;
   storyParagraphs?: Localized[];
   statLabels?: Localized[];
+  deckIntro?: Localized;
 }

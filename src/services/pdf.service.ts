@@ -3,6 +3,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 import { getResolvedSettings } from "./settings.service";
+import { getPageContent } from "./pageContent.service";
 import { getAllExperiences } from "./experience.service";
 import { getFeaturedProjects } from "./project.service";
 import { getAllCertificates } from "./certificate.service";
@@ -57,9 +58,10 @@ async function readProfileImage(): Promise<string | undefined> {
 export async function getPortfolioPdfData(
   locale: Locale
 ): Promise<PortfolioPdfData> {
-  const [settings, experiences, featuredProjects, certificates, technologies, skills] =
+  const [settings, content, experiences, featuredProjects, certificates, technologies, skills] =
     await Promise.all([
       getResolvedSettings(locale),
+      getPageContent(locale),
       getAllExperiences(locale),
       getFeaturedProjects(locale),
       getAllCertificates(locale),
@@ -83,6 +85,7 @@ export async function getPortfolioPdfData(
 
   return {
     settings,
+    intro: content.deckIntro,
     experiences,
     featuredProjects,
     certificates,
