@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --test \"tests/**/*.test.ts\"",
-    "migrate:i18n": "node --env-file=.env.local scripts/migrate-i18n.mjs"
+    "migrate:i18n": "node --env-file=.env.local scripts/migrate-i18n.mjs",
+    "migrate:roles": "node --env-file=.env.local scripts/migrate-roles.mjs"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.5.1",
