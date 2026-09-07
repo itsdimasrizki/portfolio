@@ -9,6 +9,8 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
+import { getMessages } from "@/i18n/dictionary";
+import { localeHref, type Locale } from "@/i18n/locale";
 import type { Experience } from "@/types/experience";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
@@ -16,21 +18,26 @@ import { ExperienceCard } from "./experience-card";
 
 type Props = {
   experiences: Experience[];
+  locale: Locale;
 };
 
-export function ExperiencePreview({ experiences }: Props) {
+export function ExperiencePreview({ experiences, locale }: Props) {
+  const messages = getMessages(locale);
+
   return (
     <Section>
       <Container>
         <Reveal>
           <SectionHeader
             align="left"
-            eyebrow="Experience"
-            title="Experience"
-            description="Companies and teams I've worked with."
+            eyebrow={messages["section.experiencePreview.eyebrow"]}
+            title={messages["section.experiencePreview.title"]}
+            description={messages["section.experiencePreview.description"]}
             action={
               <Button asChild variant="ghost">
-                <Link href="/experience">View all</Link>
+                <Link href={localeHref(locale, "/experience")}>
+                  {messages["cta.viewAll"]}
+                </Link>
               </Button>
             }
           />

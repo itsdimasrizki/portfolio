@@ -8,6 +8,8 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 
+import { getMessages } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locale";
 import type { Project } from "@/types/project";
 
 import { ProjectGrid } from "./project-grid";
@@ -16,9 +18,11 @@ const ALL = "All";
 
 type Props = {
   projects: Project[];
+  locale: Locale;
 };
 
-export function ProjectsList({ projects }: Props) {
+export function ProjectsList({ projects, locale }: Props) {
+  const messages = getMessages(locale);
   const [activeCategory, setActiveCategory] = useState(ALL);
 
   const categories = useMemo(() => {
@@ -39,9 +43,9 @@ export function ProjectsList({ projects }: Props) {
         <Reveal>
           <SectionHeader
             as="h1"
-            eyebrow="Projects"
-            title="Things I've designed and built."
-            description="A selection of projects spanning web apps, dashboards, APIs, and interfaces, built with a focus on performance and clean design."
+            eyebrow={messages["section.allProjects.eyebrow"]}
+            title={messages["section.allProjects.title"]}
+            description={messages["section.allProjects.description"]}
           />
         </Reveal>
 

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Download, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getMessages } from "@/i18n/dictionary";
+import type { Locale } from "@/i18n/locale";
 import { cn } from "@/lib/utils";
 
 type DownloadState = "idle" | "loading" | "error";
@@ -11,13 +13,16 @@ type DownloadPortfolioButtonProps = {
   className?: string;
   variant?: "default" | "outline" | "ghost";
   size?: "sm" | "default" | "lg";
+  locale: Locale;
 };
 
 export function DownloadPortfolioButton({
   className,
   variant = "default",
   size = "sm",
+  locale,
 }: DownloadPortfolioButtonProps) {
+  const messages = getMessages(locale);
   const [state, setState] = useState<DownloadState>("idle");
 
   async function handleDownload() {
@@ -25,7 +30,7 @@ export function DownloadPortfolioButton({
 
     setState("loading");
     try {
-      const response = await fetch("/api/portfolio/pdf");
+      const response = await fetch(`/api/portfolio/pdf?lang=${locale}`);
 
       if (!response.ok) {
         throw new Error(`Server responded with ${response.status}`);
@@ -37,7 +42,7 @@ export function DownloadPortfolioButton({
       // Trigger browser download
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = "Dimas-Rizki-Portfolio.pdf";
+      anchor.download = `Dimas-Rizki-Portfolio-Deck-${locale.toUpperCase()}.pdf`;
       document.body.appendChild(anchor);
       anchor.click();
       document.body.removeChild(anchor);
@@ -81,17 +86,17 @@ export function DownloadPortfolioButton({
       {isLoading ? (
         <>
           <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-          Generating...
+          {messages["cta.generating"]}
         </>
       ) : isError ? (
         <>
           <Download className="mr-1.5 h-3.5 w-3.5" />
-          Retry
+          {messages["cta.retry"]}
         </>
       ) : (
         <>
           <Download className="mr-1.5 h-3.5 w-3.5" />
-          Portfolio
+          {messages["cta.portfolio"]}
         </>
       )}
     </Button>

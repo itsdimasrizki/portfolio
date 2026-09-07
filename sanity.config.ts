@@ -27,6 +27,14 @@ export default defineConfig({
             S.documentTypeListItem("skill").title("Skills"),
             S.divider(),
             S.listItem()
+              .title("Page Content")
+              .id("pageContent")
+              .child(
+                S.document()
+                  .schemaType("pageContent")
+                  .documentId("pageContent")
+              ),
+            S.listItem()
               .title("Site Settings")
               .id("siteSettings")
               .child(

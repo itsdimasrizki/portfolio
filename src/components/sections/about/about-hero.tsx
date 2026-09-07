@@ -7,13 +7,18 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { BlurImage } from "@/components/motion/blur-image";
+import { getMessages } from "@/i18n/dictionary";
+import { localeHref, type Locale } from "@/i18n/locale";
 import { heroItem } from "@/lib/motion";
 
 type AboutHeroProps = {
   cvUrl?: string | null;
+  locale: Locale;
 };
 
-export function AboutHero({ cvUrl }: AboutHeroProps) {
+export function AboutHero({ cvUrl, locale }: AboutHeroProps) {
+  const messages = getMessages(locale);
+
   return (
     <Section>
       <Container>
@@ -83,12 +88,14 @@ export function AboutHero({ cvUrl }: AboutHeroProps) {
                 target={cvUrl ? "_blank" : undefined}
                 rel={cvUrl ? "noopener noreferrer" : undefined}
               >
-                Download CV
+                {messages["cta.downloadCv"]}
               </a>
             </Button>
 
             <Button size="lg" variant="outline" asChild>
-              <Link href="/contact">Let&apos;s Connect</Link>
+              <Link href={localeHref(locale, "/contact")}>
+                {messages["cta.letsConnect"]}
+              </Link>
             </Button>
           </motion.div>
 

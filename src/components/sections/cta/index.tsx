@@ -4,12 +4,17 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
+import { getMessages } from "@/i18n/dictionary";
+import { localeHref, type Locale } from "@/i18n/locale";
 
 type CTAProps = {
   cvUrl?: string | null;
+  locale: Locale;
 };
 
-export function CTA({ cvUrl }: CTAProps) {
+export function CTA({ cvUrl, locale }: CTAProps) {
+  const messages = getMessages(locale);
+
   return (
     <Section>
       <Container>
@@ -31,7 +36,7 @@ export function CTA({ cvUrl }: CTAProps) {
 
             <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
               <Button asChild size="lg">
-                <Link href="/contact">
+                <Link href={localeHref(locale, "/contact")}>
                   Get in Touch
                 </Link>
               </Button>
@@ -43,7 +48,7 @@ export function CTA({ cvUrl }: CTAProps) {
                   target={cvUrl ? "_blank" : undefined}
                   rel={cvUrl ? "noopener noreferrer" : undefined}
                 >
-                  Download CV
+                  {messages["cta.downloadCv"]}
                 </a>
               </Button>
             </div>

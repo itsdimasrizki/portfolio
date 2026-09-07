@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# sanity dataset export sebelum migrasi
+sanity-backup-*.tar.gz

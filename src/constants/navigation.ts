@@ -1,13 +1,15 @@
+import type { MessageKey } from "@/i18n/dictionary";
+
 export interface NavLink {
-  label: string;
+  labelKey: MessageKey;
   href: string;
 }
 
 export const navLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Projects", href: "/projects" },
-  { label: "Experience", href: "/experience" },
-  { label: "Certificates", href: "/certificates" },
-  { label: "Contact", href: "/contact" },
+  { labelKey: "nav.home", href: "/" },
+  { labelKey: "nav.about", href: "/about" },
+  { labelKey: "nav.projects", href: "/projects" },
+  { labelKey: "nav.experience", href: "/experience" },
+  { labelKey: "nav.certificates", href: "/certificates" },
+  { labelKey: "nav.contact", href: "/contact" },
 ];
