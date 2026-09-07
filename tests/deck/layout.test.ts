@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   stagger, heightFor, accentFor, paginate, truncate, scaleTitle,
   formatDate, yearRange, splitParagraphs, yearsSince, pad2,
+  joinRoles, introLines,
 } from "../../src/pdf/deck/layout.ts";
 
 test("stagger cycles through the offset pattern", () => {
@@ -99,4 +100,54 @@ test("yearsSince counts from the earliest date and never returns zero", () => {
 test("pad2 pads slide numbers", () => {
   assert.equal(pad2(3), "03");
   assert.equal(pad2(23), "23");
+});
+
+test("joinRoles returns nothing when there are no roles", () => {
+  assert.equal(joinRoles([], 46), "");
+});
+
+test("joinRoles separates roles with a middot", () => {
+  assert.equal(
+    joinRoles(["Full Stack Web Developer", "Data Scientist"], 46),
+    "Full Stack Web Developer · Data Scientist",
+  );
+});
+
+test("joinRoles stops before it runs past the budget", () => {
+  const roles = ["Full Stack Web Developer", "Data Scientist", "Data Analyst", "ML Engineer"];
+  const joined = joinRoles(roles, 46);
+  assert.ok(joined.length <= 46, `"${joined}" is ${joined.length} chars`);
+  assert.equal(joined, "Full Stack Web Developer · Data Scientist");
+});
+
+test("joinRoles keeps the first role even when it alone overflows", () => {
+  const joined = joinRoles(["Machine Learning Infrastructure Engineer", "Data Analyst"], 20);
+  assert.ok(joined.startsWith("Machine"), joined);
+  assert.ok(joined.endsWith("…"), joined);
+  assert.ok(!joined.includes("·"), joined);
+});
+
+test("introLines reports no lines for empty text so the caller can fall back", () => {
+  assert.deepEqual(introLines("").lines, []);
+  assert.deepEqual(introLines("   \n  \n ").lines, []);
+});
+
+test("introLines splits on newlines and trims each line", () => {
+  assert.deepEqual(
+    introLines("hi, i'm dimas \n  i build apps\n\nand turn data").lines,
+    ["hi, i'm dimas", "i build apps", "and turn data"],
+  );
+});
+
+test("introLines drops everything past the fourth line", () => {
+  assert.deepEqual(introLines("a\nb\nc\nd\ne").lines, ["a", "b", "c", "d"]);
+});
+
+test("introLines keeps display size while every line stays short", () => {
+  assert.equal(introLines("hi, i'm dimas\ni build apps").size, "display");
+  assert.equal(introLines("thirteen char").size, "display");
+});
+
+test("introLines steps down a size once a line runs long", () => {
+  assert.equal(introLines("halo, saya dimas,\nsaya bangun web").size, "h1Big");
 });

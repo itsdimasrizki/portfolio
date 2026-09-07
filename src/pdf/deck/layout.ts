@@ -97,3 +97,45 @@ export function yearsSince(dates: (string | undefined)[], now: Date = new Date()
 export function pad2(n: number): string {
   return n < 10 ? `0${n}` : String(n);
 }
+
+/**
+ * Menggabung peran untuk baris header cover, berhenti sebelum melewati anggaran
+ * karakter. Selalu menyisakan peran pertama: baris itu orientasi pembaca, bukan
+ * daftar lengkap — daftar penuhnya ada di slide profil.
+ */
+export function joinRoles(roles: string[], maxChars: number): string {
+  const kept = roles.map((role) => role.trim()).filter(Boolean);
+  if (kept.length === 0) return "";
+
+  let line = truncate(kept[0], maxChars);
+  for (const role of kept.slice(1)) {
+    const next = `${line} · ${role}`;
+    if (next.length > maxChars) break;
+    line = next;
+  }
+  return line;
+}
+
+export type IntroSize = "display" | "h1Big";
+
+/**
+ * Memecah perkenalan cover jadi baris seperti yang ditulis di Studio, lalu
+ * memilih ukuran hurufnya. Kalimat Indonesia hampir selalu lebih panjang dari
+ * padanan Inggrisnya; tanpa penurunan ukuran, @react-pdf/renderer melipat
+ * sendiri barisnya dan merusak susunan yang disengaja.
+ */
+const INTRO_MAX_LINES = 4;
+const DISPLAY_MAX_CHARS = 13;
+
+export function introLines(
+  text: string,
+  max: number = INTRO_MAX_LINES,
+): { lines: string[]; size: IntroSize } {
+  const lines = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .slice(0, max);
+  const longest = lines.reduce((n, line) => Math.max(n, line.length), 0);
+  return { lines, size: longest > DISPLAY_MAX_CHARS ? "h1Big" : "display" };
+}
