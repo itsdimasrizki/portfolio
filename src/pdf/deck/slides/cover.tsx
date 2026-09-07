@@ -27,7 +27,8 @@ export function CoverSlide({
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
         <Text style={{ ...type.body, fontWeight: 700, color: colors.ink }}>{name}</Text>
         <Text style={{ ...type.small, color: colors.muted }}>
-          {role}   ·   {place}   ·   <Text style={{ color: colors.blue }}>portfolio 2026</Text>
+          {[role, place].filter(Boolean).map((part) => `${part}   ·   `).join("")}
+          <Text style={{ color: colors.blue }}>portfolio 2026</Text>
         </Text>
       </View>
       <View style={{ height: 1, backgroundColor: colors.ink, marginTop: 10 }} />
