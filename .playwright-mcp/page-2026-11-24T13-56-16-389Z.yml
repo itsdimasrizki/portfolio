@@ -1,0 +1,105 @@
+- generic [active] [ref=f13e1]:
+  - main [ref=f13e2]:
+    - article [ref=f13e3]:
+      - generic [ref=f13e4]:
+        - generic [ref=f13e5]:
+          - heading [level=1] [ref=f13e6]:
+            - link [ref=f13e7] [cursor=pointer]:
+              - /url: https://x.com/leerob
+              - paragraph [ref=f13e8]:
+                - generic: "@"
+                - text: leerob
+          - region "Biography" [ref=f13e9]:
+            - generic [ref=f13e10]:
+              - generic [ref=f13e11]: Bio
+              - generic "Bio length" [ref=f13e12]:
+                - button "Default" [pressed] [ref=f13e13] [cursor=pointer]
+                - button "Long" [ref=f13e14] [cursor=pointer]
+            - generic [ref=f13e15]:
+              - paragraph [ref=f13e16]:
+                - text: I’m an engineer and writer. I work on Product at SpaceX (formerly at
+                - link "Cursor" [ref=f13e17]:
+                  - /url: /cursor
+                - text: ), where I help build Grok Bot. Previously, I worked at
+                - link "Vercel" [ref=f13e18]:
+                  - /url: /vercel
+                - text: on Next.js. I’ve been coding for 15 years and teaching for the second half.
+              - paragraph [ref=f13e19]:
+                - text: My life’s work is to make technology easy to understand and interesting to learn about. I’m a husband to my much cooler wife, a father to two radiant daughters, and a massive music fan. I also advise companies and
+                - link "angel invest" [ref=f13e20] [cursor=pointer]:
+                  - /url: mailto:lee@leerob.com
+                - text: .
+          - generic [ref=f13e21]:
+            - region "Notes" [ref=f13e22]:
+              - heading "Notes" [level=2] [ref=f13e23]
+              - list [ref=f13e24]:
+                - listitem [ref=f13e25]:
+                  - link "Things I believe" [ref=f13e26] [cursor=pointer]:
+                    - /url: /beliefs
+                - listitem [ref=f13e27]:
+                  - link "Understanding AI" [ref=f13e28] [cursor=pointer]:
+                    - /url: /ai
+                - listitem [ref=f13e29]:
+                  - link "Developer experience" [ref=f13e30] [cursor=pointer]:
+                    - /url: /dx
+                - listitem [ref=f13e31]:
+                  - link "Developer marketing" [ref=f13e32] [cursor=pointer]:
+                    - /url: /developer-marketing
+                - listitem [ref=f13e33]:
+                  - link "Developer relations" [ref=f13e34] [cursor=pointer]:
+                    - /url: /devrel
+                - listitem [ref=f13e35]:
+                  - link "Developer products" [ref=f13e36] [cursor=pointer]:
+                    - /url: /devtools
+                - listitem [ref=f13e37]:
+                  - link "Documentation" [ref=f13e38] [cursor=pointer]:
+                    - /url: /docs
+                - listitem [ref=f13e39]:
+                  - link "Community moderation" [ref=f13e40] [cursor=pointer]:
+                    - /url: /moderation
+                - listitem [ref=f13e41]:
+                  - link "Personal software" [ref=f13e42] [cursor=pointer]:
+                    - /url: /personal-software
+                - listitem [ref=f13e43]:
+                  - link "Product engineers" [ref=f13e44] [cursor=pointer]:
+                    - /url: /product-engineers
+            - region "Blogs" [ref=f13e45]:
+              - heading "Blogs" [level=2] [ref=f13e46]
+              - generic [ref=f13e47]:
+                - link "How we teach AI models July 2026" [ref=f13e48] [cursor=pointer]:
+                  - /url: /model-behavior
+                  - generic [ref=f13e49]: How we teach AI models
+                  - time [ref=f13e50]: July 2026
+                - link "Building low-level software with only coding agents December 2025" [ref=f13e51] [cursor=pointer]:
+                  - /url: /pixo
+                  - generic [ref=f13e52]: Building low-level software with only coding agents
+                  - time [ref=f13e53]: December 2025
+                - link "Coding agents and complexity budgets December 2025" [ref=f13e54] [cursor=pointer]:
+                  - /url: /agents
+                  - generic [ref=f13e55]: Coding agents and complexity budgets
+                  - time [ref=f13e56]: December 2025
+                - link "Reflections on the React community August 2025" [ref=f13e57] [cursor=pointer]:
+                  - /url: /reflections
+                  - generic [ref=f13e58]: Reflections on the React community
+                  - time [ref=f13e59]: August 2025
+                - link "5 things I learned from 5 years at Vercel July 2025" [ref=f13e60] [cursor=pointer]:
+                  - /url: /vercel
+                  - generic [ref=f13e61]: 5 things I learned from 5 years at Vercel
+                  - time [ref=f13e62]: July 2025
+                - link "How I'm writing CSS January 2024" [ref=f13e63] [cursor=pointer]:
+                  - /url: /css
+                  - generic [ref=f13e64]: How I'm writing CSS
+                  - time [ref=f13e65]: January 2024
+                - link "The story of Heroku May 2022" [ref=f13e66] [cursor=pointer]:
+                  - /url: /heroku
+                  - generic [ref=f13e67]: The story of Heroku
+                  - time [ref=f13e68]: May 2022
+                - link "Rust is eating JavaScript November 2021" [ref=f13e69] [cursor=pointer]:
+                  - /url: /rust
+                  - generic [ref=f13e70]: Rust is eating JavaScript
+                  - time [ref=f13e71]: November 2021
+        - complementary [ref=f13e72]:
+          - img "A colorful, hand-painted illustration with textured brushstrokes blending the San Francisco skyline into the Des Moines skyline and rolling Iowa fields, representing my life and journey over the years" [ref=f13e73]:
+            - img [aria-hidden] [ref=f13e128]:
+              - generic [aria-hidden] [ref=f13e351]: IOWA
+  - alert [ref=f13e973]

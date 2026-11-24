@@ -3,7 +3,7 @@ import { Section } from "@/components/layout/section";
 import type { Locale } from "@/i18n/locale";
 import type { PageContent } from "@/types/pageContent";
 import { HeroContent } from "./hero-content";
-import { HeroImage } from "./hero-image";
+import { HeroConsole } from "./hero-console";
 
 type HeroProps = {
   content: PageContent;
@@ -23,7 +23,7 @@ export function Hero({ content, settings, cvUrl, locale }: HeroProps) {
             cvUrl={cvUrl}
             locale={locale}
           />
-          <HeroImage />
+          <HeroConsole />
         </div>
       </Container>
     </Section>

@@ -10,7 +10,7 @@ import { localeHref, type Locale } from "@/i18n/locale";
 import { heroItem } from "@/lib/motion";
 import type { PageContent } from "@/types/pageContent";
 import { RoleRotator } from "./role-rotator";
-
+import { TypewriterGreeting } from "./typewriter-greeting";
 type HeroContentProps = {
   content: PageContent;
   settings: { fullName?: string; roles: string[] };
@@ -45,20 +45,30 @@ export function HeroContent({
         </motion.div>
       )}
 
-      <motion.h1
+      <motion.div
         custom={1}
         variants={heroItem}
         initial="hidden"
         animate="visible"
-        className="mt-6 font-display text-4xl font-bold leading-[1.08] tracking-tight md:text-5xl lg:text-6xl text-foreground"
+        className="mt-5 space-y-2"
       >
-        {headline}{" "}
-        {settings.roles.length > 0 ? (
-          <RoleRotator roles={settings.roles} />
-        ) : (
-          <span className="text-primary">{content.heroHighlight}</span>
-        )}
-      </motion.h1>
+        <div className="flex items-center gap-2 font-mono text-base md:text-lg text-muted-foreground">
+          <TypewriterGreeting />
+          <span>, I am</span>
+        </div>
+
+        <h1 className="font-display text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl text-foreground">
+          {headline}
+        </h1>
+
+        <div className="pt-1 font-display text-xl md:text-2xl font-semibold text-muted-foreground">
+          {settings.roles.length > 0 ? (
+            <RoleRotator roles={settings.roles} />
+          ) : (
+            <span className="text-primary">{content.heroHighlight}</span>
+          )}
+        </div>
+      </motion.div>
 
       {content.heroDescription && (
         <motion.p

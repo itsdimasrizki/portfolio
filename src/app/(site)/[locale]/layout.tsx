@@ -8,6 +8,8 @@ import "../../globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { ParticleCanvas } from "@/components/effects/particle-canvas";
+import { FluidCursor } from "@/components/effects/fluid-cursor";
 import { getSiteSettings } from "@/services/settings.service";
 import { getMessages } from "@/i18n/dictionary";
 import { DEFAULT_LOCALE, LOCALES, isLocale } from "@/i18n/locale";
@@ -84,13 +86,17 @@ export default async function SiteLayout({
         className={`${geistSans.variable} ${spaceGrotesk.variable} ${silkscreen.variable} font-sans antialiased bg-background text-foreground`}
       >
         <MotionProvider>
-          <Navbar cvUrl={cvUrl} locale={locale} />
-          {children}
-          <Footer
-            locale={locale}
-            socialLinks={socialLinks}
-            contactInfo={contactInfo}
-          />
+          <ParticleCanvas />
+          <FluidCursor />
+          <div className="relative z-10 flex min-h-screen flex-col">
+            <Navbar cvUrl={cvUrl} locale={locale} />
+            <main className="flex-1">{children}</main>
+            <Footer
+              locale={locale}
+              socialLinks={socialLinks}
+              contactInfo={contactInfo}
+            />
+          </div>
         </MotionProvider>
       </body>
     </html>

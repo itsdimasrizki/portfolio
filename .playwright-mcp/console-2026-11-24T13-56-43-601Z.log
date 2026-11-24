@@ -1,0 +1,21 @@
+[    1781ms] Error: Minified React error #418; visit https://react.dev/errors/418?args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at rv (https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:30575)
+    at rb (https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:31536)
+    at https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:115608
+    at uf (https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:119860)
+    at uu (https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:112256)
+    at https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:108294
+    at https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:108301
+    at i8 (https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:108398)
+    at uD (https://emilkowal.ski/_next/static/chunks/3cf2b3a0-7907689060cc9612.js:1:129036)
+    at MessagePort.T (https://emilkowal.ski/_next/static/chunks/1803-5ca4bb95e14a4830.js:1:125155)
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/media/1bb87caddaaf6c2d-s.p.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/css/617e37875b9bcf19.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/css/665709193b0592a7.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/css/8a2e21aa198b9c8d.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/css/0988b9c85088e16f.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/media/49fce7c6966c54d3-s.p.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/css/a033397860442abf.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/css/c68e78630866ffea.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/css/5897f075061f9a62.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
+[    5378ms] [WARNING] The resource https://emilkowal.ski/_next/static/media/648293620770408b-s.p.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ https://emilkowal.ski/:1
