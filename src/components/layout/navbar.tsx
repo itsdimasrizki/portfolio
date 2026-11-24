@@ -40,16 +40,16 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-all duration-300 ease-out",
+        "sticky top-0 z-50 transition-all duration-200",
         isScrolled
-          ? "border-b border-border/80 bg-background/80 backdrop-blur-md shadow-xs"
-          : "border-b border-transparent bg-transparent backdrop-blur-none"
+          ? "border-b border-border bg-background/90 backdrop-blur-md shadow-xs"
+          : "border-b border-border/40 bg-background/70 backdrop-blur-xs"
       )}
     >
       <Container className="flex h-16 items-center justify-between">
         <Link
           href={localeHref(locale, "/")}
-          className="text-sm font-semibold tracking-tight transition-colors hover:text-foreground/80"
+          className="font-display text-sm font-bold tracking-tight text-foreground transition-colors hover:text-primary"
         >
           Dimas Rizki Ardiansyah
         </Link>
@@ -65,16 +65,16 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
                 key={item.href}
                 href={href}
                 className={cn(
-                  "relative rounded-md px-3 py-1.5 text-sm transition-colors duration-200",
+                  "relative px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors duration-150",
                   isActive
-                    ? "font-medium text-foreground"
+                    ? "font-semibold text-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {isActive && (
                   <motion.div
                     layoutId="navbar-active"
-                    className="absolute inset-0 -z-10 rounded-md bg-muted/80"
+                    className="absolute inset-0 -z-10 border border-border bg-muted/60 rounded-none"
                     transition={{
                       type: "spring",
                       stiffness: 380,
@@ -89,17 +89,25 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
         </nav>
 
         <div className="flex items-center gap-2">
-          {/* Di bawah md kedua tombol ini pindah ke dalam panel MobileNav:
-              nama + dua tombol + hamburger tidak muat di layar 360px. */}
           <div className="hidden items-center gap-2 md:flex">
             {cvUrl ? (
-              <Button variant="outline" size="sm" asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-none border-border font-mono text-xs uppercase tracking-wider"
+                asChild
+              >
                 <a href={cvUrl} download target="_blank" rel="noopener noreferrer">
                   {messages["cta.downloadCv"]}
                 </a>
               </Button>
             ) : (
-              <Button variant="outline" size="sm" asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-none border-border font-mono text-xs uppercase tracking-wider"
+                asChild
+              >
                 <a href="/resume.pdf" download>
                   {messages["cta.downloadCv"]}
                 </a>
@@ -108,7 +116,7 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
 
             <DownloadPortfolioButton locale={locale} />
 
-            <LanguageSwitcher locale={locale} className="hidden md:flex" />
+            <LanguageSwitcher locale={locale} className="hidden md:flex rounded-none" />
           </div>
 
           <MobileNav cvUrl={cvUrl} locale={locale} />

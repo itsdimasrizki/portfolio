@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Geist } from "next/font/google";
+import localFont from "next/font/local";
 
 import "../../globals.css";
 
@@ -11,7 +12,40 @@ import { getSiteSettings } from "@/services/settings.service";
 import { getMessages } from "@/i18n/dictionary";
 import { DEFAULT_LOCALE, LOCALES, isLocale } from "@/i18n/locale";
 
-const geistSans = Geist({ subsets: ["latin"] });
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
+
+const spaceGrotesk = localFont({
+  src: [
+    {
+      path: "../../../../public/fonts/SpaceGrotesk-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../../../public/fonts/SpaceGrotesk-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../../../public/fonts/SpaceGrotesk-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+const silkscreen = localFont({
+  src: "../../../../public/fonts/Silkscreen-Regular.ttf",
+  weight: "400",
+  variable: "--font-silkscreen",
+  display: "swap",
+});
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -42,15 +76,21 @@ export default async function SiteLayout({
   // diam-diam menampilkan bahasa default.
   if (!isLocale(locale)) notFound();
 
-  const { cvUrl } = await getSiteSettings(locale);
+  const { cvUrl, socialLinks, contactInfo } = await getSiteSettings(locale);
 
   return (
     <html lang={locale}>
-      <body className={`${geistSans.className} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${spaceGrotesk.variable} ${silkscreen.variable} font-sans antialiased bg-background text-foreground`}
+      >
         <MotionProvider>
           <Navbar cvUrl={cvUrl} locale={locale} />
           {children}
-          <Footer locale={locale} />
+          <Footer
+            locale={locale}
+            socialLinks={socialLinks}
+            contactInfo={contactInfo}
+          />
         </MotionProvider>
       </body>
     </html>

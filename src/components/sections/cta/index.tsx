@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
@@ -19,29 +20,29 @@ export function CTA({ cvUrl, locale }: CTAProps) {
     <Section>
       <Container>
         <Reveal>
-          <div className="rounded-2xl border border-border bg-card px-8 py-16 text-center lg:px-16 transition-all duration-300 hover:border-foreground/20 hover:shadow-xs">
-            <p className="text-sm font-semibold uppercase tracking-widest text-teal-700">
-              Let&apos;s Work Together
-            </p>
+          <div className="border border-border bg-card px-8 py-14 text-center lg:px-16 rounded-none shadow-xs">
+            <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground mb-3 inline-flex items-center gap-2">
+              <span className="h-1.5 w-1.5 bg-primary" />
+              <span>{messages["section.contact.eyebrow"] || "CONNECT"}</span>
+            </div>
 
-            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
-              Have an idea worth building?
+            <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl text-foreground">
+              {messages["section.contact.title"]}
             </h2>
 
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              I&apos;m currently available for freelance projects, internships,
-              and full-time opportunities. Let&apos;s build something meaningful
-              together.
+            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
+              {messages["section.contact.description"]}
             </p>
 
-            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-              <Button asChild size="lg">
+            <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+              <Button asChild size="lg" className="rounded-none px-6 font-mono text-xs uppercase tracking-wider">
                 <Link href={localeHref(locale, "/contact")}>
-                  Get in Touch
+                  {messages["cta.letsConnect"] || "Get in Touch"}
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
 
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="rounded-none border-border px-6 font-mono text-xs uppercase tracking-wider">
                 <a
                   href={cvUrl ?? "/resume.pdf"}
                   download

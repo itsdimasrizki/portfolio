@@ -6,7 +6,6 @@ import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 
 import { Project } from "@/types/project";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,133 +17,174 @@ type ProjectCardProps = {
 export function ProjectCard({ project }: ProjectCardProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const intervalRef = useRef<number | undefined>(undefined);
   const images = project.images.length > 0 ? project.images : [];
   const hasMultiple = images.length > 1;
 
   useEffect(() => {
     if (isHovered && hasMultiple) {
-      intervalRef.current = setInterval(() => {
+      intervalRef.current = window.setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % images.length);
-      }, 1200);
+      }, 1400);
     } else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (!isHovered) setActiveIndex(0);
+      window.clearInterval(intervalRef.current);
     }
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      window.clearInterval(intervalRef.current);
     };
   }, [isHovered, hasMultiple, images.length]);
 
+  const hasLiveDemo = Boolean(
+    project.liveDemo && project.liveDemo.trim() !== "" && project.liveDemo !== "#"
+  );
+  const hasGitHub = Boolean(
+    project.github && project.github.trim() !== "" && project.github !== "#"
+  );
+
   return (
     <Card
-      className="group/card gap-0 overflow-hidden rounded-2xl border border-border bg-card p-0 ring-0 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md"
+      className="group/card flex flex-col justify-between overflow-hidden rounded-none border border-border bg-card p-0 transition-colors duration-200 hover:border-foreground/40 shadow-xs"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image area */}
-      <div className="relative aspect-video overflow-hidden bg-muted">
-        {images.length > 0 ? (
-          <>
-            {images.map((src, i) => (
-              <Image
-                key={i}
-                src={src}
-                alt={`${project.title} screenshot ${i + 1}`}
-                fill
-                className={`object-cover transition-all duration-700 ease-in-out ${
-                  i === activeIndex
-                    ? "opacity-100 scale-[1.03]"
-                    : "opacity-0 scale-100"
-                }`}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
-            ))}
+      <div>
+        {/* Image area */}
+        <div className="relative aspect-video overflow-hidden border-b border-border bg-muted/40">
+          {images.length > 0 ? (
+            <>
+              {images.map((src, i) => (
+                <Image
+                  key={i}
+                  src={src}
+                  alt={`${project.title} preview ${i + 1}`}
+                  fill
+                  className={`object-cover transition-all duration-700 ease-in-out ${
+                    i === activeIndex
+                      ? "opacity-100 scale-[1.02]"
+                      : "opacity-0 scale-100"
+                  }`}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              ))}
 
-            {/* Dot indicators — only show when multiple images */}
-            {hasMultiple && (
-              <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
-                {images.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveIndex(i)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === activeIndex
-                        ? "w-4 bg-white"
-                        : "w-1.5 bg-white/50"
-                    }`}
-                  />
-                ))}
-              </div>
-            )}
-          </>
-        ) : (
-          // Placeholder when no image
-          <div className="absolute inset-0 flex items-center justify-center bg-muted">
-            <span className="text-xs text-muted-foreground">No image</span>
+              {hasMultiple && (
+                <div className="absolute bottom-3 left-0 right-0 z-10 flex justify-center gap-1.5">
+                  {images.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      aria-label={`Show slide ${i + 1}`}
+                      onClick={() => setActiveIndex(i)}
+                      className={`h-1 transition-all duration-200 ${
+                        i === activeIndex
+                          ? "w-6 bg-white"
+                          : "w-2 bg-white/40 hover:bg-white/70"
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-muted/20">
+              <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+                [NO VISUAL ARCHIVE]
+              </span>
+            </div>
+          )}
+
+          {project.status === "ongoing" && (
+            <Badge className="absolute left-3 top-3 z-10 rounded-none bg-primary px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-primary-foreground">
+              WIP
+            </Badge>
+          )}
+        </div>
+
+        <CardContent className="space-y-4 p-5">
+          {/* Header Meta: Category & Year */}
+          <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-3">
+            <div className="flex flex-wrap gap-1.5">
+              {project.categories.map((cat) => (
+                <span
+                  key={cat}
+                  className="border border-border/80 bg-muted/30 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground"
+                >
+                  {cat}
+                </span>
+              ))}
+            </div>
+
+            <span className="font-mono text-xs text-muted-foreground">
+              {project.year}
+            </span>
           </div>
-        )}
 
-        {project.status === "ongoing" && (
-          <Badge className="absolute left-4 top-4 z-10 bg-teal-700 text-white">
-            Ongoing
-          </Badge>
-        )}
+          {/* Title & Description */}
+          <div>
+            <h3 className="font-display text-xl font-bold tracking-tight text-foreground">
+              {project.title}
+            </h3>
+
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground line-clamp-3">
+              {project.description}
+            </p>
+          </div>
+
+          {/* Tech list */}
+          <div className="flex flex-wrap gap-1 pt-1">
+            {project.technologies.map((tech) => (
+              <span
+                key={tech}
+                className="font-mono text-[11px] text-muted-foreground before:content-['#'] before:text-primary/70 mr-2"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </CardContent>
       </div>
 
-      <CardContent className="space-y-5 p-6">
-        {/* Categories */}
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex flex-wrap gap-1.5">
-            {project.categories.map((cat) => (
-              <Badge key={cat} variant="secondary">
-                {cat}
-              </Badge>
-            ))}
-          </div>
-
-          <span className="shrink-0 text-sm text-muted-foreground">
-            {project.year}
-          </span>
-        </div>
-
-        {/* Title */}
-        <div>
-          <h3 className="flex items-center gap-1 text-xl font-semibold transition-transform duration-300 ease-out group-hover/card:-translate-y-0.5">
-            {project.title}
-            <ArrowUpRight className="size-4 text-muted-foreground transition-transform duration-300 ease-out group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
-          </h3>
-
-          <p className="mt-2 text-sm text-muted-foreground">
-            {project.description}
-          </p>
-        </div>
-
-        {/* Tech */}
-        <div className="flex flex-wrap gap-2">
-          {project.technologies.map((tech) => (
-            <Badge key={tech} variant="outline">
-              {tech}
-            </Badge>
-          ))}
-        </div>
-
-        {/* Action */}
-        <div className="flex gap-3">
-          <Button asChild variant="outline" size="sm">
-            <Link href={project.github ?? "#"}>
+      {/* Action Footer */}
+      <div className="flex items-center gap-2 border-t border-border bg-muted/10 p-4">
+        {hasGitHub && (
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="rounded-none border-border font-mono text-xs uppercase tracking-wider"
+          >
+            <Link
+              href={project.github!}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               GitHub
             </Link>
           </Button>
+        )}
 
-          <Button asChild size="sm">
-            <Link href={project.liveDemo ?? "#"}>
+        {hasLiveDemo ? (
+          <Button
+            asChild
+            size="sm"
+            className="rounded-none font-mono text-xs uppercase tracking-wider"
+          >
+            <Link
+              href={project.liveDemo!}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Live Demo
+              <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
             </Link>
           </Button>
-        </div>
-      </CardContent>
+        ) : (
+          <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground/60 px-2 py-1">
+            [INTERNAL / CLI]
+          </span>
+        )}
+      </div>
     </Card>
   );
 }

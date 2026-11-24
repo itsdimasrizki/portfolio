@@ -41,16 +41,22 @@ export function SectionHeader({
         )}
       >
         {eyebrow && (
-          <p className="text-sm font-semibold uppercase tracking-widest text-teal-700">
-            {eyebrow}
-          </p>
+          <div
+            className={cn(
+              "inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-muted-foreground mb-2",
+              isCenter ? "justify-center" : "justify-start"
+            )}
+          >
+            <span className="inline-block h-1.5 w-1.5 bg-primary" />
+            <span>{eyebrow}</span>
+          </div>
         )}
 
         <Heading
           className={cn(
-            "mt-3 font-bold tracking-tight",
+            "font-display font-bold tracking-tight text-foreground",
             as === "h1"
-              ? "text-4xl md:text-5xl"
+              ? "text-4xl md:text-5xl lg:text-6xl"
               : "text-3xl md:text-4xl"
           )}
         >
@@ -58,7 +64,7 @@ export function SectionHeader({
         </Heading>
 
         {description && (
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+          <p className="mt-3 text-base leading-relaxed text-muted-foreground">
             {description}
           </p>
         )}

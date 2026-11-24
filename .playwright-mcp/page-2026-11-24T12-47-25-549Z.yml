@@ -1,0 +1,287 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - link "Dimas Rizki Ardiansyah" [ref=f1e4] [cursor=pointer]:
+        - /url: /en
+      - button "Open menu" [ref=f1e6]
+  - main [ref=f1e8]:
+    - generic [ref=f1e10]:
+      - generic [ref=f1e13]:
+        - paragraph [ref=f1e14]: Projects
+        - heading "Things I've designed and built." [level=1] [ref=f1e15]
+        - paragraph [ref=f1e16]: A selection of projects spanning web apps, dashboards, APIs, and interfaces, built with a focus on performance and clean design.
+      - generic [ref=f1e17]:
+        - button "All" [ref=f1e18]
+        - button "AI / ML" [ref=f1e19]
+        - button "Backend" [ref=f1e20]
+        - button "Dashboard" [ref=f1e21]
+        - button "Marketing" [ref=f1e22]
+        - button "Mobile App" [ref=f1e23]
+        - button "Personal" [ref=f1e24]
+        - button "Web App" [ref=f1e25]
+      - generic [ref=f1e27]:
+        - generic [ref=f1e29]:
+          - generic [ref=f1e30]:
+            - img "Matcha - AI Career Assistance screenshot 1" [ref=f1e31]
+            - img "Matcha - AI Career Assistance screenshot 2" [ref=f1e32]
+            - img "Matcha - AI Career Assistance screenshot 3" [ref=f1e33]
+            - img "Matcha - AI Career Assistance screenshot 4" [ref=f1e34]
+            - generic [ref=f1e35]:
+              - button [ref=f1e36]
+              - button [ref=f1e37]
+              - button [ref=f1e38]
+              - button [ref=f1e39]
+          - generic [ref=f1e40]:
+            - generic [ref=f1e41]:
+              - generic [ref=f1e42]:
+                - generic [ref=f1e43]: Web App
+                - generic [ref=f1e44]: Backend
+                - generic [ref=f1e45]: AI / ML
+              - generic [ref=f1e46]: "2026"
+            - generic [ref=f1e47]:
+              - heading "Matcha - AI Career Assistance" [level=3] [ref=f1e48]
+              - paragraph [ref=f1e52]: Matcha Career AI is an AI-powered career assistant that helps users evaluate their professional profile and make informed career decisions. Built with a multi-agent architecture using LangGraph, FastAPI, and React, the platform provides skill gap analysis, CV and LinkedIn reviews, ATS compatibility scoring, personalized learning roadmaps, and job description matching. By combining Large Language Models, semantic search, and machine learning, Matcha delivers adaptive, context-aware career guidance through a single interactive platform.
+            - generic [ref=f1e53]:
+              - generic [ref=f1e54]: Python
+              - generic [ref=f1e55]: Pandas
+              - generic [ref=f1e56]: Jupyter Notebook
+              - generic [ref=f1e57]: Node.js
+              - generic [ref=f1e58]: React
+              - generic [ref=f1e59]: Vite
+              - generic [ref=f1e60]: Fast API
+            - generic [ref=f1e61]:
+              - link "GitHub" [ref=f1e62] [cursor=pointer]:
+                - /url: https://github.com/rahmanisstudent/Matcha
+              - link "Live Demo" [ref=f1e63] [cursor=pointer]:
+                - /url: https://matcha-career-assistant.vercel.app/
+        - generic [ref=f1e65]:
+          - generic [ref=f1e66]:
+            - img "Agro Technology Melon screenshot 1" [ref=f1e67]
+            - img "Agro Technology Melon screenshot 2" [ref=f1e68]
+            - img "Agro Technology Melon screenshot 3" [ref=f1e69]
+            - img "Agro Technology Melon screenshot 4" [ref=f1e70]
+            - img "Agro Technology Melon screenshot 5" [ref=f1e71]
+            - img "Agro Technology Melon screenshot 6" [ref=f1e72]
+            - img "Agro Technology Melon screenshot 7" [ref=f1e73]
+            - generic [ref=f1e74]:
+              - button [ref=f1e75]
+              - button [ref=f1e76]
+              - button [ref=f1e77]
+              - button [ref=f1e78]
+              - button [ref=f1e79]
+              - button [ref=f1e80]
+              - button [ref=f1e81]
+          - generic [ref=f1e82]:
+            - generic [ref=f1e83]:
+              - generic [ref=f1e84]:
+                - generic [ref=f1e85]: Web App
+                - generic [ref=f1e86]: Dashboard
+                - generic [ref=f1e87]: Backend
+              - generic [ref=f1e88]: "2026"
+            - generic [ref=f1e89]:
+              - heading "Agro Technology Melon" [level=3] [ref=f1e90]
+              - paragraph [ref=f1e94]: Smart Agro IoT is an intelligent fertigation system designed to automate nutrient mixing, irrigation, and environmental monitoring for hydroponic and agricultural applications. Built with ESP32-based IoT devices, the system continuously monitors pH, TDS, water temperature, water level, and soil moisture while automatically controlling pumps, solenoid valves, and nutrient dosing through a Finite State Machine (FSM). Integrated with a web dashboard, Smart Agro IoT enables real-time monitoring, remote control, and data-driven fertigation management to improve efficiency and consistency.
+            - generic [ref=f1e95]:
+              - generic [ref=f1e96]: Platform IO
+              - generic [ref=f1e97]: C++
+              - generic [ref=f1e98]: Typescript
+              - generic [ref=f1e99]: MQTT
+              - generic [ref=f1e100]: Arduino Framework
+              - generic [ref=f1e101]: React
+              - generic [ref=f1e102]: Node.js
+              - generic [ref=f1e103]: Next.js
+              - generic [ref=f1e104]: Tailwind CSS
+              - generic [ref=f1e105]: ESP 32
+              - generic [ref=f1e106]: ESP-NOW
+            - generic [ref=f1e107]:
+              - link "GitHub" [ref=f1e108] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki/Agro-Technology-Melon
+              - link "Live Demo" [ref=f1e109] [cursor=pointer]:
+                - /url: https://greenhouse.fikriastama.com/login
+        - generic [ref=f1e111]:
+          - generic [ref=f1e112]: No image
+          - generic [ref=f1e115]:
+            - generic [ref=f1e116]:
+              - generic [ref=f1e117]:
+                - generic [ref=f1e118]: Personal
+                - generic [ref=f1e119]: AI / ML
+                - generic [ref=f1e120]: Mobile App
+              - generic [ref=f1e121]: 2025-now
+            - generic [ref=f1e122]:
+              - heading "Wolly Personal Assistance" [level=3] [ref=f1e123]
+              - paragraph [ref=f1e127]: Wolly AI Personal Assistant is an AI-powered personal assistant built with Google Apps Script that integrates WhatsApp, Google Calendar, and Gemini AI. The system understands natural language requests, performs function calling to manage schedules, detects available time slots, sends event reminders, and automates calendar operations through a serverless architecture. Designed with role-based access control and anti-loop protection, Wolly provides a seamless conversational experience for intelligent personal productivity.
+            - generic [ref=f1e128]:
+              - generic [ref=f1e129]: Google Apps Script
+              - generic [ref=f1e130]: JavaScript
+            - generic [ref=f1e131]:
+              - link "GitHub" [ref=f1e132] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki/ai-personal-assistance
+              - link "Live Demo" [ref=f1e133] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f1e135]:
+          - generic [ref=f1e136]: No image
+          - generic [ref=f1e139]:
+            - generic [ref=f1e140]:
+              - generic [ref=f1e141]:
+                - generic [ref=f1e142]: Personal
+                - generic [ref=f1e143]: AI / ML
+              - generic [ref=f1e144]: "2026"
+            - generic [ref=f1e145]:
+              - heading "Decission Making System LLM WP Algorithm" [level=3] [ref=f1e146]
+              - paragraph [ref=f1e150]: Decision Making System - Weighted Product Algorithm is a web-based Decision Support System (DSS) that recommends the most suitable Large Language Models (LLMs) using the Weighted Product (WP) algorithm. The system evaluates AI models across multiple criteria, including intelligence, coding capability, performance, latency, and operational cost, allowing users to customize criterion weights and generate data-driven rankings through an interactive interface.
+            - generic [ref=f1e151]:
+              - link "GitHub" [ref=f1e152] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki/Decision-Making-System-WPAlgoritm
+              - link "Live Demo" [ref=f1e153] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f1e155]:
+          - generic [ref=f1e156]:
+            - img "Web Cashier - Toko Azizah screenshot 1" [ref=f1e157]
+            - img "Web Cashier - Toko Azizah screenshot 2" [ref=f1e158]
+            - img "Web Cashier - Toko Azizah screenshot 3" [ref=f1e159]
+            - img "Web Cashier - Toko Azizah screenshot 4" [ref=f1e160]
+            - generic [ref=f1e161]:
+              - button [ref=f1e162]
+              - button [ref=f1e163]
+              - button [ref=f1e164]
+              - button [ref=f1e165]
+          - generic [ref=f1e166]:
+            - generic [ref=f1e167]:
+              - generic [ref=f1e168]:
+                - generic [ref=f1e169]: Web App
+                - generic [ref=f1e170]: Backend
+                - generic [ref=f1e171]: Marketing
+              - generic [ref=f1e172]: "2025"
+            - generic [ref=f1e173]:
+              - heading "Web Cashier - Toko Azizah" [level=3] [ref=f1e174]
+              - paragraph [ref=f1e178]: A lightweight Point of Sale (POS) application built with PHP Native and SQLite, featuring product management, shopping cart, checkout, debt payment support, and receipt generation through a clean Tailwind CSS interface.
+            - generic [ref=f1e179]:
+              - generic [ref=f1e180]: PHP
+              - generic [ref=f1e181]: HTML5
+              - generic [ref=f1e182]: Tailwind CSS
+              - generic [ref=f1e183]: CSS3
+              - generic [ref=f1e184]: SQL Lite
+            - generic [ref=f1e185]:
+              - link "GitHub" [ref=f1e186] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki/Toko-Azizah
+              - link "Live Demo" [ref=f1e187] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f1e189]:
+          - generic [ref=f1e190]: No image
+          - generic [ref=f1e193]:
+            - generic [ref=f1e194]:
+              - generic [ref=f1e195]: Personal
+              - generic [ref=f1e197]: "2026"
+            - generic [ref=f1e198]:
+              - heading "Forum Group Discussion OOP" [level=3] [ref=f1e199]
+              - paragraph [ref=f1e203]: Forum Discuss System is a desktop discussion forum application built with Java Swing and SQLite. The application allows users to create accounts, log in, publish discussion posts, edit or delete their own content, and participate through comments. It follows a simple MVC architecture and stores all application data locally using SQLite.
+            - generic [ref=f1e204]:
+              - generic [ref=f1e205]: Java
+              - generic [ref=f1e206]: SQL Lite
+            - generic [ref=f1e207]:
+              - link "GitHub" [ref=f1e208] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki/Forum-Discuss-System
+              - link "Live Demo" [ref=f1e209] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=f1e211]:
+          - img "To-Do List Website screenshot 1" [ref=f1e213]
+          - generic [ref=f1e214]:
+            - generic [ref=f1e215]:
+              - generic [ref=f1e216]:
+                - generic [ref=f1e217]: Web App
+                - generic [ref=f1e218]: Dashboard
+                - generic [ref=f1e219]: Personal
+              - generic [ref=f1e220]: "2025"
+            - generic [ref=f1e221]:
+              - heading "To-Do List Website" [level=3] [ref=f1e222]
+              - paragraph [ref=f1e226]: To-Do List Web is a responsive single-page website developed using HTML, CSS, and JavaScript. The project focuses on creating a clean user interface with interactive elements, responsive layouts, and a structured front-end implementation suitable for promotional or educational landing pages.
+            - generic [ref=f1e227]:
+              - generic [ref=f1e228]: HTML5
+              - generic [ref=f1e229]: JavaScript
+              - generic [ref=f1e230]: CSS3
+              - generic [ref=f1e231]: Tailwind CSS
+            - generic [ref=f1e232]:
+              - link "GitHub" [ref=f1e233] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki/CodingCamp-13Oct2025-DimasRizkiArdiansyah
+              - link "Live Demo" [ref=f1e234] [cursor=pointer]:
+                - /url: https://itsdimasrizki.github.io/CodingCamp-13Oct2025-DimasRizkiArdiansyah/
+        - generic [ref=f1e236]:
+          - img "Birthday Website screenshot 1" [ref=f1e238]
+          - generic [ref=f1e239]:
+            - generic [ref=f1e240]:
+              - generic [ref=f1e241]:
+                - generic [ref=f1e242]: Web App
+                - generic [ref=f1e243]: Personal
+              - generic [ref=f1e244]: "2025"
+            - generic [ref=f1e245]:
+              - heading "Birthday Website" [level=3] [ref=f1e246]
+              - paragraph [ref=f1e250]: This website is a personalized interactive digital gift website created to celebrate special moments. The website presents memories, heartfelt letters, music playlists, countdowns, and virtual gifts through a cute, pixel-inspired interface, providing a memorable and engaging browsing experience.
+            - generic [ref=f1e251]:
+              - generic [ref=f1e252]: JavaScript
+              - generic [ref=f1e253]: HTML5
+              - generic [ref=f1e254]: CSS3
+            - generic [ref=f1e255]:
+              - link "GitHub" [ref=f1e256] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki/FOR-VANNYA
+              - link "Live Demo" [ref=f1e257] [cursor=pointer]:
+                - /url: https://itsdimasrizki.github.io/FOR-VANNYA/
+        - generic [ref=f1e259]:
+          - generic [ref=f1e260]:
+            - img "Zara Store screenshot 1" [ref=f1e261]
+            - img "Zara Store screenshot 2" [ref=f1e262]
+            - generic [ref=f1e263]:
+              - button [ref=f1e264]
+              - button [ref=f1e265]
+          - generic [ref=f1e266]:
+            - generic [ref=f1e267]:
+              - generic [ref=f1e268]: Personal
+              - generic [ref=f1e270]: "2025"
+            - generic [ref=f1e271]:
+              - heading "Zara Store" [level=3] [ref=f1e272]
+              - paragraph [ref=f1e276]: A console-based fashion store management system developed in C++, implementing authentication, catalog management, searching, sorting, order processing, and persistent file storage while applying structured programming concepts and modular function design.
+            - generic [ref=f1e277]: C++
+            - generic [ref=f1e279]:
+              - link "GitHub" [ref=f1e280] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki/Zara-Store
+              - link "Live Demo" [ref=f1e281] [cursor=pointer]:
+                - /url: "#"
+  - contentinfo [ref=f1e282]:
+    - generic [ref=f1e284]:
+      - generic [ref=f1e285]:
+        - link "Dimas Rizki Ardiansyah" [ref=f1e286] [cursor=pointer]:
+          - /url: /en
+        - paragraph [ref=f1e287]: Fullstack Software Engineer.
+      - navigation [ref=f1e288]:
+        - paragraph [ref=f1e289]: Navigation
+        - list [ref=f1e290]:
+          - listitem [ref=f1e291]:
+            - link "Home" [ref=f1e292] [cursor=pointer]:
+              - /url: /en
+          - listitem [ref=f1e293]:
+            - link "About" [ref=f1e294] [cursor=pointer]:
+              - /url: /en/about
+          - listitem [ref=f1e295]:
+            - link "Projects" [ref=f1e296] [cursor=pointer]:
+              - /url: /en/projects
+          - listitem [ref=f1e297]:
+            - link "Experience" [ref=f1e298] [cursor=pointer]:
+              - /url: /en/experience
+          - listitem [ref=f1e299]:
+            - link "Certificates" [ref=f1e300] [cursor=pointer]:
+              - /url: /en/certificates
+          - listitem [ref=f1e301]:
+            - link "Contact" [ref=f1e302] [cursor=pointer]:
+              - /url: /en/contact
+      - generic [ref=f1e303]:
+        - paragraph [ref=f1e304]: Social
+        - list [ref=f1e305]:
+          - listitem [ref=f1e306]:
+            - link "GitHub" [ref=f1e307] [cursor=pointer]:
+              - /url: https://github.com
+          - listitem [ref=f1e310]:
+            - link "LinkedIn" [ref=f1e311] [cursor=pointer]:
+              - /url: https://linkedin.com
+          - listitem [ref=f1e314]:
+            - link "Email" [ref=f1e315] [cursor=pointer]:
+              - /url: mailto:hello@dimasrizki.dev
+  - alert [ref=f1e319]

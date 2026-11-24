@@ -12,12 +12,12 @@ export function SkillCard({
   description,
 }: SkillCardProps) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-md">
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
+    <div className="rounded-none border border-border bg-card p-6 transition-colors duration-200 hover:border-foreground/40 shadow-xs">
+      <div className="mb-4 flex h-10 w-10 items-center justify-center border border-border bg-muted/20 text-primary">
         {icon}
       </div>
 
-      <h3 className="text-lg font-semibold tracking-tight">
+      <h3 className="font-display text-lg font-bold tracking-tight text-foreground">
         {title}
       </h3>
 
