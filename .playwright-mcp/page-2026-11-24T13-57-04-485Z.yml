@@ -1,0 +1,667 @@
+- generic [ref=f18e3]:
+  - navigation [ref=f18e4]:
+    - generic [ref=f18e5]:
+      - button "Back to top" [ref=f18e6]:
+        - img "Logo" [ref=f18e7]
+        - img "Yash Ahire" [ref=f18e8]
+      - button "wave Say hi" [ref=f18e9]:
+        - img "wave" [ref=f18e10]: 👋
+        - generic [ref=f18e11]: Say hi
+    - generic [ref=f18e12]:
+      - button "Home" [ref=f18e13]
+      - button "About" [ref=f18e14]
+      - button "Experience" [ref=f18e15]
+      - button "Projects" [ref=f18e16]
+      - button "Skills" [ref=f18e17]
+    - generic [ref=f18e18]:
+      - generic [ref=f18e19]:
+        - button "Toggle theme" [ref=f18e20]:
+          - generic: Switch to light
+        - button "Choose accent color" [ref=f18e23]
+      - button "Get in touch" [ref=f18e26]
+      - button "View resume"
+  - generic [ref=f18e30]:
+    - generic [ref=f18e31]:
+      - generic [ref=f18e32]:
+        - generic [aria-hidden] [ref=f18e33]: "|"
+        - generic [ref=f18e34]: ",I am"
+      - generic [ref=f18e35]: Yash Ahire.
+      - generic [ref=f18e36]: I build things
+      - generic [ref=f18e37]: I'm Yash, a full-stack and AI engineer building production systems, from AI agent platforms to the design systems behind them. Worked across Banking, Healthcare and Construction management domains.
+      - generic [ref=f18e38]:
+        - button "Resume" [ref=f18e39]
+        - generic [ref=f18e42]:
+          - button "Pet the dog":
+            - generic:
+              - generic:
+                - img "dog buddy"
+            - generic: PET THE DOG
+          - button "Ask me anything" [ref=f18e43]:
+            - generic [ref=f18e47]:
+              - text: Ask me
+              - generic [ref=f18e48]: anything
+    - generic [ref=f18e51]:
+      - generic [ref=f18e52]:
+        - generic [ref=f18e55]:
+          - generic [ref=f18e56]:
+            - generic [ref=f18e57]: REEDL_
+            - generic [ref=f18e58]:
+              - generic [ref=f18e59]: FEATURES
+              - generic [ref=f18e60]: ABOUT
+              - generic [ref=f18e61]: CONTACT
+            - generic [ref=f18e62]: OPEN APP →
+          - generic [ref=f18e63]:
+            - generic [ref=f18e64]: TECH READING, REIMAGINED
+            - generic [ref=f18e65]: READ
+            - generic [ref=f18e66]: SMARTER.
+            - paragraph [ref=f18e67]: One article at a time. No noise, no sidebar.
+            - generic [ref=f18e68]: START READING →
+        - generic [ref=f18e69]:
+          - generic [ref=f18e70]: Currently Building
+          - generic [ref=f18e71]: REEDL_
+          - paragraph [ref=f18e72]: Four Claude agents run as production employees, sourcing, writing, and publishing engineering content end-to-end. A reel-style reading platform, one article at a time.
+          - generic [ref=f18e73]:
+            - generic [ref=f18e74]: Next.js
+            - generic [ref=f18e75]: Supabase
+            - generic [ref=f18e76]: Claude
+            - generic [ref=f18e77]: TypeScript
+            - generic [ref=f18e78]: PostgreSQL
+        - link "Visit REEDL" [ref=f18e79]:
+          - /url: https://reedl.app
+      - generic [ref=f18e83]:
+        - generic [ref=f18e84]:
+          - generic [ref=f18e85]:
+            - generic [ref=f18e91]:
+              - button "Previous recommendation" [ref=f18e92]
+              - button "Next recommendation" [ref=f18e95]
+              - link "View all recommendations" [ref=f18e98]:
+                - /url: https://www.linkedin.com/in/yahire/details/recommendations/?detailScreenTabIndex=0
+            - paragraph [ref=f18e102]: I've had the pleasure of working closely with Yash, and I can confidently say he is a strong and dependable engineer who consistently delivers high-quality work. Yash combines solid technical skills with a thoughtful, problem-solving mindset. He takes the time to understand requirements, asks the right questions, and follows through with well-implemented solutions. Whether working independently or collaborating across teams, he is reliable, communicative, and focused on outcomes. What stands out most about Yash is his ability to adapt quickly and handle complex work without losing sight of the bigger picture. He's receptive to feedback, continuously improving, and brings a calm, professional approach even under tight timelines. Any team would benefit from having Yash as an engineer, and I would gladly work with him again.
+            - generic [ref=f18e103]:
+              - img "Steve Gil" [ref=f18e105]
+              - generic [ref=f18e106]:
+                - generic [ref=f18e107]: Steve Gil
+                - generic [ref=f18e108]: Product Leader | 0-to-1 SaaS Platforms | Agile Transformation | AI & Data Products | Healthcare, Insurance & FinTech
+          - generic [aria-hidden]:
+            - generic:
+              - generic:
+                - button
+                - button
+                - link:
+                  - /url: https://www.linkedin.com/in/yahire/details/recommendations/?detailScreenTabIndex=0
+            - paragraph: I've known Yash for years, and he's the kind of engineer you remember. He is a strong Full Stack developer with real depth in Python, React, Angular, and scripting, and lately he has been leaning hard into AI models and AI product engineering. He is always learning, always building, and always pushing into what's next. What really sets Yash apart, though, is how he shows up. He is engaging, easy to talk with, and genuinely fun to work alongside. He solves problems with creativity and persistence, and he brings clients and teammates along with him in a way that makes collaboration effortless. If you are looking for a Full Stack or AI-focused engineer who combines technical skill with real people skills, Yash is someone you should know.
+            - generic:
+              - generic:
+                - generic: John Raven
+                - generic: Growth Strategist | Managing Director, National Sales | AI Adoption & Human-AI Collaboration | Advisor Growth | Workflow Design | Business Transformation
+          - generic [aria-hidden]:
+            - generic:
+              - generic:
+                - button
+                - button
+                - link:
+                  - /url: https://www.linkedin.com/in/yahire/details/recommendations/?detailScreenTabIndex=0
+            - paragraph: I've had the pleasure of working with Yash on several critical projects at Handtevy, particularly within the WallComm module across backend, frontend, and mobile. Yash is an excellent teammate, always attentive, proactive, and eager to take on new challenges. He consistently offers well-thought-out solutions, quickly adapts to existing codebases, and stays up to date with the latest technologies. One thing I especially value is his support during project presentations. Whenever I've found it more challenging to present progress, Yash has stepped up with confidence and strong leadership, ensuring our work is communicated clearly and effectively. His technical expertise combined with his collaborative attitude make him an asset to any team. I highly recommend Yash.
+            - generic:
+              - generic:
+                - generic: Victor Cruz
+                - generic: Full Stack - Software Engineer
+          - generic [aria-hidden]:
+            - generic:
+              - generic:
+                - button
+                - button
+                - link:
+                  - /url: https://www.linkedin.com/in/yahire/details/recommendations/?detailScreenTabIndex=0
+            - paragraph: Problem-solver is the phrase that comes to my mind when I think about Yash Ahire. I've had the pleasure of knowing Yash for about a year, during which he was working as a Software Engineer in our team. Above all, I was impressed with Yash's ability to communicate well, consistency and taking responsibilities for his young age. And, of course, his valuable interpersonal skills and high energy. Yash would be a true asset for any positions requiring software developer's skills, creativity and analytical thinking. Yash comes with true passion for his profession and with my heartfelt recommendation.
+            - generic:
+              - generic:
+                - generic: Alexander Yelkov
+                - generic: Software Quality Assurance Analyst
+          - generic [aria-hidden]:
+            - generic:
+              - generic:
+                - button
+                - button
+                - link:
+                  - /url: https://www.linkedin.com/in/yahire/details/recommendations/?detailScreenTabIndex=0
+            - paragraph: I am pleased to recommend Yash Ahire for a Software Engineer role. During his time at Handtevy, Yash made significant contributions to a groundbreaking project, quickly integrating and implementing our first AI product, which was successfully launched. Furthermore, he spearheaded our geo-location initiative, developing a product to efficiently connect special users to designated hospital locations. Yash's dedication, exceptional coding abilities, and meticulous approach has been a valuable asset to our team.
+            - generic:
+              - generic:
+                - generic: Nicole Mathurin
+                - generic: Software QA Manager | Scrum Master @ Handtevy | Management | Quality Procedures
+          - generic [aria-hidden]:
+            - generic:
+              - generic:
+                - button
+                - button
+                - link:
+                  - /url: https://www.linkedin.com/in/yahire/details/recommendations/?detailScreenTabIndex=0
+            - paragraph: Here is a bright, young fellow full of potential and very enthusiastic. He bring the passion to everything he does. Creates amazing sprint review boards too 😎
+            - generic:
+              - generic:
+                - generic: Enrique Gonzalez
+                - generic: Software Engineer at Handtevy - Pediatric Emergency Standards, Inc.
+          - generic [aria-hidden]:
+            - generic:
+              - generic:
+                - button
+                - button
+                - link:
+                  - /url: https://www.linkedin.com/in/yahire/details/recommendations/?detailScreenTabIndex=0
+            - paragraph: Yash is a talented Software Engineer with strong frontend, backend, and architectural skills. At Handtevy, he made major contributions to the geofencing feature for WallComm, showing both technical depth and attention to detail. He's a dependable teammate who consistently delivers high-quality work. Also, if you're ever hungry, Yash always knows the best spots to eat.
+            - generic:
+              - generic:
+                - generic: Lucas Dearaujo
+                - generic: Senior Software Engineer
+          - generic [ref=f18e109]:
+            - button "Show recommendation from Steve Gil" [ref=f18e110]
+            - button "Show recommendation from John Raven" [ref=f18e111]
+            - button "Show recommendation from Victor Cruz" [ref=f18e112]
+            - button "Show recommendation from Alexander Yelkov" [ref=f18e113]
+            - button "Show recommendation from Nicole Mathurin" [ref=f18e114]
+            - button "Show recommendation from Enrique Gonzalez" [ref=f18e115]
+            - button "Show recommendation from Lucas Dearaujo" [ref=f18e116]
+        - generic [ref=f18e117]: Recommendations
+  - generic [ref=f18e120]:
+    - generic:
+      - img "Logo" [ref=f18e122]
+      - img "Yash Ahire" [ref=f18e124]
+    - generic [ref=f18e125]:
+      - generic [ref=f18e126]: About Me
+      - generic [ref=f18e127]:
+        - text: I'm Yash, a full-stack and AI engineer building production systems, from AI agent platforms
+        - generic [ref=f18e128]:
+          - button "Full-stack + AI" [ref=f18e129]
+          - generic:
+            - heading "Full-stack + AI" [level=4]
+            - paragraph: "That's me in short: a full-stack and AI engineer who ships real production software, not just prototypes."
+        - text: to the design systems behind them.
+      - generic [ref=f18e134]:
+        - text: 5+ years across healthcare, fintech, and AI. I've built WallComm
+        - generic [ref=f18e135]:
+          - button "WallComm" [ref=f18e136]
+          - generic:
+            - heading "WallComm" [level=4]
+            - paragraph: Real-time coordination platform connecting 2000+ EMS agencies via geofenced hospital alerts and automated Twilio SMS handoffs.
+        - text: ", trusted by 2000+ EMS agencies, and Reedl.app"
+        - generic [ref=f18e141]:
+          - button "Reedl.app" [ref=f18e142]
+          - generic:
+            - heading "Reedl.app" [level=4]
+            - paragraph: Four Claude agents running as production employees, sourcing, writing, and publishing engineering content end to end.
+        - text: ", where Claude agents run as production employees."
+      - generic [ref=f18e147]:
+        - text: I care about systems that work when it matters
+        - generic [ref=f18e148]:
+          - button "Built to hold up" [ref=f18e149]
+          - generic:
+            - heading "Built to hold up" [level=4]
+            - paragraph: "Frontend: React, Angular. Backend: NestJS, Go. Cloud: AWS, Docker. AI: OpenAI, Claude, RAG. Plus testing, CI/CD, and clean system design."
+        - text: ", and I'm always chasing the next hard problem."
+      - button "Linkedin" [ref=f18e155]
+  - generic [ref=f18e160]:
+    - generic [ref=f18e161]:
+      - generic [ref=f18e162]: Experience
+      - paragraph [ref=f18e163]: Swipe through my professional journey
+    - generic [ref=f18e164]:
+      - button [disabled]
+      - button [ref=f18e165]
+      - generic [ref=f18e168]:
+        - generic [ref=f18e172]:
+          - generic [ref=f18e174]:
+            - img "Handtevy" [ref=f18e175]
+            - generic [ref=f18e176]:
+              - heading "Handtevy" [level=3] [ref=f18e177]
+              - paragraph [ref=f18e178]: Software Engineer
+              - generic [ref=f18e179]: Full Time
+          - generic [ref=f18e181]:
+            - generic [ref=f18e182]: Jan 2025
+            - generic [ref=f18e186]: Miami-Fort Lauderdale · Hybrid
+          - generic [ref=f18e190]: Healthcare EMS startup building mission-critical applications for emergency medical services. Built WallComm, a real-time coordination platform connecting 2000+ EMS agencies via geofenced hospital alerts and automated Twilio SMS handoffs. Developed frontend interfaces using Angular and React for real-time EMS dashboards, and built scalable NestJS APIs and an AI agent platform for clinical data and operational metrics. Contributed to Ionic/Cordova/Capacitor mobile app targeting Android, iOS, and Windows via ElectronJS.
+        - generic [ref=f18e193]:
+          - generic [ref=f18e194]:
+            - generic [ref=f18e195]:
+              - generic [ref=f18e197]:
+                - img "Rebecca Everlene Foundation" [ref=f18e198]
+                - generic [ref=f18e199]:
+                  - heading "Rebecca Everlene Foundation" [level=3] [ref=f18e200]
+                  - paragraph [ref=f18e201]: Software Engineer
+                  - generic [ref=f18e202]: Part Time
+              - generic [ref=f18e204]: May 2024 – Dec 2024
+              - paragraph [ref=f18e209]: Designed and implemented complex business modules and API-driven solutions in Python for a healthcare platform, improving system scalability and usability. Refactored and maintained ReactJS-based front-end applications.
+              - button "+" [ref=f18e210]
+            - paragraph [ref=f18e212]: Designed and implemented complex business modules and API-driven solutions in Python for a healthcare platform, improving system scalability and usability. Refactored and maintained ReactJS-based front-end applications.
+          - generic [ref=f18e213]:
+            - generic [ref=f18e214]:
+              - generic [ref=f18e216]:
+                - img "White Cap" [ref=f18e217]
+                - generic [ref=f18e218]:
+                  - heading "White Cap" [level=3] [ref=f18e219]
+                  - paragraph [ref=f18e220]: Software Developer Intern
+                  - generic [ref=f18e221]: Internship
+              - generic [ref=f18e223]: May 2023 – Aug 2023
+              - paragraph [ref=f18e228]: Integrated the Cheakit 3.0 application with Power BI, creating dedicated workspaces and customized reports. Leveraged React.js to significantly improve data visualization and analytical capabilities.
+              - button "+" [ref=f18e229]
+            - paragraph [ref=f18e231]: Integrated the Cheakit 3.0 application with Power BI, creating dedicated workspaces and customized reports. Leveraged React.js to significantly improve data visualization and analytical capabilities.
+        - generic [ref=f18e235]:
+          - generic [ref=f18e237]:
+            - img "Tata Consultancy Services" [ref=f18e238]
+            - generic [ref=f18e239]:
+              - heading "Tata Consultancy Services" [level=3] [ref=f18e240]
+              - paragraph [ref=f18e241]: Software Engineer (SDE)
+              - generic [ref=f18e242]: Full Time
+          - generic [ref=f18e244]:
+            - generic [ref=f18e245]: Aug 2019 – May 2022
+            - generic [ref=f18e249]: India
+          - generic [ref=f18e253]: Collaborated on YONO SBI and CreditShift, high-transaction banking and credit card applications, improving user engagement 20% through enhanced UI/UX. Designed secure RESTful APIs in Go and built scalable microservices handling 250 million daily transactions for one of India's largest banking platforms.
+        - generic [ref=f18e256]:
+          - generic [ref=f18e257]: Academic Positions
+          - generic [ref=f18e258]:
+            - generic [ref=f18e259]:
+              - generic [ref=f18e261]:
+                - img "UNC Charlotte" [ref=f18e262]
+                - generic [ref=f18e263]:
+                  - heading "UNC Charlotte" [level=3] [ref=f18e264]
+                  - paragraph [ref=f18e265]: Research Assistant, Robotics
+                  - generic [ref=f18e266]: Academic
+              - generic [ref=f18e268]: Jan 2023 – May 2024
+              - paragraph [ref=f18e273]: Conducted research focusing on Python-based AI and machine learning algorithms for robotic automation, path planning, and sensor data processing.
+              - button "+" [ref=f18e274]
+            - paragraph [ref=f18e276]: Conducted research focusing on Python-based AI and machine learning algorithms for robotic automation, path planning, and sensor data processing.
+          - generic [ref=f18e277]:
+            - generic [ref=f18e278]:
+              - generic [ref=f18e280]:
+                - img "UNC Charlotte" [ref=f18e281]
+                - generic [ref=f18e282]:
+                  - heading "UNC Charlotte" [level=3] [ref=f18e283]
+                  - paragraph [ref=f18e284]: Teaching Assistant, Survey of Programming Languages
+                  - generic [ref=f18e285]: Academic
+              - generic [ref=f18e287]: Jan 2023 – May 2024
+              - paragraph [ref=f18e292]: Graduate assistant exploring syntax disparities, error handling, coding style, compilation methods, time/space complexity, and code optimization across multiple languages.
+              - button "+" [ref=f18e293]
+            - paragraph [ref=f18e295]: Graduate assistant exploring syntax disparities, error handling, coding style, compilation methods, time/space complexity, and code optimization across multiple languages.
+      - generic [ref=f18e296]:
+        - button [ref=f18e297]
+        - button [ref=f18e298]
+        - button [ref=f18e299]
+        - button [ref=f18e300]
+  - generic [ref=f18e301]:
+    - generic [ref=f18e302]:
+      - generic [ref=f18e303]: Things I've Built
+      - paragraph [ref=f18e304]: Featured work and side projects
+    - generic [ref=f18e305]:
+      - button "Previous project" [ref=f18e306]
+      - generic [ref=f18e309]:
+        - generic [ref=f18e310]:
+          - generic [ref=f18e313]:
+            - generic [ref=f18e314]: Featured · Live
+            - heading "REEDL_" [level=2] [ref=f18e315]
+          - generic [ref=f18e316]:
+            - generic [ref=f18e317]: Featured · Live
+            - heading "REEDL_" [level=3] [ref=f18e318]
+            - paragraph [ref=f18e319]: "A reel-style tech reading platform, but the real story runs underneath it: four Claude agents operate as production employees, sourcing, writing, and publishing engineering content end-to-end with no human in the loop. One article at a time, full screen, zero noise."
+            - generic [ref=f18e320]:
+              - img "REEDL_ screenshot 1" [ref=f18e321]
+              - img "REEDL_ screenshot 2" [ref=f18e322]
+              - img "REEDL_ screenshot 3" [ref=f18e323]
+            - generic [ref=f18e324]:
+              - generic [ref=f18e325]: Next.js
+              - generic [ref=f18e326]: TypeScript
+              - generic [ref=f18e327]: Supabase
+              - generic [ref=f18e328]: Claude
+              - generic [ref=f18e329]: PostgreSQL
+            - generic [ref=f18e330]:
+              - link "Visit Site" [ref=f18e331]:
+                - /url: https://reedl.app
+              - link "GitHub" [ref=f18e336]:
+                - /url: https://github.com/YashAnetz/
+          - generic:
+            - button "+" [ref=f18e339]
+            - link "Visit Site" [ref=f18e341]:
+              - /url: https://reedl.app
+            - link "GitHub" [ref=f18e346]:
+              - /url: https://github.com/YashAnetz/
+        - generic [ref=f18e349]:
+          - generic [ref=f18e352]:
+            - generic [ref=f18e353]: Research Project
+            - heading "Hear Me" [level=2] [ref=f18e354]
+          - generic [ref=f18e355]:
+            - generic [ref=f18e356]: Research Project
+            - heading "Hear Me" [level=3] [ref=f18e357]
+            - paragraph [ref=f18e358]: Python app using the Leap Motion controller with machine learning to translate sign language gestures into audio and text, enabling real-time communication for the hearing-impaired.
+            - img "Hear Me screenshot 1" [ref=f18e360]
+            - generic [ref=f18e361]:
+              - generic [ref=f18e362]: Python
+              - generic [ref=f18e363]: Machine Learning
+              - generic [ref=f18e364]: Leap Motion
+              - generic [ref=f18e365]: OpenCV
+            - generic [ref=f18e366]:
+              - link "GitHub" [ref=f18e367]:
+                - /url: https://github.com/YashAnetz/
+              - link "Case Study" [ref=f18e370]:
+                - /url: https://www.youtube.com/watch?v=J1H-A5mk0lQ
+          - generic:
+            - button "+" [ref=f18e375]
+            - link "GitHub" [ref=f18e377]:
+              - /url: https://github.com/YashAnetz/
+        - generic [ref=f18e380]:
+          - generic [ref=f18e383]:
+            - generic [ref=f18e384]: Production · Handtevy
+            - heading "WallComm" [level=2] [ref=f18e385]
+          - generic [ref=f18e386]:
+            - generic [ref=f18e387]: Production · Handtevy
+            - heading "WallComm" [level=3] [ref=f18e388]
+            - paragraph [ref=f18e389]: Real-time EMS coordination system that tracks ambulance fleets, triggers hospital alerts the moment a unit enters a geofence, and logs every handoff via automated SMS. Built for 2000+ emergency medical agencies across the US and Canada. 75% reduction in coordination errors, validated in live 911 calls.
+            - img "WallComm screenshot 1" [ref=f18e391]
+            - generic [ref=f18e392]:
+              - generic [ref=f18e393]: React
+              - generic [ref=f18e394]: NestJS
+              - generic [ref=f18e395]: Twilio
+              - generic [ref=f18e396]: PostgreSQL
+              - generic [ref=f18e397]: Geolocation API
+            - generic [ref=f18e398]:
+              - link "GitHub" [ref=f18e399]:
+                - /url: https://github.com/YashAnetz/
+              - link "Case Study" [ref=f18e402]:
+                - /url: https://www.handtevy.com/solving-hospital-wall-time-ems-emergency-departments/
+          - generic:
+            - button "+" [ref=f18e407]
+            - link "GitHub" [ref=f18e409]:
+              - /url: https://github.com/YashAnetz/
+        - generic [ref=f18e412]:
+          - generic [ref=f18e415]:
+            - generic [ref=f18e416]: Featured · Live
+            - heading "Rmovie" [level=2] [ref=f18e417]
+          - generic [ref=f18e418]:
+            - generic [ref=f18e419]: Featured · Live
+            - heading "Rmovie" [level=3] [ref=f18e420]
+            - paragraph [ref=f18e421]: Personal movie and TV tracker with watchlists, franchise ordering, leaderboards, and a distraction-free TV Mode. QR-code remote lets you type searches from your phone on a TV.
+            - generic [ref=f18e422]:
+              - img "Rmovie screenshot 1" [ref=f18e423]
+              - img "Rmovie screenshot 2" [ref=f18e424]
+              - img "Rmovie screenshot 3" [ref=f18e425]
+            - generic [ref=f18e426]:
+              - generic [ref=f18e427]: React
+              - generic [ref=f18e428]: Supabase
+              - generic [ref=f18e429]: OMDB API
+              - generic [ref=f18e430]: TMDB API
+            - generic [ref=f18e431]:
+              - link "Visit Site" [ref=f18e432]:
+                - /url: https://rmovie1.netlify.app
+              - link "GitHub" [ref=f18e437]:
+                - /url: https://github.com/YashAnetz/
+          - generic:
+            - button "+" [ref=f18e440]
+            - link "Visit Site" [ref=f18e442]:
+              - /url: https://rmovie1.netlify.app
+            - link "GitHub" [ref=f18e447]:
+              - /url: https://github.com/YashAnetz/
+      - button "Next project" [ref=f18e450]
+    - generic [ref=f18e453]:
+      - button "Go to REEDL_" [ref=f18e454]
+      - button "Go to Hear Me" [ref=f18e455]
+      - button "Go to WallComm" [ref=f18e456]
+      - button "Go to Rmovie" [ref=f18e457]
+  - generic [ref=f18e458]:
+    - generic [ref=f18e461]:
+      - generic [ref=f18e462]:
+        - generic [ref=f18e463]:
+          - generic [ref=f18e464]: Skills
+          - heading "Tech Stack" [level=1] [ref=f18e465]
+        - generic [ref=f18e466]:
+          - generic [ref=f18e467]:
+            - generic [ref=f18e468]: Languages
+            - generic [ref=f18e469]:
+              - generic [ref=f18e470]:
+                - generic [ref=f18e471]: TypeScript
+                - generic: Expert · strict typing, generics, advanced type inference
+              - generic [ref=f18e474]:
+                - generic [ref=f18e475]: JavaScript
+                - generic: Expert · 6 yrs, React, Node.js, async/await, ES2024
+              - generic [ref=f18e478]:
+                - generic [ref=f18e479]: Python
+                - generic: Advanced · ML pipelines, FastAPI, automation & scripting
+              - generic [ref=f18e482]:
+                - generic [ref=f18e483]: SQL
+                - generic: Advanced · complex joins, stored procedures, query optimization
+              - generic [ref=f18e486]:
+                - generic [ref=f18e487]: HTML / CSS
+                - generic: Expert · pixel-perfect responsive layouts, animation & transitions
+          - generic [ref=f18e490]:
+            - generic [ref=f18e491]: Frameworks
+            - generic [ref=f18e492]:
+              - generic [ref=f18e493]:
+                - generic [ref=f18e494]: React
+                - generic: Expert · hooks, context API, performance optimization
+              - generic [ref=f18e497]:
+                - generic [ref=f18e498]: Node.js
+                - generic: Advanced · REST APIs, Express.js, real-time streaming
+              - generic [ref=f18e501]:
+                - generic [ref=f18e502]: NestJS
+                - generic: Advanced · microservices architecture, decorators, TypeORM
+              - generic [ref=f18e505]:
+                - generic [ref=f18e506]: Angular
+                - generic: Intermediate+ · AngularJS & Angular, healthcare EMS dashboards
+              - generic [ref=f18e509]:
+                - generic [ref=f18e510]: Ionic
+                - generic: Intermediate · cross-platform mobile, iOS, Android, Windows
+              - generic [ref=f18e513]:
+                - generic [ref=f18e514]: Cordova
+                - generic: Intermediate · native bridge, Capacitor plugins
+              - generic [ref=f18e517]:
+                - generic [ref=f18e518]: jQuery
+                - generic: Proficient · DOM manipulation, AJAX, legacy system integration
+          - generic [ref=f18e521]:
+            - generic [ref=f18e522]: Cloud & DB
+            - generic [ref=f18e523]:
+              - generic [ref=f18e524]:
+                - generic [ref=f18e525]: AWS
+                - generic: Advanced · EC2, S3, Lambda, RDS, CloudFront deployments
+              - generic [ref=f18e528]:
+                - generic [ref=f18e529]: Azure
+                - generic: Intermediate · cloud services, CI/CD pipelines, App Service
+              - generic [ref=f18e532]:
+                - generic [ref=f18e533]: PostgreSQL
+                - generic: Advanced · Supabase, schema design, indexing, full-text search
+              - generic [ref=f18e536]:
+                - generic [ref=f18e537]: MongoDB
+                - generic: Intermediate · aggregation pipelines, schema-less document design
+              - generic [ref=f18e540]:
+                - generic [ref=f18e541]: Oracle
+                - generic: Intermediate · enterprise DB administration, PL/SQL
+              - generic [ref=f18e544]:
+                - generic [ref=f18e545]: Docker
+                - generic: Intermediate · containerization, multi-stage builds, Compose
+              - generic [ref=f18e548]:
+                - generic [ref=f18e549]: REST API
+                - generic: Expert · API design, versioning, OAuth 2.0, rate limiting
+          - generic [ref=f18e552]:
+            - generic [ref=f18e553]: Tools
+            - generic [ref=f18e554]:
+              - generic [ref=f18e555]:
+                - generic [ref=f18e556]: Git
+                - generic: Expert · GitOps, branching strategies, code review workflows
+              - generic [ref=f18e559]:
+                - generic [ref=f18e560]: Figma
+                - generic: Proficient · wireframes, component libraries, design handoff
+              - generic [ref=f18e563]:
+                - generic [ref=f18e564]: Jira
+                - generic: Proficient · agile sprints, kanban boards, epics & roadmaps
+              - generic [ref=f18e567]:
+                - generic [ref=f18e568]: Tableau
+                - generic: Advanced · executive dashboards, KPI reports, story-based viz
+              - generic [ref=f18e571]:
+                - generic [ref=f18e572]: Power BI
+                - generic: Intermediate · workspace integration, custom analytical reports
+              - generic [ref=f18e575]:
+                - generic [ref=f18e576]: Unity3D
+                - generic: Intermediate · C# scripting, physics, game mechanics
+              - generic [ref=f18e579]:
+                - generic [ref=f18e580]: Xcode
+                - generic: Beginner+ · iOS deployment, simulator testing, provisioning
+              - generic [ref=f18e583]:
+                - generic [ref=f18e584]: Android Studio
+                - generic: Intermediate · native Android, SDK integration, Play Store
+          - generic [ref=f18e587]:
+            - generic [ref=f18e588]: AI & ML
+            - generic [ref=f18e589]:
+              - generic [ref=f18e590]:
+                - generic [ref=f18e591]: Claude API
+                - generic: Advanced · tool use, agents, structured outputs, prompt engineering
+              - generic [ref=f18e594]:
+                - generic [ref=f18e595]: LangChain
+                - generic: Advanced · agent orchestration, chains, memory, tool integration
+              - generic [ref=f18e598]:
+                - generic [ref=f18e599]: OpenAI
+                - generic: Advanced · GPT API, function calling, embeddings
+              - generic [ref=f18e602]:
+                - generic [ref=f18e603]: RAG
+                - generic: Advanced · retrieval pipelines, chunking strategies, reranking
+              - generic [ref=f18e606]:
+                - generic [ref=f18e607]: MCP
+                - generic: Intermediate+ · Model Context Protocol servers & tool integration
+              - generic [ref=f18e610]:
+                - generic [ref=f18e611]: pgvector
+                - generic: Advanced · vector similarity search, embeddings storage in Postgres
+              - generic [ref=f18e614]:
+                - generic [ref=f18e615]: Data Analysis
+                - generic: Advanced · EDA, pandas, statistical modeling, insight extraction
+      - generic [ref=f18e618]:
+        - generic [ref=f18e619]:
+          - generic [ref=f18e620]: Data Analysis
+          - heading "Visualizations" [level=1] [ref=f18e621]
+        - generic [ref=f18e622]:
+          - link "World Military World Military ↗" [ref=f18e623]:
+            - /url: https://public.tableau.com/views/WorldMilitary2/Story1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+            - img "World Military" [ref=f18e624]
+            - generic [ref=f18e626]:
+              - generic [ref=f18e627]: World Military
+              - generic [ref=f18e628]: ↗
+          - link "Charlotte – Mecklenburg County Charlotte – Mecklenburg County ↗" [ref=f18e629]:
+            - /url: https://public.tableau.com/views/MeclenburgCounty/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+            - img "Charlotte – Mecklenburg County" [ref=f18e630]
+            - generic [ref=f18e632]:
+              - generic [ref=f18e633]: Charlotte – Mecklenburg County
+              - generic [ref=f18e634]: ↗
+          - link "Metabo Foods Metabo Foods ↗" [ref=f18e635]:
+            - /url: https://public.tableau.com/views/VAGroupProject-Group3-Nutritionists-Dashboard2_17016277467540/Story1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+            - img "Metabo Foods" [ref=f18e636]
+            - generic [ref=f18e638]:
+              - generic [ref=f18e639]: Metabo Foods
+              - generic [ref=f18e640]: ↗
+    - generic [ref=f18e642]:
+      - generic [ref=f18e643]: Education
+      - generic [ref=f18e645]:
+        - generic [ref=f18e648]:
+          - img "University of North Carolina" [ref=f18e649]
+          - generic [ref=f18e651]:
+            - generic [ref=f18e652]: 2022 – 2024 · Charlotte, NC
+            - heading "Masters of Science" [level=3] [ref=f18e653]
+            - paragraph [ref=f18e654]: Computer Science
+            - paragraph [ref=f18e655]: University of North Carolina
+          - generic [ref=f18e656]:
+            - generic [ref=f18e657]: 2022 – 2024 · Charlotte, NC
+            - 'heading "Masters of Science: Computer Science" [level=3] [ref=f18e658]'
+            - paragraph [ref=f18e659]: University of North Carolina
+            - generic [ref=f18e660]:
+              - generic [ref=f18e661]: Database Systems
+              - generic [ref=f18e662]: Data Structures & Algorithms
+              - generic [ref=f18e663]: Software Systems Design & Implementation
+              - generic [ref=f18e664]: Applied Machine Learning
+              - generic [ref=f18e665]: Natural Language Processing
+              - generic [ref=f18e666]: Visual Analytics
+              - generic [ref=f18e667]: Network Based Application Development
+          - button "+" [ref=f18e668]
+        - generic [ref=f18e672]:
+          - img "Sinhgad Institutes · SKNCOE" [ref=f18e673]
+          - generic [ref=f18e675]:
+            - generic [ref=f18e676]: 2015 – 2019 · Pune, India
+            - heading "Bachelors of Engineering" [level=3] [ref=f18e677]
+            - paragraph [ref=f18e678]: Computer Engineering
+            - paragraph [ref=f18e679]: Sinhgad Institutes · SKNCOE
+          - generic [ref=f18e680]:
+            - generic [ref=f18e681]: 2015 – 2019 · Pune, India
+            - 'heading "Bachelors of Engineering: Computer Engineering" [level=3] [ref=f18e682]'
+            - paragraph [ref=f18e683]: Sinhgad Institutes · SKNCOE
+            - generic [ref=f18e684]:
+              - generic [ref=f18e685]: Discrete Mathematics
+              - generic [ref=f18e686]: Object Oriented Programming
+              - generic [ref=f18e687]: Software Modelling & Design
+              - generic [ref=f18e688]: Cloud Computing
+              - generic [ref=f18e689]: Data Analytics
+              - generic [ref=f18e690]: Theory of Computation
+              - generic [ref=f18e691]: Computer Organization & Architecture
+          - button "+" [ref=f18e692]
+  - generic [ref=f18e694]:
+    - generic [ref=f18e695]:
+      - generic [ref=f18e696]:
+        - generic [ref=f18e697]: Get In Touch
+        - paragraph [ref=f18e698]: Open to roles, collabs, or just a good conversation.
+      - generic [ref=f18e699]:
+        - generic [ref=f18e700]:
+          - generic [ref=f18e701]:
+            - generic [ref=f18e702]:
+              - generic [ref=f18e703]: Currently Vibing To
+              - generic [ref=f18e704]:
+                - button "Track 1" [ref=f18e705]
+                - button "Track 2" [ref=f18e706]
+                - button "Track 3" [ref=f18e707]
+                - button "Track 4" [ref=f18e708]
+                - button "Track 5" [ref=f18e709]
+                - button "Track 6" [ref=f18e710]
+                - button "Track 7" [ref=f18e711]
+                - button "Track 8" [ref=f18e712]
+            - iframe [ref=f18e713]:
+              - generic [ref=f19e6]:
+                - img "Apocalypse cover" [ref=f19e9] [cursor=pointer]
+                - button "Play on Spotify" [ref=f19e11] [cursor=pointer]
+                - generic [ref=f19e14]:
+                  - heading [level=1] [ref=f19e15]:
+                    - link "Apocalypse" [ref=f19e19] [cursor=pointer]:
+                      - /url: ""
+                  - heading [level=2] [ref=f19e21]:
+                    - link "Cigarettes After Sex" [ref=f19e26] [cursor=pointer]:
+                      - /url: https://open.spotify.com/artist/1QAJqy2dA3ihHBFIHRphZj?go=1&sp_cid=7fcfd921b9e810f606737b3434aca63c
+          - generic [ref=f18e715]:
+            - generic [ref=f18e716]: "\""
+            - paragraph [ref=f18e717]: Building software that understands people is far more interesting than building software that only understands code.
+            - generic [ref=f18e718]: Yash Ahire
+        - generic [ref=f18e719]:
+          - generic [ref=f18e720]: Leave a note
+          - generic [ref=f18e721]:
+            - generic [ref=f18e725]:
+              - generic [ref=f18e726]: Say hello
+              - textbox "Your name" [ref=f18e729]
+              - textbox "your@email.com" [ref=f18e730]
+              - textbox "What's on your mind?" [ref=f18e731]
+            - button "Send message" [ref=f18e732]
+      - generic [ref=f18e735]:
+        - generic [ref=f18e736]: LET'S DO THIS
+        - generic [ref=f18e737]:
+          - link "LinkedIn" [ref=f18e738]:
+            - /url: https://www.linkedin.com/in/yahire/
+          - link "GitHub" [ref=f18e741]:
+            - /url: https://github.com/YashAnetz
+          - link "CodePen" [ref=f18e744]:
+            - /url: https://codepen.io/yashanetz
+          - link "Awwwards" [ref=f18e747]:
+            - /url: https://www.awwwards.com/sites/yashs-site
+          - generic [ref=f18e751]:
+            - link "Send Email" [ref=f18e752]:
+              - /url: mailto:yashmahire@gmail.com
+            - button "Copy email address" [ref=f18e755]:
+              - generic: Copy email
+    - generic [ref=f18e758]:
+      - generic [ref=f18e760]: Designed and Developed by Yash Ahire
+      - generic [ref=f18e761]: ·
+      - generic [ref=f18e762]:
+        - generic [ref=f18e763]: Site Views
+        - generic [ref=f18e764]: —
+  - generic:
+    - button "Say hi":
+      - generic: Say Hi
+  - button "Scroll to top"
+  - link [ref=f18e766]:
+    - /url: https://www.awwwards.com/sites/yashs-site
+  - img "Logo" [ref=f18e775]

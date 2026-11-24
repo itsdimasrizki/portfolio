@@ -24,6 +24,7 @@ type NavbarProps = {
 
 export function Navbar({ cvUrl, locale }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [time, setTime] = useState("");
   const pathname = usePathname();
   const messages = getMessages(locale);
 
@@ -32,11 +33,28 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
       setIsScrolled(window.scrollY > 10);
     };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const updateTime = () => {
+      const now = new Date();
+      setTime(
+        now.toLocaleTimeString("en-US", {
+          timeZone: "Asia/Jakarta",
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }) + " WIB"
+      );
+    };
 
+    handleScroll();
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <header
       className={cn(
@@ -47,15 +65,26 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
       )}
     >
       <Container className="flex h-16 items-center justify-between">
-        <Link
-          href={localeHref(locale, "/")}
-          className="font-display text-sm font-bold tracking-tight text-foreground transition-colors hover:text-primary"
-        >
-          Dimas Rizki Ardiansyah
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href={localeHref(locale, "/")}
+            className="group flex items-center gap-2 font-display text-sm font-bold tracking-tight text-foreground transition-colors hover:text-primary"
+          >
+            <span className="flex h-2 w-2 relative">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            <span>Dimas Rizki</span>
+          </Link>
 
+          {time && (
+            <span className="hidden lg:inline-flex items-center border border-border/80 bg-muted/40 px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
+              {time}
+            </span>
+          )}
+        </div>
         <nav className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => {
+          {navItems.map((item, idx) => {
             const href = localeHref(locale, item.href);
             const isActive =
               pathname === href || (pathname.startsWith(href) && item.href !== "/");
@@ -65,16 +94,16 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
                 key={item.href}
                 href={href}
                 className={cn(
-                  "relative px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors duration-150",
+                  "relative px-3 py-1.5 font-mono text-xs tracking-wider transition-colors duration-150",
                   isActive
-                    ? "font-semibold text-foreground"
+                    ? "font-semibold text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {isActive && (
                   <motion.div
                     layoutId="navbar-active"
-                    className="absolute inset-0 -z-10 border border-border bg-muted/60 rounded-none"
+                    className="absolute inset-0 -z-10 border border-border bg-card shadow-xs"
                     transition={{
                       type: "spring",
                       stiffness: 380,
@@ -82,6 +111,7 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
                     }}
                   />
                 )}
+                <span className="text-[10px] text-primary/70 mr-1.5">0{idx + 1} //</span>
                 {messages[item.labelKey]}
               </Link>
             );
