@@ -5,14 +5,6 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const INTERVAL_MS = 3000;
 
-/**
- * Memutar daftar peran di dalam judul beranda.
- *
- * Render pertama selalu peran pertama, jadi HTML server dan klien identik —
- * rotasinya baru mulai setelah efek berjalan. Teks yang berputar disembunyikan
- * dari pembaca layar dan digantikan satu label berisi daftar penuh; tanpa itu,
- * teks yang berubah tiap tiga detik jadi gangguan, bukan informasi.
- */
 export function RoleRotator({ roles }: { roles: string[] }) {
   const [index, setIndex] = useState(0);
   const reduceMotion = useReducedMotion();
@@ -30,14 +22,14 @@ export function RoleRotator({ roles }: { roles: string[] }) {
 
   return (
     <span
-      className="relative inline-block align-bottom text-teal-700"
+      className="relative inline-block align-bottom text-primary font-display"
       aria-label={`${roles.join(", ")}.`}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={role}
           aria-hidden
-          className="inline-block"
+          className="inline-block underline decoration-primary/40 underline-offset-4"
           initial={reduceMotion ? false : { opacity: 0, y: "0.25em" }}
           animate={{ opacity: 1, y: 0 }}
           exit={reduceMotion ? undefined : { opacity: 0, y: "-0.25em" }}

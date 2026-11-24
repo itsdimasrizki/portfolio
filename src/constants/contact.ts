@@ -7,16 +7,9 @@ export const contactInfo: ContactInfo[] = [
   {
     id: "email",
     label: "Email",
-    value: "hello@dimasrizki.dev",
-    href: "mailto:hello@dimasrizki.dev",
+    value: "dimasrizkia477@gmail.com",
+    href: "mailto:dimasrizkia477@gmail.com",
     icon: Mail,
-  },
-  {
-    id: "phone",
-    label: "Phone",
-    value: "+62 812 3456 7890",
-    href: "tel:+6281234567890",
-    icon: Phone,
   },
   {
     id: "location",
@@ -31,25 +24,19 @@ export const socialLinks: SocialLink[] = [
   {
     id: "github",
     label: "GitHub",
-    href: "https://github.com",
+    href: "https://github.com/itsdimasrizki",
     icon: FaGithub,
   },
   {
     id: "linkedin",
     label: "LinkedIn",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/dimas-rizki-ardiansyah-28580233b/",
     icon: FaLinkedinIn,
-  },
-  {
-    id: "twitter",
-    label: "X",
-    href: "https://x.com",
-    icon: FaXTwitter,
   },
   {
     id: "instagram",
     label: "Instagram",
-    href: "https://instagram.com",
+    href: "https://www.instagram.com/drzkyyy__/",
     icon: FaInstagram,
   },
 ];

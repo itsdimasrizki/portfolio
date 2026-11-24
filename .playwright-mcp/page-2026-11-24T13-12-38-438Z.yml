@@ -1,0 +1,322 @@
+- generic [active] [ref=f7e1]:
+  - banner [ref=f7e2]:
+    - generic [ref=f7e3]:
+      - link "Dimas Rizki Ardiansyah" [ref=f7e4] [cursor=pointer]:
+        - /url: /en
+      - button "Open menu" [ref=f7e6]
+  - main [ref=f7e8]:
+    - generic [ref=f7e11]:
+      - generic [ref=f7e12]:
+        - generic [ref=f7e13]: Open To Work/Internship
+        - heading [level=1] [ref=f7e18]:
+          - text: Dimas Rizki Ardiansyah
+          - generic "Full Stack Web Developer, Data Scientist, Data Analyst, ML Engineer." [ref=f7e19]:
+            - generic [aria-hidden] [ref=f7e20]: Full Stack Web Developer.
+        - paragraph [ref=f7e21]: I enjoy figuring out how things work, working with data, and turning ideas into practical solutions. I’m currently exploring different areas of technology, from data and AI to software development, through hands-on projects and experience
+        - generic [ref=f7e22]:
+          - link "View Projects" [ref=f7e23] [cursor=pointer]:
+            - /url: /en/projects
+          - link "Download CV" [ref=f7e24] [cursor=pointer]:
+            - /url: https://cdn.sanity.io/files/fgm09tsm/production/1f3b7cd41a1b73a640627b6873d11c0c0b5ac557.pdf
+      - generic [ref=f7e26]:
+        - img "Dimas Rizki" [ref=f7e28]
+        - generic [ref=f7e29]:
+          - generic [ref=f7e30]: FIG 01. PROFILE
+          - generic [ref=f7e31]: "LOCATION: ID-YOG"
+    - generic [ref=f7e33]:
+      - generic [ref=f7e35]:
+        - generic [ref=f7e36]:
+          - generic [ref=f7e37]: 01 // SELECTED WORK
+          - heading "Featured Projects" [level=2] [ref=f7e40]
+          - paragraph [ref=f7e41]: Production systems, AI platforms, and web applications built with verifiable code.
+        - link "View all" [ref=f7e43] [cursor=pointer]:
+          - /url: /en/projects
+      - generic [ref=f7e45]:
+        - generic [ref=f7e47]:
+          - generic [ref=f7e48]:
+            - generic [ref=f7e49]:
+              - img "Matcha - AI Career Assistance preview 1" [ref=f7e50]
+              - img "Matcha - AI Career Assistance preview 2" [ref=f7e51]
+              - img "Matcha - AI Career Assistance preview 3" [ref=f7e52]
+              - img "Matcha - AI Career Assistance preview 4" [ref=f7e53]
+              - generic [ref=f7e54]:
+                - button "Show slide 1" [ref=f7e55]
+                - button "Show slide 2" [ref=f7e56]
+                - button "Show slide 3" [ref=f7e57]
+                - button "Show slide 4" [ref=f7e58]
+            - generic [ref=f7e59]:
+              - generic [ref=f7e60]:
+                - generic [ref=f7e61]:
+                  - generic [ref=f7e62]: Web App
+                  - generic [ref=f7e63]: Backend
+                  - generic [ref=f7e64]: AI / ML
+                - generic [ref=f7e65]: "2026"
+              - generic [ref=f7e66]:
+                - heading "Matcha - AI Career Assistance" [level=3] [ref=f7e67]
+                - paragraph [ref=f7e68]: Matcha Career AI is an AI-powered career assistant that helps users evaluate their professional profile and make informed career decisions. Built with a multi-agent architecture using LangGraph, FastAPI, and React, the platform provides skill gap analysis, CV and LinkedIn reviews, ATS compatibility scoring, personalized learning roadmaps, and job description matching. By combining Large Language Models, semantic search, and machine learning, Matcha delivers adaptive, context-aware career guidance through a single interactive platform.
+              - generic [ref=f7e69]:
+                - generic [ref=f7e70]: "#Python"
+                - generic [ref=f7e71]: "#Pandas"
+                - generic [ref=f7e72]: "#Jupyter Notebook"
+                - generic [ref=f7e73]: "#Node.js"
+                - generic [ref=f7e74]: "#React"
+                - generic [ref=f7e75]: "#Vite"
+                - generic [ref=f7e76]: "#Fast API"
+          - generic [ref=f7e77]:
+            - link "GitHub" [ref=f7e78] [cursor=pointer]:
+              - /url: https://github.com/rahmanisstudent/Matcha
+            - link "Live Demo" [ref=f7e79] [cursor=pointer]:
+              - /url: https://matcha-career-assistant.vercel.app/
+        - generic [ref=f7e81]:
+          - generic [ref=f7e82]:
+            - generic [ref=f7e83]:
+              - img "Agro Technology Melon preview 1" [ref=f7e84]
+              - img "Agro Technology Melon preview 2" [ref=f7e85]
+              - img "Agro Technology Melon preview 3" [ref=f7e86]
+              - img "Agro Technology Melon preview 4" [ref=f7e87]
+              - img "Agro Technology Melon preview 5" [ref=f7e88]
+              - img "Agro Technology Melon preview 6" [ref=f7e89]
+              - img "Agro Technology Melon preview 7" [ref=f7e90]
+              - generic [ref=f7e91]:
+                - button "Show slide 1" [ref=f7e92]
+                - button "Show slide 2" [ref=f7e93]
+                - button "Show slide 3" [ref=f7e94]
+                - button "Show slide 4" [ref=f7e95]
+                - button "Show slide 5" [ref=f7e96]
+                - button "Show slide 6" [ref=f7e97]
+                - button "Show slide 7" [ref=f7e98]
+            - generic [ref=f7e99]:
+              - generic [ref=f7e100]:
+                - generic [ref=f7e101]:
+                  - generic [ref=f7e102]: Web App
+                  - generic [ref=f7e103]: Dashboard
+                  - generic [ref=f7e104]: Backend
+                - generic [ref=f7e105]: "2026"
+              - generic [ref=f7e106]:
+                - heading "Agro Technology Melon" [level=3] [ref=f7e107]
+                - paragraph [ref=f7e108]: Smart Agro IoT is an intelligent fertigation system designed to automate nutrient mixing, irrigation, and environmental monitoring for hydroponic and agricultural applications. Built with ESP32-based IoT devices, the system continuously monitors pH, TDS, water temperature, water level, and soil moisture while automatically controlling pumps, solenoid valves, and nutrient dosing through a Finite State Machine (FSM). Integrated with a web dashboard, Smart Agro IoT enables real-time monitoring, remote control, and data-driven fertigation management to improve efficiency and consistency.
+              - generic [ref=f7e109]:
+                - generic [ref=f7e110]: "#Platform IO"
+                - generic [ref=f7e111]: "#C++"
+                - generic [ref=f7e112]: "#Typescript"
+                - generic [ref=f7e113]: "#MQTT"
+                - generic [ref=f7e114]: "#Arduino Framework"
+                - generic [ref=f7e115]: "#React"
+                - generic [ref=f7e116]: "#Node.js"
+                - generic [ref=f7e117]: "#Next.js"
+                - generic [ref=f7e118]: "#Tailwind CSS"
+                - generic [ref=f7e119]: "#ESP 32"
+                - generic [ref=f7e120]: "#ESP-NOW"
+          - generic [ref=f7e121]:
+            - link "GitHub" [ref=f7e122] [cursor=pointer]:
+              - /url: https://github.com/itsdimasrizki/Agro-Technology-Melon
+            - link "Live Demo" [ref=f7e123] [cursor=pointer]:
+              - /url: https://greenhouse.fikriastama.com/login
+        - generic [ref=f7e125]:
+          - generic [ref=f7e126]:
+            - generic [ref=f7e127]:
+              - img "Web Cashier - Toko Azizah preview 1" [ref=f7e128]
+              - img "Web Cashier - Toko Azizah preview 2" [ref=f7e129]
+              - img "Web Cashier - Toko Azizah preview 3" [ref=f7e130]
+              - img "Web Cashier - Toko Azizah preview 4" [ref=f7e131]
+              - generic [ref=f7e132]:
+                - button "Show slide 1" [ref=f7e133]
+                - button "Show slide 2" [ref=f7e134]
+                - button "Show slide 3" [ref=f7e135]
+                - button "Show slide 4" [ref=f7e136]
+            - generic [ref=f7e137]:
+              - generic [ref=f7e138]:
+                - generic [ref=f7e139]:
+                  - generic [ref=f7e140]: Web App
+                  - generic [ref=f7e141]: Backend
+                  - generic [ref=f7e142]: Marketing
+                - generic [ref=f7e143]: "2025"
+              - generic [ref=f7e144]:
+                - heading "Web Cashier - Toko Azizah" [level=3] [ref=f7e145]
+                - paragraph [ref=f7e146]: A lightweight Point of Sale (POS) application built with PHP Native and SQLite, featuring product management, shopping cart, checkout, debt payment support, and receipt generation through a clean Tailwind CSS interface.
+              - generic [ref=f7e147]:
+                - generic [ref=f7e148]: "#PHP"
+                - generic [ref=f7e149]: "#HTML5"
+                - generic [ref=f7e150]: "#Tailwind CSS"
+                - generic [ref=f7e151]: "#CSS3"
+                - generic [ref=f7e152]: "#SQL Lite"
+          - generic [ref=f7e153]:
+            - link "GitHub" [ref=f7e154] [cursor=pointer]:
+              - /url: https://github.com/itsdimasrizki/Toko-Azizah
+            - generic [ref=f7e155]: "[INTERNAL / CLI]"
+    - generic [ref=f7e157]:
+      - generic [ref=f7e159]:
+        - generic [ref=f7e160]:
+          - generic [ref=f7e161]: 02 // TRACK RECORD
+          - heading "Experience" [level=2] [ref=f7e164]
+          - paragraph [ref=f7e165]: Engineering roles, organizations, and research contributions.
+        - link "View all" [ref=f7e167] [cursor=pointer]:
+          - /url: /en/experience
+      - generic [ref=f7e168]:
+        - article [ref=f7e170]:
+          - generic [ref=f7e171]:
+            - heading "Laboratory Assistant" [level=3] [ref=f7e172]
+            - generic [ref=f7e173]: 2025 — Present
+          - generic [ref=f7e174]:
+            - generic [ref=f7e175]: Laboratorium Jurusan Teknik Informatika
+            - generic [ref=f7e176]: /
+            - generic [ref=f7e177]: Universitas Pembangunan Nasional "Veteran" Yogyakarta
+          - paragraph [ref=f7e178]: Assisted in conducting laboratory sessions by guiding students through practical exercises, explaining technical concepts, evaluating assignments, troubleshooting programming issues, and ensuring laboratory activities were conducted effectively.
+        - article [ref=f7e180]:
+          - generic [ref=f7e181]:
+            - heading "Assistant Lecturer & Teaching Class" [level=3] [ref=f7e182]
+            - generic [ref=f7e183]: 2025 — Present
+          - generic [ref=f7e184]:
+            - generic [ref=f7e185]: Universitas Pembangunan Nasional "Veteran" Yogyakarta
+            - generic [ref=f7e186]: /
+            - generic [ref=f7e187]: Universitas Pembangunan Nasional "Veteran" Yogyakarta
+          - paragraph [ref=f7e188]: Supported course instruction by assisting lecturers in delivering learning materials, mentoring students, answering technical questions, reviewing assignments, and facilitating an effective learning environment.
+        - article [ref=f7e190]:
+          - generic [ref=f7e191]:
+            - heading "Vice President of HIMATIF" [level=3] [ref=f7e192]
+            - generic [ref=f7e193]: 2025 — Present
+          - generic [ref=f7e194]:
+            - generic [ref=f7e195]: Himpunan Mahasiswa Program Studi Informatika - HIMATIF
+            - generic [ref=f7e196]: /
+            - generic [ref=f7e197]: Universitas Pembangunan Nasional "Veteran" Yogyakarta
+          - paragraph [ref=f7e198]: Served as the Vice President of the student association by supporting strategic decision-making, supervising organizational operations, coordinating multiple divisions, managing program execution, and representing the organization in internal and external activities when required.
+        - article [ref=f7e200]:
+          - generic [ref=f7e201]:
+            - heading "Beasiswa AI Engineer" [level=3] [ref=f7e202]
+            - generic [ref=f7e203]: February 2026 — June 2026
+          - generic [ref=f7e204]:
+            - generic [ref=f7e205]: PIJAK
+            - generic [ref=f7e206]: /
+            - generic [ref=f7e207]: Dicoding X IBM Skill Build
+          - paragraph [ref=f7e208]: Participated in the PIJAK AI Engineering Scholarship Program by Dicoding and IBM SkillsBuild, where I explored machine learning, generative AI, and modern AI development workflows. As part of the final capstone, I collaborated with a team to build Matcha, an AI-powered application designed to address real-world user needs.
+        - article [ref=f7e210]:
+          - generic [ref=f7e211]:
+            - heading "Front-end Web Development" [level=3] [ref=f7e212]
+            - generic [ref=f7e213]: 2024 — 2025
+          - generic [ref=f7e214]:
+            - generic [ref=f7e215]: Information Technology Club
+            - generic [ref=f7e216]: /
+            - generic [ref=f7e217]: Universitas Pembangunan Nasional "Veteran" Yogyakarta
+          - paragraph [ref=f7e218]: Collaborated with fellow members to develop web applications, strengthen full-stack development skills, explore modern web technologies, and contribute to technical discussions, coding sessions, and collaborative development projects.
+        - article [ref=f7e220]:
+          - generic [ref=f7e221]:
+            - heading "Staff of Biro Kesekretariatan" [level=3] [ref=f7e222]
+            - generic [ref=f7e223]: 2024 — 2025
+          - generic [ref=f7e224]:
+            - generic [ref=f7e225]: Himpunan Mahasiswa Program Studi Informatika - HIMATIF
+            - generic [ref=f7e226]: /
+            - generic [ref=f7e227]: Universitas Pembangunan Nasional "Veteran" Yogyakarta
+          - paragraph [ref=f7e228]: Managed organizational administration and documentation, prepared official correspondence and meeting records, maintained internal archives, coordinated administrative processes across divisions, and supported the execution of organizational programs while ensuring accurate and well-organized documentation.
+        - article [ref=f7e230]:
+          - generic [ref=f7e231]:
+            - heading "Web Development" [level=3] [ref=f7e232]
+            - generic [ref=f7e233]: 2025 — 2025
+          - generic [ref=f7e234]:
+            - generic [ref=f7e235]: Intro to Software Engineer
+            - generic [ref=f7e236]: /
+            - generic [ref=f7e237]: RevoU
+          - paragraph [ref=f7e238]: Completed RevoU's Intro to Software Engineering program, gaining foundational knowledge in software engineering principles, frontend web development, version control, and responsive web design through hands-on projects and practical learning.
+        - article [ref=f7e240]:
+          - generic [ref=f7e241]:
+            - heading "Staff of Aspirasi Seni dan Olahraga" [level=3] [ref=f7e242]
+            - generic [ref=f7e243]: 2022 — 2024
+          - generic [ref=f7e244]:
+            - generic [ref=f7e245]: OSIS SMA Muhammadiyah 1 Klaten
+            - generic [ref=f7e246]: /
+            - generic [ref=f7e247]: SMA Muhammadiyah 1 Klaten
+          - paragraph [ref=f7e248]: Assisted in planning and executing school events in the fields of arts and sports, coordinated student participation in competitions and extracurricular activities, gathered and conveyed student aspirations, and collaborated with the OSIS committee to promote active student engagement while strengthening teamwork, communication, and event management skills.
+    - generic [ref=f7e250]:
+      - generic [ref=f7e252]:
+        - generic [ref=f7e253]:
+          - generic [ref=f7e254]: 03 // CREDENTIALS
+          - heading "Featured Certificates" [level=2] [ref=f7e257]
+          - paragraph [ref=f7e258]: Industry certifications in AI engineering, web systems, and competitive programming.
+        - link "View all" [ref=f7e260] [cursor=pointer]:
+          - /url: /en/certificates
+      - generic [ref=f7e262]:
+        - article [ref=f7e264]:
+          - generic [ref=f7e265]:
+            - img "[PIJAK] Dicoding X IBM Skill Build" [ref=f7e267]
+            - generic [ref=f7e268]:
+              - generic [ref=f7e269]: AI Engineer
+              - heading "[PIJAK] Dicoding X IBM Skill Build" [level=3] [ref=f7e270]
+          - generic [ref=f7e271]:
+            - generic [ref=f7e272]: 20 Juli 2026
+            - link "PDF" [ref=f7e274] [cursor=pointer]:
+              - /url: https://cdn.sanity.io/files/fgm09tsm/production/6d3698f1a4d6b9e04b87e055b0c936fdac10718d.pdf
+        - article [ref=f7e279]:
+          - generic [ref=f7e280]:
+            - img "Finalis Competitive Programming SCHEMATICS ITS" [ref=f7e282]
+            - generic [ref=f7e283]:
+              - generic [ref=f7e284]: Competition
+              - heading "Finalis Competitive Programming SCHEMATICS ITS" [level=3] [ref=f7e285]
+          - generic [ref=f7e286]:
+            - generic [ref=f7e287]: "2025"
+            - link "PDF" [ref=f7e289] [cursor=pointer]:
+              - /url: https://cdn.sanity.io/files/fgm09tsm/production/7a9bcefe351bf7b9ed84e3f733dfceaaee52639f.pdf
+        - article [ref=f7e294]:
+          - generic [ref=f7e295]:
+            - img "RevoU Intro to Software Engineering" [ref=f7e297]
+            - generic [ref=f7e298]:
+              - generic [ref=f7e299]: Web Development
+              - heading "RevoU Intro to Software Engineering" [level=3] [ref=f7e300]
+          - generic [ref=f7e301]:
+            - generic [ref=f7e302]: 17 October 2025
+            - link "PDF" [ref=f7e304] [cursor=pointer]:
+              - /url: https://cdn.sanity.io/files/fgm09tsm/production/27eeef877c4b92d500d280c4fcef50ba989f5699.pdf
+    - generic [ref=f7e311]:
+      - generic [ref=f7e312]: 06 // ENGAGE
+      - heading "Let's build something together." [level=2] [ref=f7e315]
+      - paragraph [ref=f7e316]: Available for full-time engineering roles, technical internships, and collaborative software projects.
+      - generic [ref=f7e317]:
+        - link "Let's Connect" [ref=f7e318] [cursor=pointer]:
+          - /url: /en/contact
+        - link "Download CV" [ref=f7e319] [cursor=pointer]:
+          - /url: https://cdn.sanity.io/files/fgm09tsm/production/1f3b7cd41a1b73a640627b6873d11c0c0b5ac557.pdf
+  - contentinfo [ref=f7e320]:
+    - generic [ref=f7e321]:
+      - generic [ref=f7e322]:
+        - generic [ref=f7e323]:
+          - link "Dimas Rizki Ardiansyah" [ref=f7e324] [cursor=pointer]:
+            - /url: /en
+          - paragraph [ref=f7e325]: Fullstack Software Engineer.
+          - generic [ref=f7e326]: "[SYSTEM_STATUS: ONLINE / ACTIVE]"
+        - navigation [ref=f7e327]:
+          - paragraph [ref=f7e328]: Navigation
+          - list [ref=f7e329]:
+            - listitem [ref=f7e330]:
+              - link "Home" [ref=f7e331] [cursor=pointer]:
+                - /url: /en
+            - listitem [ref=f7e332]:
+              - link "About" [ref=f7e333] [cursor=pointer]:
+                - /url: /en/about
+            - listitem [ref=f7e334]:
+              - link "Projects" [ref=f7e335] [cursor=pointer]:
+                - /url: /en/projects
+            - listitem [ref=f7e336]:
+              - link "Experience" [ref=f7e337] [cursor=pointer]:
+                - /url: /en/experience
+            - listitem [ref=f7e338]:
+              - link "Certificates" [ref=f7e339] [cursor=pointer]:
+                - /url: /en/certificates
+            - listitem [ref=f7e340]:
+              - link "Contact" [ref=f7e341] [cursor=pointer]:
+                - /url: /en/contact
+        - generic [ref=f7e342]:
+          - paragraph [ref=f7e343]: Social
+          - list [ref=f7e344]:
+            - listitem [ref=f7e345]:
+              - link "GitHub" [ref=f7e346] [cursor=pointer]:
+                - /url: https://github.com/itsdimasrizki
+            - listitem [ref=f7e353]:
+              - link "LinkedIn" [ref=f7e354] [cursor=pointer]:
+                - /url: https://www.linkedin.com/in/dimas-rizki-ardiansyah-28580233b/
+            - listitem [ref=f7e361]:
+              - link "Instagram" [ref=f7e362] [cursor=pointer]:
+                - /url: https://www.instagram.com/drzkyyy__/
+            - listitem [ref=f7e369]:
+              - link "Email" [ref=f7e370] [cursor=pointer]:
+                - /url: mailto:dimasrizkia477@gmail.com
+      - generic [ref=f7e375]:
+        - paragraph [ref=f7e376]: © 2026 Dimas Rizki Ardiansyah. All rights reserved.
+        - paragraph [ref=f7e377]: ENGINEERING DOSSIER / SWISS NEO-BRUTALIST

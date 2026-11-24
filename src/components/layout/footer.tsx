@@ -1,58 +1,76 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
 
 import { Container } from "./container";
 import { navLinks } from "@/constants/navigation";
-import { socialLinks, contactInfo } from "@/constants/contact";
+import {
+  socialLinks as defaultSocialLinks,
+  contactInfo as defaultContactInfo,
+} from "@/constants/contact";
 import { getMessages } from "@/i18n/dictionary";
 import { localeHref, type Locale } from "@/i18n/locale";
-
-const footerSocials = [
-  ...socialLinks.filter((social) => ["github", "linkedin"].includes(social.id)),
-  ...contactInfo
-    .filter((item) => item.id === "email")
-    .map((item) => ({
-      id: item.id,
-      label: item.label,
-      href: item.href,
-      icon: Mail,
-    })),
-];
+import type { SocialLink, ContactInfo } from "@/types/contact";
 
 type FooterProps = {
   locale: Locale;
+  socialLinks?: SocialLink[];
+  contactInfo?: ContactInfo[];
 };
 
-export function Footer({ locale }: FooterProps) {
-  const year = new Date().getFullYear();
+export function Footer({
+  locale,
+  socialLinks = defaultSocialLinks,
+  contactInfo = defaultContactInfo,
+}: FooterProps) {
   const messages = getMessages(locale);
+  const currentYear = new Date().getFullYear();
+
+  const footerSocials = [
+    ...socialLinks.filter((social) =>
+      ["github", "linkedin", "instagram"].includes(social.id)
+    ),
+    ...contactInfo
+      .filter((item) => item.id === "email")
+      .map((item) => ({
+        id: item.id,
+        label: item.label,
+        href: item.href,
+        icon: Mail,
+      })),
+  ];
 
   return (
-    <footer className="border-t border-border bg-background">
-      <Container className="py-16">
-        <div className="grid gap-10 md:grid-cols-3">
-          <div>
+    <footer className="border-t border-border bg-card">
+      <Container className="py-14">
+        <div className="grid gap-10 md:grid-cols-4">
+          <div className="md:col-span-2 space-y-3">
             <Link
               href={localeHref(locale, "/")}
-              className="text-lg font-semibold tracking-tight"
+              className="font-display text-xl font-bold tracking-tight text-foreground"
             >
               Dimas Rizki Ardiansyah
             </Link>
 
-            <p className="mt-3 max-w-xs text-sm text-muted-foreground">
+            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
               {messages["footer.tagline"]}
             </p>
+
+            <div className="pt-2 font-mono text-xs text-muted-foreground uppercase tracking-wider">
+              [SYSTEM_STATUS: ONLINE / ACTIVE]
+            </div>
           </div>
 
           <nav className="space-y-3">
-            <p className="text-sm font-medium">{messages["footer.navigation"]}</p>
+            <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              {messages["footer.navigation"]}
+            </p>
 
             <ul className="space-y-2">
               {navLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={localeHref(locale, item.href)}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="font-mono text-xs uppercase text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {messages[item.labelKey]}
                   </Link>
@@ -62,7 +80,9 @@ export function Footer({ locale }: FooterProps) {
           </nav>
 
           <div className="space-y-3">
-            <p className="text-sm font-medium">{messages["footer.social"]}</p>
+            <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+              {messages["footer.social"]}
+            </p>
 
             <ul className="space-y-2">
               {footerSocials.map((social) => {
@@ -78,16 +98,29 @@ export function Footer({ locale }: FooterProps) {
                           ? "noopener noreferrer"
                           : undefined
                       }
-                      className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="group inline-flex items-center gap-2 font-mono text-xs uppercase text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      <Icon size={16} />
-                      {social.label}
+                      <Icon className="size-3.5 text-primary" />
+                      <span>{social.label}</span>
+                      {social.href.startsWith("http") && (
+                        <ArrowUpRight className="size-3 opacity-0 transition-opacity group-hover:opacity-100" />
+                      )}
                     </Link>
                   </li>
                 );
               })}
             </ul>
           </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 sm:flex-row sm:items-center">
+          <p className="font-mono text-xs text-muted-foreground">
+            © {currentYear} Dimas Rizki Ardiansyah. All rights reserved.
+          </p>
+
+          <p className="font-mono text-[10px] text-muted-foreground/70 uppercase tracking-widest">
+            ENGINEERING DOSSIER / SWISS NEO-BRUTALIST
+          </p>
         </div>
       </Container>
     </footer>

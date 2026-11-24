@@ -8,10 +8,10 @@ export function TechnologyCard({
   icon,
 }: TechnologyCardProps) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-xs">
-      <div className="text-teal-700">{icon}</div>
+    <div className="flex items-center gap-3 rounded-none border border-border bg-card px-4 py-3 transition-colors duration-200 hover:border-foreground/40 shadow-xs">
+      <div className="text-primary text-base">{icon}</div>
 
-      <span className="text-sm font-medium">
+      <span className="font-mono text-xs uppercase tracking-wider text-foreground">
         {name}
       </span>
     </div>

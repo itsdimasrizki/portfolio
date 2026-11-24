@@ -30,33 +30,22 @@ export function DownloadPortfolioButton({
 
     setState("loading");
     try {
-      const response = await fetch(`/api/portfolio/pdf?lang=${locale}`);
-
-      if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
-      }
+      const response = await fetch(`/api/portfolio/pdf?locale=${locale}`);
+      if (!response.ok) throw new Error("Failed to generate PDF");
 
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
-
-      // Trigger browser download
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `Dimas-Rizki-Portfolio-Deck-${locale.toUpperCase()}.pdf`;
-      document.body.appendChild(anchor);
-      anchor.click();
-      document.body.removeChild(anchor);
-
-      // Release object URL after short delay
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `dimas-rizki-portfolio-${locale}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
       setState("idle");
     } catch (err) {
       console.error("PDF download failed:", err);
       setState("error");
-
-      // Auto-reset error state after 3s
-      setTimeout(() => setState("idle"), 3000);
     }
   }
 
@@ -71,7 +60,7 @@ export function DownloadPortfolioButton({
       onClick={handleDownload}
       disabled={isLoading}
       className={cn(
-        "transition-all duration-200",
+        "rounded-none font-mono text-xs uppercase tracking-wider transition-all duration-200",
         isError && "border-destructive text-destructive hover:bg-destructive/10",
         className
       )}

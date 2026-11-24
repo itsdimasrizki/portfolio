@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { getMessages } from "@/i18n/dictionary";
@@ -12,11 +13,6 @@ import { RoleRotator } from "./role-rotator";
 
 type HeroContentProps = {
   content: PageContent;
-  /**
-   * `fullName` jadi cadangan judul bila dokumen `pageContent` hilang, dan
-   * `roles` adalah jalur utama peran yang berputar di judul — `heroHighlight`
-   * turun jadi cadangannya.
-   */
   settings: { fullName?: string; roles: string[] };
   cvUrl?: string | null;
   locale: Locale;
@@ -29,21 +25,24 @@ export function HeroContent({
   locale,
 }: HeroContentProps) {
   const messages = getMessages(locale);
-
   const headline = content.heroHeadline || settings.fullName || "";
 
   return (
-    <div className="max-w-xl">
+    <div className="max-w-2xl">
       {content.heroBadge && (
-        <motion.span
+        <motion.div
           custom={0}
           variants={heroItem}
           initial="hidden"
           animate="visible"
-          className="inline-flex items-center rounded-full bg-teal-50 px-3 py-1 text-sm font-medium text-teal-700"
+          className="inline-flex items-center gap-2 border border-border bg-card px-2.5 py-1 font-mono text-xs text-foreground uppercase tracking-wider"
         >
-          {content.heroBadge}
-        </motion.span>
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          <span>{content.heroBadge}</span>
+        </motion.div>
       )}
 
       <motion.h1
@@ -51,13 +50,13 @@ export function HeroContent({
         variants={heroItem}
         initial="hidden"
         animate="visible"
-        className="mt-6 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
+        className="mt-6 font-display text-4xl font-bold leading-[1.08] tracking-tight md:text-5xl lg:text-6xl text-foreground"
       >
         {headline}{" "}
         {settings.roles.length > 0 ? (
           <RoleRotator roles={settings.roles} />
         ) : (
-          <span className="text-teal-700">{content.heroHighlight}</span>
+          <span className="text-primary">{content.heroHighlight}</span>
         )}
       </motion.h1>
 
@@ -67,7 +66,7 @@ export function HeroContent({
           variants={heroItem}
           initial="hidden"
           animate="visible"
-          className="mt-6 text-base leading-relaxed text-muted-foreground"
+          className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
         >
           {content.heroDescription}
         </motion.p>
@@ -78,15 +77,16 @@ export function HeroContent({
         variants={heroItem}
         initial="hidden"
         animate="visible"
-        className="mt-8 flex flex-wrap gap-4"
+        className="mt-8 flex flex-wrap items-center gap-4"
       >
-        <Button size="lg" asChild>
+        <Button size="lg" className="rounded-none px-6 font-mono text-xs uppercase tracking-wider" asChild>
           <Link href={localeHref(locale, "/projects")}>
             {messages["cta.viewProjects"]}
+            <ArrowUpRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
 
-        <Button size="lg" variant="outline" asChild>
+        <Button size="lg" variant="outline" className="rounded-none border-border px-6 font-mono text-xs uppercase tracking-wider" asChild>
           <a
             href={cvUrl ?? "/resume.pdf"}
             download
