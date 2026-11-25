@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { useReducedMotion } from "framer-motion";
 const GREETINGS = [
   "Halo",
   "Hello",
@@ -11,11 +11,17 @@ const GREETINGS = [
 ];
 
 export function TypewriterGreeting() {
+  const reduceMotion = useReducedMotion();
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    if (reduceMotion) {
+      setText(GREETINGS[0]);
+      return;
+    }
+
     const current = GREETINGS[greetingIndex];
     let timeout: NodeJS.Timeout;
 

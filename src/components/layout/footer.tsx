@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mail, ArrowUpRight } from "lucide-react";
+import { VisitorCounter } from "./visitor-counter";
 
 import { Container } from "./container";
 import { navLinks } from "@/constants/navigation";
@@ -114,9 +115,12 @@ export function Footer({
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 sm:flex-row sm:items-center">
-          <p className="font-mono text-xs text-muted-foreground">
-            © {currentYear} Dimas Rizki Ardiansyah. All rights reserved.
-          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="font-mono text-xs text-muted-foreground">
+              © {currentYear} Dimas Rizki Ardiansyah. All rights reserved.
+            </p>
+            <VisitorCounter />
+          </div>
 
           <p className="font-mono text-[10px] text-muted-foreground/70 uppercase tracking-widest">
             ENGINEERING DOSSIER / SWISS NEO-BRUTALIST

@@ -1,107 +1,81 @@
-# Multi-Agent Orchestration Framework: Roles & Execution Protocols
+# Multi-Agent Workflow: Yash Ahire Redesign Execution
 
-## 1. Overview & Principles of Collaboration
-Dokumen ini mengatur pembagian tugas, spesialisasi peran, batasan kewenangan (*rules of engagement*), dan protokol komunikasi bagi para AI agent / subagents saat mengeksekusi rencana redesign portofolio yang terinspirasi dari Yash Ahire.
-
-Setiap agent harus mematuhi prinsip inti:
-1. **Evidence-Driven Implementation**: Selalu periksa kode yang ada, error log, dan verifikasi runtime sebelum dan sesudah perubahan.
-2. **YAGNI & Pragmatic Sourcing**: Tulis kode paling ringkas dan modular. Hindari over-engineering grafis via code murni yang kaku; agen diizinkan berselancar mencari asset visual berkualitas (PNG, 3D GLTF, GIF maskot, texture, SVG) via link CDN atau download langsung ke `public/assets/`.
-3. **Strict Code & Regression Safety**: Dilarang menghapus fitur yang sudah berjalan stabil (seperti i18n dwibahasa EN/ID, integrasi Sanity CMS, test suite node test, dan PDF exporter).
-4. **Mandatory UI Verification with Playwright**: Setiap perubahan UI wajib divalidasi visualnya pada 3 ukuran layar (Desktop 1440px, Tablet 768px, Mobile 390px) menggunakan Playwright MCP.
-5. **Original Content Only**: Konten, testimonial, angka counter, seni maskot, dan copy harus karya sendiri. Dilarang menyalin teks, aset, atau figur dari yashahire.info atau portofolio manapun. Tidak boleh ada visitor counter palsu — jika endpoint `/api/views` belum dibangun, hilangkan widget counter atau tampilkan placeholder.
+Dokumen ini mendefinisikan pembagian peran sub-agen otomatis, dependensi antar-tugas, batasan cakupan, dan protokol komunikasi untuk mengeksekusi rencana perombakan redesign secara paralel dan terstruktur.
 
 ---
 
-## 2. Specialized Agent Roles & Responsibilities
+## 1. Agent Roster & Domain Responsibilities
 
-```text
-+-----------------------------------------------------------------------------------------+
-|                                  ORCHESTRATOR AGENT                                     |
-|           Mengatur urutan eksekusi, dependensi antar-tugas, dan review integrasi         |
-+-----------------------------------------------------------------------------------------+
-       │                      │                      │                     │
-       ▼                      ▼                      ▼                     ▼
-+--------------+      +---------------+      +---------------+     +---------------+
-| DESIGN       |      | SANITY & I18N |      | UI COMPONENT  |     | QA PLAYWRIGHT |
-| SYSTEM AGENT |      | CONTENT AGENT |      | BUILDER AGENT |     | VERIFIER      |
-+--------------+      +---------------+      +---------------+     +---------------+
-       │                      │                      │                     │
-       ├─ Tokens & CSS        ├─ Sanity Schemas      ├─ Navbar & Coin      └─ Viewport test
-       ├─ 7-Accent Engine     ├─ GROQ Queries        ├─ Split Hero & Dog   └─ Console audit
-       ├─ SVG Water Filters   ├─ en/id Dictionaries  ├─ Carousels          └─ Regressions
-       └─ Font Setup          └─ Mock Data Fallback  └─ Spotify & Contact
+```
+                      +-----------------------------+
+                      |   Orchestrator Agent (Lead) |
+                      +--------------+--------------+
+                                     |
+       +---------------+-------------+-------------+---------------+
+       |               |                           |               |
++------v-------+ +-----v-------+             +-----v-------+ +-----v-------+
+| Agent 1      | | Agent 2     |             | Agent 3     | | Agent 4     |
+| Theme/Tokens | | Navigation  |             | Hero/Inter- | | Sections    |
+| & Foundation | | & Header UI |             | actions     | | & Sliders   |
++--------------+ +-------------+             +-------------+ +-------------+
+                                                           |
+                                                     +-----v-------+
+                                                     | Agent 5     |
+                                                     | QA & Visual |
+                                                     | Playwright  |
+                                                     +-------------+
 ```
 
-### 2.1 Agent 1: `design-system-agent`
-- **Tanggung Jawab**:
-  - Konfigurasi token warna, dark/light theme, dan 7-color dynamic accent palette di `src/app/globals.css`.
-  - Pemasangan filter SVG fisik cairan (`#navGoo`, `#waterLens`, `#glassDistortion`) di root layout.
-  - Pembuatan context provider `AccentColorContext` untuk menyimpan state aksen terpilih di `localStorage` dan menginjeksi variabel CSS `--accent-*`.
-  - Konfigurasi tipografi (`Geist`, `Space Grotesk`, `Silkscreen`). *(Sacramento direncanakan untuk quote block di masa depan.)*
-- **Batasan**: Hanya memodifikasi file style, SVG filter, dan context provider tema. Tidak mengedit logika konten halaman.
+### Agent 1: Foundation & Theme Specialist (`agent-theme`)
+- **Fokus**: Variabel CSS, Provider Aksentuasi, dan Shader SVG.
+- **Tugas**:
+  - Membuat `AccentProvider` (state context untuk 7 warna aksen + sinkronisasi `localStorage`).
+  - Menyiapkan file SVG filter (`#navGoo`, `#glassDistortion`, `#waterRipple`).
+  - Memperbarui `globals.css` dengan token warna latar dan utility glassmorphism.
+- **Input**: `docs/redesign/DESIGN.md`, `globals.css`.
+- **Output**: Komponen theme context yang siap dipakai oleh seluruh UI.
 
-### 2.2 Agent 2: `sanity-content-agent`
-- **Tanggung Jawab**:
-  - Menambahkan skema baru Sanity: `recommendation.schema.ts`, `spotifyTrack.schema.ts`, `heroTeaser.schema.ts`, dan `interactiveQA.schema.ts`.
-  - Menyiapkan GROQ query dan data service di `src/services/` dengan dukungan fallback data statis jika koneksi Sanity offline.
-  - Memperbarui dictionary i18n (`src/i18n/messages/en.json` dan `src/i18n/messages/id.json`) untuk seluruh string antarmuka baru.
-- **Batasan**: Menjamin backward-compatibility skema lama (`project`, `experience`, `skill`, `certificate`, `siteSettings`, `pageContent`).
+### Agent 2: Navigation & Header Specialist (`agent-navbar`)
+- **Fokus**: Komponen navigasi desktop & mobile.
+- **Tugas**:
+  - Membangun `coin-logo.tsx` (efek 3D flip coin avatar).
+  - Mengintegrasikan swatch warna aksen dropdown di navbar.
+  - Membangun menu navigasi desktop dan animasi slide-down hamburger menu mobile.
+  - Memastikan integrasi Language Switcher bilingual (`en`/`id`) tetap berfungsi lancar.
+- **Input**: Komponen `AccentProvider` dari Agent 1.
 
-### 2.3 Agent 3: `ui-navbar-agent`
-- **Tanggung Jawab**:
-  - Membangun komponen sticky pill navbar (`src/components/layout/navbar.tsx`).
-  - Mengimplementasikan 3D Coin-flip logo (`LogoCoin.tsx`) dengan rotasi 180° front/back.
-  - Mengimplementasikan tombol "Say hi" dengan animasi melambai `sayhiWave`.
-  - Mengimplementasikan toggle tema air (`theme-bubble__water`) dan popover swatch 7-aksen warna.
-  - Mengimplementasikan efek kanvas distorsi air (`WaterLensCanvas.tsx`) pada tombol "Get in touch".
-  - Membangun drawer navigasi mobile responsif.
-- **Batasan**: Memastikan layout navbar tidak bergeser (*zero layout shift*) saat berganti tema atau resolusi.
+### Agent 3: Hero & Playful Micro-Interactions Specialist (`agent-hero`)
+- **Fokus**: Area Hero 2-kolom dan elemen interaktif taktil.
+- **Tugas**:
+  - Mengimplementasikan prompt terminal mono (`> npm start`) dan dynamic typist greeting.
+  - Membangun komponen interaktif **"Pet the Dog"** (`dog-buddy.tsx`).
+  - Membangun launcher dialog **"Ask me anything"** (`ai-modal.tsx`) lengkap dengan pill opsi pertanyaan instan.
+  - Membangun showcase card **"Currently Building"** dan **Testimonials Slider**.
+- **Input**: Data Sanity hero/settings, komponen button dasar.
 
-### 2.4 Agent 4: `ui-hero-agent`
-- **Tanggung Jawab**:
-  - Membangun layout asimetris 2-kolom pada Hero (`src/components/sections/hero/`).
-  - Kolom Kiri: Terminal typing prompt monospace, headline Space Grotesk, role rotator, bio naratif, dan tombol aksi (Resume, Pet the dog buddy, Ask me anything).
-  - Kolom Kanan: Kartu showcase "Currently Building" (mockup mini, tag stack, pulsing live badge) dan slider testimonial rekomendasi LinkedIn.
-  - Membangun interaksi maskot anjing (`DogBuddy.tsx`) dengan tooltip ekspresi.
-  - Membangun modal drawer AI Assistant (`AIChatModal.tsx`) dengan preset pertanyaan cepat.
-- **Batasan**: Semua animasi entrance menggunakan Framer Motion yang ringan tanpa membebani thread rendering awal.
+### Agent 4: Content Sections & Sliders Specialist (`agent-sections`)
+- **Fokus**: Modul konten utama (About, Experience, Projects, Skills, Contact).
+- **Tugas**:
+  - Membangun modal kata kunci interaktif pada About section (`about-pill-modal.tsx`).
+  - Mengubah tampilan Experience menjadi horizontal slider yang responsif dengan tombol expandable `+`.
+  - Mengimplementasikan horizontal slider untuk Projects dengan badges live/research dan tech stack.
+  - Mengelompokkan skill ke dalam matrix kategori terstruktur.
+  - Membangun widget **"Currently Vibing To"** (Spotify player embed + playlist switcher) dan quote block pada Contact section.
+- **Input**: Data query Sanity dari CMS, kamus i18n.
 
-### 2.5 Agent 5: `ui-carousels-agent` (Experience & Projects)
-- **Tanggung Jawab**:
-  - Merekayasa ulang tampilan Experience menjadi **Interactive Horizontal Carousel** dengan background pattern gradien khusus per kartu dan tombol ekspansi `[+]` (*mini-plus-btn*).
-  - Merekayasa ulang tampilan Projects menjadi kartu interaktif dengan badge status rilis, tag teknologi mendalam, direct links, dan modal studi kasus.
-  - Menjamin kelancaran interaksi drag/swipe pada perangkat layar sentuh dan mouse wheel.
-- **Batasan**: Wajib menyediakan fallback tampilan vertikal yang nyaman diakses pada browser lama atau saat JavaScript dimatikan.
-
-### 2.6 Agent 6: `ui-footer-contact-agent`
-- **Tanggung Jawab**:
-  - Membangun widget pemutar musik Spotify interaktif ("Currently Vibing To") dengan 8 tab lagu pilihan.
-  - Membangun kartu kutipan personal (*Personal Quote Block*) dengan aksen tulisan tangan.
-  - Menyempurnakan form kontak dengan validasi klien, state pengiriman, dan integrasi API `/api/contact`.
-  - Mengimplementasikan banner aksen "LET'S DO THIS", social links, tombol "Copy email" dengan visual feedback checkmark, dan widget live visitor counter.
-  - Mengimplementasikan tombol melayang "Say Hi" dan "Scroll to Top".
-- **Batasan**: Form kontak harus bebas dari celah spam dan error handling email harus jelas.
-
-### 2.7 Agent 7: `qa-playwright-agent`
-- **Tanggung Jawab**:
-  - Menguji setiap fitur yang telah dibangun menggunakan Playwright MCP.
-  - Menjalankan pengujian multi-viewport:
-    - Desktop: 1440 x 900
-    - Tablet: 768 x 1024
-    - Mobile: 390 x 844
-  - Memeriksa console browser (`browser_console_messages`) untuk memastikan 0 runtime error, warning React hydration, atau layout overflow.
-  - Menguji fungsionalitas interaktif: klik coin-flip, klik dog buddy, buka modal AMA, ganti 7 warna aksen, ganti track Spotify, kirim form kontak.
-  - Menjalankan unit test suite (`pnpm test`) untuk memastikan semua regression test lolos.
-- **Batasan**: Tidak boleh menganggap pekerjaan selesai sebelum seluruh skenario verifikasi Playwright berhasil dijalankan tanpa error.
+### Agent 5: QA, Playwright & Visual Verification Specialist (`agent-qa`)
+- **Fokus**: Pengujian fungsionalitas, performa visual, dan kepatuhan desain.
+- **Tugas**:
+  - Menjalankan unit tests (`pnpm test`) untuk memastikan zero regression pada logika internal dan kamus i18n.
+  - Melakukan cross-device testing menggunakan **Playwright MCP** pada resolusi desktop (1440x900) dan mobile (390x844).
+  - Menguji interaktivitas (klik swatch aksen warna, toggle theme, pet dog, klik slider prev/next).
+  - Memverifikasi tidak adanya console error atau warning hydration.
 
 ---
 
-## 3. Communication & Handoff Protocols
+## 2. Guardrails & Quality Gates
 
-1. **Urutan Dependensi Antar Agent**:
-   `design-system-agent` -> `sanity-content-agent` -> `ui-navbar-agent` -> `ui-hero-agent` -> `ui-carousels-agent` -> `ui-footer-contact-agent` -> `qa-playwright-agent`.
-2. **Kriteria Handoff**:
-   Setiap agent hanya boleh menyerahkan hasil kerjanya jika:
-   - Kode lulus validasi TypeScript (`tsc --noEmit`).
-   - Tidak ada syntax error atau import yang hilang.
-   - Komponen memiliki fallback data aman (*no undefined property crash*).
+1. **Safety First**: Tidak diperkenankan menghapus file kredensial atau merusak skema database yang sudah berjalan.
+2. **Bilingual Completeness**: Setiap teks baru yang ditambahkan ke UI wajib memiliki entri terjemahan di `src/i18n/messages/en.json` dan `src/i18n/messages/id.json`.
+3. **Responsive Consistency**: Semua komponen harus dites pada breakpoint mobile (390px) dan desktop (1440px) sebelum dianggap selesai.
+4. **No Premature Execution**: Fase eksekusi kode baru dijalankan setelah dokumen perencanaan disetujui secara eksplisit oleh pengguna.

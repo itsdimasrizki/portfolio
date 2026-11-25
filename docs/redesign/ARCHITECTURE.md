@@ -1,186 +1,124 @@
-# Architecture Specification: Full-Stack & System Design
+# Technical Architecture: Yash Ahire Inspired Modern Stack
 
-## 1. System Overview & Technology Stack
+## 1. Core Technology Stack
 
-Situs portofolio ini dibangun di atas arsitektur web modern dengan prinsip **Server-First**, **Zero unnecessary abstractions**, dan **Optimal Core Web Vitals**:
+Arsitektur aplikasi dibangun di atas ekosistem modern yang sudah ada di repository, dioptimalkan untuk performa tinggi, modularitas, dan aksesibilitas:
 
-```text
-+-----------------------------------------------------------------------------------------+
-|                                 CLIENT VIEWPORT                                         |
-|  [Pill Navbar] [Split Hero] [Interactive Carousels] [Spotify Widget] [AI Chat Drawer]   |
-+-----------------------------------------------------------------------------------------+
-                                           ▲
-                                           │ Hydration & React 19 Islands
-                                           ▼
-+-----------------------------------------------------------------------------------------+
-|                               NEXT.JS 16 APP ROUTER                                     |
-|   /(site)/[locale]/page.tsx (React Server Component - Data Fetching & Initial HTML)     |
-|   /api/contact (NodeMailer API)   ·   /api/views (Visitor Count)   ·   /api/revalidate  |
-+-----------------------------------------------------------------------------------------+
-                                           ▲
-                                           │ GROQ Queries / CDN Cache
-                                           ▼
-+-----------------------------------------------------------------------------------------+
-|                             SANITY CMS V5 (HEADLESS CMS)                                |
-|   Projects · Experiences · Skills · Certificates · SiteSettings · PageContent · Tracks   |
-+-----------------------------------------------------------------------------------------+
-```
-
-### 1.1 Core Technologies
-- **Framework**: Next.js 16 (App Router, React Server Components).
-- **Core Library**: React 19.x (Server Actions, `useOptimistic`, `useActionState`).
-- **Styling**: Tailwind CSS v4 (`@tailwindcss/postcss`, CSS-first configuration via `@theme inline`).
-- **Animation & Micro-interactions**: Framer Motion 12 (`framer-motion`), Canvas 2D API untuk efek lensa air.
-- **Content Management**: Sanity CMS v5 (`next-sanity`, `@sanity/client`, `@sanity/image-url`).
-- **Language & Types**: TypeScript 5 (Strict Mode).
-- **Icons**: Lucide React + React Icons (FontAwesome brands).
-- **Internationalization (i18n)**: Static path generation `[locale]` (`en` & `id`) dengan type-safe dictionary lookup.
+- **Framework**: **Next.js 16 (App Router)** dengan React 19.
+- **Styling**: **Tailwind CSS v4** + `@tailwindcss/postcss` + CSS Variables untuk theming dinamis.
+- **Motion & Interactions**: **Framer Motion v12** (animasi transisi slider, modal popups, coin flip, dan spring physics).
+- **Headless CMS & Content Engine**: **Sanity CMS v5** (`@sanity/client`, `next-sanity`, live drafts & GROQ queries).
+- **Internationalization (i18n)**: Bilingual routing (`/[locale]`) untuk bahasa Inggris (`en`) dan Indonesia (`id`) menggunakan struktur kamus tipe aman (`messages/*.json`).
+- **Icons**: `lucide-react` & `react-icons` (FontAwesome, SimpleIcons).
+- **Audio & Media**: Spotify IFrame Embed API & HTML5 Audio untuk interactive music widget.
+- **E2E & Visual Testing**: **Playwright MCP** untuk verifikasi render di desktop dan mobile.
 
 ---
 
-## 2. Directory Structure & Module Organization
+## 2. Dynamic Theming & Accent Provider Architecture
 
-Penataan modular kode di dalam `src/`:
+Untuk mendukung switcher 7 warna aksen dinamis seperti pada situs referensi, dibuat React Context provider ringan tanpa re-render yang membebani seluruh halaman:
 
-```text
+```
++-------------------------------------------------------------+
+| ThemeProvider (Dark / Light + AccentColor State)             |
+|   - Sync with localStorage ("portfolio-accent", "theme")    |
+|   - Injects CSS Variables to <html> element:                |
+|       --accent-primary: <selected_hex>                      |
+|       --accent-secondary: <selected_hex_light>              |
+|       --accent-glow: <selected_rgba>                        |
++-------------------------------------------------------------+
+```
+
+### Palet CSS Variable Dinamis
+```css
+:root {
+  --accent-primary: #ffd460;
+  --accent-secondary: #f6ad55;
+  --accent-glow: rgba(255, 212, 96, 0.25);
+}
+```
+Ketika pengguna mengklik salah satu swatch warna, provider mengupdate atribut `style` pada `document.documentElement` secara instan, sehingga seluruh komponen kartu, tombol, border glow, dan badge langsung menyesuaikan warna tanpa perlu reload halaman.
+
+---
+
+## 3. Data Schema Enhancements (Sanity CMS)
+
+Untuk menyuplai data ke layout baru yang kaya fitur, skema Sanity ditingkatkan dengan entitas berikut:
+
+### 3.1 Testimonial / Recommendation Schema (`recommendation.schema.ts`)
+- `name`: string
+- `role`: string
+- `company`: string
+- `avatar`: image
+- `content`: localizedText (en, id)
+- `linkedInUrl`: url
+- `order`: number
+
+### 3.2 Spotify Track List Schema (`spotifyTrack.schema.ts` atau dalam `siteSettings`)
+- `title`: string
+- `artist`: string
+- `spotifyUri`: string (track ID)
+- `coverUrl`: string
+- `order`: number
+
+### 3.3 Interactive Keywords / About Pills (`aboutPill.schema.ts`)
+- `label`: localizedString
+- `heading`: localizedString
+- `description`: localizedText
+- `icon`: string
+
+### 3.4 Experience & Education Enriched Schema
+- Dukungan untuk metrik terukur (misal: "75% reduction in errors").
+- Detail accordion untuk kursus dan tanggung jawab tambahan.
+
+---
+
+## 4. Component Hierarchy & State Isolation
+
+```
 src/
 ├── app/
-│   ├── (site)/
-│   │   └── [locale]/
-│   │       ├── layout.tsx                # Root site layout (fonts, providers, global SVG filters)
-│   │       ├── page.tsx                  # Single-page bento layout (Hero, About, Exp, Projects, Skills, Contact)
-│   │       ├── projects/page.tsx         # Dedicated full projects catalogue
-│   │       ├── experience/page.tsx       # Dedicated full experience timeline
-│   │       └── certificates/page.tsx     # Certificates & credentials
-│   ├── (studio)/
-│   │   └── studio/[[...tool]]/           # Sanity Studio embedded dashboard
-│   ├── api/
-│   │   ├── contact/route.ts              # Email delivery via Nodemailer
-│   │   ├── views/route.ts                # ⏳ Planned, not yet built — visitor counter endpoint
-│   │   └── revalidate/route.ts           # Sanity webhook on-demand cache revalidation
-│   ├── favicon.ico
-│   └── globals.css                       # Base Tailwind v4 styles, theme variables, custom keyframes
+│   ├── (site)/[locale]/
+│   │   ├── layout.tsx         -> Menginjeksi ThemeProvider & AccentProvider
+│   │   └── page.tsx           -> Server Component utama merender seluruh section
+│   └── api/
+│       ├── contact/route.ts   -> API handler form kontak
+│       └── views/route.ts     -> API handler visitor view counter
 ├── components/
-│   ├── cards/                            # Reusable card primitives (ProjectCard, ExperienceCard, etc.)
-│   ├── effects/                          # Fluid shaders, WaterLensCanvas, SVGGooFilters, ParticleCanvas
-│   ├── layout/                           # Navbar (Pill), Footer, MobileNav, LanguageSwitcher, ThemeToggle
-│   ├── modals/                           # AIChatModal ("Ask me anything"), ProjectDetailModal, ResumeViewer
-│   ├── motion/                           # Framer motion wrappers (Reveal, BlurImage, MotionProvider)
-│   ├── sections/                         # Feature section modules:
-│   │   ├── hero/                         # HeroConsole, Typewriter, RoleRotator, DogBuddy, CurrentlyBuilding
-│   │   ├── about/                        # AboutStory, TechPillMatrix, BentoStats
-│   │   ├── experience/                   # ExperienceCarousel, MiniPlusDetail, TimelineIndicator
-│   │   ├── projects/                     # FeaturedProjectsCarousel, ProjectTags, LiveMockupFrame
-│   │   ├── skills/                       # SkillMatrixGrid, ProficiencyCategory
-│   │   ├── education/                    # EducationAccordion, CourseworkChips
-│   │   └── contact/                      # ContactForm, SpotifyPlayerWidget, QuoteBlock, LiveVisitorCounter
-│   └── ui/                               # Atomic primitives (Button, Input, Badge, Sheet, Dialog)
-├── constants/                            # Static fallbacks and navigation definitions
-├── context/                              # React Context (AccentColorContext, ViewCounterContext)
-├── i18n/                                 # Dictionary files (en.json, id.json) and helper functions
-├── lib/                                  # Pure utility functions (utils.ts, motion.ts, lens.ts)
-├── sanity/                               # Sanity schema definitions, queries, and client configurations
-├── services/                             # Data service layers communicating with Sanity GROQ
-└── types/                                # Domain TypeScript interfaces
+│   ├── layout/
+│   │   ├── navbar.tsx         -> Glassmorphism, 3D Coin-flip, Accent Switcher
+│   │   └── footer.tsx         -> Visitor counter, social links
+│   ├── sections/
+│   │   ├── hero/
+│   │   │   ├── hero-main.tsx  -> Terminal intro + Typist
+│   │   │   ├── dog-buddy.tsx  -> "Pet the dog" micro-interaction
+│   │   │   ├── ai-modal.tsx   -> "Ask me anything" conversational modal
+│   │   │   ├── building-card.tsx -> "Currently building" showcase
+│   │   │   └── testimonial-slider.tsx -> Social proof carousel
+│   │   ├── about/
+│   │   │   ├── about-story.tsx
+│   │   │   └── pill-modal.tsx -> Keyword detail popup
+│   │   ├── experience/
+│   │   │   └── experience-slider.tsx -> Swipeable timeline cards
+│   │   ├── projects/
+│   │   │   └── project-slider.tsx    -> Horizontal slide with deep tech specs
+│   │   ├── skills/
+│   │   │   └── skill-matrix.tsx      -> Categorized grid with level chips
+│   │   ├── education/
+│   │   │   └── education-accordion.tsx
+│   │   └── contact/
+│   │       ├── spotify-player.tsx    -> Interactive music widget
+│   │       ├── quote-block.tsx       -> Stylized quote
+│   │       └── contact-form.tsx      -> Direct message form
+│   └── ui/
+│       └── svg-filters.tsx    -> Filter goo, glassDistortion, waterRipple
 ```
 
 ---
 
-## 3. Theming & Dynamic State Architecture
+## 5. Performance, Assets & Accessibility Strategy
 
-### 3.1 Accent Color & Dark Mode Engine
-Untuk mereplikasi fitur switcher 7-aksen dan dark/light mode Yash Ahire tanpa layout shift (CLS):
-
-```text
-Browser Load
-  │
-  ├─ Inline Script in <head> reads 'portfolio_theme' & 'portfolio_accent' from localStorage
-  ├─ Sets <html class="dark" data-accent="#ffd460"> immediately (0ms flash)
-  │
-React Hydration
-  ├─ AccentColorProvider reads active accent
-  ├─ Injects runtime CSS variables to document.documentElement:
-  │    --accent-primary: #ffd460
-  │    --accent-secondary: #f6ad55
-  │    --accent-glow: rgba(255, 212, 96, 0.25)
-  └─ UI components consume Tailwind classes using var(--accent-primary)
-```
-
-### 3.2 Dynamic Accent Colors Definition
-```typescript
-export interface AccentColor {
-  id: string;
-  name: string;
-  primary: string;
-  secondary: string;
-  glow: string;
-}
-
-export const ACCENT_PALETTES: AccentColor[] = [
-  { id: "gold", name: "Gold / Amber", primary: "#ffd460", secondary: "#f6ad55", glow: "rgba(255, 212, 96, 0.25)" },
-  { id: "violet", name: "Cyber Violet", primary: "#8b5cf6", secondary: "#a78bfa", glow: "rgba(139, 92, 246, 0.25)" },
-  { id: "cyan", name: "Neon Cyan", primary: "#06b6d4", secondary: "#22d3ee", glow: "rgba(6, 182, 212, 0.25)" },
-  { id: "emerald", name: "Emerald Matrix", primary: "#10b981", secondary: "#34d399", glow: "rgba(16, 185, 129, 0.25)" },
-  { id: "orange", name: "Solar Orange", primary: "#f97316", secondary: "#fb923c", glow: "rgba(249, 115, 22, 0.25)" },
-  { id: "rose", name: "Electric Rose", primary: "#f43f5e", secondary: "#fb7185", glow: "rgba(244, 63, 94, 0.25)" },
-  { id: "red", name: "Crimson Red", primary: "#ef4444", secondary: "#f87171", glow: "rgba(239, 68, 68, 0.25)" }
-];
-```
-
----
-
-## 4. Sanity Content Models & Schema Extensions
-
-Untuk mendukung komponen baru yang terinspirasi dari Yash Ahire, skema Sanity ditingkatkan dengan entitas berikut:
-
-### 4.1 Schema Penambahan Baru:
-1. **`recommendation` (Testimonials & Social Proof)**:
-   - `authorName`: string
-   - `authorRole`: string
-   - `authorCompany`: string
-   - `avatar`: image
-   - `quote`: localized string/text (en, id)
-   - `linkedinUrl`: url
-   - `order`: number
-2. **`spotifyTrack` (Currently Vibing To Tracks)**:
-   - `title`: string
-   - `artist`: string
-   - `spotifyTrackId`: string (untuk generate Spotify embed URL)
-   - `order`: number
-3. **`heroTeaser` (Currently Building Card)**:
-   - `title`: string
-   - `status`: string (e.g., "FEATURED · LIVE", "IN PROGRESS")
-   - `tagline`: localized string
-   - `description`: localized text
-   - `technologies`: array of references to `technology`
-   - `liveUrl`: url
-   - `githubUrl`: url
-   - `previewImage`: image
-4. **`interactiveQA` (Ask Me Anything Knowledge Base)**:
-   - `question`: localized string
-   - `answer`: localized text
-   - `category`: string (Projects, Stack, Hiring, Bio)
-   - `order`: number
-
----
-
-## 5. Rendering Pipeline & Performance Optimization
-
-1. **Server-Side Data Fetching**:
-   - `Home` (`src/app/(site)/[locale]/page.tsx`) mengambil semua konten di server via `Promise.all` paralel menggunakan GROQ CDN cache.
-   - HTML awal ter-render lengkap untuk SEO tanpa menunggu JavaScript client.
-2. **Islands of Interactivity (Client Components)**:
-   - Elemen interaktif murni seperti `WaterLensCanvas`, `DogBuddy`, `AIChatModal`, `SpotifyPlayerWidget`, dan `AccentPicker` dideklarasikan sebagai `'use client'` dengan batasan scope sekecil mungkin.
-3. **Dynamic Import untuk Shaders & Heavy Effects**:
-   - Kanvas WebGL / filter air di-load menggunakan `next/dynamic` dengan opsi `ssr: false` agar tidak menghambat First Contentful Paint (FCP) dan Total Blocking Time (TBT).
-4. **Image & Asset Optimization**:
-   - Menggunakan `next/image` dengan loader bawaan Sanity, format otomatis WebP/AVIF, dan responsive `sizes` attribute.
-   - Font lokal (`Geist`, `Space Grotesk`, `Silkscreen`) di-load dengan `font-display: swap` untuk mencegah flash of invisible text (FOIT).
-
----
-
-## 6. Bilingual Architecture (i18n)
-
-- Struktur rute Next.js tetap mempertahankan pola `[locale]` (`/en` dan `/id`).
-- Setiap query Sanity menerima parameter `$locale` untuk mengekstrak field teks terlokalisasi (`en` atau `id`).
-- Seluruh string statis UI (seperti teks tombol *"Get in touch"*, label *"Currently Vibing To"*, placeholder form) dipusatkan di `src/i18n/messages/en.json` dan `src/i18n/messages/id.json`.
+1. **Selective Client Components**: Hanya komponen yang memiliki interaktivitas tinggi (slider, modal, audio switcher, coin-flip) yang menggunakan `'use client'`. Data fetching tetap dilakukan di Server Component (`page.tsx`) untuk zero layout shift dan SEO optimal.
+2. **Reduced Motion**: Mendukung media query `@media (prefers-reduced-motion: reduce)` agar animasi 3D coin-flip dan particle shader beralih ke transisi statis yang halus.
+3. **Optimized SVG Shaders**: Filter SVG distorsi diisolasi pada elemen interaktif spesifik untuk mencegah penurunan frame-rate (60 FPS rendering).

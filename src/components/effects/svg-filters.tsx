@@ -4,11 +4,11 @@ export function SvgFilters() {
       width="0"
       height="0"
       aria-hidden="true"
-      className="pointer-events-none absolute -left-[9999px] -top-[9999px] h-0 w-0 overflow-hidden"
+      style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}
     >
       <defs>
-        {/* Gooey fluid filter: combines blur and high alpha contrast */}
-        <filter id="navGoo" colorInterpolationFilters="sRGB">
+        {/* Gooey morph filter */}
+        <filter id="navGoo">
           <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
           <feColorMatrix
             in="blur"
@@ -19,12 +19,12 @@ export function SvgFilters() {
           <feComposite in="SourceGraphic" in2="goo" operator="atop" />
         </filter>
 
-        {/* Glass distortion filter for organic physical glass refraction */}
-        <filter id="glassDistortion" colorInterpolationFilters="sRGB">
+        {/* Glass lens distortion */}
+        <filter id="glassDistortion">
           <feTurbulence
             type="fractalNoise"
-            baseFrequency="0.04 0.04"
-            numOctaves="2"
+            baseFrequency="0.04"
+            numOctaves="3"
             result="noise"
           />
           <feDisplacementMap
@@ -33,41 +33,40 @@ export function SvgFilters() {
             scale="8"
             xChannelSelector="R"
             yChannelSelector="G"
-            result="distort"
           />
         </filter>
 
-        {/* Panel glass distortion for larger surface backgrounds */}
-        <filter id="glassDistortionPanel" colorInterpolationFilters="sRGB">
+        {/* Panel distortion for glass cards */}
+        <filter id="glassDistortionPanel">
           <feTurbulence
             type="fractalNoise"
-            baseFrequency="0.02 0.02"
-            numOctaves="3"
+            baseFrequency="0.02"
+            numOctaves="2"
             result="noise"
           />
           <feDisplacementMap
             in="SourceGraphic"
             in2="noise"
-            scale="12"
+            scale="4"
             xChannelSelector="R"
             yChannelSelector="G"
           />
         </filter>
 
-        {/* Water ripple subtle motion filter */}
-        <filter id="waterRipple" colorInterpolationFilters="sRGB">
+        {/* Water ripple */}
+        <filter id="waterRipple">
           <feTurbulence
             type="turbulence"
-            baseFrequency="0.01 0.05"
+            baseFrequency="0.05 0.05"
             numOctaves="2"
-            result="rippleNoise"
+            result="turbulence"
           />
           <feDisplacementMap
+            in2="turbulence"
             in="SourceGraphic"
-            in2="rippleNoise"
-            scale="4"
+            scale="10"
             xChannelSelector="R"
-            yChannelSelector="B"
+            yChannelSelector="G"
           />
         </filter>
       </defs>
