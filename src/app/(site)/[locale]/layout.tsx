@@ -10,6 +10,7 @@ import { Footer } from "@/components/layout/footer";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { ParticleCanvas } from "@/components/effects/particle-canvas";
 import { FluidCursor } from "@/components/effects/fluid-cursor";
+import { SvgFilters } from "@/components/effects/svg-filters";
 import { getSiteSettings } from "@/services/settings.service";
 import { getMessages } from "@/i18n/dictionary";
 import { DEFAULT_LOCALE, LOCALES, isLocale } from "@/i18n/locale";
@@ -86,6 +87,7 @@ export default async function SiteLayout({
         className={`${geistSans.variable} ${spaceGrotesk.variable} ${silkscreen.variable} font-sans antialiased bg-background text-foreground`}
       >
         <MotionProvider>
+          <SvgFilters />
           <ParticleCanvas />
           <FluidCursor />
           <div className="relative z-10 flex min-h-screen flex-col">
