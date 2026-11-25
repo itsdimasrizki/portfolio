@@ -92,29 +92,30 @@ function applyAccentToDOM(accent: AccentColor) {
   root.setAttribute("data-accent", accent.id);
 }
 
+function getInitialAccent(): AccentColor {
+  if (typeof window === "undefined") return DEFAULT_ACCENT;
+  try {
+    const savedId = localStorage.getItem(ACCENT_STORAGE_KEY);
+    if (savedId) {
+      const found = ACCENT_PALETTES.find((p) => p.id === savedId);
+      if (found) return found;
+    }
+  } catch {
+    // localStorage not accessible
+  }
+  return DEFAULT_ACCENT;
+}
+
 export function AccentColorProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [accent, setAccentState] = useState<AccentColor>(DEFAULT_ACCENT);
+  const [accent, setAccentState] = useState<AccentColor>(getInitialAccent);
 
   useEffect(() => {
-    try {
-      const savedId = localStorage.getItem(ACCENT_STORAGE_KEY);
-      if (savedId) {
-        const found = ACCENT_PALETTES.find((p) => p.id === savedId);
-        if (found) {
-          setAccentState(found);
-          applyAccentToDOM(found);
-          return;
-        }
-      }
-    } catch {
-      // localStorage may fail in private mode; fallback to default
-    }
-    applyAccentToDOM(DEFAULT_ACCENT);
-  }, []);
+    applyAccentToDOM(accent);
+  }, [accent]);
 
   const setAccent = useCallback((newAccent: AccentColor) => {
     setAccentState(newAccent);
