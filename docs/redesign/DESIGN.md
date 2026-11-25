@@ -113,3 +113,15 @@ Situs referensi Yash Ahire menggunakan SVG filter internal yang disematkan langs
 - **Prefers Reduced Motion**: Setiap animasi Framer Motion dan CSS keyframes wajib menghormati `prefers-reduced-motion: reduce`.
 - **Keyboard Navigation**: Semua elemen interaktif (coin flip, swatch buttons, dog buddy, carousel controls) memiliki state `:focus-visible` dengan outline aksen 2px.
 - **Color Contrast**: Rasio kontras teks primer terhadap latar belakang selalu memenuhi standar WCAG AA (minimal 4.5:1 untuk teks normal, 3:1 untuk teks besar).
+
+---
+
+## 7. External Assets & Sourcing Policy (Internet / 3D / Media)
+
+Untuk menjaga hasil visual tetap luwes, organik, dan tidak terkesan kaku akibat pemaksaan komputasi kode (*over-engineered generative code*), diberlakukan kebijakan eksplisit:
+1. **Asset Sourcing Authorization**:
+   - Diizinkan penuh untuk mencari, menautkan (link CDN), atau mengunduh langsung asset visual berkualitas dari internet jika upaya generate via code CSS/SVG/Canvas dinilai kaku atau rumit.
+   - Berlaku untuk: file model/mesh 3D (GLTF/GLB/Spline), animasi GIF (seperti maskot `dog.gif`), asset PNG/SVG terisolasi (ikon khusus, watermark, tekstur grain, coin badge), atau elemen visual audio/mockup.
+2. **Quality & Performance Standards**:
+   - Asset eksternal yang diunduh disimpan di `public/assets/` dengan kompresi optimal (WebP, optimized GIF, atau GLB terkompresi Draco).
+   - Penggunaan model 3D (jika ada) wajib di-load secara dinamis (*lazy loaded / client-only*) agar tidak membebani First Contentful Paint.

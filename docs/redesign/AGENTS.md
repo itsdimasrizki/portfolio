@@ -5,7 +5,7 @@ Dokumen ini mengatur pembagian tugas, spesialisasi peran, batasan kewenangan (*r
 
 Setiap agent harus mematuhi prinsip inti:
 1. **Evidence-Driven Implementation**: Selalu periksa kode yang ada, error log, dan verifikasi runtime sebelum dan sesudah perubahan.
-2. **YAGNI & KISS**: Tulis kode paling ringkas dan modular yang menyelesaikan masalah. Jangan menambah dependency npm baru kecuali jika benar-benar esensial dan diizinkan.
+2. **YAGNI & Pragmatic Sourcing**: Tulis kode paling ringkas dan modular. Hindari over-engineering grafis via code murni yang kaku; agen diizinkan berselancar mencari asset visual berkualitas (PNG, 3D GLTF, GIF maskot, texture, SVG) via link CDN atau download langsung ke `public/assets/`.
 3. **Strict Code & Regression Safety**: Dilarang menghapus fitur yang sudah berjalan stabil (seperti i18n dwibahasa EN/ID, integrasi Sanity CMS, test suite node test, dan PDF exporter).
 4. **Mandatory UI Verification with Playwright**: Setiap perubahan UI wajib divalidasi visualnya pada 3 ukuran layar (Desktop 1440px, Tablet 768px, Mobile 390px) menggunakan Playwright MCP.
 

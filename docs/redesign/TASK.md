@@ -32,7 +32,9 @@
   - Sediakan hook `useAccentColor()` untuk membaca warna aktif di komponen UI.
 - [ ] **1.4. Typography & Font Setup (`src/app/(site)/[locale]/layout.tsx`)**
   - Pastikan `Space Grotesk` (headings/tech), `Plus Jakarta Sans` / `Geist` (body/UI), `Silkscreen` (terminal), dan `Sacramento` (handwritten cursive) dimuat optimal.
-
+- [ ] **1.5. Asset Sourcing & Management (`public/assets/`)**
+  - Sediakan direktori penyimpanan asset media eksternal (`public/assets/`).
+  - Download atau link asset visual (maskot GIF anjing `dog.gif`, mesh 3D / coin texture jika diperlukan, SVG badges) dari sumber internet terpercaya daripada coding kalkulasi manual yang kaku.
 ---
 
 ### Fase 2: Navigation Shell & Global Overlays
