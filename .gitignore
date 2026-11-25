@@ -42,3 +42,5 @@ next-env.d.ts
 
 # sanity dataset export sebelum migrasi
 sanity-backup-*.tar.gz
+# playwright mcp test artifacts
+/.playwright-mcp/

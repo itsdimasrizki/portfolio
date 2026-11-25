@@ -1,4 +1,0 @@
-[    2141ms] [WARNING] [.WebGL-0x133c00351000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ https://yashahire.info/:1
-[    2244ms] [WARNING] [.WebGL-0x133c00351000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ https://yashahire.info/:1
-[    2421ms] [WARNING] [.WebGL-0x133c00351000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels @ https://yashahire.info/:1
-[    2527ms] [WARNING] [.WebGL-0x133c00351000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat) @ https://yashahire.info/:1
