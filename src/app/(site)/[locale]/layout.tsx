@@ -92,7 +92,7 @@ export default async function SiteLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${spaceGrotesk.variable} ${silkscreen.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${geistSans.variable} ${spaceGrotesk.variable} ${silkscreen.variable} font-sans antialiased bg-background text-foreground selection:bg-primary selection:text-primary-foreground`}
       >
         <AccentColorProvider>
           <MotionProvider>
