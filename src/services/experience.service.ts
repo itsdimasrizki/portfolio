@@ -2,6 +2,9 @@ import { client } from "@/sanity/client";
 import { allExperiencesQuery } from "@/sanity/queries/experience.queries";
 import { pickLocalized, type Locale } from "@/i18n/locale";
 import type { Experience, SanityExperience } from "@/types/experience";
+import { MOCK_EXPERIENCES } from "@/lib/mock-data";
+
+const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
 
 function toExperience(raw: SanityExperience, locale: Locale): Experience {
   return {
@@ -17,6 +20,7 @@ function toExperience(raw: SanityExperience, locale: Locale): Experience {
 }
 
 export async function getAllExperiences(locale: Locale): Promise<Experience[]> {
+  if (USE_MOCK) return MOCK_EXPERIENCES;
   try {
     const data = await client.fetch<SanityExperience[]>(allExperiencesQuery, {}, {
       next: { tags: ["sanity", "experience"] },

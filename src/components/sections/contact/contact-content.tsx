@@ -7,6 +7,7 @@ import type { ContactInfo as ContactInfoType, SocialLink } from "@/types/contact
 import { ContactInfo } from "./contact-info";
 import { ContactForm } from "./contact-form";
 import { SpotifyPlayer } from "./spotify-player";
+import { QuoteBlock } from "./quote-block";
 
 type Props = {
   contactInfo: ContactInfoType[];
@@ -26,6 +27,10 @@ export function ContactContent({ contactInfo, socialLinks, locale }: Props) {
 
             <Reveal delay={0.15}>
               <SpotifyPlayer />
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <QuoteBlock locale={locale} />
             </Reveal>
           </div>
 

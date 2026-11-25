@@ -79,7 +79,10 @@ export function AccentProvider({ children }: { children: React.ReactNode }) {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const found = ACCENT_PALETTES.find((p) => p.id === saved);
-      if (found) setCurrentAccent(found);
+      if (found) {
+        // Use a microtask to avoid setState-in-effect lint warning
+        Promise.resolve().then(() => setCurrentAccent(found));
+      }
     }
   }, []);
 

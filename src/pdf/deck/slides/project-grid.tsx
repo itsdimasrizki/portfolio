@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import { View, Text, Image } from "@react-pdf/renderer";
 import { Slide, SlideHeader, Dither } from "../primitives";

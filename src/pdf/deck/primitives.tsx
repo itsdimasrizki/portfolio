@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import { Page, View, Text, Image } from "@react-pdf/renderer";
 import { colors, SLIDE, type } from "./theme";

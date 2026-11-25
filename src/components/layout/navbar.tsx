@@ -81,7 +81,7 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
                     }}
                   />
                 )}
-                <span className="text-[10px] text-primary/70 mr-1.5">0{idx + 1} //</span>
+                <span className="text-[10px] text-primary/70 mr-1.5">{`0${idx + 1} //`}</span>
                 {messages[item.labelKey]}
               </Link>
             );

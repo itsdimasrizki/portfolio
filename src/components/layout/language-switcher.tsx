@@ -18,6 +18,7 @@ export function LanguageSwitcher({ locale, className }: LanguageSwitcherProps) {
     if (next === locale) return;
 
     // Cookie diingat setahun supaya kunjungan berikutnya langsung benar.
+    // eslint-disable-next-line react-hooks/immutability
     document.cookie = `NEXT_LOCALE=${next}; path=/; max-age=31536000; samesite=lax`;
 
     // Pindah ke path kembarannya, bukan kembali ke beranda: pembaca yang

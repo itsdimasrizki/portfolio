@@ -62,10 +62,10 @@ export function ContactForm({ locale }: Props) {
         message: "Thank you! Your message has been sent successfully.",
       });
       form.reset();
-    } catch (error: any) {
+    } catch (error: unknown) {
       setStatus({
         type: "error",
-        message: error.message || "Something went wrong. Please try again.",
+        message: error instanceof Error ? error.message : "Something went wrong. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -73,91 +73,104 @@ export function ContactForm({ locale }: Props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl border bg-card p-6 md:p-8"
-    >
-      {/* Hidden honeypot field to trap spam bots */}
-      <div className="hidden" aria-hidden="true">
-        <Input
-          id="hp_company"
-          name="hp_company"
-          tabIndex={-1}
-          autoComplete="off"
-        />
-      </div>
-
-      {status.type === "success" && (
-        <div className="flex items-center gap-3 rounded-lg border border-teal-500/30 bg-teal-500/10 p-4 text-sm text-teal-700 dark:text-teal-400">
-          <CheckCircle2 className="size-5 shrink-0" />
-          <span>{status.message}</span>
-        </div>
-      )}
-
-      {status.type === "error" && (
-        <div className="flex items-center gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
-          <AlertCircle className="size-5 shrink-0" />
-          <span>{status.message}</span>
-        </div>
-      )}
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="name">{messages["form.name.label"]}</Label>
+    <div>
+      <p className="mb-4 font-mono text-[10px] uppercase tracking-widest text-primary">
+        DIRECT MESSAGE // OPEN TO COLLABORATION
+      </p>
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-5 rounded-2xl border border-border/60 bg-card/70 backdrop-blur-sm p-6 md:p-8"
+      >
+        {/* Hidden honeypot field to trap spam bots */}
+        <div className="hidden" aria-hidden="true">
           <Input
-            id="name"
-            name="name"
-            placeholder={messages["form.name.placeholder"]}
-            required
-            disabled={loading}
+            id="hp_company"
+            name="hp_company"
+            tabIndex={-1}
+            autoComplete="off"
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="email">{messages["form.email.label"]}</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder={messages["form.email.placeholder"]}
-            required
-            disabled={loading}
-          />
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="subject">{messages["form.subject.label"]}</Label>
-        <Input
-          id="subject"
-          name="subject"
-          placeholder={messages["form.subject.placeholder"]}
-          required
-          disabled={loading}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="message">{messages["form.message.label"]}</Label>
-        <Textarea
-          id="message"
-          name="message"
-          placeholder={messages["form.message.placeholder"]}
-          required
-          disabled={loading}
-        />
-      </div>
-
-      <Button type="submit" size="lg" className="w-full" disabled={loading}>
-        {loading ? (
-          <>
-            <Loader2 className="mr-2 size-4 animate-spin" />
-            Sending...
-          </>
-        ) : (
-          "Send Message"
+        {status.type === "success" && (
+          <div className="flex items-center gap-3 rounded-lg border border-teal-500/30 bg-teal-500/10 p-4 text-sm text-teal-700 dark:text-teal-400">
+            <CheckCircle2 className="size-5 shrink-0" />
+            <span>{status.message}</span>
+          </div>
         )}
-      </Button>
-    </form>
+
+        {status.type === "error" && (
+          <div className="flex items-center gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
+            <AlertCircle className="size-5 shrink-0" />
+            <span>{status.message}</span>
+          </div>
+        )}
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="name">{messages["form.name.label"]}</Label>
+            <Input
+              id="name"
+              name="name"
+              placeholder={messages["form.name.placeholder"]}
+              required
+              disabled={loading}
+              className="rounded-lg bg-background/60 border-border/80 focus-visible:border-primary/60"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">{messages["form.email.label"]}</Label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder={messages["form.email.placeholder"]}
+              required
+              disabled={loading}
+              className="rounded-lg bg-background/60 border-border/80 focus-visible:border-primary/60"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="subject">{messages["form.subject.label"]}</Label>
+          <Input
+            id="subject"
+            name="subject"
+            placeholder={messages["form.subject.placeholder"]}
+            required
+            disabled={loading}
+            className="rounded-lg bg-background/60 border-border/80 focus-visible:border-primary/60"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="message">{messages["form.message.label"]}</Label>
+          <Textarea
+            id="message"
+            name="message"
+            placeholder={messages["form.message.placeholder"]}
+            required
+            disabled={loading}
+            className="rounded-lg bg-background/60 border-border/80 focus-visible:border-primary/60"
+          />
+        </div>
+
+        <Button
+          type="submit"
+          disabled={loading}
+          className="w-full rounded-xl bg-primary text-primary-foreground font-mono text-sm uppercase tracking-wider py-3 hover:bg-primary/90 transition-colors disabled:opacity-50"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 size-4 animate-spin" />
+              Sending...
+            </>
+          ) : (
+            "Send Message"
+          )}
+        </Button>
+      </form>
+    </div>
   );
 }

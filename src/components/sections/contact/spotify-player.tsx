@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Music, Play, Pause, ExternalLink } from "lucide-react";
+import { Music } from "lucide-react";
 
 interface Track {
   id: string;

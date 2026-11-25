@@ -105,5 +105,7 @@
   "meta.contact.description": "Get in touch with Dimas Rizki for freelance projects, collaborations, or full-time opportunities.",
   "language.label": "Language",
   "language.id": "ID",
-  "language.en": "EN"
+  "language.en": "EN",
+  "contact.quote.text": "The best software is built at the intersection of deep technical curiosity and genuine care for the humans who use it.",
+  "contact.quote.author": "Dimas Rizki, Fullstack Software Engineer"
 }

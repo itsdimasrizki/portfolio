@@ -6,6 +6,9 @@ import {
 } from "@/sanity/queries/certificate.queries";
 import { pickLocalized, type Locale } from "@/i18n/locale";
 import type { Certificate, SanityCertificate } from "@/types/certificate";
+import { MOCK_CERTIFICATES } from "@/lib/mock-data";
+
+const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
 
 function toCertificate(raw: SanityCertificate, locale: Locale): Certificate {
   return {
@@ -20,6 +23,7 @@ function toCertificate(raw: SanityCertificate, locale: Locale): Certificate {
 }
 
 export async function getAllCertificates(locale: Locale): Promise<Certificate[]> {
+  if (USE_MOCK) return MOCK_CERTIFICATES;
   try {
     const data = await client.fetch<SanityCertificate[]>(allCertificatesQuery, {}, {
       next: { tags: ["sanity", "certificate"] },
@@ -32,6 +36,7 @@ export async function getAllCertificates(locale: Locale): Promise<Certificate[]>
 }
 
 export async function getFeaturedCertificates(locale: Locale): Promise<Certificate[]> {
+  if (USE_MOCK) return MOCK_CERTIFICATES.slice(0, 3);
   try {
     const data = await client.fetch<(SanityCertificate | null)[]>(
       featuredCertificatesQuery,

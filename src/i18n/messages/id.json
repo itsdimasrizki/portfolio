@@ -105,5 +105,7 @@
   "meta.contact.description": "Hubungi Dimas Rizki untuk proyek lepas, kolaborasi, atau peluang kerja penuh waktu.",
   "language.label": "Bahasa",
   "language.id": "ID",
-  "language.en": "EN"
+  "language.en": "EN",
+  "contact.quote.text": "Perangkat lunak terbaik lahir di perpotongan antara rasa ingin tahu teknis yang mendalam dan kepedulian nyata terhadap manusia yang menggunakannya.",
+  "contact.quote.author": "Dimas Rizki, Fullstack Software Engineer"
 }

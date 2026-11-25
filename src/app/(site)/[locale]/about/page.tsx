@@ -4,6 +4,7 @@ import { AboutHero } from "@/components/sections/about/about-hero";
 import { AboutStory } from "@/components/sections/about/about-story";
 import { TechStack } from "@/components/sections/about/tech-stack";
 import { Skills } from "@/components/sections/about/skills";
+import { EducationSection } from "@/components/sections/about/education-section";
 
 import { getMessages } from "@/i18n/dictionary";
 import type { Locale } from "@/i18n/locale";
@@ -48,6 +49,7 @@ export default async function AboutPage({
       <AboutStory content={content} />
       <TechStack technologies={technologies} locale={typedLocale} />
       <Skills skills={skills} locale={typedLocale} />
+      <EducationSection />
     </main>
   );
 }
