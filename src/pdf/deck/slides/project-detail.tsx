@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import { View, Text, Image, Link } from "@react-pdf/renderer";
 import { Slide, SlideNumber, ChipRow, Chip, Dither } from "../primitives";

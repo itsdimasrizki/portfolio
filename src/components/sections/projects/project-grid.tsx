@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { Project } from "@/types/project";
 import { ProjectCard } from "./project-card";
-import { staggerContainer, staggerItem } from "@/lib/motion";
+import { staggerContainer } from "@/lib/motion";
 
 type ProjectGridProps = {
   projects: Project[];

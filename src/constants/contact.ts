@@ -1,5 +1,5 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import { FaGithub, FaLinkedinIn, FaXTwitter, FaInstagram } from "react-icons/fa6";
+import { Mail, MapPin } from "lucide-react";
+import { FaGithub, FaLinkedinIn, FaInstagram } from "react-icons/fa6";
 
 import { ContactInfo, SocialLink } from "@/types/contact";
 

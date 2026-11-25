@@ -1,4 +1,3 @@
-import type { SanityImageSource } from "@sanity/image-url";
 import type { Localized } from "@/i18n/locale";
 import type { SanityTechnology } from "./technology";
 

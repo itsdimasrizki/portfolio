@@ -2,6 +2,9 @@ import { client } from "@/sanity/client";
 import { pageContentQuery } from "@/sanity/queries/pageContent.queries";
 import { pickLocalized, type Locale } from "@/i18n/locale";
 import type { PageContent, SanityPageContent } from "@/types/pageContent";
+import { MOCK_PAGE_CONTENT } from "@/lib/mock-data";
+
+const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
 
 const EMPTY: PageContent = {
   heroBadge: "",
@@ -16,6 +19,7 @@ const EMPTY: PageContent = {
 };
 
 export async function getPageContent(locale: Locale): Promise<PageContent> {
+  if (USE_MOCK) return MOCK_PAGE_CONTENT;
   let raw: SanityPageContent | null = null;
   try {
     raw = await client.fetch<SanityPageContent | null>(pageContentQuery, {}, {

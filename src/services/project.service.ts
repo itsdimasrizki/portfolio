@@ -5,6 +5,9 @@ import {
 } from "@/sanity/queries/project.queries";
 import { pickLocalized, type Locale } from "@/i18n/locale";
 import type { Project, SanityProject } from "@/types/project";
+import { MOCK_PROJECTS } from "@/lib/mock-data";
+
+const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
 
 function toProject(raw: SanityProject, locale: Locale): Project {
   return {
@@ -22,6 +25,7 @@ function toProject(raw: SanityProject, locale: Locale): Project {
 }
 
 export async function getAllProjects(locale: Locale): Promise<Project[]> {
+  if (USE_MOCK) return MOCK_PROJECTS;
   try {
     const data = await client.fetch<SanityProject[]>(allProjectsQuery, {}, {
       next: { tags: ["sanity", "project"] },
@@ -34,6 +38,7 @@ export async function getAllProjects(locale: Locale): Promise<Project[]> {
 }
 
 export async function getFeaturedProjects(locale: Locale): Promise<Project[]> {
+  if (USE_MOCK) return MOCK_PROJECTS.slice(0, 3);
   try {
     const data = await client.fetch<(SanityProject | null)[]>(featuredProjectsQuery, {}, {
       next: { tags: ["sanity", "project", "siteSettings"] },

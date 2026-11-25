@@ -1,6 +1,9 @@
 import { client } from "@/sanity/client";
 import { allTechnologiesQuery } from "@/sanity/queries/technology.queries";
 import type { SanityTechnology, TechnologyGroup } from "@/types/technology";
+import { MOCK_TECHNOLOGIES } from "@/lib/mock-data";
+
+const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
 
 const DEFAULT_CATEGORY_ORDER = [
   "Programming Language",
@@ -12,6 +15,7 @@ const DEFAULT_CATEGORY_ORDER = [
 ];
 
 export async function getTechnologies(): Promise<TechnologyGroup[]> {
+  if (USE_MOCK) return MOCK_TECHNOLOGIES;
   try {
     const data = await client.fetch<SanityTechnology[]>(allTechnologiesQuery, {}, {
       next: { tags: ["sanity", "technology"] },

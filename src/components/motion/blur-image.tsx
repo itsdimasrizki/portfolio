@@ -5,12 +5,13 @@ import Image, { ImageProps } from "next/image";
 
 import { cn } from "@/lib/utils";
 
-export function BlurImage({ className, onLoad, ...props }: ImageProps) {
+export function BlurImage({ className, alt, onLoad, ...props }: ImageProps) {
   const [loaded, setLoaded] = useState(false);
 
   return (
     <Image
       {...props}
+      alt={alt}
       onLoad={(event) => {
         setLoaded(true);
         onLoad?.(event);

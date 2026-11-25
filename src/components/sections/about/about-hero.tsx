@@ -70,7 +70,7 @@ export function AboutHero({ cvUrl, locale }: AboutHeroProps) {
             animate="visible"
             className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground"
           >
-            Informatics Engineering Student at UPN "Veteran" Yogyakarta, passionate about Software Engineering and Artificial Intelligence.
+            Informatics Engineering Student at UPN &ldquo;Veteran&rdquo; Yogyakarta, passionate about Software Engineering and Artificial Intelligence.
           </motion.p>
 
           {/* CTA */}

@@ -18,7 +18,7 @@ import type { Locale } from "@/i18n/locale";
 import type { TechnologyGroup } from "@/types/technology";
 import { staggerContainer, staggerItem, viewportOnce } from "@/lib/motion";
 
-type IconComponent = ComponentType<any>;
+type IconComponent = ComponentType<{ size?: number; className?: string }>;
 
 const allIcons: Record<string, IconComponent> = {
   ...(SiIcons as unknown as Record<string, IconComponent>),
