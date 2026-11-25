@@ -13,7 +13,7 @@ Situs portofolio ini dibangun di atas arsitektur web modern dengan prinsip **Ser
                                            │ Hydration & React 19 Islands
                                            ▼
 +-----------------------------------------------------------------------------------------+
-|                                NEXT.JS 15 APP ROUTER                                    |
+|                               NEXT.JS 16 APP ROUTER                                     |
 |   /(site)/[locale]/page.tsx (React Server Component - Data Fetching & Initial HTML)     |
 |   /api/contact (NodeMailer API)   ·   /api/views (Visitor Count)   ·   /api/revalidate  |
 +-----------------------------------------------------------------------------------------+
@@ -27,8 +27,8 @@ Situs portofolio ini dibangun di atas arsitektur web modern dengan prinsip **Ser
 ```
 
 ### 1.1 Core Technologies
-- **Framework**: Next.js 15 (App Router, Turbopack, React Server Components).
-- **Core Library**: React 19 (Server Actions, `useOptimistic`, `useActionState`).
+- **Framework**: Next.js 16 (App Router, React Server Components).
+- **Core Library**: React 19.x (Server Actions, `useOptimistic`, `useActionState`).
 - **Styling**: Tailwind CSS v4 (`@tailwindcss/postcss`, CSS-first configuration via `@theme inline`).
 - **Animation & Micro-interactions**: Framer Motion 12 (`framer-motion`), Canvas 2D API untuk efek lensa air.
 - **Content Management**: Sanity CMS v5 (`next-sanity`, `@sanity/client`, `@sanity/image-url`).
@@ -56,7 +56,7 @@ src/
 │   │   └── studio/[[...tool]]/           # Sanity Studio embedded dashboard
 │   ├── api/
 │   │   ├── contact/route.ts              # Email delivery via Nodemailer
-│   │   ├── views/route.ts                # Real-time / persistent visitor counter endpoint
+│   │   ├── views/route.ts                # ⏳ Planned, not yet built — visitor counter endpoint
 │   │   └── revalidate/route.ts           # Sanity webhook on-demand cache revalidation
 │   ├── favicon.ico
 │   └── globals.css                       # Base Tailwind v4 styles, theme variables, custom keyframes
@@ -175,7 +175,7 @@ Untuk mendukung komponen baru yang terinspirasi dari Yash Ahire, skema Sanity di
    - Kanvas WebGL / filter air di-load menggunakan `next/dynamic` dengan opsi `ssr: false` agar tidak menghambat First Contentful Paint (FCP) dan Total Blocking Time (TBT).
 4. **Image & Asset Optimization**:
    - Menggunakan `next/image` dengan loader bawaan Sanity, format otomatis WebP/AVIF, dan responsive `sizes` attribute.
-   - Font lokal (`Space Grotesk`, `Silkscreen`) di-load dengan `font-display: swap` untuk mencegah flash of invisible text (FOIT).
+   - Font lokal (`Geist`, `Space Grotesk`, `Silkscreen`) di-load dengan `font-display: swap` untuk mencegah flash of invisible text (FOIT).
 
 ---
 

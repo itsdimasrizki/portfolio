@@ -178,7 +178,7 @@ Bagian penutup situs yang kaya akan interaksi personal dan high-converting call-
 | Social: [LinkedIn ↗] [GitHub ↗] [CodePen ↗] [Awwwards ↗] | Email: [Send Email ↗] [📋 Copy Email]                 |
 |                                                                                                                  |
 | ---------------------------------------------------------------------------------------------------------------- |
-| Designed & Developed with Next.js 15 & Tailwind  ·  Site Views: [ 20,696 ]  ·  © 2026                            |
+| Designed & Developed with Next.js 16 & Tailwind  ·  Site Views: [ ⏳ planned ]  ·  © 2026                            |
 +------------------------------------------------------------------------------------------------------------------+
 ```
 

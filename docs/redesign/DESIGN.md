@@ -17,9 +17,9 @@ Sistem warna menerapkan pendekatan **Dark-Mode First** dengan dukungan Light-Mod
 
 | Token | Dark Mode (Default) | Light Mode | Penggunaan |
 | :--- | :--- | :--- | :--- |
-| `--bg-primary` | `#0d0d12` / `#090b0e` | `#f7fafc` | Kanvas latar belakang utama halaman |
-| `--bg-secondary` | `#161a23` / `#11151c` | `#edf2f7` | Latar kartu (card surface), dialog, drawer |
-| `--bg-tertiary` | `#222838` / `#1a202c` | `#e2e8f0` | Border hover, active states, chips latar |
+| `--bg-primary` | `#090b0e` | `#f7fafc` | Kanvas latar belakang utama halaman |
+| `--bg-secondary` | `#11151c` | `#edf2f7` | Latar kartu (card surface), dialog, drawer |
+| `--bg-tertiary` | `#1e2634` | `#e2e8f0` | Border hover, active states, chips latar |
 | `--text-primary` | `#ffffff` / `#f8fafc` | `#0f172a` | Judul utama, heading, active text |
 | `--text-secondary` | `#94a3b8` / `#cbd5e1` | `#475569` | Body text, deskripsi, subheadings |
 | `--text-muted` | `#64748b` / `#9e9c9c66`| `#94a3b8` | Metadata, tanggal, copyright, disabled |
@@ -45,10 +45,10 @@ Kombinasi 3 font untuk menciptakan harmoni antara presisi teknis, keterbacaan mo
 
 | Role | Font Family | Weight | Fallback | Penggunaan |
 | :--- | :--- | :--- | :--- | :--- |
-| **Display / Headings** | `Space Grotesk` | 600, 700 | `system-ui, sans-serif` | H1-H3, nama profil, nama proyek, tag tech |
-| **UI & Body Copy** | `Plus Jakarta Sans` / `Geist` | 400, 500, 600 | `sans-serif` | Deskripsi, navigasi, form input, paragraf |
-| **Monospace / Terminal** | `Silkscreen` / `JetBrains Mono` | 400 | `monospace` | Terminal prompt (`> npm start`), status badge |
-| **Handwritten Accent** | `Sacramento` / Script | 400 | `cursive` | Tanda tangan personal, quote signature |
+| **Display / Headings** | `Space Grotesk` | 400, 500, 700 | `system-ui, sans-serif` | H1-H3, nama profil, nama proyek, tag tech |
+| **UI & Body Copy** | `Geist` | 400, 500, 600 | `ui-sans-serif, system-ui, sans-serif` | Deskripsi, navigasi, form input, paragraf |
+| **Pixel / Terminal** | `Silkscreen` | 400 | `monospace` | Terminal prompt, status badge, pixel accents |
+| **Handwritten Accent** | *(planned — belum dimuat)* | — | `cursive` | Tanda tangan personal, quote signature |
 
 ### Skala Tipografi
 - **Hero Title**: `clamp(2.5rem, 6vw, 4.25rem)` — Bold, tight tracking (`tracking-tight`), text-gradient atau solid white.
@@ -104,7 +104,7 @@ Situs referensi Yash Ahire menggunakan SVG filter internal yang disematkan langs
    - Tombol "Copy email" di samping tombol kirim email.
    - Memberikan transisi state instan: icon berubah ke checkmark (`✓`) dan teks berubah menjadi `"Copied!"` selama 2 detik.
 10. **Live Visitor Counter Widget**:
-    - Terintegrasi di footer samping copyright (misal: `"Site Views: 20,696"`). Menambah impresi kredibilitas dan keaktifan situs.
+    - Terintegrasi di footer samping copyright. ⏳ *Planned — endpoint `/api/views` belum dibangun; tampilkan placeholder atau hilangkan sampai diimplementasikan.*
 
 ---
 

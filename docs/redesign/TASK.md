@@ -19,22 +19,25 @@
 
 ### Fase 1: Foundation, Theming & Design System
 - [ ] **1.1. Konfigurasi CSS Tokens & Theme Variables (`src/app/globals.css`)**
-  - Definisikan canvas background gelap (`#0d0d12`), card background (`#161a23`), dan batas kontras halus.
+  - Definisikan canvas background gelap (`#090b0e`), card background (`#11151c`), dan batas kontras halus.
+  - **Status**: Token dasar sudah diterapkan di `globals.css` — primary `#f59e0b` (amber), accent `#ea580c` (orange), background `#090b0e`. Token 7-aksen dinamis belum diimplementasikan.
   - Definisikan 7 palet warna aksen dinamis (`#ffd460` Amber, `#8b5cf6` Violet, `#06b6d4` Cyan, `#10b981` Emerald, `#f97316` Orange, `#f43f5e` Rose, `#ef4444` Crimson).
   - Definisikan keyframe animasi: `sayhiWave`, `waterSlosh`, `pickerPop`, `modalLiquidExpand`, `avatarBounce`.
 - [ ] **1.2. Pemasangan SVG Filters Fisik Cairan (`src/components/effects/svg-filters.tsx`)**
   - Implementasikan SVG filter `#navGoo` (`feGaussianBlur` + `feColorMatrix`).
   - Implementasikan filter `#glassDistortion` dan kanvas lensa pembiasan air.
   - Pasang komponen filter di `src/app/(site)/[locale]/layout.tsx`.
-- [ ] **1.3. Accent Color State Management (`src/context/accent-color-context.tsx`)**
+- [ ] **1.3. Accent Color State Management (`src/context/accent-color-context.tsx`)** *(belum dibuat — `src/context/` kosong)*
   - Buat `AccentColorProvider` untuk membaca/menulis aksen terpilih ke `localStorage`.
   - Pasang script pencegah flash styling di `<head>`.
   - Sediakan hook `useAccentColor()` untuk membaca warna aktif di komponen UI.
 - [ ] **1.4. Typography & Font Setup (`src/app/(site)/[locale]/layout.tsx`)**
-  - Pastikan `Space Grotesk` (headings/tech), `Plus Jakarta Sans` / `Geist` (body/UI), `Silkscreen` (terminal), dan `Sacramento` (handwritten cursive) dimuat optimal.
+  - Pastikan `Geist` (body/UI sans-serif), `Space Grotesk` (display/headings), dan `Silkscreen` (pixel/monospace) dimuat optimal via `next/font`. *(Sacramento / handwritten font direncanakan untuk quote block — belum dimuat.)*
 - [ ] **1.5. Asset Sourcing & Management (`public/assets/`)**
   - Sediakan direktori penyimpanan asset media eksternal (`public/assets/`).
   - Download atau link asset visual (maskot GIF anjing `dog.gif`, mesh 3D / coin texture jika diperlukan, SVG badges) dari sumber internet terpercaya daripada coding kalkulasi manual yang kaku.
+- [ ] **1.6. ✏️ Modify existing visual effects (`particle-canvas.tsx`, `fluid-cursor.tsx`)**
+  - Kedua komponen sudah ada dan berfungsi di `src/components/effects/`. Sesuaikan jika diperlukan untuk integrasi SVG filter baru atau aksen dinamis.
 ---
 
 ### Fase 2: Navigation Shell & Global Overlays
@@ -59,7 +62,7 @@
 ---
 
 ### Fase 3: Hero Section & Interactive Showcase
-- [ ] **3.1. Terminal Typewriter & Greeting Header (`src/components/sections/hero/hero-console.tsx`)**
+- [ ] **3.1. ✏️ Modify existing `hero-console.tsx` & `typewriter-greeting.tsx`**
   - Monospace prefix terminal: `> npm start` lalu baris berkedip `| , I am [Name]`.
   - Headline besar tebal: "I build things".
   - Subtitle role rotator dinamis.
@@ -120,7 +123,7 @@
   - Banner teks tebal: "LET'S DO THIS".
   - Tautan sosial (LinkedIn, GitHub, CodePen, Awwwards).
   - Tombol "Copy Email" dengan feedback visual instan (*"Copied!"* + icon check).
-  - Widget Live Visitor Counter ("Site Views: 20,696").
+  - Widget Live Visitor Counter *(⏳ planned — `/api/views` belum dibangun; hilangkan atau tampilkan placeholder sampai diimplementasikan)*.
   - Tombol melayang "Say Hi" dan "Scroll to Top".
 
 ---

@@ -8,6 +8,7 @@ Setiap agent harus mematuhi prinsip inti:
 2. **YAGNI & Pragmatic Sourcing**: Tulis kode paling ringkas dan modular. Hindari over-engineering grafis via code murni yang kaku; agen diizinkan berselancar mencari asset visual berkualitas (PNG, 3D GLTF, GIF maskot, texture, SVG) via link CDN atau download langsung ke `public/assets/`.
 3. **Strict Code & Regression Safety**: Dilarang menghapus fitur yang sudah berjalan stabil (seperti i18n dwibahasa EN/ID, integrasi Sanity CMS, test suite node test, dan PDF exporter).
 4. **Mandatory UI Verification with Playwright**: Setiap perubahan UI wajib divalidasi visualnya pada 3 ukuran layar (Desktop 1440px, Tablet 768px, Mobile 390px) menggunakan Playwright MCP.
+5. **Original Content Only**: Konten, testimonial, angka counter, seni maskot, dan copy harus karya sendiri. Dilarang menyalin teks, aset, atau figur dari yashahire.info atau portofolio manapun. Tidak boleh ada visitor counter palsu — jika endpoint `/api/views` belum dibangun, hilangkan widget counter atau tampilkan placeholder.
 
 ---
 
@@ -36,7 +37,7 @@ Setiap agent harus mematuhi prinsip inti:
   - Konfigurasi token warna, dark/light theme, dan 7-color dynamic accent palette di `src/app/globals.css`.
   - Pemasangan filter SVG fisik cairan (`#navGoo`, `#waterLens`, `#glassDistortion`) di root layout.
   - Pembuatan context provider `AccentColorContext` untuk menyimpan state aksen terpilih di `localStorage` dan menginjeksi variabel CSS `--accent-*`.
-  - Konfigurasi tipografi (`Space Grotesk`, `Plus Jakarta Sans`, `Silkscreen`, `Sacramento`).
+  - Konfigurasi tipografi (`Geist`, `Space Grotesk`, `Silkscreen`). *(Sacramento direncanakan untuk quote block di masa depan.)*
 - **Batasan**: Hanya memodifikasi file style, SVG filter, dan context provider tema. Tidak mengedit logika konten halaman.
 
 ### 2.2 Agent 2: `sanity-content-agent`
