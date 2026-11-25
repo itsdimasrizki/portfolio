@@ -8,21 +8,21 @@ Rencana kerja dibagi menjadi beberapa fase bertahap dengan prinsip **zero regres
 ## 2. Phase Breakdown
 
 ### Phase 1: Theme & Visual Tokens Foundation
-- [x] Buat file provider `AccentProvider` (`src/components/theme/accent-provider.tsx`) untuk mengelola 7 warna aksen dinamis (`localStorage` sync + CSS variable injection).
-- [x] Perbarui `src/app/globals.css` untuk mendaftarkan variabel warna aksen, token background dark/light, dan utility glassmorphism.
-- [x] Buat komponen filter SVG global (`src/components/effects/svg-filters.tsx`) yang memuat filter `#navGoo`, `#glassDistortion`, dan `#waterRipple`.
-- [x] Pasang `AccentProvider` dan filter SVG ke dalam root layout `src/app/(site)/[locale]/layout.tsx`.
+✅ - [x] Buat file provider `AccentProvider` (`src/components/theme/accent-provider.tsx`) untuk mengelola 7 warna aksen dinamis (`localStorage` sync + CSS variable injection).
+✅ - [x] Perbarui `src/app/globals.css` untuk mendaftarkan variabel warna aksen, token background dark/light, dan utility glassmorphism.
+✅ - [x] Buat komponen filter SVG global (`src/components/effects/svg-filters.tsx`) yang memuat filter `#navGoo`, `#glassDistortion`, dan `#waterRipple`.
+✅ - [x] Pasang `AccentProvider` dan filter SVG ke dalam root layout `src/app/(site)/[locale]/layout.tsx`.
 
 ### Phase 2: Navigation Bar Redesign (`#navbar`)
-- [x] Buat komponen **3D Coin-Flip Logo** (`src/components/layout/coin-logo.tsx`) dengan animasi flip 180 derajat (monogram di depan, avatar di belakang).
-- [x] Tambahkan tombol interaktif "👋 Say hi" dengan efek wave emoji.
-- [x] Buat **Accent Color Picker** dropdown di navbar (`theme-chevron` + 7 palet warna).
-- [x] Tambahkan tombol "Get in touch" dengan efek water-lens droplet dan tombol download resume.
-- [x] Rapikan menu navigasi desktop dan animasi slide-down hamburger menu untuk mobile (< 1024px).
+✅ - [x] Buat komponen **3D Coin-Flip Logo** (`src/components/layout/coin-logo.tsx`) dengan animasi flip 180 derajat (monogram di depan, avatar di belakang).
+✅ - [x] Tambahkan tombol interaktif "👋 Say hi" dengan efek wave emoji.
+✅ - [x] Buat **Accent Color Picker** dropdown di navbar (`theme-chevron` + 7 palet warna).
+✅ - [x] Tambahkan tombol "Get in touch" dengan efek water-lens droplet dan tombol download resume.
+✅ - [x] Rapikan menu navigasi desktop dan animasi slide-down hamburger menu untuk mobile (< 1024px).
 
 ### Phase 3: Hero Section Transformation (`#hero`)
-- [x] Buat struktur 2-kolom responsif untuk Hero.
-- [x] **Kolom Kiri**:
+✅ - [x] Buat struktur 2-kolom responsif untuk Hero.
+✅ - [x] **Kolom Kiri**:
   - Implementasikan prompt terminal kursor mono `> npm start` dan localized typewriter text.
   - Implementasikan tombol interaktif **"Pet the Dog"** (`src/components/sections/hero/dog-buddy.tsx`) dengan sprite animasi.
   - Implementasikan tombol dan modal **"Ask me anything"** (`src/components/sections/hero/ai-modal.tsx`) dengan opsi pertanyaan cepat (quick actions).
@@ -49,11 +49,11 @@ Rencana kerja dibagi menjadi beberapa fase bertahap dengan prinsip **zero regres
   - Implementasikan kartu institusi akademik dengan accordion detail mata kuliah/fokus riset.
 
 ### Phase 6: Contact & Footer Module Enhancement
-- [x] Implementasikan widget **"Currently Vibing To"** (`spotify-player.tsx`):
+✅ - [x] Implementasikan widget **"Currently Vibing To"** (`spotify-player.tsx`):
   - Embed Spotify iframe player dengan daftar 8 track switcher instan.
 - [ ] Implementasikan blok kutipan filosofis personal (`quote-block.tsx`).
 - [ ] Desain ulang form kontak langsung dengan layout bersih dan responsif.
-- [x] Tambahkan indikator live page view counter pada baris copyright footer.
+✅ - [x] Tambahkan indikator live page view counter pada baris copyright footer.
 
 ### Phase 7: Verification & Visual Quality Assurance
 - [ ] Jalankan unit test internal (`pnpm test`) untuk memastikan kamus i18n dan logika layout tetap berfungsi 100%.

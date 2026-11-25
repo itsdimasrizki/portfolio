@@ -38,15 +38,17 @@ export function HeroContent({
         variants={heroItem}
         initial="hidden"
         animate="visible"
-        className="inline-flex items-center gap-2 border border-border/80 bg-card/60 px-3 py-1 font-mono text-xs text-foreground uppercase tracking-wider backdrop-blur-xs rounded-full"
+        className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/60 px-3 py-1 font-mono text-xs uppercase tracking-wider text-foreground backdrop-blur-xs"
       >
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
         </span>
-        <span className="text-primary font-bold">{"> npm start"}</span>
+        <span className="font-bold text-primary">{messages["hero.terminal.prefix"]}</span>
         <span className="text-border">|</span>
-        <span>{content.heroBadge || "Available for high-impact projects"}</span>
+        <span className="truncate max-w-[200px] sm:max-w-none">
+          {content.heroBadge || messages["hero.terminal.status"]}
+        </span>
       </motion.div>
 
       {/* Main Heading & Greeting */}
@@ -57,7 +59,7 @@ export function HeroContent({
         animate="visible"
         className="mt-6"
       >
-        <div className="font-mono text-xs uppercase tracking-widest text-primary mb-2">
+        <div className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">
           <TypewriterGreeting locale={locale} />
         </div>
 
@@ -66,8 +68,8 @@ export function HeroContent({
         </h1>
 
         <div className="mt-4 flex flex-wrap items-center gap-2 text-xl font-medium text-foreground sm:text-2xl">
-          <span className="text-muted-foreground font-mono text-sm tracking-wider uppercase">
-            // specialization
+          <span className="font-mono text-sm uppercase tracking-wider text-muted-foreground">
+            {"// "}{messages["hero.specialization.label"]}
           </span>
           <RoleRotator roles={settings.roles} />
         </div>
@@ -96,7 +98,7 @@ export function HeroContent({
       >
         <Button
           size="lg"
-          className="rounded-full px-6 font-mono text-xs uppercase tracking-wider bg-primary text-primary-foreground shadow-sm hover:scale-105 active:scale-95 transition-transform"
+          className="rounded-full bg-primary px-6 font-mono text-xs uppercase tracking-wider text-primary-foreground shadow-sm transition-transform hover:scale-105 active:scale-95 focus-visible:ring-2 focus-visible:ring-primary"
           asChild
         >
           <Link href={localeHref(locale, "/projects")}>
@@ -108,7 +110,7 @@ export function HeroContent({
         <Button
           size="lg"
           variant="outline"
-          className="rounded-full border-border px-6 font-mono text-xs uppercase tracking-wider hover:bg-muted"
+          className="rounded-full border-border px-6 font-mono text-xs uppercase tracking-wider hover:bg-muted focus-visible:ring-2 focus-visible:ring-primary"
           asChild
         >
           <a
@@ -122,7 +124,7 @@ export function HeroContent({
         </Button>
 
         {/* Playful Companion & AI Launcher */}
-        <DogBuddy />
+        <DogBuddy locale={locale} />
         <AiModal locale={locale} />
       </motion.div>
     </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Terminal, Cpu, Bot, User, ArrowUpRight, Activity } from "lucide-react";
+import { Cpu, Bot, User, ArrowUpRight, Activity } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function HeroConsole() {
@@ -232,7 +232,7 @@ export function HeroConsole() {
                   Dimas Rizki Ardiansyah
                 </h4>
                 <p className="font-mono text-xs text-muted-foreground leading-relaxed">
-                  Informatics Eng student at UPN "Veteran" Yogyakarta. Lab Assistant, Assistant Lecturer, and VP of HIMATIF.
+                  Informatics Eng student at UPN &quot;Veteran&quot; Yogyakarta. Lab Assistant, Assistant Lecturer, and VP of HIMATIF.
                 </p>
                 <div className="flex gap-2 pt-1 font-mono text-[11px] text-primary">
                   <span>[IoT/C++]</span>

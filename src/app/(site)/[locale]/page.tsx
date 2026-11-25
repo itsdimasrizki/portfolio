@@ -55,6 +55,7 @@ export default async function Home({
         settings={settings}
         cvUrl={cvUrl}
         locale={typedLocale}
+        featuredProject={featuredProjects[0] ?? null}
       />
       <FeaturedProjects projects={featuredProjects} locale={typedLocale} />
       <ExperiencePreview experiences={experiences} locale={typedLocale} />
