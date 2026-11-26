@@ -1,61 +1,85 @@
-# Implementation Plan: Yash Ahire Inspired Redesign
+# Implementation Task Breakdown: Compact Neo-Brutalist Overhaul
 
-## 1. Overview & Strategy
-Rencana kerja dibagi menjadi beberapa fase bertahap dengan prinsip **zero regression**: setiap fase dapat diuji secara independen, mempertahankan fungsionalitas bilingual (`en` & `id`), serta mempertahankan integrasi Sanity CMS yang sudah ada.
+Rencana kerja ini dibagi menjadi fase bertahap dengan prinsip zero-regression, menjaga fungsionalitas bilingual (`en` & `id`), dan kebersihan kode (*unslop*).
 
 ---
 
-## 2. Phase Breakdown
+## Phase 1: Design Tokens & Spacing System
+- [ ] Perbarui `src/components/layout/section.tsx`: pangkas default vertical padding dari `py-20 lg:py-32` menjadi `py-10 lg:py-14` (mobile: `py-8`).
+- [ ] Daftarkan token warna permukaan baru di `src/app/globals.css`:
+  - `--bg-surface-elevated`: `#111622` (surface kontras untuk kartu Experience & Certificates).
+  - `--border-contrast`: `rgba(255, 255, 255, 0.16)`.
+- [ ] Tambahkan utility class scroll snap di `globals.css` (`snap-proximity-y`, `snap-start`, `snap-none`).
 
-### Phase 1: Theme & Visual Tokens Foundation
-✅ - [x] Buat file provider `AccentProvider` (`src/components/theme/accent-provider.tsx`) untuk mengelola 7 warna aksen dinamis (`localStorage` sync + CSS variable injection).
-✅ - [x] Perbarui `src/app/globals.css` untuk mendaftarkan variabel warna aksen, token background dark/light, dan utility glassmorphism.
-✅ - [x] Buat komponen filter SVG global (`src/components/effects/svg-filters.tsx`) yang memuat filter `#navGoo`, `#glassDistortion`, dan `#waterRipple`.
-✅ - [x] Pasang `AccentProvider` dan filter SVG ke dalam root layout `src/app/(site)/[locale]/layout.tsx`.
+---
 
-### Phase 2: Navigation Bar Redesign (`#navbar`)
-✅ - [x] Buat komponen **3D Coin-Flip Logo** (`src/components/layout/coin-logo.tsx`) dengan animasi flip 180 derajat (monogram di depan, avatar di belakang).
-✅ - [x] Tambahkan tombol interaktif "👋 Say hi" dengan efek wave emoji.
-✅ - [x] Buat **Accent Color Picker** dropdown di navbar (`theme-chevron` + 7 palet warna).
-✅ - [x] Tambahkan tombol "Get in touch" dengan efek water-lens droplet dan tombol download resume.
-✅ - [x] Rapikan menu navigasi desktop dan animasi slide-down hamburger menu untuk mobile (< 1024px).
+## Phase 2: Navigation Bar (`#navbar`) Decluttering
+- [ ] Refactor `src/components/layout/navbar.tsx`:
+  - Hilangkan pill badge "👋 Say hi" yang membebani logo.
+  - Sederhanakan daftar link tengah menjadi 4 item (`01 // About`, `02 // Projects`, `03 // Experience`, `04 // Certificates`).
+  - Hapus tombol `Contact` duplikat di sisi kanan navigasi.
+  - Gabungkan tombol `Download CV` dan `Portfolio PDF` ke dalam split pill atau dropdown ringkas.
+  - Rapikan AccentPicker dan LanguageSwitcher agar kompak dan tidak wrapping pada viewport 1024px-1366px.
+- [ ] Pastikan drawer navigasi mobile (`mobile-nav.tsx`) tetap konsisten dan rapi.
 
-### Phase 3: Hero Section Transformation (`#hero`)
-✅ - [x] Buat struktur 2-kolom responsif untuk Hero.
-✅ - [x] **Kolom Kiri**:
-  - Implementasikan prompt terminal kursor mono `> npm start` dan localized typewriter text.
-  - Implementasikan tombol interaktif **"Pet the Dog"** (`src/components/sections/hero/dog-buddy.tsx`) dengan sprite animasi.
-  - Implementasikan tombol dan modal **"Ask me anything"** (`src/components/sections/hero/ai-modal.tsx`) dengan opsi pertanyaan cepat (quick actions).
-✅ - [x] **Kolom Kanan**:
-  - Implementasikan **"Currently Building"** showcase card (`src/components/sections/hero/building-card.tsx`) dengan mock browser window header dan tag live.
-  - Implementasikan **Testimonials / Recommendations Carousel** (`src/components/sections/hero/testimonial-slider.tsx`) dengan navigasi slide dan link profil.
+---
 
-### Phase 4: About & Experience Interactive Polish
-✅ - [x] **About Section**:
-  - Integrasikan narasi profil dengan *clickable keyword pills* ("Full-stack + AI", "Production Systems", dll.).
-  - Buat komponen modal popup detail ketika pill diklik (`about-pill-modal.tsx`).
-✅ - [x] **Experience Section**:
-  - Desain ulang timeline menjadi **Horizontal Carousel / Slider** dengan tombol navigasi `Prev`/`Next` bulat dan dot indikator.
-  - Tambahkan tombol ekspansi mini `+` pada tiap kartu untuk membaca metrik pencapaian lengkap tanpa memenuhi tampilan layar awal.
+## Phase 3: Hero Home 3-Column Split-Center (`#hero`)
+- [ ] Migrasikan asset `docs/Foto Orang/foto 1.png` (cutout berjas hijau, dasi hitam, menunjuk) ke `public/assets/dimas-pointing.png` atau integrasikan ke asset Sanity.
+- [ ] Hapus widget kolom kanan:
+  - Lepas `BuildingCard` ("Currently Building / Live") dari Hero.
+  - Lepas `TestimonialSlider` ("Recommendations / Social Proof") dari Hero.
+- [ ] Rancang ulang `src/components/sections/hero/index.tsx` & `hero-content.tsx`:
+  - Buat layout CSS Grid 3 kolom:
+    - **Kiri**: Status `[ONLINE // AVAILABLE]`, nama "Dimas Rizki Ardiansyah", peran/spesialisasi, dan tombol aksi primer ("Explore Work").
+    - **Tengah**: Centerpiece cutout portrait (`foto 1.png`) beresolusi tajam tanpa card border, terposisi kokoh di dasar viewport.
+    - **Kanan**: Deskripsi narasi teknis ringkas, micro stats, dan tombol kontak sekunder.
+  - Tangani breakpoint tablet (2-kolom) dan mobile (stack 1-kolom dengan foto di atas/tengah).
 
-### Phase 5: Projects, Skills & Education Modules
-✅ - [x] **Projects Section**:
-  - Buat horizontal slider proyek unggulan lengkap dengan status badge (`Featured · Live`, `Research Project`), screenshot preview, dan tech stack chips.
-  - Sediakan tombol eksternal langsung ke live demo dan repositori GitHub.
-✅ - [x] **Skills Section**:
-  - Restrukturisasi ke dalam matrix kategori yang rapi (Languages, Frameworks, Cloud & DB, Tools, AI & ML).
-  - Tambahkan visual chip status kemahiran (Expert, Advanced, Intermediate) pada tiap item.
-✅ - [x] **Education Section**:
-  - Implementasikan kartu institusi akademik dengan accordion detail mata kuliah/fokus riset.
+---
 
-### Phase 6: Contact & Footer Module Enhancement
-✅ - [x] Implementasikan widget **"Currently Vibing To"** (`spotify-player.tsx`):
-  - Embed Spotify iframe player dengan daftar 8 track switcher instan.
-✅ - [x] Implementasikan blok kutipan filosofis personal (`quote-block.tsx`).
-✅ - [x] Desain ulang form kontak langsung dengan layout bersih dan responsif.
-✅ - [x] Tambahkan indikator live page view counter pada baris copyright footer.
+## Phase 4: Main Page Pruning & Surface Contrast
+- [ ] **Projects Section**:
+  - Hapus import dan komponen `ProjectGrid` dari `src/components/sections/projects/index.tsx`.
+  - Hanya tampilkan `ProjectSlider` (carousel horizontal proyek unggulan).
+- [ ] **Bottom CTA Banner**:
+  - Hapus komponen `<CTA />` dari `src/app/(site)/[locale]/page.tsx`.
+- [ ] **Surface Contrast Differentiation**:
+  - Berikan styling background elevasi (`bg-[#111622]` / `border-t border-white/10`) pada container section `ExperiencePreview` dan `FeaturedCertificates` agar kontras secara visual dari kanvas utama.
 
-### Phase 7: Verification & Visual Quality Assurance
-✅ - [x] Jalankan unit test internal (`pnpm test`) untuk memastikan kamus i18n dan logika layout tetap berfungsi 100%.
-✅ - [x] Jalankan linting dan TypeScript check (`pnpm lint`).
-- [ ] Gunakan **Playwright MCP** untuk menangkap screenshot desktop (1440x900) dan mobile (390x844), serta memvalidasi console log bersih dari error.
+---
+
+## Phase 5: Image Sequence Scroll Animation
+- [ ] Buat komponen canvas sequence `src/components/motion/image-sequence-canvas.tsx`:
+  - Canvas 2D dengan aspect-ratio cover dan `devicePixelRatio` scaling.
+  - Preloader asinkron dengan prioritas pada frame awal.
+  - Scrubbing frame dikendalikan oleh posisi progres scroll (`useScroll`).
+- [ ] Pasang komponen sequence canvas di antara Hero dan Featured Projects pada Home page.
+
+---
+
+## Phase 6: Smart Scroll-Snapping Behavior
+- [ ] Buat custom hook `src/hooks/use-smart-scroll-snap.ts`:
+  - Pasang `scroll-snap-type: y proximity` pada root scroll container.
+  - Gunakan `ResizeObserver` untuk mendeteksi tinggi section secara otomatis.
+  - Jika section memiliki tinggi `> 100vh * 1.08` (seperti daftar Tech Stack atau Certificates panjang), nonaktifkan snap (`scroll-snap-align: none`) agar scrolling berjalan bebas tanpa trapping.
+  - Matikan snapping secara otomatis saat `prefers-reduced-motion` aktif.
+- [ ] Pasangkan hook pada layout root atau wrapper section utama.
+
+---
+
+## Phase 7: About Page (`/about`) Overhaul
+- [ ] Migrasikan asset `docs/Foto Orang/foto 2.png` (cutout kemeja hitam Teknik Informatika) ke `public/assets/dimas-about.png` atau pipeline Sanity.
+- [ ] Rancang ulang `src/components/sections/about/about-hero.tsx`:
+  - Hapus avatar kecil berbingkai lingkaran/kartu di bagian tengah.
+  - Buat layout 2-kolom borderless side-by-side:
+    - **Kolom Kiri**: Foto portrait cutout besar (`foto 2.png`) borderless dengan subtle bottom mask gradient.
+    - **Kolom Kanan**: Eyebrow `01 // About Me`, headline nama, sub-headline akademik, action buttons (CV & Connect), dan blok narasi *"My Story"* lengkap dengan *clickable keyword pills* interaktif.
+- [ ] Pastikan section Tech Stack ("The technologies I use every day") panjang memiliki tag `data-snap="free"` agar dapat di-scroll natural secara bebas.
+
+---
+
+## Phase 8: Verification & QA
+- [ ] Jalankan unit test (`pnpm test`) untuk memastikan kamus i18n dan logika tidak terganggu.
+- [ ] Jalankan lint & typecheck (`pnpm lint`).
+- [ ] Gunakan **Playwright MCP** untuk verifikasi tampilan visual di desktop (1440x900) dan mobile (390x844) pada rute `/en` dan `/en/about`.

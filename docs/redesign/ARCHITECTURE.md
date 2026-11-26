@@ -1,124 +1,136 @@
-# Technical Architecture: Yash Ahire Inspired Modern Stack
+# Technical Architecture: Image Sequence & Hybrid Scroll-Snapping
 
-## 1. Core Technology Stack
+## 1. System Overview
 
-Arsitektur aplikasi dibangun di atas ekosistem modern yang sudah ada di repository, dioptimalkan untuk performa tinggi, modularitas, dan aksesibilitas:
-
-- **Framework**: **Next.js 16 (App Router)** dengan React 19.
-- **Styling**: **Tailwind CSS v4** + `@tailwindcss/postcss` + CSS Variables untuk theming dinamis.
-- **Motion & Interactions**: **Framer Motion v12** (animasi transisi slider, modal popups, coin flip, dan spring physics).
-- **Headless CMS & Content Engine**: **Sanity CMS v5** (`@sanity/client`, `next-sanity`, live drafts & GROQ queries).
-- **Internationalization (i18n)**: Bilingual routing (`/[locale]`) untuk bahasa Inggris (`en`) dan Indonesia (`id`) menggunakan struktur kamus tipe aman (`messages/*.json`).
-- **Icons**: `lucide-react` & `react-icons` (FontAwesome, SimpleIcons).
-- **Audio & Media**: Spotify IFrame Embed API & HTML5 Audio untuk interactive music widget.
-- **E2E & Visual Testing**: **Playwright MCP** untuk verifikasi render di desktop dan mobile.
+Arsitektur aplikasi dioptimalkan untuk performa rendering tinggi, alur scrolling bebas jank, serta pemisahan concern yang bersih:
+- **Framework**: Next.js 16 (App Router) + React 19
+- **Styling**: Tailwind CSS v4 (dengan CSS custom properties untuk design tokens)
+- **Interactive Canvas Engine**: HTML5 Canvas 2D + WebGL / `ImageBitmap` API
+- **Motion & Scroll Tracking**: Framer Motion `useScroll`, `useTransform` + Native `IntersectionObserver` & `ResizeObserver`
+- **CMS & Assets**: Sanity CMS v5 + local optimized fallback assets
 
 ---
 
-## 2. Dynamic Theming & Accent Provider Architecture
+## 2. Image Sequence Scroll Animation Architecture
 
-Untuk mendukung switcher 7 warna aksen dinamis seperti pada situs referensi, dibuat React Context provider ringan tanpa re-render yang membebani seluruh halaman:
+Animasi sequence frame berbasis scroll pada Home page menggunakan rendering HTML5 Canvas offscreen pipeline untuk menjamin konsistensi 60+ FPS tanpa layout shift.
 
 ```
-+-------------------------------------------------------------+
-| ThemeProvider (Dark / Light + AccentColor State)             |
-|   - Sync with localStorage ("portfolio-accent", "theme")    |
-|   - Injects CSS Variables to <html> element:                |
-|       --accent-primary: <selected_hex>                      |
-|       --accent-secondary: <selected_hex_light>              |
-|       --accent-glow: <selected_rgba>                        |
-+-------------------------------------------------------------+
++-------------------------------------------------------------------------------+
+| User Scroll Container (Height: 250vh - 300vh for comfortable scrubbing)       |
+|                                                                               |
+|   +-----------------------------------------------------------------------+   |
+|   | Sticky Viewport Window (Height: 100vh, position: sticky top: 0)       |   |
+|   |                                                                       |   |
+|   |   +---------------------------------------------------------------+   |   |
+|   |   | <canvas id="sequence-canvas" /> (Hardware Accelerated 2D)     |   |   |
+|   |   +---------------------------------------------------------------+   |   |
+|   |                                                                       |   |
+|   |   Scroll Progress [0.00 ------------------------------------> 1.00]   |   |
+|   |                         │                                             |   |
+|   |                         ▼                                             |   |
+|   |   Frame Index: Math.floor(progress * (totalFrames - 1))               |   |
+|   |                         │                                             |   |
+|   |                         ▼                                             |   |
+|   |   requestAnimationFrame -> ctx.drawImage(bitmapCache[frameIndex])     |   |
+|   +-----------------------------------------------------------------------+   |
++-------------------------------------------------------------------------------+
 ```
 
-### Palet CSS Variable Dinamis
-```css
-:root {
-  --accent-primary: #ffd460;
-  --accent-secondary: #f6ad55;
-  --accent-glow: rgba(255, 212, 96, 0.25);
-}
-```
-Ketika pengguna mengklik salah satu swatch warna, provider mengupdate atribut `style` pada `document.documentElement` secara instan, sehingga seluruh komponen kartu, tombol, border glow, dan badge langsung menyesuaikan warna tanpa perlu reload halaman.
+### 2.1 Preloading & Memory Management Strategy
+1. **Critical Path (LCP)**:
+   - Frame pertama (`frame_000.webp`) dimuat dengan prioritas `fetchPriority="high"` sebagai static asset awal agar canvas tidak kosong saat halaman pertama kali terbuka.
+2. **Batched Asynchronous Preloading**:
+   - Setelah first paint / hydration selesai, frame sequence berikutnya (misal 60 hingga 90 frame) dimuat secara asinkron menggunakan Web Worker atau concurrency pool (maksimal 4 concurrent network requests).
+3. **ImageBitmap Decoding**:
+   - Setiap image yang berhasil di-fetch langsung di-decode di background thread menggunakan `createImageBitmap(blob)`.
+   - Menghindari decoding overhead pada main thread saat scrolling aktif.
+4. **Canvas Resizing & High-DPI Adaptation**:
+   - Canvas disesuaikan dengan `window.devicePixelRatio` untuk ketajaman visual di layar Retina.
+   - Fungsi draw menerapkan strategi *aspect ratio cover*:
+     ```ts
+     function drawImageCover(ctx: CanvasRenderingContext2D, img: ImageBitmap, canvasW: number, canvasH: number) {
+       const hRatio = canvasW / img.width;
+       const vRatio = canvasH / img.height;
+       const ratio = Math.max(hRatio, vRatio);
+       const centerShiftX = (canvasW - img.width * ratio) / 2;
+       const centerShiftY = (canvasH - img.height * ratio) / 2;
+       ctx.clearRect(0, 0, canvasW, canvasH);
+       ctx.drawImage(img, 0, 0, img.width, img.height, centerShiftX, centerShiftY, img.width * ratio, img.height * ratio);
+     }
+     ```
 
 ---
 
-## 3. Data Schema Enhancements (Sanity CMS)
+## 3. Hybrid CSS/JS Scroll-Snapping Behavior
 
-Untuk menyuplai data ke layout baru yang kaya fitur, skema Sanity ditingkatkan dengan entitas berikut:
+### 3.1 Problem Statement
+Penggunaan CSS `scroll-snap-type: y mandatory` secara naif menyebabkan kecacatan UX fatal (*scroll trapping*):
+- Ketika sebuah section memiliki tinggi melebihi tinggi layar pengguna (`height > 100vh`), browser memaksakan snap ke batas awal atau akhir section.
+- Akibatnya, konten bagian tengah (seperti daftar Tech Stack yang panjang) tidak dapat dibaca karena viewport dipaksa melompat (*snapping loop*).
 
-### 3.1 Testimonial / Recommendation Schema (`recommendation.schema.ts`)
-- `name`: string
-- `role`: string
-- `company`: string
-- `avatar`: image
-- `content`: localizedText (en, id)
-- `linkedInUrl`: url
-- `order`: number
+### 3.2 Arsitektur Hybrid: `useSmartScrollSnap`
 
-### 3.2 Spotify Track List Schema (`spotifyTrack.schema.ts` atau dalam `siteSettings`)
-- `title`: string
-- `artist`: string
-- `spotifyUri`: string (track ID)
-- `coverUrl`: string
-- `order`: number
+```
+                          Section Rendered
+                                 │
+                                 ▼
+                     ResizeObserver / Dimension Check
+                                 │
+                 ┌───────────────┴───────────────┐
+                 ▼                               ▼
+       Height <= 100vh * 1.05          Height > 100vh * 1.05
+                 │                               │
+                 ▼                               ▼
+        [SNAP-ENABLED]                    [FREE-SCROLL]
+   scroll-snap-align: start           scroll-snap-align: none
+   scroll-snap-stop: normal           scroll-snap-stop: normal
+   (View docks smoothly)              (Natural momentum scroll)
+```
 
-### 3.3 Interactive Keywords / About Pills (`aboutPill.schema.ts`)
-- `label`: localizedString
-- `heading`: localizedString
-- `description`: localizedText
-- `icon`: string
+### 3.3 Implementation Details
+1. **Root Configuration**:
+   - Menggunakan `scroll-snap-type: y proximity` pada container root. Mode `proximity` memungkinkan snap aktif saat scroll melambat secara alami tanpa mengunci agresif.
+2. **Hook Kontroler Dinamis**:
+   - Mengamati setiap elemen `<section>` yang memiliki atribut `data-section-snap`:
+   ```ts
+   // Pseudo-code implementation hook
+   export function useSmartScrollSnap() {
+     useEffect(() => {
+       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-### 3.4 Experience & Education Enriched Schema
-- Dukungan untuk metrik terukur (misal: "75% reduction in errors").
-- Detail accordion untuk kursus dan tanggung jawab tambahan.
+       const sections = document.querySelectorAll<HTMLElement>("section[data-snap-target]");
+       const observer = new ResizeObserver((entries) => {
+         const vh = window.innerHeight;
+         for (const entry of entries) {
+           const target = entry.target as HTMLElement;
+           const isOverflowing = target.offsetHeight > vh * 1.08;
+           if (isOverflowing) {
+             target.classList.remove("snap-start");
+             target.classList.add("snap-none");
+           } else {
+             target.classList.add("snap-start");
+             target.classList.remove("snap-none");
+           }
+         }
+       });
+
+       sections.forEach((s) => observer.observe(s));
+       return () => observer.disconnect();
+     }, []);
+   }
+   ```
 
 ---
 
-## 4. Component Hierarchy & State Isolation
+## 4. Dead Code Cleanup & Dependency Graph
 
-```
-src/
-├── app/
-│   ├── (site)/[locale]/
-│   │   ├── layout.tsx         -> Menginjeksi ThemeProvider & AccentProvider
-│   │   └── page.tsx           -> Server Component utama merender seluruh section
-│   └── api/
-│       ├── contact/route.ts   -> API handler form kontak
-│       └── views/route.ts     -> API handler visitor view counter
-├── components/
-│   ├── layout/
-│   │   ├── navbar.tsx         -> Glassmorphism, 3D Coin-flip, Accent Switcher
-│   │   └── footer.tsx         -> Visitor counter, social links
-│   ├── sections/
-│   │   ├── hero/
-│   │   │   ├── hero-main.tsx  -> Terminal intro + Typist
-│   │   │   ├── dog-buddy.tsx  -> "Pet the dog" micro-interaction
-│   │   │   ├── ai-modal.tsx   -> "Ask me anything" conversational modal
-│   │   │   ├── building-card.tsx -> "Currently building" showcase
-│   │   │   └── testimonial-slider.tsx -> Social proof carousel
-│   │   ├── about/
-│   │   │   ├── about-story.tsx
-│   │   │   └── pill-modal.tsx -> Keyword detail popup
-│   │   ├── experience/
-│   │   │   └── experience-slider.tsx -> Swipeable timeline cards
-│   │   ├── projects/
-│   │   │   └── project-slider.tsx    -> Horizontal slide with deep tech specs
-│   │   ├── skills/
-│   │   │   └── skill-matrix.tsx      -> Categorized grid with level chips
-│   │   ├── education/
-│   │   │   └── education-accordion.tsx
-│   │   └── contact/
-│   │       ├── spotify-player.tsx    -> Interactive music widget
-│   │       ├── quote-block.tsx       -> Stylized quote
-│   │       └── contact-form.tsx      -> Direct message form
-│   └── ui/
-│       └── svg-filters.tsx    -> Filter goo, glassDistortion, waterRipple
-```
+Berikut pemetaan komponen yang dinonaktifkan atau dihapus untuk menjaga bundle size tetap ramping:
 
----
-
-## 5. Performance, Assets & Accessibility Strategy
-
-1. **Selective Client Components**: Hanya komponen yang memiliki interaktivitas tinggi (slider, modal, audio switcher, coin-flip) yang menggunakan `'use client'`. Data fetching tetap dilakukan di Server Component (`page.tsx`) untuk zero layout shift dan SEO optimal.
-2. **Reduced Motion**: Mendukung media query `@media (prefers-reduced-motion: reduce)` agar animasi 3D coin-flip dan particle shader beralih ke transisi statis yang halus.
-3. **Optimized SVG Shaders**: Filter SVG distorsi diisolasi pada elemen interaktif spesifik untuk mencegah penurunan frame-rate (60 FPS rendering).
+| Komponen Asal | Status | Alasan |
+| :--- | :--- | :--- |
+| `src/components/sections/projects/project-grid.tsx` | **Removed from Home** | Menghilangkan duplikasi grid 3-kolom di bawah Featured Project carousel. |
+| `src/components/sections/cta/index.tsx` | **Removed from Home** | Eliminasi banner ajakan bertindak "Let's build something" sebelum footer. |
+| `src/components/sections/hero/building-card.tsx` | **Removed from Hero** | Membersihkan hero dari widget card kanan yang membingungkan fokus. |
+| `src/components/sections/hero/testimonial-slider.tsx` | **Removed from Hero** | Dieliminasi dari Hero Home untuk memberi ruang bagi Split-Center hero. |
+| Tombol `Contact` duplikat di `navbar.tsx` | **Removed** | Disederhanakan ke tombol CTA primer tunggal `Get in Touch`. |

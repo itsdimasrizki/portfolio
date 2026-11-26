@@ -1,6 +1,6 @@
-# Multi-Agent Workflow: Yash Ahire Redesign Execution
+# Multi-Agent Workflow: Compact Neo-Brutalist Redesign Execution
 
-Dokumen ini mendefinisikan pembagian peran sub-agen otomatis, dependensi antar-tugas, batasan cakupan, dan protokol komunikasi untuk mengeksekusi rencana perombakan redesign secara paralel dan terstruktur.
+Dokumen ini mendefinisikan pembagian peran sub-agen otomatis, dependensi antar-tugas, batasan cakupan, dan protokol komunikasi untuk mengeksekusi rencana perombakan redesign baru.
 
 ---
 
@@ -15,67 +15,57 @@ Dokumen ini mendefinisikan pembagian peran sub-agen otomatis, dependensi antar-t
        |               |                           |               |
 +------v-------+ +-----v-------+             +-----v-------+ +-----v-------+
 | Agent 1      | | Agent 2     |             | Agent 3     | | Agent 4     |
-| Theme/Tokens | | Navigation  |             | Hero/Inter- | | Sections    |
-| & Foundation | | & Header UI |             | actions     | | & Sliders   |
+| Tokens &     | | Navbar      |             | Hero Home & | | Sequence &  |
+| Spacing      | | Declutter   |             | Pruning     | | Smart Snap  |
 +--------------+ +-------------+             +-------------+ +-------------+
                                                            |
-                                                     +-----v-------+
-                                                     | Agent 5     |
-                                                     | QA & Visual |
-                                                     | Playwright  |
-                                                     +-------------+
+                                             +-------------+---------------+
+                                             |                             |
+                                       +-----v-------+               +-----v-------+
+                                       | Agent 5     |               | Agent 6     |
+                                       | About Page  |               | Playwright  |
+                                       | Overhaul    |               | QA & Visual |
+                                       +-------------+               +-------------+
 ```
 
-### Agent 1: Foundation & Theme Specialist (`agent-theme`)
-- **Fokus**: Variabel CSS, Provider Aksentuasi, dan Shader SVG.
+### Agent 1: Tokens & Spacing Specialist (`agent-tokens`)
 - **Tugas**:
-  - Membuat `AccentProvider` (state context untuk 7 warna aksen + sinkronisasi `localStorage`).
-  - Menyiapkan file SVG filter (`#navGoo`, `#glassDistortion`, `#waterRipple`).
-  - Memperbarui `globals.css` dengan token warna latar dan utility glassmorphism.
-- **Input**: `docs/redesign/DESIGN.md`, `globals.css`.
-- **Output**: Komponen theme context yang siap dipakai oleh seluruh UI.
+  - Memperbarui `section.tsx` dengan vertical spacing compact (`py-10 lg:py-14`).
+  - Menambahkan token `--bg-surface-elevated` (`#111622`) dan `--border-contrast` di `globals.css`.
+  - Menyiapkan styling utilitas scroll snapping.
+- **Output**: Token dan container layout siap pakai untuk section lainnya.
 
-### Agent 2: Navigation & Header Specialist (`agent-navbar`)
-- **Fokus**: Komponen navigasi desktop & mobile.
+### Agent 2: Navbar Decluttering Specialist (`agent-navbar`)
 - **Tugas**:
-  - Membangun `coin-logo.tsx` (efek 3D flip coin avatar).
-  - Mengintegrasikan swatch warna aksen dropdown di navbar.
-  - Membangun menu navigasi desktop dan animasi slide-down hamburger menu mobile.
-  - Memastikan integrasi Language Switcher bilingual (`en`/`id`) tetap berfungsi lancar.
-- **Input**: Komponen `AccentProvider` dari Agent 1.
+  - Merapikan `src/components/layout/navbar.tsx`: eliminasi "Say hi" badge, satukan CV & PDF download, hapus tombol Contact duplikat, dan atur link tengah ke 4 rute utama.
+  - Memastikan tampilan responsif pada viewport 1024px-1366px tidak mengalami wrapping.
+- **Output**: Navbar yang bersih, lapang, dan berhierarki tegas.
 
-### Agent 3: Hero & Playful Micro-Interactions Specialist (`agent-hero`)
-- **Fokus**: Area Hero 2-kolom dan elemen interaktif taktil.
+### Agent 3: Hero Home & Section Pruning Specialist (`agent-hero-prune`)
 - **Tugas**:
-  - Mengimplementasikan prompt terminal mono (`> npm start`) dan dynamic typist greeting.
-  - Membangun komponen interaktif **"Pet the Dog"** (`dog-buddy.tsx`).
-  - Membangun launcher dialog **"Ask me anything"** (`ai-modal.tsx`) lengkap dengan pill opsi pertanyaan instan.
-  - Membangun showcase card **"Currently Building"** dan **Testimonials Slider**.
-- **Input**: Data Sanity hero/settings, komponen button dasar.
+  - Mengimplementasikan layout 3-kolom split-center pada Hero Home dengan `foto 1.png` sebagai centerpiece.
+  - Menghapus komponen `BuildingCard` dan `TestimonialSlider` dari Hero.
+  - Menghapus `ProjectGrid` (grid 3-kolom) dari `FeaturedProjects`.
+  - Menghapus `<CTA />` ("Let's build something") di atas footer.
+  - Menerapkan background surface elevated pada `ExperiencePreview` dan `FeaturedCertificates`.
+- **Output**: Halaman Home yang terfokus, padat, dan kontras visualnya jelas.
 
-### Agent 4: Content Sections & Sliders Specialist (`agent-sections`)
-- **Fokus**: Modul konten utama (About, Experience, Projects, Skills, Contact).
+### Agent 4: Canvas Sequence & Smart Scroll-Snapping Specialist (`agent-motion`)
 - **Tugas**:
-  - Membangun modal kata kunci interaktif pada About section (`about-pill-modal.tsx`).
-  - Mengubah tampilan Experience menjadi horizontal slider yang responsif dengan tombol expandable `+`.
-  - Mengimplementasikan horizontal slider untuk Projects dengan badges live/research dan tech stack.
-  - Mengelompokkan skill ke dalam matrix kategori terstruktur.
-  - Membangun widget **"Currently Vibing To"** (Spotify player embed + playlist switcher) dan quote block pada Contact section.
-- **Input**: Data query Sanity dari CMS, kamus i18n.
+  - Membangun `image-sequence-canvas.tsx` untuk frame scrubbing berbasis scroll progress dengan preloading efisien.
+  - Membangun hook `useSmartScrollSnap` dengan `ResizeObserver` untuk menonaktifkan snap pada section dengan tinggi `> 100vh`.
+- **Output**: Animasi sequence 60 FPS dan scroll snapping yang natural tanpa trap.
 
-### Agent 5: QA, Playwright & Visual Verification Specialist (`agent-qa`)
-- **Fokus**: Pengujian fungsionalitas, performa visual, dan kepatuhan desain.
+### Agent 5: About Page Overhaul Specialist (`agent-about`)
 - **Tugas**:
-  - Menjalankan unit tests (`pnpm test`) untuk memastikan zero regression pada logika internal dan kamus i18n.
-  - Melakukan cross-device testing menggunakan **Playwright MCP** pada resolusi desktop (1440x900) dan mobile (390x844).
-  - Menguji interaktivitas (klik swatch aksen warna, toggle theme, pet dog, klik slider prev/next).
-  - Memverifikasi tidak adanya console error atau warning hydration.
+  - Mendesain ulang `src/components/sections/about/about-hero.tsx` menjadi 2-kolom borderless side-by-side dengan `foto 2.png`.
+  - Mengintegrasikan blok narasi *"My Story"* langsung di samping foto tanpa kartu avatar terpisah.
+  - Memastikan section Tech Stack panjang berjalan dengan mode free-scroll.
+- **Output**: Halaman `/about` berstandar editorial tinggi.
 
----
-
-## 2. Guardrails & Quality Gates
-
-1. **Safety First**: Tidak diperkenankan menghapus file kredensial atau merusak skema database yang sudah berjalan.
-2. **Bilingual Completeness**: Setiap teks baru yang ditambahkan ke UI wajib memiliki entri terjemahan di `src/i18n/messages/en.json` dan `src/i18n/messages/id.json`.
-3. **Responsive Consistency**: Semua komponen harus dites pada breakpoint mobile (390px) dan desktop (1440px) sebelum dianggap selesai.
-4. **No Premature Execution**: Fase eksekusi kode baru dijalankan setelah dokumen perencanaan disetujui secara eksplisit oleh pengguna.
+### Agent 6: Playwright QA & Visual Verification Specialist (`agent-qa`)
+- **Tugas**:
+  - Menjalankan unit tests (`pnpm test`) dan linter (`pnpm lint`).
+  - Melakukan inspeksi visual menggunakan **Playwright MCP** pada resolusi desktop (1440x900) dan mobile (390x844).
+  - Memastikan tidak ada console error atau layout shift.
+- **Output**: Laporan verifikasi visual dan conformance test.
