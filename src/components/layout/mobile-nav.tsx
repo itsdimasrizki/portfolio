@@ -39,7 +39,7 @@ export function MobileNav({ cvUrl, locale }: MobileNavProps) {
 
       <SheetContent title={messages["footer.navigation"]}>
         <nav className="mt-6 flex flex-col gap-1">
-          {navLinks.map((item) => {
+          {navLinks.map((item, idx) => {
             const href = localeHref(locale, item.href);
             const isActive =
               item.href === "/"
@@ -51,12 +51,13 @@ export function MobileNav({ cvUrl, locale }: MobileNavProps) {
                 <Link
                   href={href}
                   className={cn(
-                    "rounded-md px-3 py-2.5 text-base transition-colors",
+                    "flex items-center gap-2 rounded-md px-3 py-2.5 font-mono text-sm transition-colors",
                     isActive
-                      ? "bg-muted/80 font-medium text-foreground"
+                      ? "bg-card font-semibold text-primary border border-border"
                       : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                   )}
                 >
+                  <span className="text-[10px] text-primary/70">{`0${idx} //`}</span>
                   {messages[item.labelKey]}
                 </Link>
               </SheetClose>
@@ -64,7 +65,9 @@ export function MobileNav({ cvUrl, locale }: MobileNavProps) {
           })}
         </nav>
 
-        <LanguageSwitcher locale={locale} className="self-start" />
+        <div className="mt-4">
+          <LanguageSwitcher locale={locale} className="inline-flex" />
+        </div>
 
         <div className="mt-auto flex flex-col gap-2">
           <Button variant="outline" size="sm" asChild>

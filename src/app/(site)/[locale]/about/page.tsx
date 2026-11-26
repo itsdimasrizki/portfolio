@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { AboutHero } from "@/components/sections/about/about-hero";
-import { AboutStory } from "@/components/sections/about/about-story";
 import { TechStack } from "@/components/sections/about/tech-stack";
 import { Skills } from "@/components/sections/about/skills";
 import { EducationSection } from "@/components/sections/about/education-section";
@@ -45,8 +44,7 @@ export default async function AboutPage({
 
   return (
     <main>
-      <AboutHero cvUrl={cvUrl} locale={typedLocale} />
-      <AboutStory content={content} />
+      <AboutHero cvUrl={cvUrl} locale={typedLocale} content={content} />
       <TechStack technologies={technologies} locale={typedLocale} />
       <Skills skills={skills} locale={typedLocale} />
       <EducationSection />

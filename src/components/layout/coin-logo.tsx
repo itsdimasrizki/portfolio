@@ -54,13 +54,15 @@ export function CoinLogo({ locale }: CoinLogoProps) {
             />
           </div>
         </motion.div>
+        {/* Subtle live availability dot */}
+        <span
+          className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5"
+          aria-hidden="true"
+        >
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+          <span className="relative inline-flex h-2.5 w-2.5 rounded-full border-2 border-background bg-emerald-500" />
+        </span>
       </Link>
-
-      {/* Say Hi Pill */}
-      <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-card/60 px-2.5 py-1 text-xs font-mono text-muted-foreground backdrop-blur-xs">
-        <span className="inline-block origin-bottom-right animate-sayhi-wave">👋</span>
-        <span>Say hi</span>
-      </span>
     </div>
   );
 }

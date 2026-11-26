@@ -22,31 +22,19 @@ export function AccentPicker() {
   return (
     <div className="relative inline-block" ref={containerRef}>
       <button
+        type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex h-8 items-center gap-1.5 rounded-full border border-border bg-card/80 px-2 text-xs font-mono text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-card/80 transition-colors hover:border-primary/50"
         aria-label="Choose accent color"
         title="Choose accent color"
       >
         <span
-          className="h-3 w-3 rounded-full transition-transform"
+          className="h-3.5 w-3.5 rounded-full transition-transform"
           style={{
             backgroundColor: accent.primary,
             boxShadow: `0 0 8px ${accent.glow}`,
           }}
         />
-        <svg
-          width="10"
-          height="10"
-          viewBox="0 0 10 10"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-        >
-          <polyline points="2,3 5,7 8,3" />
-        </svg>
       </button>
 
       <AnimatePresence>

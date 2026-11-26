@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
 import { Hero } from "@/components/sections/hero";
+import { ImageSequenceCanvas } from "@/components/motion/image-sequence-canvas";
 import { FeaturedProjects } from "@/components/sections/projects";
 import { ExperiencePreview } from "@/components/sections/experience";
 import { FeaturedCertificates } from "@/components/sections/certificates";
-import { CTA } from "@/components/sections/cta";
 
 import { getMessages } from "@/i18n/dictionary";
 import type { Locale } from "@/i18n/locale";
@@ -55,15 +55,14 @@ export default async function Home({
         settings={settings}
         cvUrl={cvUrl}
         locale={typedLocale}
-        featuredProject={featuredProjects[0] ?? null}
       />
+      <ImageSequenceCanvas />
       <FeaturedProjects projects={featuredProjects} locale={typedLocale} />
       <ExperiencePreview experiences={experiences} locale={typedLocale} />
       <FeaturedCertificates
         certificates={featuredCertificates}
         locale={typedLocale}
       />
-      <CTA cvUrl={cvUrl} locale={typedLocale} />
     </main>
   );
 }

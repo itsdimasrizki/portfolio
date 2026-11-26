@@ -1,84 +1,81 @@
-# Design Specification: Yash Ahire Inspired Overhaul
+# Design Specification: Compact Neo-Brutalist & Split-Center Overhaul
 
-## 1. Executive Summary & Design Philosophy
-Dokumen ini mendefinisikan pedoman desain visual, identitas antarmuka, dan sistem micro-interaction untuk mendesain ulang portfolio website. Referensi utama mengacu pada analisis langsung situs **[Yash Ahire](https://yashahire.info/)** menggunakan Playwright MCP serta rekaman layar `yashahire.webm`.
+## 1. Executive Summary & Design Vision
+Dokumen ini mendefinisikan pedoman desain visual, hierarki antarmuka, dan sistem interaksi baru untuk perombakan portfolio Dimas Rizki Ardiansyah (`dimasrizkiportofolio.vercel.app`). 
 
-Filosofi desain ini menggabungkan dua karakteristik utama:
-1. **Industrial High-Tech / Cybernetic Minimalist**: Latar belakang obsidian void gelap yang bersih, tipografi monospace/grotesk yang tajam, dan struktur bento grid yang teratur.
-2. **Tactile & Playful Micro-Interactions**: Pengalaman web modern yang interaktif, organik, dan menyenangkan melalui sentuhan liquid/water droplet, 3D coin-flip avatar, interactive dog companion ("Pet the Dog"), personal AI conversational launcher ("Ask me anything"), audio player Spotify ("Currently Vibing To"), serta switcher 7-aksen warna dinamis.
-
----
-
-## 2. Color System & Theming Tokens
-
-Sistem warna menerapkan pendekatan **Dark-Mode First** dengan dukungan Light-Mode, diperkaya dengan **7-Accent Color Switcher** yang dapat dipilih pengguna secara instan dan disimpan di `localStorage`.
-
-### 2.1 Base Canvas & Surface Tokens
-
-| Token | Dark Mode (Default) | Light Mode | Penggunaan |
-| :--- | :--- | :--- | :--- |
-| `--bg-primary` | `#0d0d12` / `#090b0e` | `#f7fafc` | Kanvas latar belakang utama halaman |
-| `--bg-secondary` | `#161a23` / `#11151c` | `#edf2f7` | Latar kartu (card surface), dialog, drawer |
-| `--bg-tertiary` | `#222838` / `#1a202c` | `#e2e8f0` | Border hover, active states, chips latar |
-| `--text-primary` | `#ffffff` / `#f8fafc` | `#0f172a` | Judul utama, heading, active text |
-| `--text-secondary` | `#94a3b8` / `#cbd5e1` | `#475569` | Body text, deskripsi, subheadings |
-| `--text-muted` | `#64748b` / `#9e9c9c66`| `#94a3b8` | Metadata, tanggal, copyright, disabled |
-| `--border-subtle` | `rgba(255, 255, 255, 0.08)` | `rgba(0, 0, 0, 0.08)` | Garis batas kartu, separator, badge border |
-| `--border-hover` | `var(--accent-primary)` | `var(--accent-primary)` | Glow border saat elemen di-hover |
-
-### 2.2 The 7-Accent Dynamic Palette System
-Pengguna dapat memilih aksen aktif melalui color picker di navbar (`theme-chevron`). Aksen ini mengontrol warna primer tombol, border glow, highlight text, typing caret, dan dot indikator slider.
-
-1. **Gold / Amber (Default Dark)**: `#ffd460` (Secondary: `#f6ad55`, Glow: `rgba(255, 212, 96, 0.25)`)
-2. **Cyber Violet**: `#8b5cf6` (Secondary: `#a78bfa`, Glow: `rgba(139, 92, 246, 0.25)`)
-3. **Neon Cyan**: `#06b6d4` (Secondary: `#22d3ee`, Glow: `rgba(6, 182, 212, 0.25)`)
-4. **Emerald Matrix**: `#10b981` (Secondary: `#34d399`, Glow: `rgba(16, 185, 129, 0.25)`)
-5. **Solar Orange**: `#f97316` (Secondary: `#fb923c`, Glow: `rgba(249, 115, 22, 0.25)`)
-6. **Electric Rose**: `#f43f5e` (Secondary: `#fb7185`, Glow: `rgba(244, 63, 94, 0.25)`)
-7. **Crimson Red**: `#ef4444` (Secondary: `#f87171`, Glow: `rgba(239, 68, 68, 0.25)`)
+Arah desain baru ini berfokus pada **Unslop & High-Craft Restraint** (mengikuti prinsip `/skill:unslop` dan `/skill:impeccable`):
+1. **Unslop Chrome & Quiet Elegance**: Mengeliminasi widget yang membuat antarmuka terasa ramai/berantakan (*cluttered*), seperti kartu widget hero duplikat, tombol aksi bertumpuk di navbar, dan dekorasi berlebih. Navigasi dibuat tenang dan terarah (*quiet chrome*).
+2. **Split-Center Composition (Hero Home)**: Subjek foto portrait berjas hijau cutout menunjuk (`foto 1.png`) menjadi jangkar visual utama di tengah layar, diapit tipografi nama dan ringkasan kemampuan secara asimetris.
+3. **Borderless Side-by-Side (Hero About)**: Menghilangkan avatar berbingkai kecil, digantikan oleh portrait cutout besar kemeja hitam (`foto 2.png`) yang menyatu dengan kanvas tanpa border, berdampingan langsung dengan narasi *My Story*.
+4. **Surface Contrast & Depth Hierarchy**: Membedakan kontras latar permukaan antara area animasi canvas utama dan kartu section konten (*Experience* & *Featured Certificates*).
+5. **Compact Vertical Rhythm**: Memangkas padding/margin vertikal antar-section secara drastis untuk alur bacaan yang padat, berbobot, dan menyatu.
 
 ---
 
-## 3. Typography Hierarchy
+## 2. Color System & Surface Contrast Tokens
 
-Kombinasi 3 font untuk menciptakan harmoni antara presisi teknis, keterbacaan modern, dan sentuhan personal:
+Sistem warna menerapkan **Dark-Mode Obsidian Canvas** dengan diferensiasi kontras surface yang tegas untuk membedakan section interaktif dari latar canvas sequence.
 
-| Role | Font Family | Weight | Fallback | Penggunaan |
-| :--- | :--- | :--- | :--- | :--- |
-| **Display / Headings** | `Space Grotesk` | 600, 700 | `system-ui, sans-serif` | H1-H3, nama profil, nama proyek, tag tech |
-| **UI & Body Copy** | `Plus Jakarta Sans` / `Geist` | 400, 500, 600 | `sans-serif` | Deskripsi, navigasi, form input, paragraf |
-| **Monospace / Terminal** | `Silkscreen` / `JetBrains Mono` | 400 | `monospace` | Terminal prompt (`> npm start`), status badge |
-| **Handwritten Accent** | `Sacramento` / Script | 400 | `cursive` | Tanda tangan personal, quote signature |
+### 2.1 Base Canvas & Surface Elevation Tokens
 
-### Skala Tipografi
-- **Hero Title**: `clamp(2.5rem, 6vw, 4.25rem)` — Bold, tight tracking (`tracking-tight`), text-gradient atau solid white.
-- **Section Heading**: `clamp(1.75rem, 4vw, 2.75rem)` — Space Grotesk 700 dengan aksen dekoratif badge.
-- **Card Title**: `1.25rem - 1.5rem` — Space Grotesk 600.
-- **Body Regular**: `0.9375rem - 1rem` (`15px - 16px`), line-height `1.65`.
-- **Micro Metadata**: `0.75rem - 0.8125rem` (`12px - 13px`), uppercase, tracking `0.05em`.
+| Token | Nilai Hex / HSL | Peran & Penggunaan |
+| :--- | :--- | :--- |
+| `--bg-canvas` (`--background`) | `#090b0e` | Obsidian void kanvas utama, latar belakang sequence scroll |
+| `--bg-surface-elevated` | `#111622` | Kontras latar belakang khusus kartu *Experience* & *Certificates* |
+| `--bg-card` (`--card`) | `#151b26` | Permukaan kartu, popover, dialog, floating pill navbar |
+| `--bg-card-hover` | `#1c2433` | Status hover pada elemen interaktif kartu |
+| `--border-subtle` | `rgba(255, 255, 255, 0.08)` | Garis pemisah tipis 1px, pembatas kartu |
+| `--border-contrast` | `rgba(255, 255, 255, 0.16)` | Border atas (*top highlight line*) pada section elevated |
+| `--text-primary` | `#f8fafc` | Heading utama, nama hero, teks kontras tinggi (98% lightness) |
+| `--text-secondary` | `#94a3b8` | Subtitle, body text narasi, deskripsi proyek |
+| `--text-muted` | `#64748b` | Monospace tags, status metadata, angka urutan section |
 
----
-
-## 4. Glassmorphism, Organic Shaders & SVG Filters
-
-Situs referensi memanfaatkan filter SVG tersembunyi (`<svg width="0" height="0">`) untuk memberikan efek glass dan liquid yang sangat khas:
-1. `#navGoo`: `feGaussianBlur` dan `feColorMatrix` untuk menciptakan efek peleburan cairan (gooey) saat hover/klik tombol.
-2. `#glassDistortion` & `#glassDistortionPanel`: `feTurbulence` dan `feDisplacementMap` untuk memberikan efek pembiasan lensa kaca pada tombol dan kartu.
-3. `#waterRipple`: Efek gelombang air organik saat interaksi mouse pada water droplet canvas.
+### 2.2 Accent System (Dynamic 7-Palette)
+Aksen aktif tetap terhubung ke sistem dinamis (`AccentProvider`) dengan satu warna aksen terkalibrasi tinggi kontrasnya terhadap background obsidian:
+- **Default Accent (Amber/Gold)**: Primary `#ffd460`, Glow `rgba(255, 212, 96, 0.20)`
+- Aturan Penggunaan: Aksen hanya dipakai pada status aktif, link hover halus, indikator bullet slider aktif, dan tombol CTA primer. Dilarang menggunakan gradient teks berlebih atau glow menyebar liar di seluruh layar.
 
 ---
 
-## 5. Micro-Interactions & Playful Elements
+## 3. Typography & Micro-Hierarchy
 
-1. **3D Coin-Flip Logo**:
-   - Avatar dua sisi (sisi depan: logo inisial monogram, sisi belakang: foto asli).
-   - Efek rotasi 3D sumbu-Y (`transform: rotateY(180deg)`) dengan CSS `transform-style: preserve-3d` saat kursor mendekat atau diklik.
-2. **Interactive Dog Companion ("Pet the Dog")**:
-   - GIF/Canvas interaktif di bar aksi hero.
-   - Saat disentuh/hover menampilkan tooltip "PET THE DOG", saat diklik memicu animasi pantul dan reaksi ekspresif.
-3. **AI Dialog Launcher ("Ask me anything")**:
-   - Tombol pulsing dengan icon bot/sparkles yang membuka drawer modal interaktif untuk bertanya tentang skill, tech stack, atau proyek.
-4. **Currently Vibing To (Spotify Widget)**:
-   - Komponen pemutar musik di area contact/footer yang menampilkan track pilihan saat ini, tombol playlist mini, dan preview audio.
-5. **Interactive Project & Experience Sliders**:
-   - Transisi kartu horizontal yang mulus dengan tombol navigasi melingkar, pagination dots aktif, dan tombol detail `+` yang memicu modal popup lengkap.
+Kombinasi tipografi dirancang presisi mengikuti standar editorial modern:
+- **Display / Heading**: `Space Grotesk` (Weight 600, 700), tracking tight (`-0.03em`).
+- **Body & UI**: `Plus Jakarta Sans` / `Geist Sans` (Weight 400, 500, 600), line-height `1.5` - `1.6`.
+- **Technical & Microcopy**: `JetBrains Mono` / `Silkscreen` (Weight 400), tracking `0.05em`, uppercase untuk label teknis.
+
+### Skala Tipografi Terkalibrasi
+- **Hero Main Title**: `clamp(2.5rem, 5.5vw, 4.5rem)`
+- **Section Heading**: `clamp(1.5rem, 3.2vw, 2.25rem)`
+- **Card Title**: `1.125rem - 1.25rem`
+- **Body Copy**: `0.9375rem - 1rem`
+- **Micro Badge / Metadata**: `0.75rem` (12px)
+
+---
+
+## 4. Spacing System (Compact Vertical Rhythm)
+
+Whitespace antar-section yang sebelumnya mencapai `py-20 lg:py-32` dipangkas untuk menciptakan ritme bacaan yang rapat:
+- **Section Vertical Padding**:
+  - Standar Desktop: `py-10 lg:py-14` (pengurangan ~55% dari sebelumnya).
+  - Mobile: `py-8`.
+- **Gap Antar Elemen Grid**:
+  - Kolom Hero: `gap-6 lg:gap-8` (sebelumnya `gap-12`).
+  - Container Max-Width: `max-w-6xl` dengan padding horizontal `px-4 sm:px-6 lg:px-8`.
+
+---
+
+## 5. Interaction Mechanics & Motion Language
+
+### 5.1 Image Sequence Scroll Animation
+- Menggantikan animasi scroll pasif dengan **Image Sequence Canvas Scrubbing**.
+- Sumbu vertikal scroll mengendalikan frame scrubbing secara deterministik dari `0` sampai `N-1`.
+- Canvas dirender dengan GPU hardware acceleration via `<canvas>` 2D context / `ImageBitmap`.
+
+### 5.2 Smart Scroll-Snapping Behavior
+- Viewport secara cerdas mengunci (*docking*) ke batas awal section saat kecepatan scroll melambat (`scroll-snap-type: y proximity`).
+- **Pengecualian Panjang Konten**: Section dengan tinggi konten `> 100vh` (misalnya daftar teknologi / skill di `/about`) secara dinamis menonaktifkan snapping (`scroll-snap-align: none`) agar pengguna bebas scrolling tanpa tersentak atau terperangkap.
+
+### 5.3 Micro-Interactions
+- Smooth spring transitions pada navigation link highlight.
+- Expandable drawer / modal untuk detail mendalam tanpa mengorbankan kepadatan layout utama.

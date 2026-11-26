@@ -10,7 +10,6 @@ import { getMessages } from "@/i18n/dictionary";
 import { localeHref, type Locale } from "@/i18n/locale";
 import type { Project } from "@/types/project";
 
-import { ProjectGrid } from "./project-grid";
 import { ProjectSlider } from "./project-slider";
 
 type Props = {
@@ -24,6 +23,8 @@ export function FeaturedProjects({ projects, locale }: Props) {
   const featuredProjects = projects.filter(
     (p) => p.status === "ongoing" || p.liveDemo,
   );
+  const sliderProjects =
+    featuredProjects.length > 0 ? featuredProjects : projects;
 
   return (
     <Section>
@@ -44,15 +45,11 @@ export function FeaturedProjects({ projects, locale }: Props) {
           />
         </Reveal>
 
-        {featuredProjects.length > 0 && (
-          <div className="mt-12">
-            <ProjectSlider projects={featuredProjects} locale={locale} />
+        {sliderProjects.length > 0 && (
+          <div className="mt-8">
+            <ProjectSlider projects={sliderProjects} locale={locale} />
           </div>
         )}
-
-        <div className="mt-12">
-          <ProjectGrid projects={projects} />
-        </div>
       </Container>
     </Section>
   );

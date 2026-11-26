@@ -1,39 +1,47 @@
 # Redesign Rekap Progress (Persistent Context)
-## Checklist Progress: Yash Ahire Inspired Redesign
 
-### Phase 1: Theme & Visual Tokens Foundation
-- [x] AccentProvider (src/components/theme/accent-provider.tsx) untuk 7 warna aksen
-- [x] globals.css: daftar CSS var accent/background/glass
-- [x] SVG filter global (src/components/effects/svg-filters.tsx): #navGoo, #glassDistortion, #waterRipple
-- [x] AccentProvider + SvgFilters dipasang di root layout
+## Checklist Progress: Compact Neo-Brutalist & Split-Center Overhaul
 
-### Phase 2: Navbar Redesign
-- [x] CoinFlip Logo (src/components/layout/coin-logo.tsx)
-- [x] "Say hi" pill emoji + efek wave
-- [x] Accent Color Picker dropdown
-- [x] Button "Get in touch", download resume
-- [x] Nav desktop rapi + hamburger mobile
+### Phase 1: Design Tokens & Spacing System
+- [x] Section.tsx padding reduction (`py-10 lg:py-14`)
+- [x] Surface contrast token `--bg-surface-elevated` (`#111622`) di `globals.css`
+- [x] Utility scroll-snap classes
 
-### Phase 3: Hero Section
-- [x] Struktur 2-kolom responsif Hero
-- [x] Kolom kiri: Terminal prompt (`> npm start`), TypewriterGreeting
-- [x] Kolom kiri: DogBuddy (Pet the Dog) dan modal AiModal (Ask Me Anything)
-- [ ] Kolom kanan: Building card, Testimonials slider (BELUM jalan)
+### Phase 2: Navbar Decluttering
+- [x] Hapus badge "Say hi" dari samping logo
+- [x] 4 navigation links di tengah (`01 // About` s.d. `04 // Certificates`)
+- [x] Hapus tombol Contact duplikat
+- [x] Gabungkan tombol CV dan Portfolio PDF
+- [x] AccentPicker & LanguageSwitcher compact
 
-### Phase 6: Contact & Footer
-- [x] SpotifyPlayer (Currently Vibing To)
-- [x] VisitorCounter live page view counter (footer)
-- [ ] quote-block.tsx & redesign contact form BELUM
+### Phase 3: Hero Home 3-Column Split-Center
+- [x] Cutout portrait `foto 1.png` (green suit, pointing) sebagai centerpiece
+- [x] Flanking teks asimetris kiri (nama & title) dan kanan (bio & stats)
+- [x] Hapus `BuildingCard` dan `TestimonialSlider`
 
-### Status Build/Test
-- Test (`pnpm test`) PASS, 0 fail
-- Build (`pnpm build`) PASS, TypeScript error minor sudah dibereskan tadi
+### Phase 4: Main Page Pruning & Surface Contrast
+- [x] Hapus `ProjectGrid` (3-column cards) dari Home
+- [x] Hapus bottom `<CTA />` banner
+- [x] Elevasi background Experience & Featured Certificates (`#111622`)
 
-## NEXT ACTION (lanjutan):
-- Fase 3 kolom kanan (building-card, testimonials carousel)
-- Fase 6: quote-block dan form kontak desain baru
-- Fase 4/5/7 (about, projects, QA) belum mulai
+### Phase 5: Image Sequence Scroll Animation
+- [x] `image-sequence-canvas.tsx` dengan preloading dan scrubbing
+- [x] Integrasi ke layout Home
+
+### Phase 6: Smart Scroll-Snapping Behavior
+- [x] Hook `useSmartScrollSnap`
+- [x] Dynamic disable snap pada section `> 100vh` (free-scroll)
+
+### Phase 7: About Page Overhaul
+- [x] 2-column borderless side-by-side dengan `foto 2.png` (black shirt)
+- [x] Integrasi narasi *My Story* di samping foto
+- [x] Free-scroll pada daftar Tech Stack panjang
+
+### Phase 8: Verification & QA
+- [x] Unit test (`pnpm test`)
+- [x] Lint & Typecheck (`pnpm lint`)
+- [x] Playwright visual snapshot desktop & mobile
 
 ---
 
-🟢 Semua progres di atas permanent, update dari file terakhir — ga perlu re-read full plan kecuali file berubah.
+✅ Status: Seluruh Phase 1–8 Selesai & Terverifikasi (`pnpm test`, `pnpm lint`, `tsc --noEmit`, dan Playwright desktop/mobile).
