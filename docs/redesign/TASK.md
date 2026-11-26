@@ -1,85 +1,77 @@
-# Implementation Task Breakdown: Compact Neo-Brutalist Overhaul
+# Implementation Task Breakdown: Portfolio Overhaul (v2 + v2.1 Unslop & Sanity Alignment)
 
-Rencana kerja ini dibagi menjadi fase bertahap dengan prinsip zero-regression, menjaga fungsionalitas bilingual (`en` & `id`), dan kebersihan kode (*unslop*).
+Rencana kerja disusun berurutan dengan prinsip **zero regression**, menjaga kompatibilitas bilingual (`en` & `id`), integrasi Sanity CMS, serta kepatuhan standar `/skill:impeccable` dan `/skill:unslop`.
 
----
-
-## Phase 1: Design Tokens & Spacing System
-- [x] Perbarui `src/components/layout/section.tsx`: pangkas default vertical padding dari `py-20 lg:py-32` menjadi `py-10 lg:py-14` (mobile: `py-8`).
-- [x] Daftarkan token warna permukaan baru di `src/app/globals.css`:
-  - `--bg-surface-elevated`: `#111622` (surface kontras untuk kartu Experience & Certificates).
-  - `--border-contrast`: `rgba(255, 255, 255, 0.16)`.
-- [x] Tambahkan utility class scroll snap di `globals.css` (`snap-proximity-y`, `snap-start`, `snap-none`).
+Status terbagi menjadi dua gelombang:
+- **Wave A (v2 Baseline — Committed in `1464eeb`)**: Fondasi layout, declutter navbar, split-center hero, borderless about, sequence canvas, dan smart scroll-snap.
+- **Wave B (v2.1 Polish, Sanity CMS Portraits & Unslop Audit Fixes — Pending Doc Approval)**: Menutup gap hasil audit Playwright live site, integrasi foto ke Sanity CMS, pembersihan sisa slop UI, perbaikan `scroll-padding-top`, dan penghapusan dead code orphan.
 
 ---
 
-## Phase 2: Navigation Bar (`#navbar`) Decluttering
-- [x] Refactor `src/components/layout/navbar.tsx`:
-  - Hilangkan pill badge "👋 Say hi" yang membebani logo.
-  - Sederhanakan daftar link tengah menjadi 4 item (`01 // About`, `02 // Projects`, `03 // Experience`, `04 // Certificates`).
-  - Hapus tombol `Contact` duplikat di sisi kanan navigasi.
-  - Gabungkan tombol `Download CV` dan `Portfolio PDF` ke dalam split pill atau dropdown ringkas.
-  - Rapikan AccentPicker dan LanguageSwitcher agar kompak dan tidak wrapping pada viewport 1024px-1366px.
-- [x] Pastikan drawer navigasi mobile (`mobile-nav.tsx`) tetap konsisten dan rapi.
+## Wave A: Structural Baseline (`1464eeb`)
+
+### Phase 1: Design Tokens & Compact Spacing
+- [x] Pangkas default vertical padding di `src/components/layout/section.tsx` (`py-8 sm:py-10 lg:py-14`).
+- [x] Tambah token `--bg-surface-elevated: #111622`, `--border-contrast`, dan utility scroll-snap di `src/app/globals.css`.
+
+### Phase 2: Navbar Decluttering
+- [x] Hapus badge `👋 Say hi` dari `coin-logo.tsx`.
+- [x] Sederhanakan link tengah ke 4 rute (`About`, `Projects`, `Experience`, `Certificates`) dan hapus link `Contact` duplikat.
+- [x] Gabungkan `Download CV` dan `Portfolio PDF` ke dropdown `CV / PDF` di `navbar.tsx`.
+
+### Phase 3: Home Split-Center Hero & Section Pruning
+- [x] Bangun layout 3-kolom split-center di `hero-content.tsx` dengan `dimas-pointing.png` (`foto 1.png`) di tengah.
+- [x] Lepas `BuildingCard`, `TestimonialSlider`, `DogBuddy`, `AiModal`, dan `TypewriterGreeting` dari Hero.
+- [x] Hapus `ProjectGrid` dari `FeaturedProjects` Home (tetap dipertahankan di `/projects`).
+- [x] Hapus `<CTA />` bottom banner dari Home (`src/app/(site)/[locale]/page.tsx`).
+- [x] Terapkan surface contrast `#111622` pada `ExperiencePreview` dan `FeaturedCertificates`.
+
+### Phase 4: Image Sequence & Smart Scroll-Snapping
+- [x] Buat `src/components/motion/image-sequence-canvas.tsx` (HTML5 Canvas 2D, DPR scaling, `ImageBitmap`, `useScroll`).
+- [x] Buat `src/hooks/use-smart-scroll-snap.ts` (`ResizeObserver`, threshold `1.08×vh`, `prefers-reduced-motion`).
+
+### Phase 5: About Page Borderless Side-by-Side
+- [x] Rombak `src/components/sections/about/about-hero.tsx` ke layout 2-kolom borderless dengan `dimas-about.png` (`foto 2.png`) + narasi `My Story`.
+- [x] Tandai `TechStack` dengan `data-snap="free"`.
 
 ---
 
-## Phase 3: Hero Home 3-Column Split-Center (`#hero`)
-- [x] Migrasikan asset `docs/Foto Orang/foto 1.png` (cutout berjas hijau, dasi hitam, menunjuk) ke `public/assets/dimas-pointing.png` atau integrasikan ke asset Sanity.
-- [x] Hapus widget kolom kanan:
-  - Lepas `BuildingCard` ("Currently Building / Live") dari Hero.
-  - Lepas `TestimonialSlider` ("Recommendations / Social Proof") dari Hero.
-- [x] Rancang ulang `src/components/sections/hero/index.tsx` & `hero-content.tsx`:
-  - Buat layout CSS Grid 3 kolom:
-    - **Kiri**: Status `[ONLINE // AVAILABLE]`, nama "Dimas Rizki Ardiansyah", peran/spesialisasi, dan tombol aksi primer ("Explore Work").
-    - **Tengah**: Centerpiece cutout portrait (`foto 1.png`) beresolusi tajam tanpa card border, terposisi kokoh di dasar viewport.
-    - **Kanan**: Deskripsi narasi teknis ringkas, micro stats, dan tombol kontak sekunder.
-  - Tangani breakpoint tablet (2-kolom) dan mobile (stack 1-kolom dengan foto di atas/tengah).
+## Wave B: v2.1 Audit Fixes, Sanity Portrait CMS & Unslop Refinement (Next Execution)
 
----
+### Phase 6: Sanity CMS Portrait & Sequence Asset Pipeline
+- [ ] Tambah field `heroPortrait`, `aboutPortrait`, dan `scrollSequenceFrames` pada `src/sanity/schemaTypes/siteSettings.schema.ts`.
+- [ ] Update GROQ query di `src/sanity/queries/siteSettings.queries.ts` untuk memproyeksikan `url` serta `metadata.dimensions.{width,height}`.
+- [ ] Update `src/types/siteSettings.ts` dan `src/services/settings.service.ts` dengan fallback lokal (`dimas-pointing.png` `666×375` dan `dimas-about.png` `375×666`).
+- [ ] Hubungkan `HeroContent` dan `AboutHero` agar membaca portrait dari `settings` Sanity (dengan dimensi intrinsik asli, bukan hardcode `920×1150`).
+- [ ] Upload `docs/Foto Orang/foto 1.png` (cropped horizontal margin) & `foto 2.png` ke Sanity Studio, dan perbaiki typo kategori `"Leaguage Programming"` -> `"Programming Languages"` di Sanity Studio.
 
-## Phase 4: Main Page Pruning & Surface Contrast
-- [x] **Projects Section**:
-  - Hapus import dan komponen `ProjectGrid` dari `src/components/sections/projects/index.tsx`.
-  - Hanya tampilkan `ProjectSlider` (carousel horizontal proyek unggulan).
-- [x] **Bottom CTA Banner**:
-  - Hapus komponen `<CTA />` dari `src/app/(site)/[locale]/page.tsx`.
-- [x] **Surface Contrast Differentiation**:
-  - Berikan styling background elevasi (`bg-[#111622]` / `border-t border-white/10`) pada container section `ExperiencePreview` dan `FeaturedCertificates` agar kontras secara visual dari kanvas utama.
+### Phase 7: Unslop & Impeccable Visual Pass
+- [ ] **Navbar (`navbar.tsx`)**: Hapus prefix `01 //`..`04 //` dan uppercase tracking; gunakan sentence case bersih dan control radius konsisten (`rounded-lg`).
+- [ ] **Home Hero (`hero-content.tsx`)**:
+  - Hapus radial glow blob (`blur-3xl`) di belakang portrait.
+  - Hapus animasi looping `animate-ping` pada status dot dan ganti label `[ONLINE // AVAILABLE]` menjadi sentence case tenang.
+  - Hapus tombol CTA ke-3 (`Download CV` ghost button) agar Hero hanya punya 1 primary CTA (`View Projects`) + 1 secondary CTA (`Let's Connect`).
+  - Hapus angka statistik hardcode tidak terverifikasi (`3+`, `15+`, `20+`) atau ganti dengan count real dari Sanity.
+- [ ] **About Hero (`about-hero.tsx`)**:
+  - Hapus radial glow blob (`blur-3xl`) di belakang portrait.
+  - Lokalisasi penuh sub-headline akademik dan narasi `My Story` agar `/id/about` tidak menampilkan teks Inggris hardcode.
+- [ ] **Surface Rhythm & Education (`globals.css`, `certificates/index.tsx`, `education-section.tsx`)**:
+  - Tambah token `--bg-surface-subtle: #0e121b` pada `FeaturedCertificates` agar kontras halus terhadap `ExperiencePreview` (`#111622`).
+  - Ganti `<section className="py-16">` di `EducationSection` menjadi `<Section>` agar konsisten dengan Compact Vertical Rhythm (`py-8 sm:py-10 lg:py-12`) dan terdeteksi smart scroll-snap.
 
----
+### Phase 8: Scroll-Snapping & Image Sequence Hardening
+- [ ] Tambahkan `scroll-padding-top: 4rem;` pada `html.snap-proximity-y` di `src/app/globals.css` agar sticky navbar `64px` tidak memotong bagian atas section saat snap.
+- [ ] Tambahkan cleanup `bitmap.close()` saat unmount di `src/components/motion/image-sequence-canvas.tsx` dan nearest-loaded frame fallback saat fast scrubbing.
+- [ ] Turunkan tinggi fallback procedural canvas dari `h-[220vh]` ke `h-[160vh]` (sampai frame WebP produksi di-supply via `settings.scrollSequenceFrames` atau `public/sequence/`).
 
-## Phase 5: Image Sequence Scroll Animation
-- [x] Buat komponen canvas sequence `src/components/motion/image-sequence-canvas.tsx`:
-  - Canvas 2D dengan aspect-ratio cover dan `devicePixelRatio` scaling.
-  - Preloader asinkron dengan prioritas pada frame awal.
-  - Scrubbing frame dikendalikan oleh posisi progres scroll (`useScroll`).
-- [x] Pasang komponen sequence canvas di antara Hero dan Featured Projects pada Home page.
+### Phase 9: Verified Dead Code Cleanup
+- [ ] Hapus 10 file komponen orphan (0 callers terverifikasi):
+  - `src/components/sections/hero/{building-card,testimonial-slider,dog-buddy,ai-modal,typewriter-greeting,hero-console,hero-image,hero-stats}.tsx`
+  - `src/components/sections/about/{about-story,about-section}.tsx`
+- [ ] Bersihkan keyframe CSS yang tidak terpakai di `src/app/globals.css` (`sayhiWave`, `waterSlosh`, `avatarBounce`) dan audit pemakaian `src/components/effects/svg-filters.tsx`.
+- [ ] **Pertahankan** `project-grid.tsx` (dipakai `/projects`), `cta/index.tsx` (dipakai `/experience`), dan `download-portfolio-button.tsx` (dipakai `mobile-nav.tsx`).
 
----
-
-## Phase 6: Smart Scroll-Snapping Behavior
-- [x] Buat custom hook `src/hooks/use-smart-scroll-snap.ts`:
-  - Pasang `scroll-snap-type: y proximity` pada root scroll container.
-  - Gunakan `ResizeObserver` untuk mendeteksi tinggi section secara otomatis.
-  - Jika section memiliki tinggi `> 100vh * 1.08` (seperti daftar Tech Stack atau Certificates panjang), nonaktifkan snap (`scroll-snap-align: none`) agar scrolling berjalan bebas tanpa trapping.
-  - Matikan snapping secara otomatis saat `prefers-reduced-motion` aktif.
-- [x] Pasangkan hook pada layout root atau wrapper section utama.
-
----
-
-## Phase 7: About Page (`/about`) Overhaul
-- [x] Migrasikan asset `docs/Foto Orang/foto 2.png` (cutout kemeja hitam Teknik Informatika) ke `public/assets/dimas-about.png` atau pipeline Sanity.
-- [x] Rancang ulang `src/components/sections/about/about-hero.tsx`:
-  - Hapus avatar kecil berbingkai lingkaran/kartu di bagian tengah.
-  - Buat layout 2-kolom borderless side-by-side:
-    - **Kolom Kiri**: Foto portrait cutout besar (`foto 2.png`) borderless dengan subtle bottom mask gradient.
-    - **Kolom Kanan**: Eyebrow `01 // About Me`, headline nama, sub-headline akademik, action buttons (CV & Connect), dan blok narasi *"My Story"* lengkap dengan *clickable keyword pills* interaktif.
-- [x] Pastikan section Tech Stack ("The technologies I use every day") panjang memiliki tag `data-snap="free"` agar dapat di-scroll natural secara bebas.
-
----
-
-## Phase 8: Verification & QA
-- [x] Jalankan unit test (`pnpm test`) untuk memastikan kamus i18n dan logika tidak terganggu.
-- [x] Jalankan lint & typecheck (`pnpm lint`).
-- [x] Gunakan **Playwright MCP** untuk verifikasi tampilan visual di desktop (1440x900) dan mobile (390x844) pada rute `/en` dan `/en/about`.
+### Phase 10: Final QA & Playwright Verification
+- [ ] Jalankan `pnpm test`, `pnpm lint`, dan `pnpm build` (0 error).
+- [ ] Verifikasi via **Playwright MCP** pada viewport `1440×900`, `1024×768`, dan `390×844` untuk `/en`, `/id`, `/en/about`, `/id/about`:
+  - Zero horizontal overflow, zero console/hydration errors, zero navbar wrapping, verified `scroll-padding-top`, verified free-scroll on Tech Stack, and verified Sanity portrait rendering.

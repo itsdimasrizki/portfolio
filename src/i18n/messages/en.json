@@ -106,6 +106,9 @@
   "language.label": "Language",
   "language.id": "ID",
   "language.en": "EN",
+  "about.eyebrow": "About",
+  "about.academicSubtitle": "Informatics Engineering student at UPN “Veteran” Yogyakarta, focused on software engineering, AI systems, and practical hardware integration.",
+  "about.story.eyebrow": "My story",
   "contact.quote.text": "The best software is built at the intersection of deep technical curiosity and genuine care for the humans who use it.",
   "contact.quote.author": "Dimas Rizki, Fullstack Software Engineer"
 }

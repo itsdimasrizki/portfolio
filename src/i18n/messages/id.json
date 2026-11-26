@@ -106,6 +106,9 @@
   "language.label": "Bahasa",
   "language.id": "ID",
   "language.en": "EN",
+  "about.eyebrow": "Tentang",
+  "about.academicSubtitle": "Mahasiswa Teknik Informatika di UPN “Veteran” Yogyakarta dengan fokus pada rekayasa perangkat lunak, sistem AI, dan integrasi perangkat keras.",
+  "about.story.eyebrow": "Cerita saya",
   "contact.quote.text": "Perangkat lunak terbaik lahir di perpotongan antara rasa ingin tahu teknis yang mendalam dan kepedulian nyata terhadap manusia yang menggunakannya.",
   "contact.quote.author": "Dimas Rizki, Fullstack Software Engineer"
 }

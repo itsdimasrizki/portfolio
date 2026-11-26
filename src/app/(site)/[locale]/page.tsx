@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
 import { Hero } from "@/components/sections/hero";
-import { ImageSequenceCanvas } from "@/components/motion/image-sequence-canvas";
 import { FeaturedProjects } from "@/components/sections/projects";
 import { ExperiencePreview } from "@/components/sections/experience";
 import { FeaturedCertificates } from "@/components/sections/certificates";
@@ -46,17 +45,9 @@ export default async function Home({
       getPageContent(typedLocale),
     ]);
 
-  const cvUrl = settings.cvUrl ?? null;
-
   return (
     <main>
-      <Hero
-        content={content}
-        settings={settings}
-        cvUrl={cvUrl}
-        locale={typedLocale}
-      />
-      <ImageSequenceCanvas />
+      <Hero content={content} settings={settings} locale={typedLocale} />
       <FeaturedProjects projects={featuredProjects} locale={typedLocale} />
       <ExperiencePreview experiences={experiences} locale={typedLocale} />
       <FeaturedCertificates

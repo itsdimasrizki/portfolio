@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, GraduationCap, BookOpen, FlaskConical, Trophy } from "lucide-react";
-
+import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
 const EDUCATION_DATA = {
   initials: "UPN",
   institution: 'Universitas Pembangunan Nasional "Veteran" Yogyakarta',
@@ -48,11 +49,11 @@ export function EducationSection() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="py-16">
-      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+    <Section>
+      <Container>
         {/* Section label */}
-        <p className="mb-8 font-mono text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-          {`// Education`}
+        <p className="mb-6 font-mono text-xs font-medium text-muted-foreground">
+          Education
         </p>
 
         <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
@@ -147,7 +148,7 @@ export function EducationSection() {
             )}
           </AnimatePresence>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

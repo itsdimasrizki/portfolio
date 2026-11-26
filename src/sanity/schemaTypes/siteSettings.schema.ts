@@ -107,5 +107,26 @@ export const siteSettingsSchema = defineType({
       ],
       validation: (Rule) => Rule.max(3),
     }),
+    defineField({
+      name: "heroPortrait",
+      title: "Hero Portrait Cutout (Home)",
+      description: "Transparent PNG cutout for the Home split-center hero (foto 1.png).",
+      type: "image",
+      options: { hotspot: false },
+    }),
+    defineField({
+      name: "aboutPortrait",
+      title: "About Portrait Cutout (/about)",
+      description: "Transparent PNG cutout for the About borderless side-by-side hero (foto 2.png).",
+      type: "image",
+      options: { hotspot: false },
+    }),
+    defineField({
+      name: "scrollSequenceFrames",
+      title: "Home Scroll Sequence Frames (Optional)",
+      description: "Ordered WebP frames for Home scroll scrubbing animation.",
+      type: "array",
+      of: [defineArrayMember({ type: "image" })],
+    }),
   ],
 });

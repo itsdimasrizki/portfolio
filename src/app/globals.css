@@ -44,6 +44,7 @@
   --bg-primary: var(--background);
   --bg-secondary: var(--card);
   --bg-surface-elevated: #111622;
+  --bg-surface-subtle: #0e121b;
   --bg-tertiary: var(--border);
   --text-primary: var(--foreground);
   --text-secondary: var(--muted-foreground);
@@ -98,6 +99,7 @@
   --bg-primary: var(--background);
   --bg-secondary: var(--card);
   --bg-surface-elevated: #111622;
+  --bg-surface-subtle: #0e121b;
   --bg-tertiary: var(--border);
   --text-primary: var(--foreground);
   --text-secondary: var(--muted-foreground);
@@ -147,6 +149,8 @@
 
   --bg-primary: var(--background);
   --bg-secondary: var(--card);
+  --bg-surface-elevated: #edf2f7;
+  --bg-surface-subtle: #f1f5f9;
   --bg-tertiary: var(--border);
   --text-primary: var(--foreground);
   --text-secondary: var(--muted-foreground);
@@ -214,42 +218,18 @@
   --color-accent-primary: var(--accent-primary);
   --color-accent-secondary: var(--accent-secondary);
   --color-surface-elevated: var(--bg-surface-elevated);
+  --color-surface-subtle: var(--bg-surface-subtle);
   --color-border-subtle: var(--border-subtle);
   --color-border-contrast: var(--border-contrast);
   --color-border-hover: var(--border-hover);
-
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 2px);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Keyframes & custom animation utilities from DESIGN.md / TASK.md 1.1 */
-  --animate-sayhi-wave: sayhiWave 1.8s ease-in-out infinite;
-  --animate-water-slosh: waterSlosh 2.4s ease-in-out infinite;
-  --animate-picker-pop: pickerPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-modal-liquid-expand: modalLiquidExpand 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-avatar-bounce: avatarBounce 1.2s ease-in-out infinite;
-
-  @keyframes sayhiWave {
-    0%, 100% {
-      transform: rotate(0deg);
-    }
-    20%, 60% {
-      transform: rotate(14deg);
-    }
-    40%, 80% {
-      transform: rotate(-10deg);
-    }
-  }
-
-  @keyframes waterSlosh {
-    0%, 100% {
-      transform: translateY(0) scale(1);
-    }
-    50% {
-      transform: translateY(-2px) scale(1.04);
-    }
-  }
+  /* Purposeful UI transitions */
+  --animate-picker-pop: pickerPop 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-modal-liquid-expand: modalLiquidExpand 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 
   @keyframes pickerPop {
     0% {
@@ -265,20 +245,11 @@
   @keyframes modalLiquidExpand {
     0% {
       opacity: 0;
-      transform: scale(0.92) translateY(12px);
+      transform: scale(0.96) translateY(8px);
     }
     100% {
       opacity: 1;
       transform: scale(1) translateY(0);
-    }
-  }
-
-  @keyframes avatarBounce {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-4px);
     }
   }
 }
@@ -304,8 +275,8 @@
 /* Scroll-snap utility classes for smart hybrid scroll-snapping */
 .snap-proximity-y {
   scroll-snap-type: y proximity;
+  scroll-padding-top: 4rem;
 }
-
 .snap-start {
   scroll-snap-align: start;
   scroll-snap-stop: normal;

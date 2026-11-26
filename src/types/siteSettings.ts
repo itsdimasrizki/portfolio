@@ -1,4 +1,7 @@
 import type { Localized } from "@/i18n/locale";
+import type { SanityImageMeta } from "@/lib/portraits";
+
+export type { SanityImageMeta };
 
 export interface SanitySettings {
   cvUrl?: string;
@@ -14,17 +17,26 @@ export interface SanitySettings {
   linkedinUrl?: string;
   twitterUrl?: string;
   instagramUrl?: string;
+  heroPortrait?: SanityImageMeta | null;
+  aboutPortrait?: SanityImageMeta | null;
+  scrollSequenceFrames?: (string | null)[] | null;
 }
 
 /**
  * Settings setelah service memilih bahasanya. Komponen tampilan dan PDF
  * memakai tipe ini: field prosa sudah berupa string biasa, bukan objek.
  */
-export type ResolvedSettings = Omit<SanitySettings, "roles" | "bio"> & {
+export type ResolvedSettings = Omit<
+  SanitySettings,
+  "roles" | "bio" | "heroPortrait" | "aboutPortrait" | "scrollSequenceFrames"
+> & {
   /**
    * Selalu array, boleh kosong. Bukan opsional supaya delapan tempat yang
    * membacanya tidak perlu menjaga-jaga `undefined` masing-masing.
    */
   roles: string[];
   bio?: string;
+  heroPortrait: SanityImageMeta;
+  aboutPortrait: SanityImageMeta;
+  scrollSequenceFrames: string[];
 };

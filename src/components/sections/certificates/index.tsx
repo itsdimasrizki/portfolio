@@ -21,7 +21,7 @@ export function FeaturedCertificates({ certificates, locale }: Props) {
   const messages = getMessages(locale);
 
   return (
-    <Section className="border-t border-[var(--border-contrast)] bg-[var(--bg-surface-elevated)]">
+    <Section className="border-t border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)]">
       <Container>
         <Reveal>
           <SectionHeader

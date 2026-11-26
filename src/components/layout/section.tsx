@@ -14,7 +14,7 @@ export function Section({
       data-snap={dataSnap}
       data-snap-target={dataSnap === "free" ? undefined : "true"}
       className={cn(
-        "py-8 sm:py-10 lg:py-14",
+        "py-8 sm:py-10 lg:py-12",
         className
       )}
       {...props}

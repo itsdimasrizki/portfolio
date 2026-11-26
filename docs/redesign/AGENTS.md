@@ -1,10 +1,10 @@
-# Multi-Agent Workflow: Compact Neo-Brutalist Redesign Execution
+# Multi-Agent Workflow: Portfolio Overhaul Execution (v2.1)
 
-Dokumen ini mendefinisikan pembagian peran sub-agen otomatis, dependensi antar-tugas, batasan cakupan, dan protokol komunikasi untuk mengeksekusi rencana perombakan redesign baru.
+Dokumen ini mendefinisikan pembagian domain sub-agen, batas tanggung jawab file, dependensi, dan quality gate untuk mengeksekusi Wave B (v2.1 Polish, Sanity Portrait CMS, Scroll/Sequence Hardening & Dead Code Cleanup) setelah dokumen perencanaan disetujui.
 
 ---
 
-## 1. Agent Roster & Domain Responsibilities
+## 1. Agent Roster & File Ownership
 
 ```
                       +-----------------------------+
@@ -15,57 +15,56 @@ Dokumen ini mendefinisikan pembagian peran sub-agen otomatis, dependensi antar-t
        |               |                           |               |
 +------v-------+ +-----v-------+             +-----v-------+ +-----v-------+
 | Agent 1      | | Agent 2     |             | Agent 3     | | Agent 4     |
-| Tokens &     | | Navbar      |             | Hero Home & | | Sequence &  |
-| Spacing      | | Declutter   |             | Pruning     | | Smart Snap  |
+| Sanity CMS & | | Unslop UI   |             | Scroll Snap | | Dead Code   |
+| Asset Schema | | Navbar/Hero |             | & Sequence  | | Cleanup     |
 +--------------+ +-------------+             +-------------+ +-------------+
                                                            |
-                                             +-------------+---------------+
-                                             |                             |
-                                       +-----v-------+               +-----v-------+
-                                       | Agent 5     |               | Agent 6     |
-                                       | About Page  |               | Playwright  |
-                                       | Overhaul    |               | QA & Visual |
-                                       +-------------+               +-------------+
+                                                     +-----v-------+
+                                                     | Agent 5     |
+                                                     | QA & Visual |
+                                                     | Playwright  |
+                                                     +-------------+
 ```
 
-### Agent 1: Tokens & Spacing Specialist (`agent-tokens`)
-- **Tugas**:
-  - Memperbarui `section.tsx` dengan vertical spacing compact (`py-10 lg:py-14`).
-  - Menambahkan token `--bg-surface-elevated` (`#111622`) dan `--border-contrast` di `globals.css`.
-  - Menyiapkan styling utilitas scroll snapping.
-- **Output**: Token dan container layout siap pakai untuk section lainnya.
+### Agent 1: Sanity CMS & Portrait Pipeline (`agent-sanity`)
+- **Owned Files:**
+  - `src/sanity/schemaTypes/siteSettings.schema.ts`
+  - `src/sanity/queries/siteSettings.queries.ts`
+  - `src/types/siteSettings.ts`
+  - `src/services/settings.service.ts`
+- **Scope:** Tambah field `heroPortrait`, `aboutPortrait`, dan `scrollSequenceFrames` dengan metadata dimensi + fallback lokal yang akurat (`666×375` & `375×666`).
 
-### Agent 2: Navbar Decluttering Specialist (`agent-navbar`)
-- **Tugas**:
-  - Merapikan `src/components/layout/navbar.tsx`: eliminasi "Say hi" badge, satukan CV & PDF download, hapus tombol Contact duplikat, dan atur link tengah ke 4 rute utama.
-  - Memastikan tampilan responsif pada viewport 1024px-1366px tidak mengalami wrapping.
-- **Output**: Navbar yang bersih, lapang, dan berhierarki tegas.
+### Agent 2: Unslop Visual, Navbar, Hero & About (`agent-ui`)
+- **Owned Files:**
+  - `src/components/layout/navbar.tsx`
+  - `src/components/sections/hero/index.tsx` & `hero-content.tsx`
+  - `src/components/sections/about/about-hero.tsx` & `education-section.tsx`
+  - `src/components/sections/certificates/index.tsx`
+  - `src/i18n/messages/en.json` & `src/i18n/messages/id.json`
+- **Depends On:** Agent 1 (`ResolvedSettings` portrait types).
+- **Scope:** Hilangkan glow blobs, looping `animate-ping`, CTA ke-3 di Hero, hardcoded unverified stats, uppercase `01 //` clutter; lokalisasi `AboutHero` story; samakan `<Section>` di `EducationSection`; terapkan `--bg-surface-subtle` pada `FeaturedCertificates`.
 
-### Agent 3: Hero Home & Section Pruning Specialist (`agent-hero-prune`)
-- **Tugas**:
-  - Mengimplementasikan layout 3-kolom split-center pada Hero Home dengan `foto 1.png` sebagai centerpiece.
-  - Menghapus komponen `BuildingCard` dan `TestimonialSlider` dari Hero.
-  - Menghapus `ProjectGrid` (grid 3-kolom) dari `FeaturedProjects`.
-  - Menghapus `<CTA />` ("Let's build something") di atas footer.
-  - Menerapkan background surface elevated pada `ExperiencePreview` dan `FeaturedCertificates`.
-- **Output**: Halaman Home yang terfokus, padat, dan kontras visualnya jelas.
+### Agent 3: Scroll-Snapping & Sequence Engine (`agent-motion`)
+- **Owned Files:**
+  - `src/app/globals.css`
+  - `src/components/motion/image-sequence-canvas.tsx`
+  - `src/hooks/use-smart-scroll-snap.ts`
+- **Scope:** Tambah `scroll-padding-top: 4rem` pada `.snap-proximity-y`, tambah `--bg-surface-subtle`, perbaiki memory cleanup `bitmap.close()` + nearest-frame fallback di `ImageSequenceCanvas`, dan pangkas unused keyframes.
 
-### Agent 4: Canvas Sequence & Smart Scroll-Snapping Specialist (`agent-motion`)
-- **Tugas**:
-  - Membangun `image-sequence-canvas.tsx` untuk frame scrubbing berbasis scroll progress dengan preloading efisien.
-  - Membangun hook `useSmartScrollSnap` dengan `ResizeObserver` untuk menonaktifkan snap pada section dengan tinggi `> 100vh`.
-- **Output**: Animasi sequence 60 FPS dan scroll snapping yang natural tanpa trap.
+### Agent 4: Dead Code Cleanup (`agent-cleanup`)
+- **Owned Files:** 10 orphan files terverifikasi di `src/components/sections/hero/*` dan `src/components/sections/about/*`.
+- **Depends On:** Agent 2 (memastikan tidak ada import tersisa).
+- **Scope:** Hapus file dengan 0 caller setelah verifikasi `grep`; **dilarang** menghapus `project-grid.tsx`, `cta/index.tsx`, atau `download-portfolio-button.tsx`.
 
-### Agent 5: About Page Overhaul Specialist (`agent-about`)
-- **Tugas**:
-  - Mendesain ulang `src/components/sections/about/about-hero.tsx` menjadi 2-kolom borderless side-by-side dengan `foto 2.png`.
-  - Mengintegrasikan blok narasi *"My Story"* langsung di samping foto tanpa kartu avatar terpisah.
-  - Memastikan section Tech Stack panjang berjalan dengan mode free-scroll.
-- **Output**: Halaman `/about` berstandar editorial tinggi.
+### Agent 5: QA & Playwright Verification (`agent-qa`)
+- **Depends On:** Agents 1–4.
+- **Scope:** Jalankan `pnpm test`, `pnpm lint`, `pnpm build`, dan verifikasi live render dengan **Playwright MCP** pada viewport `1440×900`, `1024×768`, dan `390×844` untuk `/en`, `/id`, `/en/about`, `/id/about`.
 
-### Agent 6: Playwright QA & Visual Verification Specialist (`agent-qa`)
-- **Tugas**:
-  - Menjalankan unit tests (`pnpm test`) dan linter (`pnpm lint`).
-  - Melakukan inspeksi visual menggunakan **Playwright MCP** pada resolusi desktop (1440x900) dan mobile (390x844).
-  - Memastikan tidak ada console error atau layout shift.
-- **Output**: Laporan verifikasi visual dan conformance test.
+---
+
+## 2. Guardrails & Quality Gates
+
+1. **Docs-First Gate:** Tidak ada modifikasi kode `src/` sebelum dokumen di `docs/redesign/` dan `docs/superpowers/plans/2026-11-27-portfolio-visual-and-interaction-overhaul.md` ditinjau dan disetujui pengguna.
+2. **Bilingual Completeness:** Setiap key UI baru wajib ada di `en.json` dan `id.json` (diverifikasi oleh `tests/i18n/messages.test.ts`).
+3. **Caller-Verified Deletion:** Dilarang menghapus file komponen tanpa bukti `grep` menunjukkan 0 caller aktif.
+4. **Zero Console/Hydration Errors:** Playwright verification wajib melaporkan `Errors: 0` sebelum task ditandai selesai.
