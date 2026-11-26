@@ -63,7 +63,7 @@ export function TechStack({ technologies, locale }: Props) {
   const messages = getMessages(locale);
 
   return (
-    <Section>
+    <Section data-snap="free">
       <Container>
         <Reveal>
           <SectionHeader

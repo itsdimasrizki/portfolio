@@ -8,6 +8,7 @@ import "../../globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { SmartScrollSnap } from "@/components/motion/smart-scroll-snap";
 import { ParticleCanvas } from "@/components/effects/particle-canvas";
 import { FluidCursor } from "@/components/effects/fluid-cursor";
 import { SvgFilters } from "@/components/effects/svg-filters";
@@ -96,6 +97,7 @@ export default async function SiteLayout({
       >
         <AccentColorProvider>
           <MotionProvider>
+            <SmartScrollSnap />
             <SvgFilters />
             <ParticleCanvas />
             <FluidCursor />

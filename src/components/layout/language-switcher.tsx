@@ -33,7 +33,12 @@ export function LanguageSwitcher({ locale, className }: LanguageSwitcherProps) {
   }
 
   return (
-    <div className={cn("flex items-center rounded-md border border-border", className)}>
+    <div
+      className={cn(
+        "flex shrink-0 items-center overflow-hidden rounded-full border border-border bg-card/70 p-0.5",
+        className
+      )}
+    >
       {LOCALES.map((item) => (
         <button
           key={item}
@@ -41,9 +46,9 @@ export function LanguageSwitcher({ locale, className }: LanguageSwitcherProps) {
           onClick={() => switchTo(item)}
           aria-current={item === locale ? "true" : undefined}
           className={cn(
-            "px-2 py-1 text-xs font-medium uppercase transition-colors",
+            "rounded-full px-2 py-0.5 font-mono text-[11px] font-medium uppercase transition-colors",
             item === locale
-              ? "bg-muted text-foreground"
+              ? "bg-primary/15 text-primary"
               : "text-muted-foreground hover:text-foreground"
           )}
         >

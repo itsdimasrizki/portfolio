@@ -43,11 +43,13 @@
   /* Semantic surface aliases from DESIGN.md */
   --bg-primary: var(--background);
   --bg-secondary: var(--card);
+  --bg-surface-elevated: #111622;
   --bg-tertiary: var(--border);
   --text-primary: var(--foreground);
   --text-secondary: var(--muted-foreground);
   --text-muted: #64748b;
   --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-contrast: rgba(255, 255, 255, 0.16);
   --border-hover: var(--accent-primary);
 
   --chart-1: #f59e0b;
@@ -95,11 +97,13 @@
 
   --bg-primary: var(--background);
   --bg-secondary: var(--card);
+  --bg-surface-elevated: #111622;
   --bg-tertiary: var(--border);
   --text-primary: var(--foreground);
   --text-secondary: var(--muted-foreground);
   --text-muted: #64748b;
   --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-contrast: rgba(255, 255, 255, 0.16);
   --border-hover: var(--accent-primary);
 
   --sidebar: var(--background);
@@ -209,7 +213,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-accent-primary: var(--accent-primary);
   --color-accent-secondary: var(--accent-secondary);
+  --color-surface-elevated: var(--bg-surface-elevated);
   --color-border-subtle: var(--border-subtle);
+  --color-border-contrast: var(--border-contrast);
   --color-border-hover: var(--border-hover);
 
   --radius-sm: calc(var(--radius) - 2px);
@@ -293,4 +299,18 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight text-foreground;
   }
+}
+
+/* Scroll-snap utility classes for smart hybrid scroll-snapping */
+.snap-proximity-y {
+  scroll-snap-type: y proximity;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+.snap-none {
+  scroll-snap-align: none;
 }

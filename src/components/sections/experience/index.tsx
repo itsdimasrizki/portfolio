@@ -70,7 +70,7 @@ export function ExperiencePreview({ experiences, locale }: Props) {
   const active = experiences[current];
 
   return (
-    <Section>
+    <Section className="border-t border-[var(--border-contrast)] bg-[var(--bg-surface-elevated)]">
       <Container>
         <Reveal>
           <SectionHeader
