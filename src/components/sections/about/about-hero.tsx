@@ -12,6 +12,7 @@ import { getMessages } from "@/i18n/dictionary";
 import { localeHref, type Locale } from "@/i18n/locale";
 import { heroItem } from "@/lib/motion";
 import type { PageContent } from "@/types/pageContent";
+import type { SanityImageMeta } from "@/types/siteSettings";
 
 import { AboutPillModal, type PillKey } from "./about-pill-modal";
 
@@ -19,6 +20,8 @@ type AboutHeroProps = {
   cvUrl?: string | null;
   locale: Locale;
   content: PageContent;
+  portrait: SanityImageMeta;
+  fullName?: string;
 };
 
 function PillButton({
@@ -32,81 +35,67 @@ function PillButton({
     <button
       type="button"
       onClick={onClick}
-      className="inline rounded-full border border-primary/40 bg-primary/10 px-2.5 py-0.5 font-mono text-xs text-primary cursor-pointer hover:bg-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="inline rounded-md border border-primary/35 bg-primary/10 px-2 py-0.5 font-mono text-xs text-primary cursor-pointer hover:bg-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       {children}
     </button>
   );
 }
 
-export function AboutHero({ cvUrl, locale, content }: AboutHeroProps) {
+export function AboutHero({
+  cvUrl,
+  locale,
+  content,
+  portrait,
+  fullName,
+}: AboutHeroProps) {
   const messages = getMessages(locale);
   const [activePill, setActivePill] = useState<PillKey | null>(null);
-
-  const openPill = (pill: PillKey) => setActivePill(pill);
-  const closePill = () => setActivePill(null);
+  const displayName = fullName || "Dimas Rizki Ardiansyah";
 
   return (
     <>
-      <Section className="pt-8 pb-10 lg:py-12">
+      <Section className="pt-6 pb-8 lg:py-10">
         <Container>
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(300px,420px)_1fr] lg:gap-14">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(280px,380px)_minmax(0,1fr)] lg:gap-12">
             {/* LEFT COLUMN: Large Borderless Portrait Cutout */}
             <motion.div
               custom={0}
               variants={heroItem}
               initial="hidden"
               animate="visible"
-              className="relative mx-auto w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[400px]"
+              className="relative mx-auto w-full max-w-[260px] sm:max-w-[320px] lg:max-w-[380px]"
             >
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-x-6 bottom-4 h-2/3 rounded-full opacity-20 blur-3xl"
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 60%, var(--accent-primary), transparent 70%)",
-                }}
-              />
               <div
                 className="relative w-full border-0 bg-transparent"
                 style={{
                   maskImage:
-                    "linear-gradient(to bottom, black 80%, transparent 100%)",
+                    "linear-gradient(to bottom, black 84%, transparent 100%)",
                   WebkitMaskImage:
-                    "linear-gradient(to bottom, black 80%, transparent 100%)",
+                    "linear-gradient(to bottom, black 84%, transparent 100%)",
                 }}
               >
                 <Image
-                  src="/assets/dimas-about.png"
-                  alt="Dimas Rizki Ardiansyah"
-                  width={800}
-                  height={1000}
+                  src={portrait.url}
+                  alt={displayName}
+                  width={portrait.width}
+                  height={portrait.height}
                   priority
-                  className="mx-auto h-auto w-full object-contain object-bottom drop-shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+                  className="mx-auto h-auto w-full object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.45)]"
                 />
               </div>
             </motion.div>
 
-            {/* RIGHT COLUMN: Eyebrow, Headline, Academic Sub-headline, Actions & Integrated My Story */}
-            <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-              <motion.p
-                custom={0}
-                variants={heroItem}
-                initial="hidden"
-                animate="visible"
-                className="font-mono text-xs font-semibold uppercase tracking-widest text-primary"
-              >
-                01 // About Me
-              </motion.p>
-
+            {/* RIGHT COLUMN: Heading, Academic Subtitle, Actions & Localized My Story */}
+            <div className="flex flex-col items-start text-left">
               <motion.h1
                 custom={1}
                 variants={heroItem}
                 initial="hidden"
                 animate="visible"
-                className="mt-3 font-display text-[clamp(2rem,4vw,3.25rem)] font-bold leading-tight tracking-tight text-foreground"
+                className="font-display text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-tight tracking-[-0.025em] text-foreground"
               >
-                Dimas Rizki Ardiansyah
+                {displayName}
               </motion.h1>
 
               <motion.p
@@ -116,22 +105,20 @@ export function AboutHero({ cvUrl, locale, content }: AboutHeroProps) {
                 animate="visible"
                 className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground"
               >
-                Informatics Engineering Student at UPN &ldquo;Veteran&rdquo;
-                Yogyakarta, passionate about Software Engineering and Artificial
-                Intelligence.
+                {messages["about.academicSubtitle"]}
               </motion.p>
 
-              {/* Action Buttons */}
+              {/* Action Buttons (Max 2) */}
               <motion.div
                 custom={3}
                 variants={heroItem}
                 initial="hidden"
                 animate="visible"
-                className="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start"
+                className="mt-6 flex flex-wrap gap-3"
               >
                 <Button
                   size="default"
-                  className="rounded-full bg-primary px-6 font-mono text-xs uppercase tracking-wider text-primary-foreground"
+                  className="rounded-lg bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                   asChild
                 >
                   <a
@@ -147,7 +134,7 @@ export function AboutHero({ cvUrl, locale, content }: AboutHeroProps) {
                 <Button
                   size="default"
                   variant="outline"
-                  className="rounded-full border-border px-6 font-mono text-xs uppercase tracking-wider"
+                  className="rounded-lg border-border px-5 text-sm font-medium text-foreground transition-colors hover:border-primary/60 hover:text-primary"
                   asChild
                 >
                   <Link href={localeHref(locale, "/contact")}>
@@ -162,11 +149,11 @@ export function AboutHero({ cvUrl, locale, content }: AboutHeroProps) {
                 variants={heroItem}
                 initial="hidden"
                 animate="visible"
-                className="mt-8 w-full border-t border-border/70 pt-6 text-left"
+                className="mt-7 w-full border-t border-border/70 pt-6 text-left"
               >
                 <div className="mb-4 flex items-center gap-2">
-                  <span className="font-mono text-xs uppercase tracking-widest text-primary">
-                    {content.storyEyebrow || "MY STORY"}
+                  <span className="text-xs font-medium text-primary">
+                    {content.storyEyebrow || messages["about.story.eyebrow"]}
                   </span>
                   {content.storyTitle && (
                     <span className="text-xs text-muted-foreground">
@@ -175,53 +162,73 @@ export function AboutHero({ cvUrl, locale, content }: AboutHeroProps) {
                   )}
                 </div>
 
-                <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                  <p>
-                    I am a{" "}
-                    <PillButton onClick={() => openPill("Full-stack + AI")}>
-                      Full-stack + AI
-                    </PillButton>{" "}
-                    engineer focused on building{" "}
-                    <PillButton onClick={() => openPill("Production Systems")}>
-                      Production Systems
-                    </PillButton>{" "}
-                    that actually scale. From pixel-perfect interfaces to
-                    resilient backend services, I care about the full picture —
-                    not just the happy path.
-                  </p>
+                {locale === "id" && content.storyParagraphs.length > 0 ? (
+                  <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                    {content.storyParagraphs.map((paragraph, i) => (
+                      <p key={i}>{paragraph}</p>
+                    ))}
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {(
+                        [
+                          "Full-stack + AI",
+                          "Production Systems",
+                          "Mission Critical",
+                          "Cloud Architecture",
+                        ] as PillKey[]
+                      ).map((pill) => (
+                        <PillButton key={pill} onClick={() => setActivePill(pill)}>
+                          {pill}
+                        </PillButton>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                    <p>
+                      I am a{" "}
+                      <PillButton onClick={() => setActivePill("Full-stack + AI")}>
+                        Full-stack + AI
+                      </PillButton>{" "}
+                      engineer focused on building{" "}
+                      <PillButton onClick={() => setActivePill("Production Systems")}>
+                        Production Systems
+                      </PillButton>{" "}
+                      that actually scale. From crisp interfaces to resilient
+                      backend services, I care about the full picture — not just
+                      the happy path.
+                    </p>
 
-                  <p>
-                    I have shipped{" "}
-                    <PillButton onClick={() => openPill("Mission Critical")}>
-                      Mission Critical
-                    </PillButton>{" "}
-                    software where downtime has real-world consequences, which
-                    means I build with observability, graceful degradation, and
-                    runbooks from day one. Infrastructure is not an
-                    afterthought.
-                  </p>
+                    <p>
+                      I have shipped{" "}
+                      <PillButton onClick={() => setActivePill("Mission Critical")}>
+                        Mission Critical
+                      </PillButton>{" "}
+                      software where downtime has real-world consequences,
+                      building with observability, graceful degradation, and
+                      runbooks from day one.
+                    </p>
 
-                  <p>
-                    My background spans modern{" "}
-                    <PillButton onClick={() => openPill("Cloud Architecture")}>
-                      Cloud Architecture
-                    </PillButton>{" "}
-                    on AWS and GCP, writing infrastructure as code and
-                    automating everything from provisioning to cost anomaly
-                    alerts — so the team can ship fast without flying blind.
-                  </p>
+                    <p>
+                      My work spans{" "}
+                      <PillButton onClick={() => setActivePill("Cloud Architecture")}>
+                        Cloud Architecture
+                      </PillButton>{" "}
+                      and practical automation so teams can ship reliably without
+                      flying blind.
+                    </p>
 
-                  {content.storyParagraphs.slice(3).map((paragraph, i) => (
-                    <p key={i + 3}>{paragraph}</p>
-                  ))}
-                </div>
+                    {content.storyParagraphs.slice(3).map((paragraph, i) => (
+                      <p key={i + 3}>{paragraph}</p>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             </div>
           </div>
         </Container>
       </Section>
 
-      <AboutPillModal pill={activePill} onClose={closePill} />
+      <AboutPillModal pill={activePill} onClose={() => setActivePill(null)} />
     </>
   );
 }

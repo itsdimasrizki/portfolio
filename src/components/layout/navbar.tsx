@@ -96,9 +96,9 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
         {/* Center: 4 Primary Desktop Nav Links */}
         <nav
           aria-label="Primary navigation"
-          className="hidden items-center gap-0.5 lg:gap-1 md:flex"
+          className="hidden items-center gap-1 md:flex"
         >
-          {navItems.map((item, idx) => {
+          {navItems.map((item) => {
             const href = localeHref(locale, item.href);
             const isActive =
               pathname === href || (pathname.startsWith(`${href}/`) && item.href !== "/");
@@ -108,16 +108,16 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
                 key={item.href}
                 href={href}
                 className={cn(
-                  "relative whitespace-nowrap rounded-md px-2.5 py-1.5 font-mono text-[11px] lg:text-xs tracking-wider transition-colors duration-150",
+                  "relative whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-150",
                   isActive
-                    ? "font-semibold text-primary"
+                    ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {isActive && (
                   <motion.div
                     layoutId="navbar-active"
-                    className="absolute inset-0 -z-10 rounded-md border border-border bg-card/80 shadow-xs"
+                    className="absolute inset-0 -z-10 rounded-lg border border-border bg-card/80"
                     transition={{
                       type: "spring",
                       stiffness: 380,
@@ -125,7 +125,6 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
                     }}
                   />
                 )}
-                <span className="mr-1 text-[10px] text-primary/70">{`0${idx + 1} //`}</span>
                 {messages[item.labelKey]}
               </Link>
             );
@@ -141,9 +140,9 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
               onClick={() => setDossierOpen((prev) => !prev)}
               aria-expanded={dossierOpen}
               aria-haspopup="menu"
-              className="inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full border border-border bg-card/80 px-3 font-mono text-[11px] uppercase tracking-wider text-foreground transition-colors hover:border-primary/50 hover:text-primary"
+              className="inline-flex h-8 items-center gap-1.5 whitespace-nowrap rounded-lg border border-border bg-card/80 px-3 text-xs font-medium text-foreground transition-colors hover:border-primary/50 hover:text-primary"
             >
-              <FileText className="h-3.5 w-3.5 text-primary/80" />
+              <FileText className="h-3.5 w-3.5 text-muted-foreground" />
               <span>CV / PDF</span>
               <ChevronDown
                 className={cn(
@@ -214,14 +213,13 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
           <Button
             variant="default"
             size="sm"
-            className="hidden h-8 shrink-0 whitespace-nowrap rounded-full bg-primary px-3.5 font-mono text-[11px] uppercase tracking-wider text-primary-foreground shadow-sm transition-transform hover:scale-[1.03] active:scale-95 md:inline-flex"
+            className="hidden h-8 shrink-0 whitespace-nowrap rounded-lg bg-primary px-3.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex"
             asChild
           >
             <Link href={localeHref(locale, "/contact")}>
               {messages["cta.letsConnect"]}
             </Link>
           </Button>
-
           <MobileNav cvUrl={cvUrl} locale={locale} />
         </div>
       </Container>

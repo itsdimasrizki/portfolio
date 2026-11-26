@@ -14,6 +14,17 @@ export const siteSettingsQuery = groq`
     githubUrl,
     linkedinUrl,
     twitterUrl,
-    instagramUrl
+    instagramUrl,
+    "heroPortrait": heroPortrait.asset->{
+      url,
+      "width": metadata.dimensions.width,
+      "height": metadata.dimensions.height
+    },
+    "aboutPortrait": aboutPortrait.asset->{
+      url,
+      "width": metadata.dimensions.width,
+      "height": metadata.dimensions.height
+    },
+    "scrollSequenceFrames": scrollSequenceFrames[].asset->url
   }
 `;

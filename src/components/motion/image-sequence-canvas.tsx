@@ -4,15 +4,34 @@ import { useCallback, useEffect, useRef } from "react";
 import { useReducedMotion, useScroll } from "framer-motion";
 
 type ImageSequenceCanvasProps = {
-  /** Optional ordered list of image URLs (e.g., /sequence/frame_000.webp) */
+  /** Optional ordered list of image URLs (e.g., Sanity CDN or /sequence/frame_000.webp) */
   frames?: string[];
-  /** Number of virtual frames when rendering the built-in procedural canvas sequence */
+  /** Number of virtual frames when rendering the built-in procedural ring sequence */
   totalProceduralFrames?: number;
-  /** Scroll container height class */
-  heightClassName?: string;
+  /**
+   * "backdrop": transparent ring sequence aligned directly behind the Hero portrait photo.
+   * "section": standalone scroll-scrubbed section container.
+   */
+  variant?: "backdrop" | "section";
+  /** Optional wrapper className (used in backdrop mode or custom section height) */
+  className?: string;
 };
 
 const MAX_CONCURRENCY = 4;
+
+function findNearestLoadedFrame(
+  cache: (ImageBitmap | HTMLImageElement | null)[],
+  targetIndex: number
+): ImageBitmap | HTMLImageElement | null {
+  if (cache[targetIndex]) return cache[targetIndex];
+  for (let i = targetIndex - 1; i >= 0; i--) {
+    if (cache[i]) return cache[i];
+  }
+  for (let i = targetIndex + 1; i < cache.length; i++) {
+    if (cache[i]) return cache[i];
+  }
+  return null;
+}
 
 function drawImageCover(
   ctx: CanvasRenderingContext2D,
@@ -44,53 +63,32 @@ function drawImageCover(
   );
 }
 
-function drawProceduralFrame(
+function drawProceduralRings(
   ctx: CanvasRenderingContext2D,
   width: number,
   height: number,
   progress: number,
-  frameIndex: number,
-  totalFrames: number,
-  accentColor: string
+  accentColor: string,
+  transparentBg: boolean
 ) {
   ctx.clearRect(0, 0, width, height);
 
-  // Obsidian canvas base
-  ctx.fillStyle = "#090b0e";
-  ctx.fillRect(0, 0, width, height);
+  if (!transparentBg) {
+    ctx.fillStyle = "#090b0e";
+    ctx.fillRect(0, 0, width, height);
+  }
 
   const cx = width / 2;
   const cy = height / 2;
   const minDim = Math.min(width, height);
 
-  // Perspective grid scrubbed by scroll progress
-  ctx.save();
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
-  ctx.lineWidth = 1;
-  const gridSize = Math.max(36, Math.round(minDim / 14));
-  const offsetY = (progress * gridSize * 3) % gridSize;
-
-  for (let x = cx % gridSize; x < width; x += gridSize) {
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, height);
-    ctx.stroke();
-  }
-  for (let y = offsetY; y < height; y += gridSize) {
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(width, y);
-    ctx.stroke();
-  }
-  ctx.restore();
-
-  // Concentric technical rings expanding & rotating with scroll
+  // Subtle concentric technical rings expanding & rotating with scroll
   const ringCount = 5;
   for (let i = 0; i < ringCount; i++) {
     const t = i / ringCount;
-    const radius = minDim * (0.12 + t * 0.32 + progress * 0.08);
-    const startAngle = progress * Math.PI * (i % 2 === 0 ? 1.5 : -1.2) + i * 0.9;
-    const sweep = Math.PI * (0.65 + 0.25 * Math.sin(progress * Math.PI * 2 + i));
+    const radius = minDim * (0.17 + t * 0.27 + progress * 0.045);
+    const startAngle = progress * Math.PI * (i % 2 === 0 ? 1.4 : -1.1) + i * 0.9;
+    const sweep = Math.PI * (0.68 + 0.22 * Math.sin(progress * Math.PI * 2 + i));
 
     ctx.save();
     ctx.beginPath();
@@ -98,74 +96,54 @@ function drawProceduralFrame(
     ctx.strokeStyle =
       i === 1
         ? accentColor
-        : `rgba(248, 250, 252, ${0.08 + (1 - t) * 0.12})`;
-    ctx.lineWidth = i === 1 ? 2 : 1;
+        : `rgba(248, 250, 252, ${0.09 + (1 - t) * 0.13})`;
+    ctx.lineWidth = i === 1 ? 1.75 : 1;
     ctx.stroke();
     ctx.restore();
   }
 
-  // Orbiting node markers
+  // Orbiting telemetry nodes synced to scroll progress
   const nodeCount = 6;
   for (let i = 0; i < nodeCount; i++) {
-    const angle = (i / nodeCount) * Math.PI * 2 + progress * Math.PI * 1.6;
-    const orbitR = minDim * (0.2 + (i % 3) * 0.085);
+    const angle = (i / nodeCount) * Math.PI * 2 + progress * Math.PI * 1.5;
+    const orbitR = minDim * (0.24 + (i % 3) * 0.08);
     const nx = cx + Math.cos(angle) * orbitR;
-    const ny = cy + Math.sin(angle) * orbitR * 0.65;
+    const ny = cy + Math.sin(angle) * orbitR * 0.85;
 
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(nx, ny);
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(nx, ny, i % 2 === 0 ? 3.5 : 2.5, 0, Math.PI * 2);
-    ctx.fillStyle = i % 2 === 0 ? accentColor : "rgba(248, 250, 252, 0.5)";
+    ctx.arc(nx, ny, i % 2 === 0 ? 3 : 2, 0, Math.PI * 2);
+    ctx.fillStyle = i % 2 === 0 ? accentColor : "rgba(248, 250, 252, 0.45)";
     ctx.fill();
     ctx.restore();
   }
 
-  // Center crosshair & frame progress bar
+  // Subtle calibration crosshair behind subject center
   ctx.save();
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.16)";
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
   ctx.lineWidth = 1;
-  const cross = 14;
+  const cross = 12;
   ctx.beginPath();
   ctx.moveTo(cx - cross, cy);
   ctx.lineTo(cx + cross, cy);
   ctx.moveTo(cx, cy - cross);
   ctx.lineTo(cx, cy + cross);
   ctx.stroke();
-
-  // Scrub progress bar near bottom
-  const barW = Math.min(320, width * 0.5);
-  const barX = cx - barW / 2;
-  const barY = height - 48;
-  ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
-  ctx.fillRect(barX, barY, barW, 2);
-  ctx.fillStyle = accentColor;
-  ctx.fillRect(barX, barY, barW * progress, 2);
-
-  // Frame telemetry text
-  ctx.font = "11px monospace";
-  ctx.fillStyle = "rgba(148, 163, 184, 0.85)";
-  ctx.textAlign = "center";
-  const paddedFrame = String(frameIndex + 1).padStart(3, "0");
-  const paddedTotal = String(totalFrames).padStart(3, "0");
-  ctx.fillText(
-    `SEQUENCE // FRAME ${paddedFrame} / ${paddedTotal}`,
-    cx,
-    barY - 12
-  );
   ctx.restore();
 }
 
 export function ImageSequenceCanvas({
   frames = [],
   totalProceduralFrames = 60,
-  heightClassName = "h-[220vh]",
+  variant = "backdrop",
+  className,
 }: ImageSequenceCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -177,10 +155,17 @@ export function ImageSequenceCanvas({
   const hasImageFrames = frames.length > 0;
   const totalFrames = hasImageFrames ? frames.length : totalProceduralFrames;
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  const { scrollYProgress } = useScroll(
+    variant === "backdrop"
+      ? {
+          target: containerRef,
+          offset: ["start end", "end start"],
+        }
+      : {
+          target: containerRef,
+          offset: ["start start", "end end"],
+        }
+  );
 
   const renderFrame = useCallback(
     (progress: number) => {
@@ -201,14 +186,14 @@ export function ImageSequenceCanvas({
         canvas.height = targetH;
       }
 
-      const clamped = Math.max(0, Math.min(1, progress));
+      const clamped = reducedMotion ? 0.15 : Math.max(0, Math.min(1, progress));
       const frameIndex = Math.min(
         totalFrames - 1,
         Math.floor(clamped * (totalFrames - 1))
       );
 
       if (hasImageFrames) {
-        const bitmap = bitmapsRef.current[frameIndex] ?? bitmapsRef.current[0];
+        const bitmap = findNearestLoadedFrame(bitmapsRef.current, frameIndex);
         if (bitmap) {
           ctx.setTransform(1, 0, 0, 1, 0, 0);
           drawImageCover(ctx, bitmap, canvas.width, canvas.height);
@@ -221,20 +206,19 @@ export function ImageSequenceCanvas({
         getComputedStyle(document.documentElement)
           .getPropertyValue("--accent-primary")
           .trim() || "#ffd460";
-      drawProceduralFrame(
+      drawProceduralRings(
         ctx,
         displayW,
         displayH,
         clamped,
-        frameIndex,
-        totalFrames,
-        accent
+        accent,
+        variant === "backdrop"
       );
     },
-    [hasImageFrames, totalFrames]
+    [hasImageFrames, reducedMotion, totalFrames, variant]
   );
 
-  // Async preloader with frame-0 priority and concurrency pool (4)
+  // Async preloader with frame-0 priority, concurrency pool (4), and GPU bitmap cleanup
   useEffect(() => {
     if (!hasImageFrames) return;
     let cancelled = false;
@@ -252,13 +236,15 @@ export function ImageSequenceCanvas({
         if (cancelled) return;
         if (typeof createImageBitmap === "function") {
           const bmp = await createImageBitmap(blob);
-          if (!cancelled) {
-            bitmapsRef.current[index] = bmp;
-            if (index === 0) renderFrame(progressRef.current);
+          if (cancelled) {
+            bmp.close();
+            return;
           }
+          bitmapsRef.current[index] = bmp;
+          if (index === 0) renderFrame(progressRef.current);
         }
       } catch {
-        // Fallback to procedural render on missing/failed frames
+        // Gracefully fall back to nearest frame or procedural rings
       }
     }
 
@@ -279,7 +265,7 @@ export function ImageSequenceCanvas({
     return () => {
       cancelled = true;
       for (const bmp of bitmapsRef.current) {
-        if (bmp && "close" in bmp) {
+        if (bmp && typeof ImageBitmap !== "undefined" && bmp instanceof ImageBitmap) {
           bmp.close();
         }
       }
@@ -287,12 +273,13 @@ export function ImageSequenceCanvas({
     };
   }, [frames, hasImageFrames, renderFrame]);
 
-  // Subscribe to scroll progress & resize
+  // Subscribe to scroll progress, resize, and accent theme changes
   useEffect(() => {
     renderFrame(progressRef.current);
 
     const unsubscribe = scrollYProgress.on("change", (latest) => {
       progressRef.current = latest;
+      if (reducedMotion) return;
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
         renderFrame(latest);
@@ -303,12 +290,40 @@ export function ImageSequenceCanvas({
     const handleResize = () => renderFrame(progressRef.current);
     window.addEventListener("resize", handleResize, { passive: true });
 
+    const mutationObserver = new MutationObserver(() =>
+      renderFrame(progressRef.current)
+    );
+    mutationObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["style", "class"],
+    });
+
     return () => {
       unsubscribe();
       window.removeEventListener("resize", handleResize);
+      mutationObserver.disconnect();
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
-  }, [scrollYProgress, renderFrame]);
+  }, [scrollYProgress, renderFrame, reducedMotion]);
+
+  if (variant === "backdrop") {
+    return (
+      <div
+        ref={containerRef}
+        aria-hidden="true"
+        className={
+          className ??
+          "pointer-events-none absolute left-1/2 top-[48%] z-0 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 sm:h-[480px] sm:w-[480px] lg:h-[580px] lg:w-[580px]"
+        }
+      >
+        <canvas
+          id="sequence-canvas"
+          ref={canvasRef}
+          className="block h-full w-full"
+        />
+      </div>
+    );
+  }
 
   return (
     <section
@@ -316,20 +331,17 @@ export function ImageSequenceCanvas({
       data-snap="free"
       aria-label="Interactive engineering sequence"
       className={`relative w-full border-y border-border/60 bg-background ${
-        reducedMotion ? "h-[60vh]" : heightClassName
+        reducedMotion
+          ? "h-[70svh]"
+          : className ?? (hasImageFrames ? "h-[220vh]" : "h-[160vh]")
       }`}
     >
-      <div className="sticky top-16 flex h-[calc(100vh-4rem)] w-full items-center justify-center overflow-hidden">
+      <div className="sticky top-16 flex h-[calc(100svh-4rem)] w-full items-center justify-center overflow-hidden">
         <canvas
           id="sequence-canvas"
           ref={canvasRef}
-          className="h-full w-full block"
+          className="block h-full w-full"
         />
-        <div className="pointer-events-none absolute inset-x-0 top-6 flex justify-center px-4">
-          <span className="rounded-full border border-border/70 bg-card/70 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground backdrop-blur-xs">
-            SCROLL TO SCRUB // SYSTEM ARCHITECTURE
-          </span>
-        </div>
       </div>
     </section>
   );

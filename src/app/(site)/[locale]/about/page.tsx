@@ -9,7 +9,7 @@ import { getMessages } from "@/i18n/dictionary";
 import type { Locale } from "@/i18n/locale";
 import { getTechnologies } from "@/services/technology.service";
 import { getSkills } from "@/services/skill.service";
-import { getSiteSettings } from "@/services/settings.service";
+import { getResolvedSettings } from "@/services/settings.service";
 import { getPageContent } from "@/services/pageContent.service";
 
 export const revalidate = 0;
@@ -35,16 +35,22 @@ export default async function AboutPage({
   const { locale } = await params;
   const typedLocale = locale as Locale;
 
-  const [technologies, skills, { cvUrl }, content] = await Promise.all([
+  const [technologies, skills, settings, content] = await Promise.all([
     getTechnologies(),
     getSkills(typedLocale),
-    getSiteSettings(typedLocale),
+    getResolvedSettings(typedLocale),
     getPageContent(typedLocale),
   ]);
 
   return (
     <main>
-      <AboutHero cvUrl={cvUrl} locale={typedLocale} content={content} />
+      <AboutHero
+        cvUrl={settings.cvUrl ?? null}
+        locale={typedLocale}
+        content={content}
+        portrait={settings.aboutPortrait}
+        fullName={settings.fullName}
+      />
       <TechStack technologies={technologies} locale={typedLocale} />
       <Skills skills={skills} locale={typedLocale} />
       <EducationSection />

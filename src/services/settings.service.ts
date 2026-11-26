@@ -8,7 +8,11 @@ import { pickLocalized, type Locale } from "@/i18n/locale";
 import type { ResolvedSettings, SanitySettings } from "@/types/siteSettings";
 import type { ContactInfo, SocialLink } from "@/types/contact";
 import { MOCK_SETTINGS } from "@/lib/mock-data";
-
+import {
+  DEFAULT_ABOUT_PORTRAIT,
+  DEFAULT_HERO_PORTRAIT,
+  resolvePortrait,
+} from "@/lib/portraits";
 const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK_DATA === "true";
 
 export async function getSiteSettings(locale: Locale): Promise<{
@@ -100,22 +104,34 @@ export async function getSiteSettings(locale: Locale): Promise<{
   return { cvUrl, contactInfo, socialLinks };
 }
 
+const EMPTY_RESOLVED_SETTINGS: ResolvedSettings = {
+  roles: [],
+  heroPortrait: DEFAULT_HERO_PORTRAIT,
+  aboutPortrait: DEFAULT_ABOUT_PORTRAIT,
+  scrollSequenceFrames: [],
+};
+
 export async function getResolvedSettings(locale: Locale): Promise<ResolvedSettings> {
   if (USE_MOCK) return MOCK_SETTINGS;
   try {
     const settings = await client.fetch<SanitySettings | null>(siteSettingsQuery, {}, {
       next: { tags: ["sanity", "settings"] },
     });
-    if (!settings) return { roles: [] };
+    if (!settings) return EMPTY_RESOLVED_SETTINGS;
     return {
       ...settings,
       roles: (settings.roles ?? [])
         .map((role) => pickLocalized(role, locale))
         .filter((role) => role.trim() !== ""),
       bio: pickLocalized(settings.bio, locale),
+      heroPortrait: resolvePortrait(settings.heroPortrait, DEFAULT_HERO_PORTRAIT),
+      aboutPortrait: resolvePortrait(settings.aboutPortrait, DEFAULT_ABOUT_PORTRAIT),
+      scrollSequenceFrames: (settings.scrollSequenceFrames ?? []).filter(
+        (url): url is string => typeof url === "string" && url.trim() !== ""
+      ),
     };
   } catch (error) {
     console.warn("Failed to fetch resolved settings from Sanity:", error);
-    return { roles: [] };
+    return EMPTY_RESOLVED_SETTINGS;
   }
 }
