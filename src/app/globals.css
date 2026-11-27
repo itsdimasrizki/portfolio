@@ -285,3 +285,60 @@
 .snap-none {
   scroll-snap-align: none;
 }
+
+/* ── Route transitions (React <ViewTransition> in template.tsx) ───────────── */
+/* Only the page content animates; the root snapshot (particles, footer) and
+   the anchored navbar swap without motion. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+::view-transition-old(.page-exit) {
+  animation: 180ms cubic-bezier(0.4, 0, 1, 1) both vt-page-sink;
+}
+::view-transition-new(.page-enter) {
+  animation: 520ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both vt-page-rise;
+}
+@keyframes vt-page-sink {
+  to {
+    opacity: 0;
+    transform: scale(0.97);
+    filter: blur(6px);
+  }
+}
+@keyframes vt-page-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the crossfade, drop the spatial movement. */
+  ::view-transition-old(.page-exit) {
+    animation: 150ms ease-out both vt-fade-out;
+  }
+  ::view-transition-new(.page-enter) {
+    animation: 200ms ease-out both vt-fade-in;
+  }
+}
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}

@@ -15,7 +15,8 @@ export function CertificateGrid({ certificates }: CertificateGridProps) {
     <motion.div
       variants={staggerContainer}
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
       className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
     >
       {certificates.map((certificate) => (

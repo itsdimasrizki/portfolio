@@ -4,6 +4,8 @@ import { Hero } from "@/components/sections/hero";
 import { FeaturedProjects } from "@/components/sections/projects";
 import { ExperiencePreview } from "@/components/sections/experience";
 import { FeaturedCertificates } from "@/components/sections/certificates";
+import { HeroStack } from "@/components/motion/hero-stack";
+import { SectionReveal } from "@/components/motion/section-reveal";
 
 import { getMessages } from "@/i18n/dictionary";
 import type { Locale } from "@/i18n/locale";
@@ -47,13 +49,22 @@ export default async function Home({
 
   return (
     <main>
-      <Hero content={content} settings={settings} locale={typedLocale} />
-      <FeaturedProjects projects={featuredProjects} locale={typedLocale} />
-      <ExperiencePreview experiences={experiences} locale={typedLocale} />
-      <FeaturedCertificates
-        certificates={featuredCertificates}
-        locale={typedLocale}
-      />
+      <HeroStack
+        hero={
+          <Hero content={content} settings={settings} locale={typedLocale} />
+        }
+      >
+        <FeaturedProjects projects={featuredProjects} locale={typedLocale} />
+        <SectionReveal>
+          <ExperiencePreview experiences={experiences} locale={typedLocale} />
+        </SectionReveal>
+        <SectionReveal>
+          <FeaturedCertificates
+            certificates={featuredCertificates}
+            locale={typedLocale}
+          />
+        </SectionReveal>
+      </HeroStack>
     </main>
   );
 }

@@ -1,17 +1,15 @@
-"use client";
+import { ViewTransition } from "react";
 
-import { motion } from "framer-motion";
-
-import { easeOutSoft } from "@/lib/motion";
-
+/**
+ * Route-change transition (native View Transitions via React).
+ * The leaving page sinks back and blurs out quickly; the arriving page rises
+ * into focus. The navbar is anchored separately (see globals.css) so the
+ * content reads as moving under a fixed header. Initial loads do not animate.
+ */
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, ease: easeOutSoft }}
-    >
-      {children}
-    </motion.div>
+    <ViewTransition enter="page-enter" exit="page-exit" default="none">
+      <div>{children}</div>
+    </ViewTransition>
   );
 }

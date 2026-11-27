@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useTransform } from "framer-motion";
 import { ArrowUpRight, Mail } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ImageSequenceCanvas } from "@/components/motion/image-sequence-canvas";
+import { useHeroRecede } from "@/components/motion/hero-stack";
+import { TypeText } from "@/components/motion/type-text";
 import { getMessages } from "@/i18n/dictionary";
 import { localeHref, type Locale } from "@/i18n/locale";
 import { heroItem } from "@/lib/motion";
@@ -31,10 +33,21 @@ export function HeroContent({ content, settings, locale }: HeroContentProps) {
     settings.fullName || content.heroHeadline || "Dimas Rizki Ardiansyah";
   const statusText = content.heroBadge || messages["hero.terminal.status"];
 
+  // Depth parallax while the hero is being covered: the copy is "closer" to
+  // the viewer than the portrait, so it travels faster and fades out first.
+  const recede = useHeroRecede();
+  const reduceMotion = useReducedMotion();
+  const flankOpacity = useTransform(recede, [0, 0.55], [1, 0]);
+  const leftY = useTransform(recede, [0, 1], [0, reduceMotion ? 0 : -140]);
+  const rightY = useTransform(recede, [0, 1], [0, reduceMotion ? 0 : -100]);
+
   return (
     <div className="grid min-h-[calc(100svh-4rem)] grid-cols-1 items-end gap-6 pt-2 pb-0 md:grid-cols-2 lg:grid-cols-[minmax(280px,1fr)_minmax(480px,760px)_minmax(280px,1fr)] lg:gap-8 xl:grid-cols-[minmax(320px,1.1fr)_minmax(560px,840px)_minmax(320px,1fr)] xl:gap-10">
       {/* LEFT FLANK: Status, Name, Specialization & Primary Action */}
-      <div className="order-2 flex flex-col items-center self-center text-center md:order-1 md:items-start md:text-left py-4 lg:py-10">
+      <motion.div
+        style={{ y: leftY, opacity: flankOpacity }}
+        className="order-2 flex flex-col items-center self-center text-center md:order-1 md:items-start md:text-left py-4 lg:py-10"
+      >
         <motion.div
           custom={0}
           variants={heroItem}
@@ -90,7 +103,7 @@ export function HeroContent({ content, settings, locale }: HeroContentProps) {
             </Link>
           </Button>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* CENTERPIECE: Scaled Hero Portrait Grounded to Section Bottom with Rich 3D Orbital Backdrop */}
       <motion.div
@@ -163,7 +176,10 @@ export function HeroContent({ content, settings, locale }: HeroContentProps) {
       </motion.div>
 
       {/* RIGHT FLANK: Concise Narrative, Secondary CTA & Grounding Telemetry Card */}
-      <div className="order-3 flex flex-col items-center self-center pb-8 text-center md:order-2 md:items-start md:pb-10 md:text-left lg:order-3 py-4 lg:py-10">
+      <motion.div
+        style={{ y: rightY, opacity: flankOpacity }}
+        className="order-3 flex flex-col items-center self-center pb-8 text-center md:order-2 md:items-start md:pb-10 md:text-left lg:order-3 py-4 lg:py-10"
+      >
         {content.heroDescription && (
           <motion.p
             custom={2}
@@ -214,19 +230,19 @@ export function HeroContent({ content, settings, locale }: HeroContentProps) {
           <div className="mt-3 space-y-2.5 text-[12px] font-sans">
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground text-[11px] uppercase tracking-wider">DOMAIN</span>
-              <span className="text-foreground font-medium">Fullstack · AI · IoT</span>
+              <TypeText text="Fullstack · AI · IoT" delay={0.8} className="text-foreground font-medium" />
             </div>
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground text-[11px] uppercase tracking-wider">BASE</span>
-              <span className="text-foreground font-medium">Yogyakarta, ID</span>
+              <TypeText text="Yogyakarta, ID" delay={1.6} className="text-foreground font-medium" />
             </div>
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground text-[11px] uppercase tracking-wider">STATUS</span>
-              <span className="text-primary font-medium">Open to Work</span>
+              <TypeText text="Open to Work" delay={2.3} className="text-primary font-medium" />
             </div>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 }

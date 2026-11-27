@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { useReducedMotion, useScroll } from "framer-motion";
+import { useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 type ImageSequenceCanvasProps = {
   /** Optional ordered list of image URLs (e.g., Sanity CDN or /sequence/frame_000.webp) */
@@ -18,6 +18,10 @@ type ImageSequenceCanvasProps = {
 };
 
 const MAX_CONCURRENCY = 4;
+/** Backdrop ring pose at the very top of the page. */
+const BACKDROP_BASE_PROGRESS = 0.35;
+/** Viewport heights of page scroll that sweep the rings from base to the end. */
+const BACKDROP_SCROLL_SPAN = 1.6;
 
 function findNearestLoadedFrame(
   cache: (ImageBitmap | HTMLImageElement | null)[],
@@ -219,17 +223,21 @@ export function ImageSequenceCanvas({
   const hasImageFrames = frames.length > 0;
   const totalFrames = hasImageFrames ? frames.length : totalProceduralFrames;
 
-  const { scrollYProgress } = useScroll(
-    variant === "backdrop"
-      ? {
-          target: containerRef,
-          offset: ["start end", "end start"],
-        }
-      : {
-          target: containerRef,
-          offset: ["start start", "end end"],
-        }
+  // "section" scrubs against its own tall container. "backdrop" lives inside the
+  // pinned (sticky) hero, whose position no longer changes while the page
+  // scrolls, so element-relative progress would freeze the rings. Drive it from
+  // the page scroll instead so the rings keep turning the whole time.
+  const { scrollYProgress: sectionProgress, scrollY } = useScroll(
+    variant === "section"
+      ? { target: containerRef, offset: ["start start", "end end"] }
+      : undefined
   );
+  const backdropProgress = useTransform(scrollY, (y) => {
+    const vh = typeof window === "undefined" ? 900 : window.innerHeight;
+    return BACKDROP_BASE_PROGRESS + y / (vh * BACKDROP_SCROLL_SPAN);
+  });
+  const scrollYProgress =
+    variant === "section" ? sectionProgress : backdropProgress;
 
   const renderFrame = useCallback(
     (progress: number) => {
@@ -339,6 +347,7 @@ export function ImageSequenceCanvas({
 
   // Subscribe to scroll progress, resize, and accent theme changes
   useEffect(() => {
+    progressRef.current = scrollYProgress.get();
     renderFrame(progressRef.current);
 
     const unsubscribe = scrollYProgress.on("change", (latest) => {

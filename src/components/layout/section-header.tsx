@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
+import { MaskedText } from "@/components/motion/masked-text";
 import { cn } from "@/lib/utils";
 
 type SectionHeaderProps = {
@@ -60,7 +61,7 @@ export function SectionHeader({
               : "text-3xl md:text-4xl"
           )}
         >
-          {title}
+          <MaskedText text={title} />
         </Heading>
 
         {description && (
