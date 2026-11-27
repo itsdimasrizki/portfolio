@@ -9,9 +9,9 @@ import {
 
 test("resolvePortrait falls back to local cutouts with true intrinsic dimensions", () => {
   assert.deepEqual(resolvePortrait(null, DEFAULT_HERO_PORTRAIT), {
-    url: "/assets/dimas-pointing.png",
-    width: 666,
-    height: 375,
+    url: "/assets/dimas-hero-large.png",
+    width: 852,
+    height: 937,
   });
   assert.deepEqual(resolvePortrait(undefined, DEFAULT_ABOUT_PORTRAIT), {
     url: "/assets/dimas-about.png",
@@ -34,8 +34,8 @@ test("resolvePortrait preserves fallback dimensions when Sanity metadata omits t
     resolvePortrait({ url: "https://cdn.sanity.io/images/demo/hero.png" }, DEFAULT_HERO_PORTRAIT),
     {
       url: "https://cdn.sanity.io/images/demo/hero.png",
-      width: 666,
-      height: 375,
+      width: 852,
+      height: 937,
     }
   );
 });

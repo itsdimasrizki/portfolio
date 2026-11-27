@@ -22,7 +22,7 @@ export function Hero({ content, settings, locale }: HeroProps) {
       id="hero"
       className="relative overflow-hidden pt-4 pb-0 sm:pt-6 lg:pt-6 lg:pb-0"
     >
-      <Container>
+      <Container className="max-w-[1536px] px-4 sm:px-6 lg:px-8 xl:px-10">
         <HeroContent content={content} settings={settings} locale={locale} />
       </Container>
     </Section>

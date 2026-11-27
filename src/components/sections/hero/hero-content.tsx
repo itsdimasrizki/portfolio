@@ -32,9 +32,9 @@ export function HeroContent({ content, settings, locale }: HeroContentProps) {
   const statusText = content.heroBadge || messages["hero.terminal.status"];
 
   return (
-    <div className="grid min-h-[calc(100svh-4rem)] grid-cols-1 items-center gap-6 py-4 md:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(360px,500px)_minmax(0,1fr)] lg:items-center lg:gap-8 lg:py-0">
+    <div className="grid min-h-[calc(100svh-4rem)] grid-cols-1 items-end gap-6 pt-2 pb-0 md:grid-cols-2 lg:grid-cols-[minmax(280px,1fr)_minmax(480px,760px)_minmax(280px,1fr)] lg:gap-8 xl:grid-cols-[minmax(320px,1.1fr)_minmax(560px,840px)_minmax(320px,1fr)] xl:gap-10">
       {/* LEFT FLANK: Status, Name, Specialization & Primary Action */}
-      <div className="order-2 flex flex-col items-center text-center md:order-1 md:items-start md:text-left">
+      <div className="order-2 flex flex-col items-center self-center text-center md:order-1 md:items-start md:text-left py-4 lg:py-10">
         <motion.div
           custom={0}
           variants={heroItem}
@@ -92,26 +92,63 @@ export function HeroContent({ content, settings, locale }: HeroContentProps) {
         </motion.div>
       </div>
 
-      {/* CENTERPIECE: Ring Sequence Canvas Aligned Directly Behind Borderless Portrait Cutout */}
+      {/* CENTERPIECE: Scaled Hero Portrait Grounded to Section Bottom with Rich 3D Orbital Backdrop */}
       <motion.div
         custom={1}
         variants={heroItem}
         initial="hidden"
         animate="visible"
-        className="order-1 relative mx-auto flex w-full max-w-[340px] items-center justify-center py-6 md:order-3 md:col-span-2 md:max-w-[420px] lg:order-2 lg:col-span-1 lg:max-w-[500px] lg:py-0"
+        className="order-1 relative mx-auto flex w-full max-w-[420px] self-end items-end justify-center overflow-visible md:order-3 md:col-span-2 md:max-w-[540px] lg:order-2 lg:col-span-1 lg:max-w-[720px] xl:max-w-[820px] 2xl:max-w-[880px]"
       >
         <ImageSequenceCanvas
           variant="backdrop"
           frames={settings.scrollSequenceFrames}
         />
 
+        {/* Subtle floating telemetry badges flanking the heroic portrait */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: [0, -6, 0] }}
+          transition={{
+            opacity: { duration: 0.6, delay: 0.4 },
+            y: { duration: 4.5, repeat: Infinity, ease: "easeInOut" },
+          }}
+          className="pointer-events-none absolute -right-6 top-[16%] z-20 hidden rounded-xl border border-border/80 bg-card/85 px-3.5 py-2.5 shadow-xl backdrop-blur-md lg:flex lg:flex-col lg:gap-1 lg:-right-10 xl:-right-14"
+        >
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+            <span className="h-2 w-2 rounded-full bg-primary" />
+            <span>Fullstack · AI · IoT</span>
+          </div>
+          <span className="font-mono text-[10px] text-muted-foreground">
+            Production-Grade Systems
+          </span>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: [0, 6, 0] }}
+          transition={{
+            opacity: { duration: 0.6, delay: 0.5 },
+            y: { duration: 5, repeat: Infinity, ease: "easeInOut" },
+          }}
+          className="pointer-events-none absolute -left-6 bottom-[30%] z-20 hidden rounded-xl border border-border/80 bg-card/85 px-3.5 py-2.5 shadow-xl backdrop-blur-md lg:flex lg:flex-col lg:gap-1 lg:-left-10 xl:-left-14"
+        >
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" />
+            <span>UPN &quot;Veteran&quot; YK</span>
+          </div>
+          <span className="font-mono text-[10px] text-muted-foreground">
+            Informatics Engineering
+          </span>
+        </motion.div>
+
         <div
           className="relative z-10 w-full"
           style={{
             maskImage:
-              "linear-gradient(to bottom, black 84%, transparent 100%)",
+              "linear-gradient(to bottom, black 86%, transparent 100%)",
             WebkitMaskImage:
-              "linear-gradient(to bottom, black 84%, transparent 100%)",
+              "linear-gradient(to bottom, black 86%, transparent 100%)",
           }}
         >
           <Image
@@ -120,13 +157,13 @@ export function HeroContent({ content, settings, locale }: HeroContentProps) {
             width={settings.heroPortrait.width}
             height={settings.heroPortrait.height}
             priority
-            className="mx-auto h-auto w-full object-contain object-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.5)]"
+            className="mx-auto h-auto w-full object-contain object-bottom drop-shadow-[0_16px_36px_rgba(0,0,0,0.6)]"
           />
         </div>
       </motion.div>
 
-      {/* RIGHT FLANK: Concise Narrative & Single Secondary Action */}
-      <div className="order-3 flex flex-col items-center pb-8 text-center md:order-2 md:items-start md:pb-0 md:text-left lg:order-3">
+      {/* RIGHT FLANK: Concise Narrative, Secondary CTA & Grounding Telemetry Card */}
+      <div className="order-3 flex flex-col items-center self-center pb-8 text-center md:order-2 md:items-start md:pb-10 md:text-left lg:order-3 py-4 lg:py-10">
         {content.heroDescription && (
           <motion.p
             custom={2}
@@ -157,6 +194,37 @@ export function HeroContent({ content, settings, locale }: HeroContentProps) {
               {messages["cta.letsConnect"]}
             </Link>
           </Button>
+        </motion.div>
+
+        {/* Technical telemetry micro-panel to eliminate empty dashboard impression */}
+        <motion.div
+          custom={4}
+          variants={heroItem}
+          initial="hidden"
+          animate="visible"
+          className="mt-8 hidden w-full max-w-sm rounded-xl border border-border/80 bg-card/60 p-4 text-xs backdrop-blur-sm sm:block"
+        >
+          <div className="flex items-center justify-between border-b border-border/60 pb-2.5 text-muted-foreground">
+            <span className="font-semibold tracking-wider uppercase text-[11px] text-foreground/80 font-sans">&#47;&#47; TELEMETRY</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium font-sans">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              ONLINE
+            </span>
+          </div>
+          <div className="mt-3 space-y-2.5 text-[12px] font-sans">
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground text-[11px] uppercase tracking-wider">DOMAIN</span>
+              <span className="text-foreground font-medium">Fullstack · AI · IoT</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground text-[11px] uppercase tracking-wider">BASE</span>
+              <span className="text-foreground font-medium">Yogyakarta, ID</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground text-[11px] uppercase tracking-wider">STATUS</span>
+              <span className="text-primary font-medium">Open to Work</span>
+            </div>
+          </div>
         </motion.div>
       </div>
     </div>

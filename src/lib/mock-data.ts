@@ -34,7 +34,7 @@ export const MOCK_SETTINGS: ResolvedSettings = {
   githubUrl: "https://github.com/itsdimasrizki",
   linkedinUrl: "https://www.linkedin.com/in/dimas-rizki-ardiansyah-28580233b/",
   instagramUrl: "https://www.instagram.com/drzkyyy__/",
-  heroPortrait: { url: "/assets/dimas-pointing.png", width: 666, height: 375 },
+  heroPortrait: { url: "/assets/dimas-hero-large.png", width: 852, height: 937 },
   aboutPortrait: { url: "/assets/dimas-about.png", width: 375, height: 666 },
   scrollSequenceFrames: [],
 };

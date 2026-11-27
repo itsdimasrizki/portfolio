@@ -82,25 +82,89 @@ function drawProceduralRings(
   const cy = height / 2;
   const minDim = Math.min(width, height);
 
-  // Subtle concentric technical rings expanding & rotating with scroll
+  // Atmospheric depth illumination behind subject
+  const ambientGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, minDim * 0.48);
+  ambientGrad.addColorStop(0, accentColor);
+  ambientGrad.addColorStop(0.35, "rgba(248, 250, 252, 0.04)");
+  ambientGrad.addColorStop(0.7, "rgba(248, 250, 252, 0.01)");
+  ambientGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+  ctx.save();
+  ctx.globalAlpha = 0.14;
+  ctx.fillStyle = ambientGrad;
+  ctx.beginPath();
+  ctx.arc(cx, cy, minDim * 0.48, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // 3D perspective ellipse rings (tilted orbital plane)
+  const tiltRings = [
+    { r: 0.38, tilt: 0.42, rot: progress * 0.8 },
+    { r: 0.32, tilt: 0.55, rot: -progress * 1.1 + 0.6 },
+    { r: 0.26, tilt: 0.38, rot: progress * 1.4 + 1.2 },
+  ];
+
+  tiltRings.forEach((ring, idx) => {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(ring.rot);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, minDim * ring.r, minDim * ring.r * ring.tilt, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = idx === 0 ? accentColor : "rgba(248, 250, 252, 0.14)";
+    ctx.lineWidth = idx === 0 ? 1.5 : 1;
+    if (idx === 1) {
+      ctx.setLineDash([4, 8]);
+    }
+    ctx.stroke();
+    ctx.restore();
+  });
+
+  // Concentric technical arcs expanding & rotating with scroll
   const ringCount = 5;
   for (let i = 0; i < ringCount; i++) {
     const t = i / ringCount;
-    const radius = minDim * (0.17 + t * 0.27 + progress * 0.045);
-    const startAngle = progress * Math.PI * (i % 2 === 0 ? 1.4 : -1.1) + i * 0.9;
-    const sweep = Math.PI * (0.68 + 0.22 * Math.sin(progress * Math.PI * 2 + i));
+    const radius = minDim * (0.16 + t * 0.28 + progress * 0.04);
+    const startAngle = progress * Math.PI * (i % 2 === 0 ? 1.3 : -1.0) + i * 0.85;
+    const sweep = Math.PI * (0.65 + 0.25 * Math.sin(progress * Math.PI * 2 + i));
 
     ctx.save();
     ctx.beginPath();
     ctx.arc(cx, cy, radius, startAngle, startAngle + sweep);
     ctx.strokeStyle =
-      i === 1
+      i === 2
         ? accentColor
-        : `rgba(248, 250, 252, ${0.09 + (1 - t) * 0.13})`;
-    ctx.lineWidth = i === 1 ? 1.75 : 1;
+        : `rgba(248, 250, 252, ${0.12 + (1 - t) * 0.16})`;
+    ctx.lineWidth = i === 2 ? 1.5 : 1;
     ctx.stroke();
     ctx.restore();
   }
+
+  // Outer calibration compass ring with degree ticks
+  const outerR = minDim * 0.44;
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Tick marks
+  const tickCount = 36;
+  for (let j = 0; j < tickCount; j++) {
+    const angle = (j / tickCount) * Math.PI * 2;
+    const isCardinal = j % 9 === 0;
+    const tickLen = isCardinal ? 8 : 4;
+    const r1 = outerR - tickLen;
+    const r2 = outerR;
+
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(angle) * r1, cy + Math.sin(angle) * r1);
+    ctx.lineTo(cx + Math.cos(angle) * r2, cy + Math.sin(angle) * r2);
+    ctx.strokeStyle = isCardinal ? accentColor : "rgba(255, 255, 255, 0.15)";
+    ctx.lineWidth = isCardinal ? 1.5 : 1;
+    ctx.stroke();
+  }
+  ctx.restore();
 
   // Orbiting telemetry nodes synced to scroll progress
   const nodeCount = 6;
@@ -114,22 +178,22 @@ function drawProceduralRings(
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(nx, ny);
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.beginPath();
     ctx.arc(nx, ny, i % 2 === 0 ? 3 : 2, 0, Math.PI * 2);
-    ctx.fillStyle = i % 2 === 0 ? accentColor : "rgba(248, 250, 252, 0.45)";
+    ctx.fillStyle = i % 2 === 0 ? accentColor : "rgba(248, 250, 252, 0.55)";
     ctx.fill();
     ctx.restore();
   }
 
   // Subtle calibration crosshair behind subject center
   ctx.save();
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
   ctx.lineWidth = 1;
-  const cross = 12;
+  const cross = 16;
   ctx.beginPath();
   ctx.moveTo(cx - cross, cy);
   ctx.lineTo(cx + cross, cy);
@@ -313,7 +377,7 @@ export function ImageSequenceCanvas({
         aria-hidden="true"
         className={
           className ??
-          "pointer-events-none absolute left-1/2 top-[48%] z-0 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 sm:h-[480px] sm:w-[480px] lg:h-[580px] lg:w-[580px]"
+          "pointer-events-none absolute left-1/2 top-1/2 z-0 h-[460px] w-[460px] -translate-x-1/2 -translate-y-1/2 sm:h-[600px] sm:w-[600px] lg:h-[780px] lg:w-[780px] xl:h-[880px] xl:w-[880px]"
         }
       >
         <canvas
