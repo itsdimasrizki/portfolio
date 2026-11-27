@@ -386,7 +386,7 @@ export function ImageSequenceCanvas({
         aria-hidden="true"
         className={
           className ??
-          "pointer-events-none absolute left-1/2 top-1/2 z-0 h-[460px] w-[460px] -translate-x-1/2 -translate-y-1/2 sm:h-[600px] sm:w-[600px] lg:h-[780px] lg:w-[780px] xl:h-[880px] xl:w-[880px]"
+          "pointer-events-none absolute left-1/2 top-1/2 z-0 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 sm:h-[460px] sm:w-[460px] md:h-[520px] md:w-[520px] lg:h-[620px] lg:w-[620px] xl:h-[820px] xl:w-[820px]"
         }
       >
         <canvas

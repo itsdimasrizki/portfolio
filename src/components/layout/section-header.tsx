@@ -57,8 +57,8 @@ export function SectionHeader({
           className={cn(
             "font-display font-bold tracking-tight text-foreground",
             as === "h1"
-              ? "text-4xl md:text-5xl lg:text-6xl"
-              : "text-3xl md:text-4xl"
+              ? "text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+              : "text-2xl sm:text-3xl md:text-4xl"
           )}
         >
           <MaskedText text={title} />

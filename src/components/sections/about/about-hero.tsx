@@ -57,14 +57,14 @@ export function AboutHero({
     <>
       <Section className="pt-6 pb-8 lg:py-10">
         <Container>
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(280px,380px)_minmax(0,1fr)] lg:gap-12">
+          <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-[240px_1fr] md:items-start lg:grid-cols-[minmax(280px,380px)_minmax(0,1fr)] lg:items-center lg:gap-12">
             {/* LEFT COLUMN: Large Borderless Portrait Cutout */}
             <motion.div
               custom={0}
               variants={heroItem}
               initial="hidden"
               animate="visible"
-              className="relative mx-auto w-full max-w-[260px] sm:max-w-[320px] lg:max-w-[380px]"
+              className="relative mx-auto w-full max-w-[220px] sm:max-w-[280px] lg:max-w-[380px]"
             >
               <div
                 className="relative w-full border-0 bg-transparent"
@@ -87,7 +87,7 @@ export function AboutHero({
             </motion.div>
 
             {/* RIGHT COLUMN: Heading, Academic Subtitle, Actions & Localized My Story */}
-            <div className="flex flex-col items-start text-left">
+            <div className="flex flex-col items-center text-center md:items-start md:text-left">
               <motion.h1
                 custom={1}
                 variants={heroItem}
@@ -114,7 +114,7 @@ export function AboutHero({
                 variants={heroItem}
                 initial="hidden"
                 animate="visible"
-                className="mt-6 flex flex-wrap gap-3"
+                className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start"
               >
                 <Button
                   size="default"

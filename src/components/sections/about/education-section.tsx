@@ -56,12 +56,12 @@ export function EducationSection() {
           Education
         </p>
 
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
           {/* Card header */}
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-start gap-4">
+          <div className="flex items-start justify-between gap-3 sm:gap-4">
+            <div className="flex items-start gap-3 sm:gap-4">
               {/* Logo placeholder */}
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/40 font-mono text-lg font-bold text-primary">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-muted/40 font-mono text-base font-bold text-primary sm:h-14 sm:w-14 sm:text-lg">
                 {EDUCATION_DATA.initials}
               </div>
 

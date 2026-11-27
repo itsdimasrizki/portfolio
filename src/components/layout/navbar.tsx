@@ -109,7 +109,7 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
         {/* Center: 4 Primary Desktop Nav Links */}
         <nav
           aria-label="Primary navigation"
-          className="hidden items-center gap-1 md:flex"
+          className="hidden items-center gap-1 lg:flex"
         >
           {navItems.map((item) => {
             const href = localeHref(locale, item.href);
@@ -147,7 +147,7 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
         {/* Right: Consolidated CV/PDF Dropdown, AccentPicker, LanguageSwitcher & Primary CTA */}
         <div className="flex shrink-0 items-center gap-1.5 lg:gap-2">
           {/* Consolidated CV / Portfolio PDF Dropdown */}
-          <div className="relative hidden md:block" ref={dossierRef}>
+          <div className="relative hidden lg:block" ref={dossierRef}>
             <button
               type="button"
               onClick={() => setDossierOpen((prev) => !prev)}
@@ -220,13 +220,13 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
 
           <AccentPicker />
 
-          <LanguageSwitcher locale={locale} className="hidden md:flex" />
+          <LanguageSwitcher locale={locale} className="hidden lg:flex" />
 
           {/* Single Primary CTA */}
           <Button
             variant="default"
             size="sm"
-            className="hidden h-8 shrink-0 whitespace-nowrap rounded-lg bg-primary px-3.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex"
+            className="hidden h-8 shrink-0 whitespace-nowrap rounded-lg bg-primary px-3.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:inline-flex"
             asChild
           >
             <Link href={localeHref(locale, "/contact")}>

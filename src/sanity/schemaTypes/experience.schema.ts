@@ -4,6 +4,13 @@ export const experienceSchema = defineType({
   name: "experience",
   title: "Experience",
   type: "document",
+  fieldsets: [
+    {
+      name: "period",
+      title: "Periode Kerja",
+      options: { columns: 2 },
+    },
+  ],
   fields: [
     defineField({
       name: "company",
@@ -26,6 +33,7 @@ export const experienceSchema = defineType({
       name: "startDate",
       title: "Start Date",
       type: "string",
+      fieldset: "period",
       description: "e.g. Jan 2024",
       validation: (Rule) => Rule.required(),
     }),
@@ -33,6 +41,7 @@ export const experienceSchema = defineType({
       name: "endDate",
       title: "End Date",
       type: "string",
+      fieldset: "period",
       description: "e.g. Present or Dec 2024",
       validation: (Rule) => Rule.required(),
     }),
@@ -55,10 +64,28 @@ export const experienceSchema = defineType({
     defineField({
       name: "order",
       title: "Order",
+      description: "Angka lebih besar tampil lebih dulu.",
       type: "number",
       initialValue: 0,
     }),
   ],
+  preview: {
+    select: {
+      company: "company",
+      posEn: "position.en",
+      posId: "position.id",
+      startDate: "startDate",
+      endDate: "endDate",
+    },
+    prepare({ company, posEn, posId, startDate, endDate }) {
+      const pos = posEn || posId;
+      const period = [startDate, endDate].filter(Boolean).join(" - ");
+      return {
+        title: company || "Untitled Experience",
+        subtitle: [pos, period].filter(Boolean).join(" • "),
+      };
+    },
+  },
   orderings: [
     {
       title: "Order",

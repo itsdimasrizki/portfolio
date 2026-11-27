@@ -4,6 +4,13 @@ export const certificateSchema = defineType({
   name: "certificate",
   title: "Certificate",
   type: "document",
+  fieldsets: [
+    {
+      name: "files",
+      title: "Upload Thumbnail & PDF",
+      options: { columns: 2 },
+    },
+  ],
   fields: [
     defineField({
       name: "title",
@@ -28,13 +35,15 @@ export const certificateSchema = defineType({
       name: "thumbnail",
       title: "Thumbnail",
       type: "image",
+      fieldset: "files",
       options: { hotspot: true },
-      description: "Gambar preview sertifikat untuk ditampilkan di website",
+      description: "Gambar preview sertifikat untuk website",
     }),
     defineField({
       name: "pdfFile",
       title: "PDF File",
       type: "file",
+      fieldset: "files",
       description: "File PDF sertifikat asli",
       options: {
         accept: "application/pdf",
@@ -48,14 +57,26 @@ export const certificateSchema = defineType({
     defineField({
       name: "order",
       title: "Order",
+      description: "Angka lebih besar tampil lebih dulu.",
       type: "number",
       initialValue: 0,
     }),
   ],
-  // title kini objek, jadi daftar dokumen harus menunjuk salah satu bahasanya
-  // supaya tidak berbunyi "Untitled".
   preview: {
-    select: { title: "title.en", subtitle: "issuer" },
+    select: {
+      titleEn: "title.en",
+      titleId: "title.id",
+      issuer: "issuer",
+      issuedAt: "issuedAt",
+      media: "thumbnail",
+    },
+    prepare({ titleEn, titleId, issuer, issuedAt, media }) {
+      return {
+        title: titleEn || titleId || "Untitled Certificate",
+        subtitle: [issuer, issuedAt].filter(Boolean).join(" • "),
+        media,
+      };
+    },
   },
   orderings: [
     {
