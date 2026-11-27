@@ -32,10 +32,18 @@ export const skillSchema = defineType({
       initialValue: 0,
     }),
   ],
-  // title kini objek, jadi daftar dokumen harus menunjuk salah satu bahasanya
-  // supaya tidak berbunyi "Untitled".
   preview: {
-    select: { title: "title.en", subtitle: "title.id" },
+    select: {
+      titleEn: "title.en",
+      titleId: "title.id",
+      iconName: "iconName",
+    },
+    prepare({ titleEn, titleId, iconName }) {
+      return {
+        title: titleEn || titleId || "Untitled Skill",
+        subtitle: iconName ? `Icon: ${iconName}` : undefined,
+      };
+    },
   },
   orderings: [
     {

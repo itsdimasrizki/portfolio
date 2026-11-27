@@ -3,8 +3,10 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 
 import { schemaTypes } from "@/sanity/schemaTypes";
+import { SINGLETON_TYPES, structure } from "@/sanity/structure";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "placeholder-project-id";
+const projectId =
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "placeholder-project-id";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 export default defineConfig({
@@ -15,37 +17,21 @@ export default defineConfig({
   dataset,
 
   plugins: [
-    structureTool({
-      structure: (S) =>
-        S.list()
-          .title("Content")
-          .items([
-            S.documentTypeListItem("project").title("Projects"),
-            S.documentTypeListItem("experience").title("Experience"),
-            S.documentTypeListItem("certificate").title("Certificates"),
-            S.documentTypeListItem("technology").title("Technologies"),
-            S.documentTypeListItem("skill").title("Skills"),
-            S.divider(),
-            S.listItem()
-              .title("Page Content")
-              .id("pageContent")
-              .child(
-                S.document()
-                  .schemaType("pageContent")
-                  .documentId("pageContent")
-              ),
-            S.listItem()
-              .title("Site Settings")
-              .id("siteSettings")
-              .child(
-                S.document()
-                  .schemaType("siteSettings")
-                  .documentId("siteSettings")
-              ),
-          ]),
-    }),
+    structureTool({ structure }),
     visionTool(),
   ],
+
+  document: {
+    // Prevent creating duplicate singleton documents from the global "+" menu
+    newDocumentOptions: (prev, { creationContext }) => {
+      if (creationContext.type === "global") {
+        return prev.filter(
+          (templateItem) => !SINGLETON_TYPES.has(templateItem.templateId)
+        );
+      }
+      return prev;
+    },
+  },
 
   schema: {
     types: schemaTypes,

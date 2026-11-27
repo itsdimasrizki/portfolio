@@ -32,6 +32,19 @@ export const technologySchema = defineType({
       initialValue: 0,
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      category: "category",
+      iconName: "iconName",
+    },
+    prepare({ title, category, iconName }) {
+      return {
+        title: title || "Untitled Technology",
+        subtitle: [category, iconName].filter(Boolean).join(" • "),
+      };
+    },
+  },
   orderings: [
     {
       title: "Category & Order",
