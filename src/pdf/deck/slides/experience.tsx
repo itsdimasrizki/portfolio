@@ -1,55 +1,100 @@
 import React from "react";
 import { View, Text } from "@react-pdf/renderer";
-import { Slide, SlideHeader, fgOn, mutedOn, type Tone } from "../primitives";
+import { Slide, SlideHeader } from "../primitives";
 import { colors, type } from "../theme";
 import { truncate, yearRange } from "../layout";
 import type { Experience } from "@/types/experience";
 
-const INDENT = [0, 26, 0, 26];
-
 export function ExperienceSlide({
-  experiences, pageIndex,
-}: { experiences: Experience[]; pageIndex: number }) {
+  experiences,
+  pageIndex,
+}: {
+  experiences: Experience[];
+  pageIndex: number;
+}) {
   return (
-    <Slide tone="bone">
-      <SlideHeader eyebrow={pageIndex === 0 ? "work history" : "work history (cont.)"} />
-      {experiences.map((experience, i) => {
-        const hero = pageIndex === 0 && i === 0;
-        const tone: Tone = hero ? "blue" : "paper";
-        const range = yearRange(experience.startDate, experience.endDate);
-        const indent = INDENT[i % 4];
-        // Lebar eksplisit, bukan flexGrow: flexShrink default yoga adalah 0,
-        // jadi kolom teks tidak pernah menyusut dan deskripsi panjang meluber
-        // keluar kartu. 864 - indent - 28 (padding kartu) - 190 (kolom kiri).
-        const bodyWidth = 646 - indent;
-        return (
-          <View
-            key={experience.id}
-            style={{
-              width: 864 - indent, marginLeft: indent,
-              height: 84, marginBottom: 12, padding: 14, flexDirection: "row",
-              backgroundColor: hero ? colors.blue : colors.paper,
-            }}
-          >
-            <View style={{ width: 190 }}>
-              {range && (
-                <Text style={{ ...type.h2, fontSize: 24, color: fgOn(tone) }}>{range}</Text>
+    <Slide tone="elevated">
+      <SlideHeader
+        tone="elevated"
+        eyebrow={pageIndex === 0 ? "work history" : "work history (cont.)"}
+      />
+      <View>
+        {experiences.map((experience, i) => {
+          const hero = pageIndex === 0 && i === 0;
+          const range =
+            yearRange(experience.startDate, experience.endDate) ??
+            [experience.startDate, experience.endDate].filter(Boolean).join(" — ");
+          const techs = (experience.technologies ?? []).slice(0, 6);
+
+          return (
+            <View
+              key={experience.id}
+              style={{
+                width: 864,
+                marginBottom: i < experiences.length - 1 ? 12 : 0,
+                padding: 15,
+                backgroundColor: colors.card,
+                borderWidth: 1,
+                borderColor: hero ? colors.accentBorder : colors.border,
+                borderRadius: 10,
+              }}
+            >
+              {/* Top row: Position + Date Range */}
+              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
+                <Text style={{ ...type.h3, color: colors.fg }}>
+                  {truncate(experience.position, 56)}
+                </Text>
+                {range && (
+                  <Text style={{ ...type.micro, color: colors.fgMuted }}>
+                    {range}
+                  </Text>
+                )}
+              </View>
+
+              {/* Company / Location */}
+              <View style={{ flexDirection: "row", alignItems: "center", marginTop: 4 }}>
+                <Text style={{ ...type.small, fontWeight: 700, color: colors.accent }}>
+                  {truncate(experience.company, 48)}
+                </Text>
+                {experience.location && (
+                  <Text style={{ ...type.small, color: colors.fgSecondary }}>
+                    {`  /  ${truncate(experience.location, 36)}`}
+                  </Text>
+                )}
+              </View>
+
+              {/* Description */}
+              <Text style={{ ...type.small, color: colors.fgSecondary, marginTop: 8 }}>
+                {truncate(experience.description, 195)}
+              </Text>
+
+              {/* Tech stack pills */}
+              {techs.length > 0 && (
+                <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 8 }}>
+                  {techs.map((tech) => (
+                    <View
+                      key={tech}
+                      style={{
+                        borderWidth: 1,
+                        borderColor: colors.border,
+                        backgroundColor: colors.secondary,
+                        borderRadius: 999,
+                        paddingHorizontal: 7,
+                        paddingVertical: 2,
+                        marginRight: 5,
+                      }}
+                    >
+                      <Text style={{ ...type.micro, fontSize: 7.5, color: colors.fgSecondary }}>
+                        {tech}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
               )}
-              <Text style={{ ...type.micro, color: mutedOn(tone), marginTop: 4 }}>
-                {truncate(experience.position, 34)}
-              </Text>
             </View>
-            <View style={{ width: bodyWidth, paddingLeft: 16 }}>
-              <Text style={{ ...type.h3, color: fgOn(tone) }}>
-                {truncate(experience.company, 46)}
-              </Text>
-              <Text style={{ ...type.small, color: fgOn(tone), marginTop: 6 }}>
-                {truncate(experience.description, 150)}
-              </Text>
-            </View>
-          </View>
-        );
-      })}
+          );
+        })}
+      </View>
     </Slide>
   );
 }

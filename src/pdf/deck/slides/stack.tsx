@@ -5,7 +5,7 @@ import { colors, type } from "../theme";
 import { truncate } from "../layout";
 import type { TechnologyGroup } from "@/types/technology";
 
-const OFFSETS = [0, 12, 0, 10, 0];
+const OFFSETS = [0, 10, 0, 10, 0];
 
 export function StackSlide({ technologies }: { technologies: TechnologyGroup[] }) {
   const names = technologies.flatMap((group) => group.items.map((item) => item.name));
@@ -13,15 +13,21 @@ export function StackSlide({ technologies }: { technologies: TechnologyGroup[] }
   const max = Math.max(1, ...groups.map((group) => group.items.length));
 
   return (
-    <Slide tone="bone">
+    <Slide tone="obsidian">
       <SlideHeader eyebrow="02 — tools" />
       <View style={{ flexDirection: "row" }}>
         <View style={{ width: 440, marginRight: 24 }}>
-          <BigType size="h1" lines={["the tools", "i reach for"]} color={colors.ink} />
-          <View style={{ marginTop: 24 }}>
-            <ChipRow labels={names} max={24} />
+          <BigType
+            size="h1"
+            lines={["the tools", "i reach for"]}
+            color={colors.fg}
+            accentColor={colors.accent}
+            accentLast
+          />
+          <View style={{ marginTop: 20 }}>
+            <ChipRow labels={names} max={24} accentFirst />
           </View>
-          <Text style={{ ...type.nano, color: colors.muted, marginTop: 14 }}>
+          <Text style={{ ...type.micro, color: colors.fgMuted, marginTop: 12 }}>
             bar length = tools per group, not proficiency
           </Text>
         </View>
@@ -31,21 +37,28 @@ export function StackSlide({ technologies }: { technologies: TechnologyGroup[] }
             <View
               key={group.title}
               style={{
-                width: 388, marginLeft: OFFSETS[i], marginBottom: 12,
-                backgroundColor: colors.paper, padding: 16,
+                width: 390,
+                marginLeft: OFFSETS[i],
+                marginBottom: 10,
+                backgroundColor: colors.card,
+                borderWidth: 1,
+                borderColor: colors.border,
+                borderRadius: 8,
+                padding: 14,
               }}
             >
-              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
-                <Text style={{ ...type.h3, color: colors.ink }}>{truncate(group.title, 26)}</Text>
-                <Text style={{ ...type.micro, color: colors.muted }}>
+              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <Text style={{ ...type.h3, color: colors.fg }}>{truncate(group.title, 26)}</Text>
+                <Text style={{ ...type.micro, color: colors.fgMuted }}>
                   {group.items.length} tools
                 </Text>
               </View>
               <View style={{ marginTop: 10 }}>
                 <PixelBar
                   value={group.items.length / max}
-                  width={356}
-                  fill={i % 2 === 0 ? colors.blue : colors.orange}
+                  width={360}
+                  fill={i % 2 === 0 ? colors.accent : colors.accentSecondary}
+                  empty={colors.border}
                 />
               </View>
             </View>

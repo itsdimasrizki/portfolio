@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { ChevronDown, Download, FileText, Loader2 } from "lucide-react";
 
 import { Container } from "./container";
@@ -34,6 +34,12 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
   const dossierRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const messages = getMessages(locale);
+  const { scrollYProgress } = useScroll();
+  const readProgress = useSpring(scrollYProgress, {
+    stiffness: 300,
+    damping: 40,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,6 +86,7 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
   return (
     <header
       id="navbar"
+      style={{ viewTransitionName: "site-header" }}
       className={cn(
         "sticky top-0 z-50 transition-all duration-200",
         isScrolled
@@ -87,6 +94,12 @@ export function Navbar({ cvUrl, locale }: NavbarProps) {
           : "border-b border-border/40 bg-background/60 backdrop-blur-xs"
       )}
     >
+      {/* Reading progress: a hairline in the user's accent color. */}
+      <motion.div
+        aria-hidden="true"
+        style={{ scaleX: readProgress }}
+        className="pointer-events-none absolute inset-x-0 -bottom-px h-0.5 origin-left bg-primary"
+      />
       <Container className="flex h-16 items-center justify-between gap-3">
         {/* Left: Coin Logo with subtle availability indicator */}
         <div className="shrink-0">

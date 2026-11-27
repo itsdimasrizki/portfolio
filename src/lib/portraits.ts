@@ -5,9 +5,9 @@ export interface SanityImageMeta {
 }
 
 export const DEFAULT_HERO_PORTRAIT: SanityImageMeta = {
-  url: "/assets/dimas-pointing.png",
-  width: 666,
-  height: 375,
+  url: "/assets/dimas-hero-large.png",
+  width: 852,
+  height: 937,
 };
 
 export const DEFAULT_ABOUT_PORTRAIT: SanityImageMeta = {
