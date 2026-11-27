@@ -31,7 +31,7 @@ export function MobileNav({ cvUrl, locale }: MobileNavProps) {
           variant="ghost"
           size="icon"
           aria-label={messages["nav.openMenu"]}
-          className="md:hidden"
+          className="lg:hidden"
         >
           <Menu className="size-5" />
         </Button>
@@ -70,6 +70,13 @@ export function MobileNav({ cvUrl, locale }: MobileNavProps) {
         </div>
 
         <div className="mt-auto flex flex-col gap-2">
+          <SheetClose asChild>
+            <Button size="sm" className="w-full" asChild>
+              <Link href={localeHref(locale, "/contact")}>
+                {messages["cta.letsConnect"]}
+              </Link>
+            </Button>
+          </SheetClose>
           <Button variant="outline" size="sm" asChild>
             {cvUrl ? (
               <a href={cvUrl} download target="_blank" rel="noopener noreferrer">

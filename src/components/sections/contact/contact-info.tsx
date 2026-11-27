@@ -24,12 +24,12 @@ export function ContactInfo({ contactInfo, socialLinks }: Props) {
                 <Icon size={18} />
               </span>
 
-              <span>
+              <span className="min-w-0">
                 <span className="block text-sm text-muted-foreground">
                   {item.label}
                 </span>
 
-                <span className="block font-medium">
+                <span className="block break-words font-medium">
                   {item.value}
                 </span>
               </span>

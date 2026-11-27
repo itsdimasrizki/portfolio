@@ -16,7 +16,7 @@ export function ExperienceCard({
   onToggle,
 }: ExperienceCardProps) {
   return (
-    <article className="relative border border-border bg-card p-6 rounded-2xl transition-colors duration-200 hover:border-foreground/40 shadow-xs">
+    <article className="relative rounded-2xl border border-border bg-card p-4 shadow-xs transition-colors duration-200 hover:border-foreground/40 sm:p-6">
       {/* Expand / collapse toggle */}
       {onToggle && (
         <button

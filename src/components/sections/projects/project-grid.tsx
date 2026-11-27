@@ -73,7 +73,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3 py-1 transition-colors border ${
+            className={`px-2.5 py-1 text-[11px] sm:px-3 sm:text-xs transition-colors border ${
               selectedCategory === cat
                 ? "border-primary bg-primary/10 text-primary font-semibold"
                 : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-foreground/30"
@@ -82,7 +82,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
             [{cat}]
           </button>
         ))}
-        <span className="ml-auto text-[11px] text-muted-foreground">
+        <span className="w-full text-[11px] text-muted-foreground sm:ml-auto sm:w-auto">
           {filteredProjects.length} OF {projects.length} SYSTEMS
         </span>
       </div>

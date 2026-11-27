@@ -79,7 +79,7 @@ export function ContactForm({ locale }: Props) {
       </p>
       <form
         onSubmit={handleSubmit}
-        className="space-y-5 rounded-2xl border border-border/60 bg-card/70 backdrop-blur-sm p-6 md:p-8"
+        className="space-y-5 rounded-2xl border border-border/60 bg-card/70 p-4 backdrop-blur-sm sm:p-6 md:p-8"
       >
         {/* Hidden honeypot field to trap spam bots */}
         <div className="hidden" aria-hidden="true">

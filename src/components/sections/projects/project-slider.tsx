@@ -88,10 +88,10 @@ export function ProjectSlider({ projects, locale }: Props) {
           initial="enter"
           animate="center"
           exit="exit"
-          className="grid gap-8 rounded-2xl border border-border bg-card p-6 lg:grid-cols-2 lg:p-10"
+          className="grid gap-6 rounded-2xl border border-border bg-card p-4 sm:p-6 lg:grid-cols-2 lg:gap-8 lg:p-10"
         >
           {/* Left: Content */}
-          <div className="flex flex-col justify-between gap-6">
+          <div className="order-2 flex flex-col justify-between gap-6 lg:order-1">
             <div className="space-y-4">
               {/* Badge */}
               <span
@@ -159,18 +159,18 @@ export function ProjectSlider({ projects, locale }: Props) {
 
           {/* Right: Image preview */}
           {project.images?.[0] ? (
-            <div className="relative hidden aspect-video overflow-hidden rounded-xl border border-border bg-muted/20 lg:block">
+            <div className="order-1 relative aspect-video overflow-hidden rounded-xl border border-border bg-muted/20 lg:order-2">
               <Image
                 src={project.images[0]}
                 alt={project.title}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 0px, 50vw"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
           ) : (
-            <div className="hidden items-center justify-center rounded-xl border border-border bg-muted/10 lg:flex">
-              <span className="font-mono text-6xl font-bold tracking-tighter text-muted-foreground/20 select-none">
+            <div className="order-1 flex aspect-video items-center justify-center rounded-xl border border-border bg-muted/10 lg:order-2 lg:aspect-auto">
+              <span className="font-mono text-4xl font-bold tracking-tighter text-muted-foreground/20 select-none sm:text-6xl">
                 {project.title.slice(0, 2).toUpperCase()}
               </span>
             </div>
@@ -178,44 +178,62 @@ export function ProjectSlider({ projects, locale }: Props) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Prev/Next floating buttons */}
+      {/* Prev/Next floating buttons (desktop) */}
       {projects.length > 1 && (
         <>
           <button
             onClick={() => navigate(-1)}
             aria-label="Previous project"
-            className="absolute left-3 top-1/2 z-10 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-muted"
+            className="hidden lg:flex absolute left-3 top-1/2 z-10 -translate-y-1/2 h-9 w-9 items-center justify-center rounded-full border border-border bg-background/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-muted"
           >
             <ChevronLeft size={16} />
           </button>
           <button
             onClick={() => navigate(1)}
             aria-label="Next project"
-            className="absolute right-3 top-1/2 z-10 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-muted"
+            className="hidden lg:flex absolute right-3 top-1/2 z-10 -translate-y-1/2 h-9 w-9 items-center justify-center rounded-full border border-border bg-background/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-muted"
           >
             <ChevronRight size={16} />
           </button>
         </>
       )}
 
-      {/* Dot indicators */}
+      {/* Dot indicators + mobile/tablet prev/next controls */}
       {projects.length > 1 && (
-        <div className="mt-5 flex justify-center gap-2">
-          {projects.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                setDirection(i > current ? 1 : -1);
-                setCurrent(i);
-              }}
-              aria-label={`Go to project ${i + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === current
-                  ? "w-5 bg-primary"
-                  : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"
-              }`}
-            />
-          ))}
+        <div className="mt-5 flex items-center justify-center gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            aria-label="Previous project"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-muted lg:hidden"
+          >
+            <ChevronLeft size={15} />
+          </button>
+
+          <div className="flex items-center gap-2">
+            {projects.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setDirection(i > current ? 1 : -1);
+                  setCurrent(i);
+                }}
+                aria-label={`Go to project ${i + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  i === current
+                    ? "w-5 bg-primary"
+                    : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"
+                }`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => navigate(1)}
+            aria-label="Next project"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:bg-muted lg:hidden"
+          >
+            <ChevronRight size={15} />
+          </button>
         </div>
       )}
     </div>

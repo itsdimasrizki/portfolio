@@ -19,7 +19,7 @@ export function ContactContent({ contactInfo, socialLinks, locale }: Props) {
   return (
     <Section>
       <Container>
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="space-y-8">
             <Reveal>
               <ContactInfo contactInfo={contactInfo} socialLinks={socialLinks} />
