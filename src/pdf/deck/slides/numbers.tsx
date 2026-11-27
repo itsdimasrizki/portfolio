@@ -12,11 +12,11 @@ type Stat = { value: string; label: string };
 
 export function buildStats(input: {
   experiences: Experience[];
-  featuredProjects: Project[];
+  projects: Project[];
   certificates: Certificate[];
   technologies: TechnologyGroup[];
 }): Stat[] {
-  const { experiences, featuredProjects, certificates, technologies } = input;
+  const { experiences, projects, certificates, technologies } = input;
   const toolCount = technologies.reduce((sum, group) => sum + group.items.length, 0);
 
   const lead: Stat = experiences.length
@@ -25,13 +25,13 @@ export function buildStats(input: {
         label: "years building for the web",
       }
     : {
-        value: String(new Set(featuredProjects.flatMap((p) => p.categories)).size),
+        value: String(new Set(projects.flatMap((p) => p.categories)).size),
         label: "domains worked in",
       };
 
   return [
     lead,
-    { value: String(featuredProjects.length), label: "projects shipped" },
+    { value: String(projects.length), label: "projects shipped" },
     { value: String(certificates.length), label: "certifications earned" },
     { value: String(toolCount), label: "tools in daily rotation" },
   ];
@@ -39,26 +39,54 @@ export function buildStats(input: {
 
 export function NumbersSlide(props: {
   experiences: Experience[];
-  featuredProjects: Project[];
+  projects: Project[];
   certificates: Certificate[];
   technologies: TechnologyGroup[];
 }) {
   const [lead, second, third, fourth] = buildStats(props);
   return (
-    <Slide tone="bone">
+    <Slide tone="obsidian">
       <SlideHeader eyebrow="by the numbers" />
       <View style={{ flexDirection: "row" }}>
-        <StatCard value={lead.value} label={lead.label} tone="blue"
-                  width={400} height={360} size="stat" dither />
+        <StatCard
+          value={lead.value}
+          label={lead.label}
+          tone="card"
+          width={400}
+          height={360}
+          size="stat"
+          valueColor={colors.accent}
+          accentBorder
+        />
         <View style={{ width: 440, marginLeft: 24 }}>
           <View style={{ flexDirection: "row" }}>
-            <StatCard value={second.value} label={second.label} tone="paper" width={208} height={168} />
+            <StatCard
+              value={second.value}
+              label={second.label}
+              tone="elevated"
+              width={208}
+              height={168}
+              valueColor={colors.fg}
+            />
             <View style={{ width: 24 }} />
-            <StatCard value={third.value} label={third.label} tone="paper"
-                      width={208} height={168} valueColor={colors.orange} />
+            <StatCard
+              value={third.value}
+              label={third.label}
+              tone="elevated"
+              width={208}
+              height={168}
+              valueColor={colors.accentSecondary}
+            />
           </View>
           <View style={{ marginTop: 24 }}>
-            <StatCard value={fourth.value} label={fourth.label} tone="ink" width={440} height={168} />
+            <StatCard
+              value={fourth.value}
+              label={fourth.label}
+              tone="subtle"
+              width={440}
+              height={168}
+              valueColor={colors.fg}
+            />
           </View>
         </View>
       </View>

@@ -2,7 +2,7 @@ import React from "react";
 import type { ReactElement } from "react";
 import { Document } from "@react-pdf/renderer";
 import type { PortfolioPdfData } from "@/types/pdf";
-import { paginate } from "./deck/layout";
+import { paginate, chunkCertificates } from "./deck/layout";
 import { CoverSlide } from "./deck/slides/cover";
 import { ContentsSlide } from "./deck/slides/contents";
 import { DividerSlide } from "./deck/slides/divider";
@@ -12,7 +12,6 @@ import { StackSlide } from "./deck/slides/stack";
 import { ProcessSlide } from "./deck/slides/process";
 import { ProjectIndexSlide } from "./deck/slides/project-index";
 import { ProjectDetailSlide } from "./deck/slides/project-detail";
-import { ProjectGridSlide } from "./deck/slides/project-grid";
 import { ExperienceSlide } from "./deck/slides/experience";
 import { CertificatesSlide } from "./deck/slides/certificates";
 import { ContactSlide } from "./deck/slides/contact";
@@ -24,8 +23,18 @@ type Entry = { section?: Section; node: ReactElement };
 
 export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
   const {
-    settings, intro, experiences, featuredProjects, certificates, technologies,
-    skills, qrCodeDataUrl, profileImage, projectImages,
+    settings,
+    intro,
+    experiences,
+    projects,
+    certificates,
+    technologies,
+    skills,
+    qrCodeDataUrl,
+    profileImage,
+    aboutImage,
+    projectImages,
+    certificateImages,
   } = data;
 
   const name = settings.fullName ?? "Portfolio";
@@ -35,63 +44,93 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
   rest.push({
     section: "profile",
     node: (
-      <DividerSlide key="d-profile" eyebrow="section 01" lines={["the", "profile"]}
-        tone="bone" corner="bl"
-        subline="Who is behind the work, and how they think about building it." />
+      <DividerSlide
+        key="d-profile"
+        eyebrow="section 01"
+        lines={["the", "profile."]}
+        tone="obsidian"
+        corner="bl"
+        subline="Who is behind the work, and how they think about building it."
+      />
     ),
   });
-  rest.push({ node: <BioSlide key="bio" settings={settings} photo={profileImage} /> });
+  rest.push({
+    node: <BioSlide key="bio" settings={settings} photo={aboutImage ?? profileImage} />,
+  });
   rest.push({
     node: (
-      <NumbersSlide key="numbers" experiences={experiences} featuredProjects={featuredProjects}
-        certificates={certificates} technologies={technologies} />
+      <NumbersSlide
+        key="numbers"
+        experiences={experiences}
+        projects={projects}
+        certificates={certificates}
+        technologies={technologies}
+      />
     ),
   });
   if (technologies.length > 0) {
     rest.push({ node: <StackSlide key="stack" technologies={technologies} /> });
   }
-  paginate(skills, 5, 2).forEach((page, i) => {
+  paginate(skills, 5, 10).forEach((page, i) => {
     rest.push({ node: <ProcessSlide key={`process-${i}`} skills={page} pageIndex={i} /> });
   });
 
-  if (featuredProjects.length > 0) {
+  if (projects.length > 0) {
     rest.push({
       section: "work",
       node: (
-        <DividerSlide key="d-work" eyebrow="section 02" lines={["selected", "work"]}
-          tone="blue" corner="tr"
-          subline="What the problem was, what was decided, and what came out of it." />
+        <DividerSlide
+          key="d-work"
+          eyebrow="section 02"
+          lines={["selected", "work."]}
+          tone="elevated"
+          corner="tr"
+          subline="All projects — problem context, architecture decisions, and live outcomes."
+        />
       ),
     });
-    rest.push({ node: <ProjectIndexSlide key="p-index" projects={featuredProjects} /> });
-    featuredProjects.slice(0, 4).forEach((project, i) => {
+    paginate(projects, 6, 10).forEach((page, i) => {
       rest.push({
         node: (
-          <ProjectDetailSlide key={project.id} project={project} index={i}
-            image={projectImages[project.id]} />
+          <ProjectIndexSlide
+            key={`p-index-${i}`}
+            projects={page}
+            startIndex={i * 6}
+            pageIndex={i}
+          />
         ),
       });
     });
-    if (featuredProjects.length > 4) {
+    projects.forEach((project, i) => {
       rest.push({
         node: (
-          <ProjectGridSlide key="p-grid" projects={featuredProjects.slice(4, 6)}
-            images={projectImages} startIndex={4} />
+          <ProjectDetailSlide
+            key={project.id}
+            project={project}
+            index={i}
+            total={projects.length}
+            image={projectImages[project.id]}
+          />
         ),
       });
-    }
+    });
   }
 
   if (experiences.length > 0) {
     rest.push({
       section: "experience",
       node: (
-        <DividerSlide key="d-exp" eyebrow="section 03" lines={["where i've", "worked"]}
-          tone="ink" corner="tl"
-          subline="Teaching, research labs, student organisations, and industry programmes." />
+        <DividerSlide
+          key="d-exp"
+          eyebrow="section 03"
+          lines={["where i've", "worked."]}
+          tone="elevated"
+          corner="tl"
+          subline="Teaching, research labs, student organisations, and industry programmes."
+        />
       ),
     });
-    paginate(experiences, 4, 2).forEach((page, i) => {
+    paginate(experiences, 3, 20).forEach((page, i) => {
       rest.push({ node: <ExperienceSlide key={`exp-${i}`} experiences={page} pageIndex={i} /> });
     });
   }
@@ -100,18 +139,27 @@ export function PortfolioPdf({ data }: { data: PortfolioPdfData }) {
     rest.push({
       section: "credentials",
       node: (
-        <DividerSlide key="d-cred" eyebrow="section 04" lines={["credentials"]}
-          tone="orange" corner="br"
-          subline="Scheduled proof of learning — not a substitute for experience." />
+        <DividerSlide
+          key="d-cred"
+          eyebrow="section 04"
+          lines={["credentials."]}
+          tone="subtle"
+          corner="br"
+          subline="Verified certifications and technical training across cloud, AI, and engineering."
+        />
       ),
     });
-    const pages = paginate(certificates, 6, 2);
-    const overflow = Math.max(0, certificates.length - pages.flat().length);
-    pages.forEach((page, i) => {
+    const certPages = chunkCertificates(certificates);
+    certPages.forEach((page, i) => {
       rest.push({
         node: (
-          <CertificatesSlide key={`cert-${i}`} certificates={page} pageIndex={i}
-            overflow={i === pages.length - 1 ? overflow : 0} />
+          <CertificatesSlide
+            key={`cert-${i}`}
+            certificates={page}
+            images={certificateImages}
+            pageIndex={i}
+            totalPages={certPages.length}
+          />
         ),
       });
     });

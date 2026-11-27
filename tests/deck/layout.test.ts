@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  stagger, heightFor, accentFor, paginate, truncate, scaleTitle,
+  stagger, heightFor, accentFor, paginate, chunkCertificates, truncate, scaleTitle,
   formatDate, yearRange, splitParagraphs, yearsSince, pad2,
   joinRoles, introLines,
 } from "../../src/pdf/deck/layout.ts";
@@ -32,6 +32,17 @@ test("paginate splits, caps pages, and drops the overflow", () => {
 
 test("paginate returns no pages for an empty list", () => {
   assert.deepEqual(paginate([], 6, 2), []);
+});
+
+test("chunkCertificates keeps all items and splits into 2-3 per page when >= 2", () => {
+  assert.deepEqual(chunkCertificates([]), []);
+  assert.deepEqual(chunkCertificates([1]), [[1]]);
+  assert.deepEqual(chunkCertificates([1, 2]), [[1, 2]]);
+  assert.deepEqual(chunkCertificates([1, 2, 3]), [[1, 2, 3]]);
+  assert.deepEqual(chunkCertificates([1, 2, 3, 4]), [[1, 2], [3, 4]]);
+  assert.deepEqual(chunkCertificates([1, 2, 3, 4, 5]), [[1, 2, 3], [4, 5]]);
+  assert.deepEqual(chunkCertificates([1, 2, 3, 4, 5, 6]), [[1, 2, 3], [4, 5, 6]]);
+  assert.deepEqual(chunkCertificates([1, 2, 3, 4, 5, 6, 7]), [[1, 2, 3], [4, 5], [6, 7]]);
 });
 
 test("truncate cuts on a word boundary and marks the cut", () => {

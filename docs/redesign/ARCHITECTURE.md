@@ -178,3 +178,4 @@ Verified via codebase `grep` across `src/` (zero assumptions):
 | `src/components/sections/projects/project-grid.tsx` | `src/components/sections/projects/projects-list.tsx` (`/[locale]/projects`) | **Keep file** — removed from Home `FeaturedProjects` only |
 | `src/components/sections/cta/index.tsx` | `src/app/(site)/[locale]/experience/page.tsx` | **Keep file** — removed from Home only (remove from `/experience` only if requested) |
 | `src/components/common/download-portfolio-button.tsx` | `src/components/layout/mobile-nav.tsx` | **Keep file** — consolidated into dropdown on desktop navbar |
+agy --conversation=65560e67-a5b6-4c9e-bb98-05a5234436a9

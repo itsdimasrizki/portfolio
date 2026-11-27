@@ -30,6 +30,30 @@ export function paginate<T>(items: T[], perPage: number, maxPages: number): T[][
   return pages;
 }
 
+/**
+ * Membagi sertifikat menjadi halaman berisi 2–3 kartu per halaman (tanpa
+ * membuang item berlebih). Saat jumlah total >= 2, menghindari halaman terakhir
+ * yang hanya berisi 1 kartu (mis. 4 -> 2+2, 7 -> 3+2+2).
+ */
+export function chunkCertificates<T>(items: T[]): T[][] {
+  if (items.length === 0) return [];
+  if (items.length <= 3) return [items];
+
+  const pages: T[][] = [];
+  let i = 0;
+  while (i < items.length) {
+    const remaining = items.length - i;
+    if (remaining === 4 || remaining === 2) {
+      pages.push(items.slice(i, i + 2));
+      i += 2;
+    } else {
+      pages.push(items.slice(i, i + 3));
+      i += 3;
+    }
+  }
+  return pages;
+}
+
 export function truncate(value: string, max: number): string {
   if (value.length <= max) return value;
   const cut = value.slice(0, max);
